@@ -337,28 +337,91 @@ nav.scrolled {
 footer {
   background: var(--navy-2);
   border-top: 1px solid rgba(34,120,172,0.15);
-  padding: 36px 32px;
+  padding: 56px 32px 36px;
 }
-
 .footer__inner {
   max-width: 1120px;
-  margin: 0 auto;
+  margin: 0 auto 32px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 24px;
+  gap: 40px;
   flex-wrap: wrap;
 }
-
-.footer__copy {
-  font-size: 13px;
+.footer-brand__tagline {
+  font-family: var(--font-serif, serif);
+  font-style: italic;
+  font-size: 0.9rem;
   color: var(--faint);
+  margin-top: 10px;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer-links__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 4px;
+}
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+.footer-socials__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 4px;
+}
+.footer-socials__icons { display: flex; gap: 10px; }
+.social-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.social-icon:hover {
+  background: rgba(34,120,172,0.18);
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+.footer__bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  display: flex;
+  justify-content: center;
+}
+.footer__copy {
+  font-size: 12px;
+  color: var(--faint);
+  text-align: center;
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 900px) {
   nav { padding: 16px 20px; }
-  .footer__inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
 }
 
 @media (max-width: 480px) {
@@ -368,6 +431,9 @@ footer {
   .content-area { padding: 60px 0 80px; }
   .policy-intro { padding: 28px 24px; }
   .policy-section__body { padding-left: 0; }
+  footer { padding: 40px 20px 28px; }
+  .footer__inner { gap: 28px; }
+  .footer__copy { font-size: 11px; }
 }
 </style>
 </head>
@@ -553,9 +619,37 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer__inner" style="display:flex;align-items:center;justify-content:space-between;">
-    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;">
-    <span class="footer__copy">© 2025 Strong Standard. All rights reserved.</span>
+  <div class="footer__inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <!-- Legal links -->
+    <div class="footer-links">
+      <span class="footer-links__label">Legal</span>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms-of-service">Terms of Service</a>
+      <a href="mailto:support@strongstandard.com">Contact</a>
+    </div>
+    <!-- Socials -->
+    <div class="footer-socials">
+      <span class="footer-socials__label">Follow</span>
+      <div class="footer-socials__icons">
+        <a href="https://www.instagram.com/dr.joeymunoz" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@drjoeymunoz" target="_blank" rel="noopener" class="social-icon" aria-label="YouTube">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        </a>
+        <a href="https://open.spotify.com/show/drjoeymunoz" target="_blank" rel="noopener" class="social-icon" aria-label="Podcast">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">© 2026 Strong Standard Coaching. All rights reserved.</span>
   </div>
 </footer>
 
