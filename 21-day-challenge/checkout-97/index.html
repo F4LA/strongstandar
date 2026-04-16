@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>21 Day Lean & Strong Challenge | Strong Standard</title>
+<meta name="description" content="Join the 21 Day Lean & Strong Challenge. Science-backed coaching by Dr. Joey Munoz, Ph.D. Only 60 spots available.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<!-- GHL dependencies -->
+<script src="https://stcdn.leadconnectorhq.com/libphonenumber/1.10.60/libphonenumber-js.min.js" async></script>
+<script src="https://stcdn.leadconnectorhq.com/intl-tel-input/17.0.12/js/utils.min.js" async></script>
+<script src="https://stcdn.leadconnectorhq.com/intl-tel-input/intlTelInput.min.js" async></script>
+<link rel="stylesheet" href="https://stcdn.leadconnectorhq.com/intl-tel-input/17.0.12/css/intlTelInput.min.css">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --navy-4:      #17243B;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --success:     #3DD68C;
+  --warning:     #E05555;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--off-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, rgba(8,13,26,0.98) 0%, rgba(8,13,26,0) 100%);
+  transition: background 0.3s, padding 0.3s;
+}
+
+nav.scrolled {
+  background: rgba(8,13,26,0.97);
+  border-bottom: 1px solid rgba(34,120,172,0.2);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  padding: 18px 32px;
+}
+
+.nav-logo img { height: 24px; width: auto; display: block; }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 160px 0 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.page-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,95,138,0.15) 0%, transparent 70%);
+}
+
+.page-header-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.eyebrow .line { width: 36px; height: 1px; background: var(--steel-mid); }
+
+.eyebrow-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.8vw, 4.2rem);
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+
+.page-header h1 .accent { color: var(--steel-light); }
+
+.page-header-sub {
+  font-size: 19px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.page-header-phone {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 14px;
+}
+
+.page-header-phone a {
+  color: var(--steel-light);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.page-header-phone a:hover { color: var(--white); }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+}
+
+/* ── FORM SECTION ── */
+.form-section {
+  background: var(--navy-2);
+  padding: 72px 0;
+}
+
+.form-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.form-card {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  position: relative;
+}
+
+.form-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+}
+
+.form-card-header {
+  padding: 36px 40px 24px;
+  text-align: center;
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+}
+
+.form-card-title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.form-card-sub {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.form-card-sub strong {
+  color: var(--off-white);
+  font-weight: 500;
+}
+
+.spots-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(34,120,172,0.25);
+  border-radius: var(--r-full);
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.spots-badge strong { color: var(--off-white); font-weight: 600; }
+
+.form-card-body { padding: 32px 40px 36px; }
+
+/* ── GHL FORM OVERRIDES ── */
+.form-card-body .hl-app,
+.form-card-body section#form-builder,
+.form-card-body .hl_form-builder--main { padding: 0 !important; margin: 0 !important; }
+
+.form-card-body .form-builder--wrap,
+.form-card-body .form-builder--wrap-full {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  margin-bottom: 0 !important;
+}
+
+.form-card-body #_builder-form {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+.form-card-body .fields-container { padding: 0 !important; }
+.form-card-body .ghl-form-wrap { max-width: 100% !important; }
+
+.form-card-body label,
+.form-card-body .field-label {
+  color: var(--off-white) !important;
+  font-family: var(--font-body) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+
+.form-card-body input[type=text],
+.form-card-body input[type=email],
+.form-card-body input[type=tel],
+.form-card-body input[type=number],
+.form-card-body .form-control {
+  background: var(--navy-2) !important;
+  color: var(--off-white) !important;
+  border: 1px solid rgba(34,120,172,0.25) !important;
+  border-radius: var(--r-md) !important;
+  padding: 13px 16px !important;
+  font-family: var(--font-body) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  width: 100% !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.form-card-body input:focus,
+.form-card-body input[type=email]:focus,
+.form-card-body input[type=tel]:focus,
+.form-card-body .form-control:focus {
+  border-color: rgba(56,153,204,0.6) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(34,120,172,0.1) !important;
+}
+
+.form-card-body ::placeholder { color: var(--faint) !important; font-size: 13px !important; }
+
+.form-card-body .payment-outlayer { background: transparent !important; }
+
+.form-card-body .product-container {
+  background: var(--navy-2) !important;
+  border: 1px solid rgba(34,120,172,0.2) !important;
+  border-radius: var(--r-md) !important;
+  padding: 16px !important;
+}
+
+.form-card-body .product-summary-label-large,
+.form-card-body .product-summary-label-normal {
+  color: var(--off-white) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+}
+
+.form-card-body .product-summary-amount-large {
+  color: var(--steel-light) !important;
+  font-family: var(--font-display) !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+.form-card-body .payment-info-container {
+  background: var(--navy-2) !important;
+  border: 1px solid rgba(34,120,172,0.2) !important;
+  border-radius: var(--r-md) !important;
+}
+
+.form-card-body .footer-payment {
+  color: var(--faint) !important;
+  font-size: 12px !important;
+  text-align: center !important;
+  margin-top: 12px !important;
+}
+
+.form-card-body button[type=submit],
+.form-card-body .form-builder--btn-submit button {
+  background: var(--steel-mid) !important;
+  color: var(--white) !important;
+  border: none !important;
+  border-radius: var(--r-full) !important;
+  padding: 16px 36px !important;
+  font-family: var(--font-body) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  cursor: pointer !important;
+  transition: all 0.22s ease !important;
+  box-shadow: 0 0 30px rgba(34,120,172,0.3) !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  text-align: center !important;
+}
+
+.form-card-body button[type=submit]:hover,
+.form-card-body .form-builder--btn-submit button:hover {
+  background: var(--steel-light) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0 50px rgba(56,153,204,0.45) !important;
+}
+
+/* ── GUARANTEE ── */
+.guarantee-section { background: var(--navy); padding: 60px 0; }
+
+.guarantee-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 36px 40px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  background: rgba(61,214,140,0.05);
+  border: 1px solid rgba(61,214,140,0.2);
+  border-radius: var(--r-lg);
+}
+
+.guarantee-icon { font-size: 52px; flex-shrink: 0; }
+
+.guarantee-text h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--success);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.guarantee-text p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── SECTIONS ── */
+.section { padding: 80px 0; }
+.section--dark  { background: var(--navy); }
+.section--mid   { background: var(--navy-2); }
+
+.section__header { text-align: center; margin-bottom: 52px; }
+.section__header .eyebrow-label { display: block; margin-bottom: 10px; }
+
+.section__header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 4.5vw, 5rem);
+  color: var(--white);
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+.section__header p {
+  font-size: 19px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* Photo testimonials */
+.tgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.tcard {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.13);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.tcard:hover { transform: translateY(-5px); border-color: rgba(34,120,172,0.3); }
+
+.tcard__img { width: 100%; aspect-ratio: 4/3; overflow: hidden; }
+
+.tcard__img img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  transition: transform 0.4s;
+}
+
+.tcard:hover .tcard__img img { transform: scale(1.04); }
+
+.tcard__body { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+.tcard__stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; }
+
+.tcard__quote {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  color: var(--off-white);
+  line-height: 1.55;
+  font-style: italic;
+  flex: 1;
+}
+
+.tcard__result {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px;
+  background: rgba(61,214,140,0.08);
+  border: 1px solid rgba(61,214,140,0.2);
+  border-radius: var(--r-full);
+  font-size: 12px; font-weight: 600; color: var(--success); width: fit-content;
+}
+
+.tcard__author { font-size: 12px; color: var(--muted); padding-top: 10px; border-top: 1px solid rgba(34,120,172,0.12); }
+.tcard__author strong { color: var(--off-white); display: block; font-weight: 600; }
+
+/* Video */
+.vgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+.vcard {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.vcard:hover { transform: translateY(-4px); border-color: rgba(34,120,172,0.35); }
+
+.vcard__embed { position: relative; width: 100%; aspect-ratio: 16/9; }
+.vcard__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+
+.vcard__caption {
+  padding: 14px 18px;
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  color: var(--off-white);
+  font-style: italic;
+  line-height: 1.5;
+  border-top: 1px solid rgba(34,120,172,0.12);
+}
+
+/* ── FINAL CTA ── */
+.cta-section {
+  padding: 100px 0;
+  position: relative; overflow: hidden; text-align: center;
+  background: var(--navy);
+}
+
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(26,95,138,0.2) 0%, transparent 70%);
+}
+
+.cta-section::after {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 0 32px; }
+
+.cta-inner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 6vw, 7rem);
+  color: var(--white);
+  margin: 12px 0 20px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.cta-inner p { font-size: 17px; color: var(--muted); font-weight: 300; line-height: 1.65; margin-bottom: 32px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-weight: 700; font-size: 15px;
+  letter-spacing: 0.04em; border-radius: var(--r-full); border: none;
+  cursor: pointer; transition: all 0.22s ease; text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--steel-mid);
+  color: var(--white);
+  padding: 16px 40px;
+  box-shadow: 0 0 30px rgba(34,120,172,0.3);
+}
+
+.btn-primary:hover {
+  background: var(--steel-light);
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(56,153,204,0.45);
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  padding: 56px 32px 36px;
+}
+
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--faint);
+  margin-top: 12px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: nowrap;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-socials {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.social-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.social-icon:hover {
+  background: var(--steel-glow);
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+
+.footer__bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 28px;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.footer__copy { font-size: 13px; color: var(--faint); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 760px) {
+  .tgrid { grid-template-columns: 1fr; }
+  .vgrid { grid-template-columns: 1fr; }
+  nav { padding: 12px 20px; }
+  .form-card-header, .form-card-body { padding-left: 24px; padding-right: 24px; }
+  .guarantee-inner { flex-direction: column; text-align: center; padding: 28px 24px; }
+  .form-wrap { padding: 0 20px; }
+  .container { padding: 0 20px; }
+  .page-header-inner { padding: 0 20px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+  .footer-socials { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard">
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="page-header-inner">
+    <div class="eyebrow">
+      <span class="line"></span>
+      <span class="eyebrow-label">21 Day Challenge</span>
+      <span class="line"></span>
+    </div>
+    <h1>
+      You're One Step Closer to Feeling
+      <span class="accent">Lean &amp; Strong in the Next 21 Days</span>
+    </h1>
+    <p class="page-header-sub">
+      Join hundreds who have transformed their bodies with our proven system.
+    </p>
+    <p class="page-header-phone">
+      Have questions or need assistance? Text us at <a href="tel:+18136862306">+1 (813) 686-2306</a> and we'll be happy to help.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FORM SECTION -->
+<section class="form-section" id="checkout">
+  <div class="form-wrap">
+    <div class="form-card reveal">
+
+      <div class="form-card-header">
+
+        <div class="form-card-title">Complete Your Registration</div>
+        <p class="form-card-sub">
+          We only have <strong>60 spots total</strong>, so don't wait to join!
+        </p>
+        <div class="spots-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--steel-light)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <strong>60 spots</strong> &nbsp;· Limited availability
+        </div>
+      </div>
+
+      <div class="form-card-body">
+        <div class="hl-app">
+          <section id="form-builder" style="margin:0;padding:0;">
+            <div class="ghl-form-wrap" style="max-width:100%;margin-bottom:0;">
+              <div id="_builder-form" style="background-color:#FFFFFFFF;max-width:600px;width:100%;padding:20px 0;" name="builder-form" class="form-builder--wrap-full form-builder--wrap">
+                <div class="flex items-center" style="gap:0;">
+                  <div class="form-side" style="width:100%;">
+                    <div class="flex-col row fields-container remove-extra-padding">
+
+                      <div style="margin-bottom:16px;" class="col-12 form-field-wrapper">
+                        <div class="f-odd form-field-container">
+                          <div><div class="field-container">
+                            <div id="form-first_name" class="form-builder--item">
+                              <label class="label-alignment field-label" for="first_name">First Name <span>*</span></label>
+                              <div class="flex-col"><input type="text" placeholder="First Name" name="first_name" class="form-control" id="first_name" data-q="first_name" data-required="true"></div>
+                            </div>
+                          </div></div>
+                        </div>
+                      </div>
+
+                      <div style="margin-bottom:16px;" class="col-12 form-field-wrapper">
+                        <div class="f-even form-field-container">
+                          <div><div class="field-container">
+                            <div id="form-last_name" class="form-builder--item">
+                              <label class="label-alignment field-label" for="last_name">Last Name <span>*</span></label>
+                              <div class="flex-col"><input type="text" placeholder="Last Name" name="last_name" class="form-control" id="last_name" data-q="last_name" data-required="true"></div>
+                            </div>
+                          </div></div>
+                        </div>
+                      </div>
+
+                      <div style="margin-bottom:16px;" class="col-12 form-field-wrapper">
+                        <div class="f-odd form-field-container">
+                          <div class="form-builder--item field-container">
+                            <label class="label-alignment" for="email">Email <span>*</span></label>
+                            <div class="flex-col">
+                              <div class="flex email-input">
+                                <input placeholder="Email" name="email" type="email" class="form-control" data-q="email" data-required="true" id="email">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style="margin-bottom:16px;" class="col-12 form-field-wrapper">
+                        <div class="f-even form-field-container">
+                          <div><div class="field-container">
+                            <div id="form-phone" class="form-builder--item">
+                              <label class="label-alignment field-label" for="phone">Phone <span>*</span></label>
+                              <div class="flex-col">
+                                <div class="flex phone-input">
+                                  <input type="tel" name="phone" placeholder="Phone" autocomplete="off" class="form-control" id="phone" data-q="phone" data-required="true">
+                                </div>
+                              </div>
+                            </div>
+                          </div></div>
+                        </div>
+                      </div>
+
+                      <div style="margin-bottom:16px;" class="col-12 payment-block form-field-wrapper">
+                        <div class="f-odd form-field-container">
+                          <div id="payment" class="payment-outlayer">
+                            <label class="label-alignment field-label">Select the product <span>*</span></label>
+                            <section class="product-layout" style="active-tag-bg-color:009EF426;bg-color:FFFFFFFF;font-color:2c3345FF;label-alignment:top;label-color:2c3345FF;label-font-family:Inter;label-font-size:14;label-font-weight:500;label-width:200;placeholder-color:8c8c8cFF;placeholder-font-family:Inter;placeholder-font-size:12;placeholder-font-weight:300;width:900;">
+                              <div class="product-container">
+                                <div class="product-checkbox">
+                                  <input id="69b5a1fea48ec40831f9ff64" name="69b5a1fea48ec40831f9ff64" value="69b5a1fea48ec40831f9ff64" disabled type="radio">
+                                </div>
+                                <div class="product-inner-container">
+                                  <div class="product-text-container">
+                                    <div class="product-no-image-gap product-stretch">
+                                      <div class="product-text-divider">
+                                        <label class="product-summary-label-large">21 Day Lean &amp; Strong Challenge ($97)</label>
+                                      </div>
+                                      <div class="product-price-container">
+                                        <div class="product-summary-amount-large">$97</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </section>
+                            <div id="error-container" class="error coupon-error"></div>
+                            <section id="payment-gateway" class="payment-layer">
+                              <div class="ghl-payment-element">
+                                <div></div>
+                                <span>
+                                  <div id="paypal-form-payment-966630be-3a7b-4de8-b48d-26db93e0ec0f"><span></span></div>
+                                </span>
+                              </div>
+                            </section>
+                            <div class="footer-payment">*100% secure &amp; safe payments*</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style="margin-bottom:16px;" class="col-12 form-field-wrapper">
+                        <div class="f-even form-field-container">
+                          <div class="form-builder--item form-builder--btn-submit" style="text-align:center;margin-top:8px;">
+                            <div style="display:inline-block;position:relative;width:100%;">
+                              <button type="submit" class="btn btn-dark button-element" style="background-color:#2278ACFF;border:none;border-radius:9999px;padding:16px 36px;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;">
+                                Confirm Purchase
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style="display:none;" class="col-12"><input type="text" name="kzaf5gbRanpXnhw6Cphj" class="form-control" id="kzaf5gbRanpXnhw6Cphj" data-q="utm_source" data-required="false"></div>
+                      <div style="display:none;" class="col-12"><input type="text" name="ac9iF4Ubgl3SPPfNUU37" class="form-control" id="ac9iF4Ubgl3SPPfNUU37" data-q="utm_medium" data-required="false"></div>
+                      <div style="display:none;" class="col-12"><input type="text" name="cDUtCD4IZNPQZowiky4c" class="form-control" id="cDUtCD4IZNPQZowiky4c" data-q="utm_content" data-required="false"></div>
+
+                      <div class="col-12" style="margin-top:8px;">
+                        <p style="text-align:center;font-size:12px;color:var(--faint);line-height:1.6;">
+                          <a href="https://fit4lifeacademy.health/privacy-policy-21-day-challenge" target="_blank" style="color:var(--muted);text-decoration:underline;">Privacy Policy</a>
+                          &nbsp;|&nbsp;
+                          <a href="https://www.fit4lifeacademy.health/terms-of-service-challenge" target="_blank" style="color:var(--muted);text-decoration:underline;">Terms of Service</a>
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://fit4lifeacademy.health/privacy-policy-21-day-challenge" target="_blank">Privacy Policy</a>
+      <a href="https://www.fit4lifeacademy.health/terms-of-service-challenge" target="_blank">Terms of Service</a>
+      <a href="mailto:support@strongstandard.com">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#" class="social-icon" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="Spotify">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
