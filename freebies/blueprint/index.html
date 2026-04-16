@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dr. Joey Blueprint — Strong Standard | Dr. Joey Munoz, Ph.D.</title>
+<meta name="description" content="Download the free Blueprint and learn the science-backed nutrition, exercise, and lifestyle principles to lose fat, build muscle, and transform your body for life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ── VARIABLES ──────────────────────────────────────── */
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --navy-4:      #17243B;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --ice:         #A8CDE0;
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --success:     #3DD68C;
+  --warning:     #E05555;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   20px;
+  --r-full: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--off-white);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ── PAGE WRAPPER ───────────────────────────────────── */
+.page-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 60px 24px 80px;
+}
+
+/* Grid background */
+.page-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+}
+
+.page-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,95,138,0.18) 0%, transparent 70%);
+  z-index: 0;
+}
+
+/* Floating glow */
+.bg-glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34,120,172,0.1) 0%, transparent 70%);
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatGlow 8s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+  50%       { transform: translateX(-50%) translateY(30px) scale(1.04); }
+}
+
+/* ── INNER CONTENT ──────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── LOGO ───────────────────────────────────────────── */
+.logo-wrap {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.logo-wrap img {
+  height: 24px;
+  width: auto;
+  margin: 0 auto;
+}
+
+/* ── EYEBROW ────────────────────────────────────────── */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.eyebrow .line {
+  width: 32px;
+  height: 1px;
+  background: var(--steel-mid);
+}
+
+.eyebrow span {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+
+/* ── HEADLINE ───────────────────────────────────────── */
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.9vw, 3.85rem);
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+h1 .accent {
+  color: var(--steel-light);
+  display: block;
+}
+
+.subheadline {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+  text-align: center;
+  max-width: 560px;
+  font-weight: 300;
+  margin-bottom: 44px;
+}
+
+.subheadline strong {
+  color: var(--off-white);
+  font-weight: 500;
+}
+
+/* ── FORM CARD ──────────────────────────────────────── */
+.form-card {
+  width: 100%;
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.25);
+  border-radius: var(--r-lg);
+  padding: 40px 40px 36px;
+  position: relative;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.4),
+    0 0 60px rgba(34,120,172,0.08);
+}
+
+/* Top accent line */
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+.form-card__heading {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+
+/* ── FORM FIELDS ────────────────────────────────────── */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group input {
+  width: 100%;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-md);
+  padding: 14px 20px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--off-white);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-group input::placeholder {
+  color: var(--faint);
+  font-weight: 300;
+}
+
+.form-group input:focus {
+  border-color: rgba(34,120,172,0.55);
+  box-shadow: 0 0 0 3px rgba(34,120,172,0.12);
+  background: var(--navy-4);
+}
+
+/* Submit button */
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--steel-mid);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 16px 36px;
+  border-radius: var(--r-full);
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
+  box-shadow: 0 0 30px rgba(34,120,172,0.35);
+  transition: all 0.22s ease;
+}
+
+.btn-submit:hover {
+  background: var(--steel-light);
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(56,153,204,0.45);
+}
+
+.btn-submit svg { flex-shrink: 0; }
+
+/* ── CONSENT + LINKS ────────────────────────────────── */
+.consent-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.consent-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  margin-top: 2px;
+  accent-color: var(--steel-mid);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.consent-row label {
+  font-size: 12px;
+  color: var(--faint);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.policy-links {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--faint);
+}
+
+.policy-links a {
+  color: var(--steel-light);
+  transition: color 0.2s;
+}
+
+.policy-links a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+/* ── TRUST BULLETS ──────────────────────────────────── */
+.trust-bullets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  margin-top: 36px;
+}
+
+.trust-bullet {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.trust-bullet svg { color: var(--success); flex-shrink: 0; }
+
+/* ── DIVIDER ────────────────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+  margin: 44px 0 0;
+}
+
+/* ── FOOTER ─────────────────────────────────────────── */
+.footer-note {
+  margin-top: 28px;
+  font-size: 12px;
+  color: var(--faint);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ─────────────────────────────────────────── */
+footer {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  padding: 56px 32px 36px;
+}
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--faint);
+  margin-top: 12px;
+}
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: nowrap;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer-socials {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+.social-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.social-icon:hover {
+  background: var(--steel-glow);
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+.footer__bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 28px;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  display: flex;
+  justify-content: center;
+}
+.footer__copy { font-size: 13px; color: var(--faint); }
+
+@media (max-width: 960px) {
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+  .footer-socials { justify-content: flex-start; }
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 560px) {
+  .page-section { padding: 60px 20px; }
+  .form-card { padding: 32px 24px 28px; }
+  h1 { font-size: clamp(2.8rem, 9vw, 4rem); }
+  .subheadline { font-size: 16px; margin-bottom: 32px; }
+  .logo-wrap img { height: 24px; }
+  .trust-bullets { gap: 8px 16px; }
+}
+</style>
+</head>
+<body>
+
+<section class="page-section">
+  <div class="bg-glow"></div>
+
+  <div class="inner">
+
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <img
+        src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png"
+        alt="Strong Standard"
+      >
+    </div>
+
+    <!-- Eyebrow -->
+    <div class="eyebrow">
+      <span class="line"></span>
+      <span>Free Download</span>
+      <span class="line"></span>
+    </div>
+
+    <!-- Headline -->
+    <h1>
+      The Strong Standard
+      <span class="accent">Blueprint</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="subheadline">
+      Learn the <strong>science-backed nutrition, exercise, and lifestyle principles</strong>
+      to help you lose fat, build muscle, and transform your body for life.
+    </p>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      <p class="form-card__heading">Enter your name and email below to download for free</p>
+
+      <form action="#" method="post" onsubmit="return false;">
+
+        <div class="form-group">
+          <input
+            type="text"
+            name="first_name"
+            id="first_name"
+            placeholder="First Name *"
+            autocomplete="given-name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address *"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            placeholder="Phone Number (Optional)"
+            autocomplete="tel"
+          >
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Get it now
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+
+        <div class="consent-row">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">
+            By providing my email and phone number, I agree to receive occasional
+            marketing messages from Strong Standard which I can opt out of at any time.
+          </label>
+        </div>
+
+        <p class="policy-links">
+          <a href="https://drjoeymunoz.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+          &nbsp;|&nbsp;
+          <a href="https://drjoeymunoz.com/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
+        </p>
+
+      </form>
+    </div>
+
+    <!-- Trust bullets -->
+    <div class="trust-bullets">
+      <div class="trust-bullet">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Science-backed content
+      </div>
+      <div class="trust-bullet">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Ph.D. in Nutritional Sciences
+      </div>
+      <div class="trust-bullet">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        100% free, no credit card
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#" class="social-icon" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="Spotify">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
