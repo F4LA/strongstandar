@@ -1,0 +1,23 @@
+name: Add Favicon to All Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  add-favicon:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run favicon injection script
+        run: python3 scripts/add_favicon.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Add favicon to all HTML pages"
+          git push
