@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Strong Standard Coaching</title>
+<meta name="description" content="Privacy Policy for A2P Messaging — Strong Standard Coaching, Dr. Joey Munoz, Ph.D.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --r-md:   12px;
+  --r-lg:   20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--off-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-size: 17px; /* body general */
+}
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── NAV — logo only ─────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(8,13,26,0.98) 0%, rgba(8,13,26,0) 100%);
+  transition: background 0.3s, padding 0.3s;
+}
+
+nav.scrolled {
+  background: rgba(8,13,26,0.97);
+  border-bottom: 1px solid rgba(34,120,172,0.2);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  padding: 14px 32px;
+}
+
+.nav-logo img {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+/* ── PAGE HEADER ─────────────────────────────────────── */
+.page-header {
+  background: var(--navy);
+  padding: 140px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 60%, rgba(26,95,138,0.14) 0%, transparent 70%);
+}
+
+.page-header__inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Labels / eyebrows: 11px */
+.label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+
+.page-header__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.page-header__eyebrow .line {
+  width: 40px;
+  height: 1px;
+  background: var(--steel-mid);
+}
+
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  color: var(--white);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+
+/* Intro de sección: 19px */
+.page-header__sub {
+  font-size: 19px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+}
+
+/* ── CONTENT AREA ────────────────────────────────────── */
+.content-area {
+  background: var(--navy-2);
+  padding: 80px 0 100px;
+}
+
+.container--narrow {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Intro card */
+.policy-intro {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 36px 40px;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.policy-intro::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+}
+
+/* Intro de sección: 19px */
+.policy-intro p {
+  font-size: 19px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* Sections */
+.policy-sections {
+  display: flex;
+  flex-direction: column;
+}
+
+.policy-section {
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(34,120,172,0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+.policy-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.policy-section:last-child {
+  border-bottom: none;
+}
+
+.policy-section__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.policy-section__num {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: rgba(34,120,172,0.25);
+  line-height: 1;
+  min-width: 40px;
+  margin-top: 3px;
+}
+
+.policy-section h2 {
+  font-family: var(--font-body);
+  font-size: 17px; /* body general */
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+  letter-spacing: 0;
+  padding-top: 5px;
+}
+
+.policy-section__body {
+  padding-left: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cuerpo general: 17px */
+.policy-section__body p {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.policy-section__body a {
+  color: var(--steel-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.policy-section__body a:hover { color: #A8CDE0; }
+
+/* Bullet list — tarjetas: 14–15px */
+.policy-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.policy-list li {
+  display: flex;
+  gap: 12px;
+  font-size: 15px; /* tarjetas */
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+  align-items: flex-start;
+}
+
+.policy-list li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--steel-light);
+  margin-top: 9px;
+}
+
+/* Note highlight — tarjeta: 14px */
+.policy-note {
+  background: rgba(34,120,172,0.07);
+  border: 1px solid rgba(34,120,172,0.18);
+  border-radius: var(--r-md);
+  padding: 18px 22px;
+}
+
+.policy-note p {
+  font-size: 14px !important; /* tarjeta */
+  color: var(--off-white) !important;
+  line-height: 1.7 !important;
+}
+
+.policy-note strong {
+  color: var(--steel-light) !important;
+  font-weight: 600 !important;
+}
+
+/* Contact block — tarjeta: 14–15px */
+.contact-block {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.18);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-block .name {
+  font-size: 15px; /* tarjeta */
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.contact-block p {
+  font-size: 14px !important; /* tarjeta */
+  color: var(--muted) !important;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  padding: 36px 32px;
+}
+
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer__copy {
+  font-size: 13px;
+  color: var(--faint);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 16px 20px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+@media (max-width: 480px) {
+  .container--narrow { padding: 0 20px; }
+  .page-header { padding: 100px 0 60px; }
+  .page-header__inner { padding: 0 20px; }
+  .content-area { padding: 60px 0 80px; }
+  .policy-intro { padding: 28px 24px; }
+  .policy-section__body { padding-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV — logo only, no links -->
+<nav id="nav">
+  <div class="nav-logo">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard">
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header__inner">
+    <div class="page-header__eyebrow">
+      <span class="line"></span>
+      <span class="label">Legal</span>
+      <span class="line"></span>
+    </div>
+    <h1>Privacy<br>Policy</h1>
+    <p class="page-header__sub">For A2P Messaging — Strong Standard Coaching</p>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- CONTENT -->
+<section class="content-area">
+  <div class="container--narrow">
+
+    <div class="policy-intro">
+      <p>At Strong Standard Coaching, we respect and are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you opt in to receive messages through our Application-to-Person (A2P) messaging services. By opting in to receive text messages from us, you agree to the practices described in this policy.</p>
+    </div>
+
+    <div class="policy-sections">
+
+      <!-- 1 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">01</span>
+          <h2>Information We Collect</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>When you opt in to receive text messages from Strong Standard Coaching, we may collect the following information:</p>
+          <ul class="policy-list">
+            <li>Your phone number</li>
+            <li>Any personal information you provide directly via SMS</li>
+            <li>Information about your interactions with the messages (e.g., responses, preferences, and data on how you engage with the messages)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">02</span>
+          <h2>How We Use Your Information</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>We use the information collected from you to:</p>
+          <ul class="policy-list">
+            <li>Send you transactional or marketing messages</li>
+            <li>Provide information and updates about our products and services</li>
+            <li>Respond to your inquiries, requests, or complaints</li>
+            <li>Improve our services and personalize the content of our messages</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">03</span>
+          <h2>Consent</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>By opting in to receive SMS or text messages from Strong Standard Coaching, you consent to:</p>
+          <ul class="policy-list">
+            <li>Receiving recurring automated promotional and personalized marketing text messages (e.g., fitness updates, coaching reminders) at the phone number you provided when opting in</li>
+            <li>Receiving messages related to your transactions, services, or other related content</li>
+          </ul>
+          <div class="policy-note">
+            <p>You can withdraw your consent at any time by texting <strong>"STOP"</strong> to the number from which you received the message. After opting out, you will no longer receive A2P messages from us unless you opt in again.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">04</span>
+          <h2>Data Retention</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>We retain your phone number and related information for as long as necessary to fulfill the purposes outlined in this privacy policy unless otherwise required by law. If you opt out of receiving text messages, we will remove your phone number from our active SMS list.</p>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">05</span>
+          <h2>Data Sharing</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes.</p>
+          <p>Information sharing to subcontractors in support services, such as customer service, is permitted.</p>
+          <div class="policy-note">
+            <p>All other use case categories exclude text messaging originator opt-in data and consent. This information will not be shared with any third parties.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">06</span>
+          <h2>Security</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>We take reasonable precautions to protect your information. However, no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee the absolute security of your data, but we strive to protect your privacy.</p>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">07</span>
+          <h2>Your Rights</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>You have the right to:</p>
+          <ul class="policy-list">
+            <li>Access, correct, or delete your personal information</li>
+            <li>Opt out of receiving A2P messages by following the opt-out instructions in any of our text messages</li>
+            <li>Request information on how your data is used or shared</li>
+          </ul>
+          <p>To exercise these rights, please contact us at <a href="mailto:support@strongstandard.com">support@strongstandard.com</a>.</p>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">08</span>
+          <h2>Children's Privacy</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>Our messaging services are not intended for use by anyone under the age of 18. We do not knowingly collect data from children. If we learn that we have collected data from a child, we will delete it promptly.</p>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">09</span>
+          <h2>Changes to This Policy</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>We may update this Privacy Policy from time to time. Any changes will be reflected on this page, and the date of the latest revision will be indicated at the top of the policy.</p>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="policy-section">
+        <div class="policy-section__header">
+          <span class="policy-section__num">10</span>
+          <h2>Contact Us</h2>
+        </div>
+        <div class="policy-section__body">
+          <p>If you have any questions or concerns about this Privacy Policy or our A2P messaging practices, please contact us at:</p>
+          <div class="contact-block">
+            <p class="name">Strong Standard Coaching</p>
+            <p><a href="mailto:support@strongstandard.com">support@strongstandard.com</a></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__inner" style="display:flex;align-items:center;justify-content:space-between;">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;">
+    <span class="footer__copy">© 2025 Strong Standard. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+const sections = document.querySelectorAll('.policy-section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+sections.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
