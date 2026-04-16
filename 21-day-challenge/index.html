@@ -1,0 +1,3037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lean &amp; Strong 21-Day Challenge | Strong Standard</title>
+<meta name="description" content="Lose fat, build muscle, and build confidence in just 21 days with expert coaching from Dr. Joey Munoz, Ph.D. Science-backed, fully coached, built for real life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════
+   CSS VARIABLES
+═══════════════════════════════════════════════ */
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --navy-4:      #17243B;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --ice:         #A8CDE0;
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --success:     #3DD68C;
+  --warning:     #E05555;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   20px;
+  --r-xl:   32px;
+  --r-full: 9999px;
+
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.25);
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.35);
+  --shadow-lg:   0 20px 60px rgba(0,0,0,0.45);
+  --shadow-glow: 0 0 40px rgba(34,120,172,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  background: var(--navy);
+  color: var(--off-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM
+═══════════════════════════════════════════════ */
+.label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════ */
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.container--narrow {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ═══════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  border-radius: var(--r-full);
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--steel-mid);
+  color: var(--white);
+  padding: 16px 36px;
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 0 30px rgba(34,120,172,0.3);
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.btn-primary:hover {
+  background: var(--steel-light);
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(56,153,204,0.45);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--steel-light);
+  padding: 14px 32px;
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  border: 1.5px solid var(--steel-mid);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+}
+
+.btn-outline:hover {
+  background: var(--steel-glow);
+  border-color: var(--steel-light);
+}
+
+.btn-checkout-pulse {
+  animation: ctaPulse 3s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(34,120,172,0.3); }
+  50% { box-shadow: 0 0 60px rgba(56,153,204,0.55); }
+}
+
+/* ═══════════════════════════════════════════════
+   STICKY BANNER
+═══════════════════════════════════════════════ */
+.sticky-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--navy-2);
+  border-bottom: 1px solid rgba(34,120,172,0.25);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.sticky-banner__left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.countdown {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  min-width: 44px;
+}
+
+.countdown-unit .num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--steel-light);
+  line-height: 1;
+}
+
+.countdown-unit .label {
+  font-size: 9px;
+  color: var(--faint);
+  letter-spacing: 0.15em;
+  margin-top: 2px;
+}
+
+.sticky-banner__spots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.spots-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: spotPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.spots-dot--white { background: var(--white); }
+.spots-dot--accent { background: var(--steel-light); }
+
+@keyframes spotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 130px 0 100px;
+  margin-top: 0;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 60% 40%, rgba(26,95,138,0.18) 0%, transparent 70%),
+    linear-gradient(160deg, rgba(8,13,26,0.5) 0%, rgba(8,13,26,0.95) 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34,120,172,0.12) 0%, transparent 70%);
+  top: 10%;
+  right: 5%;
+  animation: floatGlow 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 30px) scale(1.05); }
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.hero__eyebrow .line {
+  width: 40px;
+  height: 1px;
+  background: var(--steel-mid);
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(61,214,140,0.1);
+  border: 1px solid rgba(61,214,140,0.3);
+  border-radius: var(--r-full);
+  padding: 7px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--success);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero__badge .pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: spotPulse 2s ease-in-out infinite;
+}
+
+.hero__spots-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.25);
+  border-radius: var(--r-full);
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--steel-light);
+  letter-spacing: 0.06em;
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  font-size: clamp(4rem, 7vw, 8rem);
+  color: var(--white);
+  line-height: 0.92;
+  margin-bottom: 28px;
+}
+
+.hero h1 .accent {
+  color: var(--steel-light);
+  display: block;
+}
+
+.hero__sub {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.hero__sub strong {
+  color: var(--off-white);
+  font-weight: 500;
+}
+
+.hero__ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.hero__start-date {
+  font-size: 13px;
+  color: var(--faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════
+   TRUST BAR
+═══════════════════════════════════════════════ */
+.trust-bar {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  border-bottom: 1px solid rgba(34,120,172,0.15);
+  padding: 18px 0;
+  overflow: hidden;
+}
+
+.trust-bar__track {
+  display: flex;
+  gap: 64px;
+  align-items: center;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.trust-bar__item svg { color: var(--steel-light); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════════ */
+.section {
+  padding: 100px 0;
+}
+
+.section--dark { background: var(--navy); }
+.section--mid  { background: var(--navy-2); }
+
+.section__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section__header h2 {
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  color: var(--white);
+  margin: 12px 0 20px;
+}
+
+.section__header p {
+  font-size: 19px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════════
+   VSL SECTION
+═══════════════════════════════════════════════ */
+.vsl-section {
+  padding: 100px 0;
+  background: var(--navy-2);
+}
+
+.vsl-section .section__header {
+  margin-bottom: 40px;
+}
+
+.vsl-section__body {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 40px;
+}
+
+.vsl-player-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid rgba(34,120,172,0.2);
+  box-shadow: var(--shadow-lg);
+  background: var(--navy-3);
+}
+
+.vsl-player-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+  z-index: 2;
+}
+
+.vsl-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--navy-3);
+}
+
+.vsl-player video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vsl-play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8,13,26,0.4);
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.2s;
+}
+
+.vsl-play-btn:hover { background: rgba(8,13,26,0.2); }
+
+.vsl-play-btn__circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--steel-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(34,120,172,0.5);
+  transition: all 0.22s ease;
+}
+
+.vsl-play-btn:hover .vsl-play-btn__circle {
+  background: var(--steel-light);
+  transform: scale(1.08);
+}
+
+.vsl-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(8,13,26,0.95), transparent);
+  padding: 32px 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.25s;
+  z-index: 3;
+}
+
+.vsl-controls.visible { opacity: 1; }
+
+.vsl-ctrl-btn {
+  background: none;
+  border: none;
+  color: var(--off-white);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.vsl-ctrl-btn:hover { opacity: 1; }
+
+.vsl-progress {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.vsl-progress__fill {
+  height: 100%;
+  background: var(--steel-light);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.vsl-time {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════
+   WHAT 21 DAYS CAN DO
+═══════════════════════════════════════════════ */
+.what-21-days__body {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.what-21-days__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.what-21-days__list li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.12);
+  border-radius: var(--r-lg);
+  padding: 20px 24px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.what-21-days__list li:hover {
+  border-color: rgba(34,120,172,0.3);
+  transform: translateX(4px);
+}
+
+.what-21-days__list li strong {
+  color: var(--off-white);
+  font-weight: 600;
+}
+
+.what-21-days__list li svg {
+  flex-shrink: 0;
+  color: var(--success);
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════════ */
+.testimonials__sub {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto 56px;
+  line-height: 1.7;
+  font-weight: 300;
+  text-align: center;
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.tcard {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.13);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.tcard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(34,120,172,0.3);
+}
+
+.tcard__img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.tcard__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.tcard:hover .tcard__img img { transform: scale(1.04); }
+
+.tcard__img-labels {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+.tcard__img-labels span {
+  background: rgba(8,13,26,0.85);
+  border: 1px solid rgba(34,120,172,0.3);
+  border-radius: var(--r-full);
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  backdrop-filter: blur(8px);
+}
+
+.tcard__img-labels .after-label {
+  border-color: rgba(61,214,140,0.4);
+  color: var(--success);
+}
+
+.tcard__body {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.tcard__stars {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.tcard__headline {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--off-white);
+  line-height: 1.35;
+}
+
+.tcard__quote {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+  font-style: italic;
+  flex: 1;
+}
+
+.tcard__result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  background: rgba(61,214,140,0.08);
+  border: 1px solid rgba(61,214,140,0.2);
+  border-radius: var(--r-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--success);
+  width: fit-content;
+}
+
+.testimonials__disclaimer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 32px;
+}
+
+/* ═══════════════════════════════════════════════
+   VIDEO TESTIMONIALS
+═══════════════════════════════════════════════ */
+.video-testimonials__sub {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto 56px;
+  line-height: 1.7;
+  font-weight: 300;
+  text-align: center;
+}
+
+.video-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.vt-card {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.vt-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(34,120,172,0.35);
+}
+
+.video-testimonial-player {
+  position: relative;
+}
+
+.video-testimonial-player--vertical { aspect-ratio: 9/16; }
+
+.video-testimonial-player video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vid-test-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8,13,26,0.45);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.vid-test-play:hover { background: rgba(8,13,26,0.25); }
+
+.vid-test-play__circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--steel-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(34,120,172,0.5);
+  transition: all 0.22s ease;
+  color: var(--white);
+}
+
+.vid-test-play:hover .vid-test-play__circle {
+  background: var(--steel-light);
+  transform: scale(1.08);
+}
+
+/* ═══════════════════════════════════════════════
+   INCLUDED
+═══════════════════════════════════════════════ */
+.included__sub {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto 56px;
+  line-height: 1.7;
+  font-weight: 300;
+  text-align: center;
+}
+
+.included__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.included-card {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.included-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.included-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(34,120,172,0.35);
+}
+
+.included-card:hover::before { opacity: 1; }
+
+.included-card__value {
+  display: inline-block;
+  background: rgba(200,169,110,0.12);
+  border: 1px solid rgba(200,169,110,0.25);
+  border-radius: var(--r-full);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.included-card__icon {
+  width: 48px;
+  height: 48px;
+  background: var(--steel-glow);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--steel-light);
+  margin-bottom: 18px;
+}
+
+.included-card h3 {
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.included-card p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════
+   BONUSES
+═══════════════════════════════════════════════ */
+.bonuses__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.bonus-item {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 28px 28px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.bonus-item:hover {
+  border-color: rgba(34,120,172,0.35);
+  transform: translateY(-3px);
+}
+
+.bonus-item__tag {
+  flex-shrink: 0;
+  background: var(--steel-glow);
+  border: 1px solid rgba(34,120,172,0.3);
+  border-radius: var(--r-full);
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--steel-light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.bonus-item__content { flex: 1; }
+
+.bonus-item__content h3 {
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.bonus-item__content p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.bonus-item__value {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--gold);
+  line-height: 1;
+  white-space: nowrap;
+  align-self: center;
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════
+   PRIZES
+═══════════════════════════════════════════════ */
+.prizes__showcase {
+  background: var(--navy-2);
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: var(--r-lg);
+  padding: 48px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.prizes__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200,169,110,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.prizes__showcase h2 {
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  color: var(--white);
+  margin: 12px 0 20px;
+}
+
+.prizes__amount-inline { color: var(--gold); }
+
+.prizes__sub {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.prizes__trophy-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.prizes__trophy-ring {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2px solid rgba(200,169,110,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200,169,110,0.06);
+}
+
+.prizes__trophy-ring-inner {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,169,110,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prizes__trophy-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--gold);
+}
+
+.prizes__amount-display {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  line-height: 1;
+}
+
+.prizes__dollar {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+  margin-top: 6px;
+}
+
+.prizes__number {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.prizes__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.prizes__details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.prizes__detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.prizes__detail-item svg { color: var(--success); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════
+   AUDIENCE
+═══════════════════════════════════════════════ */
+.audience__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.audience__col {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 36px 32px;
+}
+
+.audience__col--for {
+  border-color: rgba(61,214,140,0.2);
+}
+
+.audience__col--not {
+  border-color: rgba(224,85,85,0.15);
+}
+
+.audience__col h3 {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--off-white);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.audience__col--for h3 svg { color: var(--success); }
+.audience__col--not h3 svg { color: var(--warning); }
+
+.audience__col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.audience__col li {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.audience__col--for li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  opacity: 0.6;
+}
+
+.audience__col--not li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════
+   OFFER / PRICING
+═══════════════════════════════════════════════ */
+.offer__box {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-lg);
+  padding: 56px 48px;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.offer__box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+}
+
+.offer__box-badge {
+  position: absolute;
+  top: -1px;
+  right: 40px;
+  background: var(--steel-mid);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 0 0 var(--r-md) var(--r-md);
+}
+
+.offer__box h2 {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  color: var(--white);
+  margin: 16px 0 32px;
+}
+
+.offer__spots-bar {
+  margin-bottom: 32px;
+}
+
+.offer__spots-bar-track {
+  height: 6px;
+  background: var(--navy-3);
+  border-radius: 3px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.offer__spots-bar-fill {
+  height: 100%;
+  background: var(--steel-mid);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+  width: 2%;
+}
+
+.offer__spots-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.offer__tiers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.offer__tier {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-md);
+  padding: 20px;
+}
+
+.offer__tier--active {
+  border-color: rgba(34,120,172,0.5);
+  background: rgba(34,120,172,0.08);
+}
+
+.offer__tier--sold {
+  opacity: 0.5;
+}
+
+.offer__tier-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.offer__tier--active .offer__tier-label { color: var(--steel-light); }
+
+.offer__tier-price {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--white);
+  line-height: 1;
+}
+
+.offer__tier--active .offer__tier-price { color: var(--steel-light); }
+
+.offer__early-checkout {
+  text-align: center;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.offer__early-checkout-note {
+  font-size: 12px;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+
+.offer__value-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(34,120,172,0.12);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.offer__value-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--muted);
+  background: var(--navy-3);
+  border-bottom: 1px solid rgba(34,120,172,0.08);
+  transition: background 0.2s;
+}
+
+.offer__value-list li:last-child { border-bottom: none; }
+.offer__value-list li:hover { background: var(--navy-4); }
+
+.item-value {
+  font-weight: 700;
+  color: var(--faint);
+  font-size: 13px;
+}
+
+.offer__total-value {
+  text-align: center;
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.offer__total-value s { color: var(--faint); }
+
+.offer__price {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.offer__price .dynamic-price { color: var(--steel-light); }
+
+.offer__price-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* ═══════════════════════════════════════════════
+   GUARANTEE
+═══════════════════════════════════════════════ */
+.guarantee__box {
+  background: var(--navy-2);
+  border: 1px solid rgba(61,214,140,0.2);
+  border-radius: var(--r-lg);
+  padding: 56px 48px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.guarantee__icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.guarantee__box h2 {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.guarantee__box p {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════════ */
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 720px;
+  margin: 0 auto;
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.faq-item {
+  background: var(--navy-2);
+  border-bottom: 1px solid rgba(34,120,172,0.1);
+}
+
+.faq-item:last-child { border-bottom: none; }
+
+.faq-item__question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--off-white);
+  font-family: var(--font-body);
+  transition: background 0.2s, color 0.2s;
+}
+
+.faq-item__question:hover { background: rgba(34,120,172,0.06); color: var(--white); }
+.faq-item.active .faq-item__question { color: var(--steel-light); background: rgba(34,120,172,0.06); }
+
+.faq-item__question svg {
+  flex-shrink: 0;
+  color: var(--steel-light);
+  transition: transform 0.25s ease;
+}
+
+.faq-item.active .faq-item__question svg { transform: rotate(45deg); }
+
+.faq-item__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+
+.faq-item.active .faq-item__answer { max-height: 400px; }
+
+.faq-item__answer p {
+  padding: 0 28px 22px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════════
+   FINAL CTA
+═══════════════════════════════════════════════ */
+.final-cta-section {
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.final-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, rgba(26,95,138,0.2) 0%, transparent 70%);
+}
+
+.final-cta-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.final-cta-section__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.final-cta-section h2 {
+  font-size: clamp(3.5rem, 6vw, 7rem);
+  color: var(--white);
+  margin: 16px 0 24px;
+  line-height: 1;
+}
+
+.final-cta-section p {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.final-cta__spots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+/* ═══════════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  padding: 56px 32px 36px;
+}
+
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--faint);
+  margin-top: 12px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: nowrap;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--white); }
+
+.footer-socials {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.social-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.social-icon:hover {
+  background: var(--steel-glow);
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+
+.footer__bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 28px;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.footer__copy { font-size: 13px; color: var(--faint); }
+
+/* ═══════════════════════════════════════════════
+   FLOATING CTA
+═══════════════════════════════════════════════ */
+.floating-cta {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.floating-cta.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.floating-cta__spots {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-full);
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════
+   TESTIMONIAL CAROUSEL (mobile)
+═══════════════════════════════════════════════ */
+.tcard-carousel {
+  display: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.tcard-carousel__track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+.tcard-carousel__track .tcard {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.tcard-carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.tcard-carousel__btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(34,120,172,0.3);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.tcard-carousel__btn:hover {
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+
+.tcard-carousel__dots {
+  display: flex;
+  gap: 7px;
+}
+
+.tcard-carousel__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--faint);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.tcard-carousel__dot.active {
+  background: var(--steel-light);
+  box-shadow: 0 0 8px rgba(56,153,204,0.6);
+}
+
+/* ─────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .testimonials__grid { grid-template-columns: 1fr; }
+  .included__grid { grid-template-columns: 1fr; }
+  .audience__grid { grid-template-columns: 1fr; }
+  .offer__tiers { grid-template-columns: 1fr; }
+  .video-testimonials__grid { grid-template-columns: 1fr; }
+  .offer__box { padding: 40px 28px; }
+  .guarantee__box { padding: 40px 28px; }
+  .sticky-banner { flex-direction: column; gap: 8px; padding: 8px 20px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+  .footer-socials { justify-content: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 20px; }
+  .container--narrow { padding: 0 20px; }
+  .section { padding: 72px 0; }
+  .hero h1 { font-size: 3.5rem; }
+  .hero__ctas { flex-direction: column; }
+  .floating-cta { bottom: 16px; right: 16px; }
+  .bonus-item { flex-direction: column; gap: 12px; }
+  .bonus-item__value { align-self: flex-start; }
+  /* Nav: smaller logo and button */
+  #nav img { height: 18px !important; }
+  #nav .btn-primary { font-size: 12px !important; padding: 10px 18px !important; }
+  /* Testimonials: hide grid, show carousel */
+  .testimonials__grid { display: none; }
+  .tcard-carousel { display: block; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     STICKY BANNER
+═══════════════════════════════════════════════ -->
+<div class="sticky-banner" role="banner" aria-label="Registration countdown">
+  <div class="sticky-banner__left">
+    <span class="label" style="color:var(--muted);">Registration Closes In</span>
+    <div class="countdown">
+      <div class="countdown-unit"><span class="num" id="cd-days">00</span><span class="label">Days</span></div>
+      <div class="countdown-unit"><span class="num" id="cd-hours">00</span><span class="label">Hrs</span></div>
+      <div class="countdown-unit"><span class="num" id="cd-mins">00</span><span class="label">Min</span></div>
+      <div class="countdown-unit"><span class="num" id="cd-secs">00</span><span class="label">Sec</span></div>
+    </div>
+  </div>
+  <div class="sticky-banner__spots">
+    <span class="spots-dot"></span>
+    <span><strong id="spots-banner-count">59</strong> of 60 Spots Left</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════ -->
+<nav id="nav" style="position:fixed;top:48px;left:0;right:0;z-index:99;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,13,26,0.97);border-bottom:1px solid rgba(34,120,172,0.15);transition:background 0.3s;">
+  <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:24px;width:auto;display:block;">
+  <a href="#pricing" class="btn-primary scroll-to-pricing" style="font-size:13px;padding:12px 28px;">
+    Join the Challenge
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="hero-glow"></div>
+  </div>
+  <div class="container">
+    <div class="hero__inner reveal">
+
+      <div class="hero__badge">
+        <span class="pulse"></span>
+        Now Accepting Challengers
+      </div>
+
+      <div class="hero__spots-pill">
+        <span class="spots-dot spots-dot--accent"></span>
+        <span id="hero-spots-count">59</span> of 60 Spots Remaining
+      </div>
+
+      <h1>
+        Lose Fat.<br>
+        Build Muscle.<br>
+        <span class="accent">Feel Confident.</span>
+      </h1>
+
+      <p class="hero__sub">
+        Join the science-backed 21-day challenge that's helped <strong>375+ people</strong> start transforming their bodies, with expert coaching from a PhD-led team, personalized nutrition, and a community that actually shows up for you.
+      </p>
+
+      <div class="hero__ctas">
+        <a href="#pricing" class="btn-primary btn-dynamic-price btn-checkout-pulse scroll-to-pricing">
+          Join the Challenge
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#results" class="btn-outline">See Results</a>
+      </div>
+
+      <p class="hero__start-date">Starts March 30th, 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TRUST BAR
+═══════════════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-bar__track">
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Evidence-Based Coaching
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Led by Dr. Joey Munoz, PhD in Nutritional Sciences
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      375+ Transformations
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      1-on-1 Coaching Call Included
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      21-Day Money-Back Guarantee
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Only 60 Spots Available
+    </div>
+    <!-- duplicates for seamless loop -->
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Evidence-Based Coaching
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Led by Dr. Joey Munoz, PhD in Nutritional Sciences
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      375+ Transformations
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      1-on-1 Coaching Call Included
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      21-Day Money-Back Guarantee
+    </div>
+    <div class="trust-bar__item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Only 60 Spots Available
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     VSL
+═══════════════════════════════════════════════ -->
+<section class="vsl-section" id="vsl">
+  <div class="container--narrow">
+    <div class="section__header reveal">
+      <span class="label">Hear From Dr. Joey</span>
+      <h2>Why We Built This Challenge</h2>
+    </div>
+    <p class="vsl-section__body reveal">Most 21-day challenges give you a meal plan, wish you luck, and disappear. This one was designed to do the opposite: give you real coaching, real education, and a real system you can use long after the 21 days are over. Here's what this is actually about.</p>
+    <div class="vsl-player-wrap reveal">
+      <div class="vsl-player">
+        <video
+          id="vsl-video"
+          preload="metadata"
+          playsinline
+          controlsList="nodownload"
+        >
+          <source src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/68222a98c2929f86716034c7.mp4" type="video/mp4">
+        </video>
+        <button class="vsl-play-btn" id="vsl-play-btn" aria-label="Play video">
+          <div class="vsl-play-btn__circle">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </button>
+        <div class="vsl-controls" id="vsl-controls">
+          <button class="vsl-ctrl-btn" id="vsl-playpause" aria-label="Play/Pause">
+            <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          </button>
+          <div class="vsl-progress" id="vsl-progress-bar">
+            <div class="vsl-progress__fill" id="vsl-progress-fill"></div>
+          </div>
+          <span class="vsl-time" id="vsl-time">0:00 / 0:00</span>
+          <button class="vsl-ctrl-btn" id="vsl-mute" aria-label="Toggle sound">
+            <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     WHAT 21 DAYS CAN DO
+═══════════════════════════════════════════════ -->
+<section class="section section--dark" id="about">
+  <div class="container--narrow">
+    <div class="section__header reveal">
+      <span class="label">The Real Question</span>
+      <h2>What Can 21 Days<br>Actually Do?</h2>
+    </div>
+    <p class="what-21-days__body reveal">Three weeks won't undo years of frustration, and we'd never insult you by pretending it will. But 21 days is more than enough to prove something most people have stopped believing: that real progress is possible within the life you're already living. No overhaul required.</p>
+
+    <ul class="what-21-days__list reveal">
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><strong>Start losing body fat</strong> with a clear nutrition strategy built around your actual schedule, not a rigid meal plan you'll abandon by day 4.</div>
+      </li>
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><strong>Feel noticeably stronger and more energized</strong> with workouts designed to build real muscle, not burn you out.</div>
+      </li>
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><strong>Understand why past approaches failed</strong> so you stop cycling through the same frustration and finally see what sustainable progress looks like.</div>
+      </li>
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><strong>Build daily habits that survive your real life:</strong> your commute, your kids' schedules, your 60-hour work weeks. Because a system that only works in ideal conditions isn't a system.</div>
+      </li>
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><strong>Experience what expert coaching actually feels like:</strong> personalized, proactive, and focused on teaching you to think for yourself, not just follow orders.</div>
+      </li>
+    </ul>
+
+    <div style="text-align:center;" class="reveal">
+      <a href="#pricing" class="btn-primary btn-dynamic-price scroll-to-pricing">
+        Join the Challenge
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     TESTIMONIALS
+═══════════════════════════════════════════════ -->
+<section class="section section--mid" id="results">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Real People. Real Results.</span>
+      <h2>They Were Exactly Where You Are</h2>
+      <p>These are real clients: professionals, parents, people with full schedules and real responsibilities. They decided 21 days was worth the commitment.</p>
+    </div>
+
+    <div class="testimonials__grid">
+      <div class="tcard reveal">
+        <div class="tcard__img">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6ddea13c4b6739b0fb439.jpeg" alt="Client transformation" loading="lazy">
+          <div class="tcard__img-labels">
+            <span>Before</span>
+            <span class="after-label">After</span>
+          </div>
+        </div>
+        <div class="tcard__body">
+          <div class="tcard__stars">★★★★★</div>
+          <div class="tcard__headline">"My experience has been excellent."</div>
+          <blockquote class="tcard__quote">"I've lost over 25 lbs. of fat working with Strong Standard and built substantial muscle!"</blockquote>
+          <div class="tcard__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Lost 25+ lbs of fat and built muscle
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal" style="transition-delay:0.1s">
+        <div class="tcard__img">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6de8a3792943a72e42e4d.webp" alt="Client transformation" loading="lazy">
+          <div class="tcard__img-labels">
+            <span>Before</span>
+            <span class="after-label">After</span>
+          </div>
+        </div>
+        <div class="tcard__body">
+          <div class="tcard__stars">★★★★★</div>
+          <div class="tcard__headline">"Transformed How I Feel About My Body Post-Pregnancy"</div>
+          <blockquote class="tcard__quote">"I've overcome my challenges and now feel empowered in my own skin after my pregnancy!"</blockquote>
+          <div class="tcard__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Empowered body confidence post-pregnancy
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal" style="transition-delay:0.2s">
+        <div class="tcard__img">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e5a649b1c04bcea24fb54d.jpeg" alt="Client transformation" loading="lazy">
+          <div class="tcard__img-labels">
+            <span>Before</span>
+            <span class="after-label">After</span>
+          </div>
+        </div>
+        <div class="tcard__body">
+          <div class="tcard__stars">★★★★★</div>
+          <div class="tcard__headline">"I can't recommend Strong Standard enough!"</div>
+          <blockquote class="tcard__quote">"I lost over 40lbs of fat and my latest blood draw showed a tremendous drop in all the numbers I was worried about!"</blockquote>
+          <div class="tcard__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Lost 40+ lbs and improved blood work
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal" style="transition-delay:0.25s">
+        <div class="tcard__img">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6dee3e519ed575b251725.webp" alt="Client transformation" loading="lazy">
+          <div class="tcard__img-labels">
+            <span>Before</span>
+            <span class="after-label">After</span>
+          </div>
+        </div>
+        <div class="tcard__body">
+          <div class="tcard__stars">★★★★★</div>
+          <div class="tcard__headline">"I Feel Leaner and Stronger Than Ever Before"</div>
+          <blockquote class="tcard__quote">"I've dropped over 10 lbs of body fat after menopause, which I thought was impossible!"</blockquote>
+          <div class="tcard__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Dropped 10+ lbs after menopause
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal" style="transition-delay:0.3s">
+        <div class="tcard__img">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6de1fe519ed3e2d251661.jpeg" alt="Client transformation" loading="lazy">
+          <div class="tcard__img-labels">
+            <span>Before</span>
+            <span class="after-label">After</span>
+          </div>
+        </div>
+        <div class="tcard__body">
+          <div class="tcard__stars">★★★★★</div>
+          <div class="tcard__headline">"My results were better than I expected."</div>
+          <blockquote class="tcard__quote">"I added 10 lbs of lean muscle and shed 16 lbs of fat in just 6 months."</blockquote>
+          <div class="tcard__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            +10 lbs muscle, -16 lbs fat in 6 months
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal" style="transition-delay:0.35s">
+        <div class="tcard__img">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6deca30a81cf110f49df6.webp" alt="Client transformation" loading="lazy">
+          <div class="tcard__img-labels">
+            <span>Before</span>
+            <span class="after-label">After</span>
+          </div>
+        </div>
+        <div class="tcard__body">
+          <div class="tcard__stars">★★★★★</div>
+          <div class="tcard__headline">"Reignited My Motivation to Train"</div>
+          <blockquote class="tcard__quote">"I've never felt or looked stronger and have achieved the lean physique I've always desired."</blockquote>
+          <div class="tcard__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Achieved desired lean physique
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile carousel version -->
+    <div class="tcard-carousel" id="tcardCarousel">
+      <div class="tcard-carousel__track" id="tcardTrack">
+        <div class="tcard">
+          <div class="tcard__img">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6ddea13c4b6739b0fb439.jpeg" alt="Client transformation" loading="lazy">
+            <div class="tcard__img-labels"><span>Before</span><span class="after-label">After</span></div>
+          </div>
+          <div class="tcard__body">
+            <div class="tcard__stars">★★★★★</div>
+            <div class="tcard__headline">"My experience has been excellent."</div>
+            <blockquote class="tcard__quote">"I've lost over 25 lbs. of fat working with Strong Standard and built substantial muscle!"</blockquote>
+            <div class="tcard__result"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Lost 25+ lbs of fat and built muscle</div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard__img">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6de8a3792943a72e42e4d.webp" alt="Client transformation" loading="lazy">
+            <div class="tcard__img-labels"><span>Before</span><span class="after-label">After</span></div>
+          </div>
+          <div class="tcard__body">
+            <div class="tcard__stars">★★★★★</div>
+            <div class="tcard__headline">"Transformed How I Feel About My Body Post-Pregnancy"</div>
+            <blockquote class="tcard__quote">"I've overcome my challenges and now feel empowered in my own skin after my pregnancy!"</blockquote>
+            <div class="tcard__result"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Empowered body confidence post-pregnancy</div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard__img">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e5a649b1c04bcea24fb54d.jpeg" alt="Client transformation" loading="lazy">
+            <div class="tcard__img-labels"><span>Before</span><span class="after-label">After</span></div>
+          </div>
+          <div class="tcard__body">
+            <div class="tcard__stars">★★★★★</div>
+            <div class="tcard__headline">"I can't recommend Strong Standard enough!"</div>
+            <blockquote class="tcard__quote">"I lost over 40lbs of fat and my latest blood draw showed a tremendous drop in all the numbers I was worried about!"</blockquote>
+            <div class="tcard__result"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Lost 40+ lbs and improved blood work</div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard__img">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6dee3e519ed575b251725.webp" alt="Client transformation" loading="lazy">
+            <div class="tcard__img-labels"><span>Before</span><span class="after-label">After</span></div>
+          </div>
+          <div class="tcard__body">
+            <div class="tcard__stars">★★★★★</div>
+            <div class="tcard__headline">"I Feel Leaner and Stronger Than Ever Before"</div>
+            <blockquote class="tcard__quote">"I've dropped over 10 lbs of body fat after menopause, which I thought was impossible!"</blockquote>
+            <div class="tcard__result"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Dropped 10+ lbs after menopause</div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard__img">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6de1fe519ed3e2d251661.jpeg" alt="Client transformation" loading="lazy">
+            <div class="tcard__img-labels"><span>Before</span><span class="after-label">After</span></div>
+          </div>
+          <div class="tcard__body">
+            <div class="tcard__stars">★★★★★</div>
+            <div class="tcard__headline">"My results were better than I expected."</div>
+            <blockquote class="tcard__quote">"I added 10 lbs of lean muscle and shed 16 lbs of fat in just 6 months."</blockquote>
+            <div class="tcard__result"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>+10 lbs muscle, -16 lbs fat in 6 months</div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard__img">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e6deca30a81cf110f49df6.webp" alt="Client transformation" loading="lazy">
+            <div class="tcard__img-labels"><span>Before</span><span class="after-label">After</span></div>
+          </div>
+          <div class="tcard__body">
+            <div class="tcard__stars">★★★★★</div>
+            <div class="tcard__headline">"Reignited My Motivation to Train"</div>
+            <blockquote class="tcard__quote">"I've never felt or looked stronger and have achieved the lean physique I've always desired."</blockquote>
+            <div class="tcard__result"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Achieved desired lean physique</div>
+          </div>
+        </div>
+      </div>
+      <div class="tcard-carousel__nav">
+        <button class="tcard-carousel__btn" id="tcardPrev">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="tcard-carousel__dots" id="tcardDots"></div>
+        <button class="tcard-carousel__btn" id="tcardNext">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="testimonials__disclaimer reveal">Results vary based on individual effort and consistency. These testimonials reflect personal experiences from Strong Standard clients.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     VIDEO TESTIMONIALS
+═══════════════════════════════════════════════ -->
+<section class="section section--dark" id="video-results">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Hear It From Them</span>
+      <h2>Previous Challengers Share Their Experience</h2>
+      <p>Unlike most quick-fix programs, our coaching team combines the latest science with practical strategies that actually work.</p>
+    </div>
+
+    <div class="video-testimonials__grid" style="display:flex;justify-content:center;">
+      <div class="vt-card reveal" style="width:380px;flex-shrink:0;">
+        <div class="video-testimonial-player video-testimonial-player--vertical">
+          <video preload="metadata" playsinline controlsList="nodownload">
+            <source src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/681a81656d12af52578ae7c4.mp4" type="video/mp4">
+          </video>
+          <button class="vid-test-play" aria-label="Play testimonial">
+            <div class="vid-test-play__circle">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     WHAT'S INCLUDED
+═══════════════════════════════════════════════ -->
+<section class="section section--mid" id="whats-included">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Everything You Get</span>
+      <h2>What's Inside the 21-Day Challenge</h2>
+      <p>This isn't a PDF and a prayer. It's a fully coached experience, designed by a team that actually knows the science and has helped hundreds of people apply it to real life.</p>
+    </div>
+
+    <div class="included__grid">
+      <div class="included-card reveal">
+        <div class="included-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        </div>
+        <h3>3-4 Day Workout Plans</h3>
+        <p>Strength and muscle-building workouts designed to maximize results, at home or in the gym, without wasting hours training.</p>
+      </div>
+
+      <div class="included-card reveal" style="transition-delay:0.08s">
+        <div class="included-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Tailored Nutrition Targets</h3>
+        <p>Personalized calorie and macro targets so you know exactly what to eat, without restrictive dieting or giving up foods you love.</p>
+      </div>
+
+      <div class="included-card reveal" style="transition-delay:0.16s">
+        <span class="included-card__value">$197 Value</span>
+        <div class="included-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Coaching Calls and Community</h3>
+        <p>Weekly live coaching calls plus a private community of like-minded challengers for support, accountability, and real answers to your questions.</p>
+      </div>
+
+      <div class="included-card reveal" style="transition-delay:0.24s">
+        <span class="included-card__value">$97 Value</span>
+        <div class="included-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Technique Feedback</h3>
+        <p>Submit your exercise videos and get personalized form corrections from our coaches to maximize results and prevent injury.</p>
+      </div>
+
+      <div class="included-card reveal" style="transition-delay:0.32s">
+        <span class="included-card__value">$47 Value</span>
+        <div class="included-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </div>
+        <h3>Strong Standard App Access</h3>
+        <p>Track workouts, log nutrition, and monitor your progress all in one place with our dedicated coaching app.</p>
+      </div>
+
+      <div class="included-card reveal" style="transition-delay:0.4s">
+        <span class="included-card__value">$47 Value</span>
+        <div class="included-card__icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <h3>Recipe Guides</h3>
+        <p>Simple, delicious, and nutritious recipes to make eating well effortless. Prep guides that save you time and keep you on track.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     BONUSES
+═══════════════════════════════════════════════ -->
+<section class="section section--dark">
+  <div class="container--narrow">
+    <div class="section__header reveal">
+      <span class="label">But Wait, There's More</span>
+      <h2 style="font-size:clamp(2.5rem,4vw,4.5rem);white-space:nowrap;">Exclusive Bonuses, Included Free</h2>
+    </div>
+
+    <div class="bonuses__list">
+      <div class="bonus-item reveal">
+        <span class="bonus-item__tag">Bonus 1</span>
+        <div class="bonus-item__content">
+          <h3>1-on-1 Coaching Call</h3>
+          <p>A private session with one of our expert coaches to build your personalized strategy and answer all your questions. This alone is worth the price of the entire challenge.</p>
+        </div>
+        <span class="bonus-item__value">$147</span>
+      </div>
+
+      <div class="bonus-item reveal" style="transition-delay:0.08s">
+        <span class="bonus-item__tag">Bonus 2</span>
+        <div class="bonus-item__content">
+          <h3>Body Composition Mini-Course</h3>
+          <p>Learn the science behind fat loss and body transformation with daily educational videos. Understand the why, not just the what. This is what separates a 21-day attempt from a lasting change.</p>
+        </div>
+        <span class="bonus-item__value">$147</span>
+      </div>
+
+      <div class="bonus-item reveal" style="transition-delay:0.16s">
+        <span class="bonus-item__tag">Bonus 3</span>
+        <div class="bonus-item__content">
+          <h3>21-Day Habit Tracker</h3>
+          <p>Track your daily actions and progress to build consistency. Small wins every day add up to massive transformation.</p>
+        </div>
+        <span class="bonus-item__value">$47</span>
+      </div>
+
+      <div class="bonus-item reveal" style="transition-delay:0.24s">
+        <span class="bonus-item__tag">Bonus 4</span>
+        <div class="bonus-item__content">
+          <h3>Post-Challenge Blueprint (78-Page E-Book)</h3>
+          <p>Our comprehensive guide to sustainable transformation, so you can keep making progress long after the challenge ends. Because the goal was never to need us forever. It's for you to understand how this works.</p>
+        </div>
+        <span class="bonus-item__value">$97</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     PRIZES
+═══════════════════════════════════════════════ -->
+<section class="section section--mid">
+  <div class="container">
+    <div class="prizes__showcase reveal">
+      <div class="prizes__glow"></div>
+      <span class="label">Bring Your Best</span>
+      <h2>Compete for a <span class="prizes__amount-inline">$500</span> Cash Prize</h2>
+      <p class="prizes__sub">The top transformation wins $500 cash. One winner. Real results. Another reason to give it everything you've got for 21 days.</p>
+
+      <div class="prizes__trophy-block">
+        <div class="prizes__trophy-ring">
+          <div class="prizes__trophy-ring-inner">
+            <svg class="prizes__trophy-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M8 21h8m-4-4v4m-5-8c-1.5 0-3-.5-3-3V5h3m10 5c1.5 0 3-.5 3-3V5h-3m-10 0h10V5a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v0m0 8h10c0 3.5-2.5 5-5 5s-5-1.5-5-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="prizes__amount-display">
+          <span class="prizes__dollar">$</span>
+          <span class="prizes__number">500</span>
+        </div>
+        <div class="prizes__label">Grand Prize</div>
+        <div class="prizes__details">
+          <div class="prizes__detail-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            One winner, one incredible transformation
+          </div>
+          <div class="prizes__detail-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Judged on overall progress and effort
+          </div>
+          <div class="prizes__detail-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            $500 cash paid directly to the winner
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     AUDIENCE
+═══════════════════════════════════════════════ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Is This Right For You?</span>
+      <h2>This Challenge Is Perfect If...</h2>
+    </div>
+
+    <div class="audience__grid">
+      <div class="audience__col audience__col--for reveal">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          This Is For You If...
+        </h3>
+        <ul>
+          <li>You're ready to lose fat, build muscle, and finally take your body composition seriously, even if past attempts have failed.</li>
+          <li>You're done with fad diets and conflicting advice, and want a clear, science-backed plan from people who actually know what they're talking about.</li>
+          <li>You want expert guidance and real accountability, not an app that sends you push notifications and calls it "coaching."</li>
+          <li>You're willing to do the work for 21 days and trust a process built on evidence, not hype.</li>
+          <li>You believe your health deserves the same level of investment and attention you give to your career and family.</li>
+        </ul>
+      </div>
+
+      <div class="audience__col audience__col--not reveal" style="transition-delay:0.1s">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+          This Is NOT For You If...
+        </h3>
+        <ul>
+          <li>You're looking for a magic bullet or a shortcut. We don't sell those, and we wouldn't respect ourselves if we did.</li>
+          <li>You're not willing to make small, consistent changes, even for just 21 days.</li>
+          <li>You've already decided you know everything and coaching can't help you.</li>
+          <li>You want someone to hand you a plan and take responsibility for your results. This is a partnership, not a rescue mission.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     PRICING
+═══════════════════════════════════════════════ -->
+<section class="section section--mid" id="pricing">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Limited Enrollment: Only 60 Spots</span>
+      <h2>Join The Challenge</h2>
+    </div>
+
+    <div class="offer__box reveal">
+      <div class="offer__box-badge">Most Popular</div>
+      <h2>Lean and Strong 21-Day Challenge</h2>
+
+      <div class="offer__spots-bar">
+        <div class="offer__spots-bar-track">
+          <div class="offer__spots-bar-fill" id="offer-spots-fill"></div>
+        </div>
+        <div class="offer__spots-text">
+          <span class="spots-dot spots-dot--accent"></span>
+          <strong id="offer-spots-count">59</strong> of 60 spots remaining
+        </div>
+      </div>
+
+      <div class="offer__tiers">
+        <div class="offer__tier offer__tier--active" id="tier-early">
+          <div class="offer__tier-label">Early Bird: First 30 Spots</div>
+          <div class="offer__tier-price">$97</div>
+        </div>
+        <div class="offer__tier offer__tier--next" id="tier-regular">
+          <div class="offer__tier-label">Regular Price: Next 30 Spots</div>
+          <div class="offer__tier-price">$147</div>
+        </div>
+      </div>
+
+      <div class="offer__early-checkout" id="checkout">
+        <a href="https://drjoeymunoz.com/21-day-challenge-checkout" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
+          Join the Challenge
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="offer__early-checkout-note">One-time payment. 21-day money-back guarantee.</p>
+      </div>
+
+      <ul class="offer__value-list">
+        <li><span>Strong Standard App Access</span><span class="item-value">$47</span></li>
+        <li><span>Recipe Guides</span><span class="item-value">$47</span></li>
+        <li><span>1-on-1 Coaching Call</span><span class="item-value">$147</span></li>
+        <li><span>3-4 Day Workout Plans</span><span class="item-value">$97</span></li>
+        <li><span>Body Composition Mini-Course</span><span class="item-value">$147</span></li>
+        <li><span>Technique Feedback</span><span class="item-value">$97</span></li>
+        <li><span>Coaching Calls and Community</span><span class="item-value">$197</span></li>
+        <li><span>Tailored Nutrition Targets</span><span class="item-value">$97</span></li>
+      </ul>
+
+      <div class="offer__total-value">Total Value: <s>$876</s></div>
+      <div class="offer__price" id="offer-price">Join Today for <span class="dynamic-price">$97</span></div>
+      <p class="offer__price-note" id="offer-price-note">One-time payment. Full access to everything above.</p>
+
+      <div style="text-align:center;">
+        <a href="https://drjoeymunoz.com/21-day-challenge-checkout" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
+          Join the Challenge
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     GUARANTEE
+═══════════════════════════════════════════════ -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="guarantee__box reveal">
+      <span class="guarantee__icon">🛡️</span>
+      <h2>21-Day 100% Money-Back Guarantee</h2>
+      <p>We're confident this challenge will deliver real results. But if after 21 days you're not completely satisfied for any reason, we'll refund your investment, no questions asked. You truly have nothing to lose and everything to gain.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════
+     FAQ
+═══════════════════════════════════════════════ -->
+<section class="section section--mid" id="faq">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Got Questions?</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq__list reveal">
+      <div class="faq-item">
+        <button class="faq-item__question" aria-expanded="false">
+          <span>I'm a complete beginner. Is this for me?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__answer">
+          <p>Absolutely. Everything is tailored to meet you where you are. Whether you've been training for years or haven't stepped into a gym in a decade, the workouts and nutrition are adjusted to your level. Plus, you'll have direct access to coaches for personalized guidance every step of the way.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__question" aria-expanded="false">
+          <span>I don't have a gym. Can I still do this?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__answer">
+          <p>Yes. All workouts can be done from home with minimal equipment like dumbbells or resistance bands. If you have gym access, we have options for that too. The program adapts to what you have available.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__question" aria-expanded="false">
+          <span>I'm busy. How much time does this take?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__answer">
+          <p>The workouts are 3-4 days per week and designed to fit into a full schedule, not replace it. We built this for professionals and parents who don't have hours to spare. If you can commit 30-45 minutes a few days a week, you have enough time.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__question" aria-expanded="false">
+          <span>How is this different from every other fitness challenge?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__answer">
+          <p>Most challenges hand you a generic plan and leave you on your own. This one is fully coached, with personalized nutrition targets, form feedback on your exercises, weekly coaching calls, and a team that's paying attention to your progress. It's built on the same evidence-based system we use in our premium coaching program, led by Dr. Joey Munoz (PhD in Nutritional Sciences). The difference isn't in the promise. It's in the process.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__question" aria-expanded="false">
+          <span>What if I've tried other programs and nothing worked?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__answer">
+          <p>You're exactly who this is for. Most programs fail because they give you rigid rules without teaching you why anything works. So the moment life gets in the way, you're back to square one. We focus on education and strategy, not just a plan. Our goal is for you to finish these 21 days understanding your body better than you did before, so you never have to start over again.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-item__question" aria-expanded="false">
+          <span>What happens after the 21 days are over?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-item__answer">
+          <p>You'll leave with the tools, habits, and understanding to keep making progress on your own. And if you want to continue building on your results with ongoing expert coaching, you'll have the opportunity to explore our full coaching program. But there's no pressure. The challenge is designed to stand on its own.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FINAL CTA
+═══════════════════════════════════════════════ -->
+<section class="final-cta-section">
+  <div class="container final-cta-section__inner">
+    <div class="reveal">
+      <span class="label">Ready To Start?</span>
+      <h2>Your Transformation<br>Starts Here</h2>
+      <p>Stop waiting for Monday. Stop waiting for the right time. The next 21 days are going to pass whether you start or not. Make them count.</p>
+      <a href="#pricing" class="btn-primary btn-dynamic-price btn-checkout-pulse scroll-to-pricing" style="font-size:16px;padding:18px 44px;">
+        Join the Challenge
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="final-cta__spots">
+        <span class="spots-dot spots-dot--white"></span>
+        <strong id="final-spots-count">59</strong> of 60 spots remaining
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#" class="social-icon" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="Spotify">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     FLOATING CTA
+═══════════════════════════════════════════════ -->
+<!-- floating cta removed -->
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── COUNTDOWN ─────────────────────────────────────
+  const deadline = new Date('2026-03-28T17:00:00Z');
+
+  function updateCountdown() {
+    const diff = deadline - new Date();
+    if (diff <= 0) {
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+        document.getElementById(id).textContent = '00';
+      });
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ── LIVE SPOTS ─────────────────────────────────────
+  const SHEET_ID    = '1OyqosZzgTxOwAs_j2VL7-xtSiIGVPUYKYpGUNnXZnG0';
+  const SHEET_GID   = '1013531920';
+  const TOTAL_SPOTS = 60;
+  const TIER_1_LIMIT = 30;
+  const LINK_97  = 'https://drjoeymunoz.com/21-day-challenge-checkout';
+  const LINK_147 = 'https://drjoeymunoz.com/21-day-challenge-checkout-147';
+
+  let purchaseCount = 0;
+
+  function updateSpotsUI() {
+    const currentSpots = Math.max(0, TOTAL_SPOTS - purchaseCount);
+    const inTier2 = purchaseCount >= TIER_1_LIMIT;
+    const price = inTier2 ? 147 : 97;
+    const priceStr = '$' + price;
+
+    ['spots-banner-count','hero-spots-count','offer-spots-count','final-spots-count','floating-spots-count'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = currentSpots;
+    });
+
+    document.querySelectorAll('.dynamic-price').forEach(el => { el.textContent = priceStr; });
+
+    const offerPrice = document.getElementById('offer-price');
+    if (offerPrice) offerPrice.innerHTML = 'Join Today for <span class="dynamic-price">' + priceStr + '</span>';
+
+    const baseUrl = inTier2 ? LINK_147 : LINK_97;
+    document.querySelectorAll('.checkout-link').forEach(link => { link.href = baseUrl; });
+
+    const tierEarly   = document.getElementById('tier-early');
+    const tierRegular = document.getElementById('tier-regular');
+    if (tierEarly && tierRegular) {
+      if (inTier2) {
+        tierEarly.classList.remove('offer__tier--active');
+        tierEarly.classList.add('offer__tier--sold');
+        tierRegular.classList.remove('offer__tier--next');
+        tierRegular.classList.add('offer__tier--active');
+      } else {
+        tierEarly.classList.add('offer__tier--active');
+        tierEarly.classList.remove('offer__tier--sold');
+        tierRegular.classList.add('offer__tier--next');
+        tierRegular.classList.remove('offer__tier--active');
+      }
+    }
+
+    const fill = document.getElementById('offer-spots-fill');
+    if (fill) {
+      const pct = (purchaseCount / TOTAL_SPOTS) * 100;
+      fill.style.width = Math.min(pct, 100) + '%';
+      fill.style.background = currentSpots <= 10 ? '#E05555' : inTier2 ? '#C8A96E' : 'var(--steel-mid)';
+    }
+
+    const priceNote = document.getElementById('offer-price-note');
+    if (priceNote) {
+      if (currentSpots <= 0) {
+        priceNote.textContent = 'All spots have been claimed!';
+      } else if (inTier2) {
+        priceNote.textContent = 'Early bird pricing is sold out. Lock in your spot before they\'re gone.';
+      } else {
+        const earlyLeft = TIER_1_LIMIT - purchaseCount;
+        priceNote.textContent = 'Early bird pricing: only ' + earlyLeft + ' spot' + (earlyLeft === 1 ? '' : 's') + ' left at $97. Price goes to $147 after.';
+      }
+    }
+  }
+
+  function fetchPurchaseCount() {
+    const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+                '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
+                '&tq=' + encodeURIComponent('SELECT COUNT(A)');
+    fetch(url)
+      .then(r => r.text())
+      .then(text => {
+        const json = text.replace(/^[^{]+/, '').replace(/\);?$/, '');
+        const data = JSON.parse(json);
+        if (data.table && data.table.rows && data.table.rows[0]) {
+          purchaseCount = Math.max(0, Math.floor(data.table.rows[0].c[0].v));
+        }
+        updateSpotsUI();
+      })
+      .catch(() => {});
+  }
+
+  fetchPurchaseCount();
+  setInterval(fetchPurchaseCount, 60000);
+
+  // ── FAQ ────────────────────────────────────────────
+  document.querySelectorAll('.faq-item__question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('active');
+        i.querySelector('.faq-item__question').setAttribute('aria-expanded','false');
+      });
+      if (!isActive) {
+        item.classList.add('active');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // ── VSL PLAYER ────────────────────────────────────
+  const vslVideo    = document.getElementById('vsl-video');
+  const vslPlayBtn  = document.getElementById('vsl-play-btn');
+  const vslControls = document.getElementById('vsl-controls');
+  const vslPlaypause = document.getElementById('vsl-playpause');
+  const vslProgressBar  = document.getElementById('vsl-progress-bar');
+  const vslProgressFill = document.getElementById('vsl-progress-fill');
+  const vslTime = document.getElementById('vsl-time');
+  const vslMute = document.getElementById('vsl-mute');
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    return m + ':' + String(Math.floor(s % 60)).padStart(2,'0');
+  }
+
+  if (vslVideo && vslPlayBtn) {
+    vslPlayBtn.addEventListener('click', () => {
+      vslVideo.play(); vslVideo.muted = false;
+      vslPlayBtn.style.display = 'none';
+      vslControls.classList.add('visible');
+    });
+    vslPlaypause.addEventListener('click', () => {
+      vslVideo.paused ? vslVideo.play() : vslVideo.pause();
+    });
+    vslVideo.addEventListener('play', () => {
+      vslPlaypause.querySelector('.icon-play').style.display  = 'none';
+      vslPlaypause.querySelector('.icon-pause').style.display = 'block';
+    });
+    vslVideo.addEventListener('pause', () => {
+      vslPlaypause.querySelector('.icon-play').style.display  = 'block';
+      vslPlaypause.querySelector('.icon-pause').style.display = 'none';
+    });
+    vslVideo.addEventListener('timeupdate', () => {
+      if (vslVideo.duration) {
+        vslProgressFill.style.width = (vslVideo.currentTime / vslVideo.duration * 100) + '%';
+        vslTime.textContent = formatTime(vslVideo.currentTime) + ' / ' + formatTime(vslVideo.duration);
+      }
+    });
+    vslProgressBar.addEventListener('click', e => {
+      const rect = vslProgressBar.getBoundingClientRect();
+      vslVideo.currentTime = ((e.clientX - rect.left) / rect.width) * vslVideo.duration;
+    });
+    vslMute.addEventListener('click', () => {
+      vslVideo.muted = !vslVideo.muted;
+      vslMute.querySelector('.icon-unmuted').style.display = vslVideo.muted ? 'none' : 'block';
+      vslMute.querySelector('.icon-muted').style.display   = vslVideo.muted ? 'block' : 'none';
+    });
+    vslVideo.addEventListener('ended', () => {
+      vslPlayBtn.style.display = 'flex';
+      vslControls.classList.remove('visible');
+    });
+  }
+
+  // ── VIDEO TESTIMONIAL PLAYERS ─────────────────────
+  document.querySelectorAll('.video-testimonial-player').forEach(player => {
+    const video   = player.querySelector('video');
+    const playBtn = player.querySelector('.vid-test-play');
+    playBtn.addEventListener('click', () => {
+      document.querySelectorAll('.video-testimonial-player video').forEach(v => {
+        if (v !== video && !v.paused) {
+          v.pause();
+          v.closest('.video-testimonial-player').querySelector('.vid-test-play').style.display = 'flex';
+          v.removeAttribute('controls');
+        }
+      });
+      video.play(); video.setAttribute('controls',''); playBtn.style.display = 'none';
+    });
+    video.addEventListener('pause',  () => { if (!video.ended) playBtn.style.display = 'flex'; });
+    video.addEventListener('play',   () => { playBtn.style.display = 'none'; });
+    video.addEventListener('ended',  () => { playBtn.style.display = 'flex'; video.removeAttribute('controls'); });
+  });
+
+  // ── FLOATING CTA ──────────────────────────────────
+  const floatingCta    = document.getElementById('floating-cta');
+  const heroSection    = document.getElementById('hero');
+  const pricingSection = document.getElementById('pricing');
+
+  if (floatingCta && heroSection) {
+    window.addEventListener('scroll', () => {
+      const heroBottom   = heroSection.getBoundingClientRect().bottom;
+      const pricingTop   = pricingSection ? pricingSection.getBoundingClientRect().top : Infinity;
+      const wh           = window.innerHeight;
+      if (heroBottom < 0 && pricingTop > wh) {
+        floatingCta.classList.add('visible');
+      } else {
+        floatingCta.classList.remove('visible');
+      }
+    }, { passive: true });
+  }
+
+  // ── TESTIMONIAL CAROUSEL (mobile) ────────────────
+  const tcardTrack = document.getElementById('tcardTrack');
+  const tcardDotsContainer = document.getElementById('tcardDots');
+  const tcardTotal = tcardTrack ? tcardTrack.children.length : 0;
+  let tcardActive = 0;
+
+  if (tcardTrack && tcardTotal > 0) {
+    // Build dots
+    for (let i = 0; i < tcardTotal; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'tcard-carousel__dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToTcard(i));
+      tcardDotsContainer.appendChild(dot);
+    }
+
+    function goToTcard(n) {
+      tcardActive = (n + tcardTotal) % tcardTotal;
+      tcardTrack.style.transform = 'translateX(-' + (tcardActive * 100) + '%)';
+      tcardDotsContainer.querySelectorAll('.tcard-carousel__dot').forEach((d, i) => {
+        d.classList.toggle('active', i === tcardActive);
+      });
+    }
+
+    document.getElementById('tcardPrev').addEventListener('click', () => goToTcard(tcardActive - 1));
+    document.getElementById('tcardNext').addEventListener('click', () => goToTcard(tcardActive + 1));
+
+    // Touch swipe
+    let tcardTouchX = null;
+    tcardTrack.addEventListener('touchstart', e => { tcardTouchX = e.touches[0].clientX; }, { passive: true });
+    tcardTrack.addEventListener('touchend', e => {
+      if (!tcardTouchX) return;
+      const dx = tcardTouchX - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 40) goToTcard(dx > 0 ? tcardActive + 1 : tcardActive - 1);
+      tcardTouchX = null;
+    }, { passive: true });
+  }
+
+  // ── NAV POSITIONING ───────────────────────────────
+  function positionNav() {
+    const banner = document.querySelector('.sticky-banner');
+    const nav    = document.getElementById('nav');
+    const hero   = document.getElementById('hero');
+    if (!banner || !nav) return;
+    const bannerH = banner.getBoundingClientRect().height;
+    nav.style.top = bannerH + 'px';
+    if (hero) hero.style.paddingTop = (bannerH + nav.getBoundingClientRect().height + 32) + 'px';
+  }
+  positionNav();
+  window.addEventListener('resize', positionNav);
+
+  // ── NAV SCROLL ────────────────────────────────────
+  const navEl = document.getElementById('nav');
+  if (navEl) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navEl.style.background = 'rgba(8,13,26,0.97)';
+        navEl.style.borderBottom = '1px solid rgba(34,120,172,0.2)';
+        navEl.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
+      } else {
+        navEl.style.background = 'linear-gradient(to bottom,rgba(8,13,26,0.95) 0%,rgba(8,13,26,0) 100%)';
+        navEl.style.borderBottom = 'none';
+        navEl.style.boxShadow = 'none';
+      }
+    }, { passive: true });
+  }
+
+  // ── SCROLL REVEAL ─────────────────────────────────
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  // ── SMOOTH SCROLL TO PRICING ─────────────────────
+  document.querySelectorAll('.scroll-to-pricing').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const isMobile = window.innerWidth <= 768;
+      const target   = isMobile ? document.getElementById('checkout') : document.getElementById('pricing');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
