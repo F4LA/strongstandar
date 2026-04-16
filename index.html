@@ -3,11 +3,3084 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home | Strong Standard</title>
-<link rel="stylesheet" href="/assets/css/brand.css">
+<title>Strong Standard Coaching | Dr. Joey Munoz, PhD</title>
+<meta name="description" content="Concierge nutrition, fitness, and lifestyle coaching. Grounded in science. Built around your real life. Designed to make results last.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ── CSS VARIABLES ─────────────────────────────────── */
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --navy-4:      #17243B;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --ice:         #A8CDE0;
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --success:     #3DD68C;
+  --warning:     #E05555;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   20px;
+  --r-full: 9999px;
+
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.35);
+  --shadow-glow: 0 0 40px rgba(34,120,172,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--off-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ── TYPOGRAPHY ─────────────────────────────────────── */
+.label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+
+h1, h2 { font-family: var(--font-display); line-height: 1; letter-spacing: 0.02em; }
+h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
+
+/* ── LAYOUT ─────────────────────────────────────────── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+.container--narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+.container--tight { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+
+/* ── BUTTONS ─────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  border-radius: var(--r-full);
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--steel-mid);
+  color: var(--white);
+  padding: 16px 36px;
+  box-shadow: 0 0 30px rgba(34,120,172,0.3);
+}
+.btn-primary:hover {
+  background: var(--steel-light);
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(56,153,204,0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--steel-light);
+  padding: 14px 32px;
+  border: 1.5px solid var(--steel-mid);
+}
+.btn-outline:hover {
+  background: var(--steel-glow);
+  border-color: var(--steel-light);
+}
+
+.br-mobile { display: none; }
+
+.micro-copy {
+  font-size: 12px;
+  color: var(--faint);
+  font-style: italic;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+}
+
+/* ── SECTIONS ────────────────────────────────────────── */
+.section { padding: clamp(72px,8vw,128px) 0; }
+.section--dark  { background: var(--navy); }
+.section--mid   { background: var(--navy-2); }
+
+.section__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.section__header h2 {
+  font-size: clamp(3rem,5vw,5.5rem);
+  color: var(--white);
+  margin: 12px 0 20px;
+}
+.section__header p {
+  font-size: 19px;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* ── NAV ────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(8,13,26,0.98) 0%, rgba(8,13,26,0) 100%);
+  transition: background 0.3s, padding 0.3s;
+}
+nav.scrolled {
+  background: rgba(8,13,26,0.97);
+  border-bottom: 1px solid rgba(34,120,172,0.2);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  padding: 14px 32px;
+}
+.nav-logo img { height: auto; width: auto; display: block; }
+.nav-logo-placeholder {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+}
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 110px 0 90px;
+  background: var(--navy);
+}
+
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 40% 50%, rgba(26,95,138,0.15) 0%, transparent 70%),
+    linear-gradient(160deg, rgba(8,13,26,0.3) 0%, rgba(8,13,26,0.8) 100%);
+}
+.hero-glow {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34,120,172,0.1) 0%, transparent 70%);
+  top: -10%; left: -10%;
+  animation: floatGlow 10s ease-in-out infinite;
+  z-index: 0;
+}
+@keyframes floatGlow {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(30px,40px) scale(1.06); }
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero__pre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.hero__pre .line { width: 40px; height: 1px; background: var(--steel-mid); }
+.hero h1 {
+  font-size: clamp(3.5rem,6.5vw,7rem);
+  color: var(--white);
+  line-height: 0.95;
+  margin-bottom: 28px;
+}
+.hero__sub {
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+.hero__cta-group { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+/* Trust bar — standalone strip, same as original homepage */
+.trust-bar {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  border-bottom: 1px solid rgba(34,120,172,0.15);
+  padding: 18px 0;
+  overflow: hidden;
+}
+.trust-bar__track {
+  display: flex;
+  gap: 64px;
+  align-items: center;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+.trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.trust-bar__item svg { color: var(--steel-light); flex-shrink: 0; }
+.cred-bar { display: none; }
+
+/* ── VSL SECTION ─────────────────────────────────────── */
+.vsl-section { background: var(--navy-2); padding: clamp(72px,8vw,128px) 0; }
+.vsl-label {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.vsl-pre {
+  text-align: center;
+  font-size: 18px;
+  color: var(--off-white);
+  font-weight: 400;
+  margin-bottom: 36px;
+}
+.vsl-player {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid rgba(34,120,172,0.2);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  aspect-ratio: 16/9;
+  background: var(--navy-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.vsl-player::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+}
+.vsl-placeholder-icon {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(34,120,172,0.2);
+  border: 2px solid rgba(34,120,172,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vsl-placeholder-text {
+  font-size: 13px;
+  color: var(--faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.vsl-below {
+  text-align: center;
+  font-size: 18px;
+  color: var(--off-white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  margin-top: 36px;
+  margin-bottom: 28px;
+}
+
+/* ── MINI PROOF STRIP ────────────────────────────────── */
+.proof-strip { background: var(--navy); padding: clamp(72px,6vw,108px) 0; }
+.proof-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+.proof-card {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.13);
+  border-radius: var(--r-lg);
+  padding: 36px 32px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.proof-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(34,120,172,0.3);
+}
+.proof-card__top {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+}
+.proof-card__stars {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 3px;
+}
+.proof-card__meta { flex: 1; }
+.proof-card__result {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--success);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.proof-card__name {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.proof-card__quote {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--off-white);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ── PROBLEM SECTION ─────────────────────────────────── */
+.problem-section {
+  background: var(--navy-2);
+  padding: clamp(72px,8vw,128px) 0;
+}
+.problem__block-1 {
+  margin-bottom: 40px;
+}
+.desire-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.desire-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 24px 22px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.desire-card:hover {
+  border-color: rgba(34,120,172,0.4);
+  transform: translateY(-3px);
+}
+.desire-card__icon {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: var(--r-md);
+  background: var(--steel-glow);
+  border: 1px solid rgba(34,120,172,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-top: 2px;
+}
+.desire-card__text {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--off-white);
+  line-height: 1.55;
+}
+.problem__transition {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--muted);
+  margin: 36px 0;
+  text-align: center;
+}
+.problem__block-2 { margin-bottom: 40px; }
+.problem__block-2 p {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+.problem__block-2 p strong { color: var(--off-white); font-weight: 500; }
+.problem__block-2 em { color: var(--off-white); font-style: italic; font-size: 18px; }
+.problem__pivot {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  text-align: center;
+  padding: 24px 0;
+  border-top: 1px solid rgba(34,120,172,0.15);
+  border-bottom: 1px solid rgba(34,120,172,0.15);
+  margin: 36px 0;
+}
+.problem__units { display: flex; flex-direction: column; gap: 0; }
+.problem-unit {
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+}
+.problem-unit:last-child { border-bottom: none; }
+.problem-unit__quote {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+.problem-unit__body {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+.problem__closing {
+  font-size: 17px;
+  color: var(--off-white);
+  font-weight: 400;
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(34,120,172,0.15);
+}
+
+/* Quote Carousel */
+.quote-carousel {
+  margin-top: 60px;
+  position: relative;
+}
+.quote-carousel__track {
+  position: relative;
+  min-height: 260px;
+}
+.carousel-quote {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  text-align: center;
+  padding: 36px 48px;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.carousel-quote.active { opacity: 1; position: relative; }
+.carousel-quote__text {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--off-white);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.carousel-quote__author {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.carousel-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--faint);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  border: none;
+  flex-shrink: 0;
+}
+.carousel-dot.active { background: var(--steel-light); box-shadow: 0 0 8px rgba(56,153,204,0.6); }
+.carousel-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.carousel-arrow {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(34,120,172,0.3);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.carousel-arrow:hover {
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+
+/* ── METHOD SECTION ──────────────────────────────────── */
+.method-section { background: var(--navy); padding: clamp(72px,8vw,128px) 0; }
+.method__bridge {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 56px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Pillar cards — diff-card style from original homepage */
+.pillars__grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+  margin-bottom: 80px;
+  align-items: stretch;
+}
+.pillar-card {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.pillar-card:hover { transform: translateY(-6px); border-color: rgba(34,120,172,0.35); }
+.pillar-card:hover::before { opacity: 1; }
+.pillar-card__num {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: rgba(34,120,172,0.12);
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 20px;
+}
+.pillar-card__icon {
+  width: 48px; height: 48px;
+  background: var(--steel-glow);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.pillar-card h3 {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.pillar-card p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.pillar-card__analogy {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.7;
+  padding: 16px 18px;
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-md);
+  background: rgba(34,120,172,0.05);
+  margin-top: auto;
+}
+
+/* Pillar accordion (mobile) */
+.pillar-accordion { display: none; }
+.pillar-accordion-item {
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+}
+.pillar-accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  text-align: left;
+}
+.pillar-accordion-trigger svg { flex-shrink: 0; color: var(--steel-light); transition: transform 0.2s; }
+.pillar-accordion-trigger.open svg { transform: rotate(180deg); }
+.pillar-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.pillar-accordion-body--inner { padding: 0 0 24px; }
+
+/* Process — vertical layout (funnel style) */
+.process__sublabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  text-align: center;
+  margin-bottom: 48px;
+}
+.process__timeline { display: none; }
+.process__steps {
+  display: flex;
+  flex-direction: column;
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+}
+.process__steps::before {
+  content: '';
+  position: absolute;
+  left: 27px; top: 56px; bottom: 56px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--steel-mid), rgba(34,120,172,0.08));
+}
+.process-step-v {
+  display: flex;
+  gap: 32px;
+  padding: 28px 0;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(34,120,172,0.08);
+}
+.process-step-v:last-child { border-bottom: none; }
+.process-step-v__num {
+  flex-shrink: 0;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: var(--navy-3);
+  border: 1.5px solid var(--steel-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--steel-light);
+  position: relative;
+  z-index: 1;
+}
+.process-step-v__content h3 {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+  margin-top: 10px;
+}
+.process-step-v__content p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+.process-step-v__voice {
+  font-size: 14px;
+  color: var(--steel-light);
+  font-style: italic;
+  padding: 10px 14px;
+  background: rgba(34,120,172,0.08);
+  border-left: 2px solid var(--steel-light);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+
+/* Vertical (mobile) */
+.process__list { display: none; flex-direction: column; gap: 0; position: relative; }
+.process__list::before {
+  content: '';
+  position: absolute;
+  left: 27px; top: 56px; bottom: 56px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--steel-mid), rgba(34,120,172,0.1));
+}
+.process-list-step {
+  display: flex;
+  gap: 24px;
+  padding: 28px 0;
+  align-items: flex-start;
+}
+.process-list-step__num {
+  flex-shrink: 0;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: var(--navy-2);
+  border: 1.5px solid var(--steel-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--steel-light);
+  position: relative;
+  z-index: 1;
+}
+
+.method__closing {
+  text-align: center;
+  font-size: 17px;
+  color: var(--off-white);
+  font-weight: 500;
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(34,120,172,0.15);
+}
+
+/* ── SOCIAL PROOF CAROUSEL ───────────────────────────── */
+.social-proof-section { background: var(--navy-2); padding: clamp(72px,8vw,128px) 0; }
+.sp-carousel {
+  position: relative;
+}
+.sp-carousel__inner {
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  min-height: 520px;
+}
+.sp-slide {
+  display: none;
+}
+.sp-slide.active { display: block; }
+.sp-slide__photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.sp-photo {
+  aspect-ratio: unset;
+  height: 520px;
+  background: var(--navy-3);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(34,120,172,0.2);
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 14px;
+  overflow: hidden;
+}
+.sp-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.sp-photo__label {
+  position: relative;
+  z-index: 1;
+  background: rgba(8,13,26,0.85);
+  border: 1px solid rgba(34,120,172,0.3);
+  border-radius: var(--r-full);
+  padding: 5px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  backdrop-filter: blur(8px);
+}
+.sp-photo--after .sp-photo__label {
+  border-color: rgba(61,214,140,0.4);
+  color: var(--success);
+}
+.sp-placeholder-img {
+  position: absolute; inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy-3);
+  color: var(--faint);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.sp-slide__card {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 36px 40px;
+  height: 260px;
+  overflow: hidden;
+}
+.sp-slide__headline {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+.sp-slide__story {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.sp-slide__client {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+.sp-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 32px;
+  min-height: 44px;
+}
+.sp-nav button {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(34,120,172,0.3);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.sp-nav button:hover { border-color: var(--steel-light); color: var(--steel-light); }
+.sp-dots { display: flex; gap: 8px; }
+.sp-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--faint);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  border: none;
+  flex-shrink: 0;
+}
+.sp-dot.active { background: var(--steel-light); box-shadow: 0 0 8px rgba(56,153,204,0.6); }
+.sp-cta-line {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 36px 0 20px;
+}
+
+/* ── WHO IS THIS FOR — qual-card style (funnel v3) ── */
+.fit-section { background: var(--navy); padding: clamp(72px,8vw,128px) 0; }
+.fit__panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.fit-panel {
+  border-radius: var(--r-lg);
+  padding: 36px 32px;
+  border: 1px solid rgba(34,120,172,0.2);
+}
+.fit-panel--yes {
+  background: rgba(61,214,140,0.06);
+  border-color: rgba(61,214,140,0.18);
+}
+.fit-panel--no {
+  background: rgba(224,85,85,0.06);
+  border-color: rgba(224,85,85,0.12);
+}
+.fit-panel__heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+  line-height: 1;
+}
+.fit-panel--yes .fit-panel__heading { color: var(--success); }
+.fit-panel--no .fit-panel__heading { color: var(--warning); }
+.fit-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+}
+.fit-panel__item {
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.55;
+  align-items: flex-start;
+}
+.fit-panel__icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+.litmus {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-lg);
+  padding: 48px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.litmus::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--steel-light), transparent);
+}
+.litmus__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 24px;
+}
+.litmus__quote {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.55;
+  margin-bottom: 20px;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.litmus__line {
+  font-size: 15px;
+  color: var(--muted);
+  font-style: italic;
+  font-family: var(--font-serif);
+}
+
+/* ── TEAM SECTION ────────────────────────────────────── */
+.team-section { background: var(--navy-2); padding: clamp(72px,8vw,128px) 0; }
+
+/* Founders grid — Joey + Bernardo side by side */
+.founders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 56px;
+}
+.founder-card {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  transition: border-color 0.25s;
+}
+.founder-card:hover { border-color: rgba(34,120,172,0.4); }
+.founder-card__photo {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--navy-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+.founder-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.founder-card__body { padding: 28px 24px; flex: 1; }
+.founder-card__degree {
+  display: inline-block;
+  background: var(--steel-glow);
+  border: 1px solid rgba(34,120,172,0.3);
+  border-radius: var(--r-full);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--steel-light);
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.founder-card__name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  font-family: var(--font-body);
+  margin-bottom: 3px;
+}
+.founder-card__role {
+  font-size: 11px;
+  color: var(--steel-light);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.founder-card__bio {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.founder-card__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.founder-card__pill {
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-full);
+  padding: 4px 10px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Staff grid — 4 coaches in 2x2 */
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.coaches-sublabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  text-align: center;
+  margin-bottom: 28px;
+}
+.coach-card {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.13);
+  border-radius: var(--r-lg);
+  padding: 28px 20px;
+  text-align: center;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.coach-card:hover { transform: translateY(-4px); border-color: rgba(34,120,172,0.3); }
+.coach-card__avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: var(--steel-glow);
+  border: 2px solid rgba(34,120,172,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--steel-light);
+  margin: 0 auto 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.coach-card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.coach-card__degree {
+  display: inline-block;
+  background: var(--steel-glow);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-full);
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--steel-light);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.coach-card h4 {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.coach-card__role {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 12px;
+}
+.coach-card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── PHILOSOPHY SECTION ──────────────────────────────── */
+.philosophy-section { background: var(--navy); padding: clamp(72px,8vw,128px) 0; }
+.beliefs-list { max-width: 800px; margin: 0 auto; }
+.belief {
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.belief:last-child { border-bottom: none; }
+.belief__num {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: rgba(56,153,204,0.3);
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  margin-top: 2px;
+  line-height: 1.65;
+}
+.belief__opening {
+  font-size: 18px;
+  color: var(--white);
+  font-weight: 500;
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+.belief__opening span {
+  font-weight: 300;
+  color: var(--muted);
+}
+.philosophy-tagline {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem,4vw,3.5rem);
+  color: var(--steel-light);
+  margin-top: 56px;
+  letter-spacing: 0.02em;
+}
+
+/* ── GUARANTEE ───────────────────────────────────────── */
+.guarantee-section { background: var(--navy-2); padding: clamp(72px,8vw,128px) 0; }
+.guarantee__inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.guarantee__icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+  display: block;
+  line-height: 1;
+}
+.guarantee__body p {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.guarantee__callout {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  margin: 40px 0 28px;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-lg);
+  padding: 32px;
+}
+.guarantee-item {
+  text-align: center;
+  padding: 0 12px;
+  border-right: 1px solid rgba(34,120,172,0.15);
+}
+.guarantee-item:last-child { border-right: none; }
+.guarantee-item__emoji {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+}
+.guarantee-item__label {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--steel-light);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.guarantee-item__text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.guarantee__closing {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── APPLICATION CTA ─────────────────────────────────── */
+.app-cta-section { background: var(--navy); padding: clamp(72px,8vw,128px) 0; }
+.app-cta__inner { max-width: 600px; margin: 0 auto; text-align: center; }
+.app-cta__opening {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+.app-steps {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.app-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(34,120,172,0.1);
+}
+.app-step:last-child { border-bottom: none; }
+.app-step__num {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--steel-glow);
+  border: 1px solid rgba(34,120,172,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--steel-light);
+}
+.app-step__text {
+  font-size: 15px;
+  color: var(--off-white);
+  line-height: 1.6;
+  font-weight: 300;
+}
+.app-qualifying {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--faint);
+  margin-bottom: 32px;
+}
+
+/* ── COACH CAROUSEL (mobile only) ───────────────────── */
+.coach-carousel { display: none; position: relative; }
+.coach-carousel__inner { overflow: hidden; }
+.coach-carousel__track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.coach-carousel__track .coach-card {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+.coach-carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+}
+.coach-carousel__btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(34,120,172,0.3);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.coach-carousel__btn:hover { border-color: var(--steel-light); color: var(--steel-light); }
+.coach-carousel__dots { display: flex; gap: 8px; }
+.coach-carousel__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--faint);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.coach-carousel__dot.active { background: var(--steel-light); box-shadow: 0 0 8px rgba(56,153,204,0.6); }
+.faq-section { background: var(--navy-2); padding: clamp(72px,8vw,128px) 0; }
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item {
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+}
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  gap: 20px;
+  transition: color 0.2s;
+}
+.faq-trigger:hover { color: var(--steel-light); }
+.faq-trigger svg { flex-shrink: 0; color: var(--steel-light); transition: transform 0.3s; }
+.faq-trigger.open svg { transform: rotate(180deg); }
+.faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.faq-body--inner {
+  padding-bottom: 24px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+}
+.faq-link {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.faq-link a {
+  color: var(--steel-light);
+  border-bottom: 1px solid rgba(56,153,204,0.3);
+  transition: border-color 0.2s;
+}
+.faq-link a:hover { border-color: var(--steel-light); }
+
+/* ── FINAL CTA ───────────────────────────────────────── */
+.final-cta {
+  padding: clamp(100px,10vw,140px) 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: var(--navy);
+}
+.final-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.final-cta::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(26,95,138,0.18) 0%, transparent 70%);
+}
+.final-cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.final-cta h2 {
+  font-size: clamp(3rem,6vw,6.5rem);
+  color: var(--white);
+  margin: 16px 0 28px;
+  line-height: 1;
+}
+.final-cta__sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 40px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  padding: 56px 32px 36px;
+}
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--faint);
+  margin-top: 12px;
+}
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: nowrap;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer-socials {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+.social-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(34,120,172,0.1);
+  border: 1px solid rgba(34,120,172,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.social-icon:hover {
+  background: var(--steel-glow);
+  border-color: var(--steel-light);
+  color: var(--steel-light);
+}
+.footer__bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 28px;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  display: flex;
+  justify-content: center;
+}
+.footer__copy { font-size: 13px; color: var(--faint); }
+
+/* ── SCROLL REVEAL ───────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero__inner { max-width: 100%; }
+  .proof-strip__grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+  .desire-grid { max-width: 100%; grid-template-columns: 1fr; }
+  .pillars__grid { display: none; }
+  .pillar-accordion { display: block; }
+  .founders-grid { grid-template-columns: 1fr; }
+  .staff-grid { grid-template-columns: repeat(2, 1fr); }
+  .founder-card { flex-direction: column; }
+  .founder-card__photo { width: 100%; min-height: 260px; aspect-ratio: 4/3; }
+  .fit__panels { grid-template-columns: 1fr; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+  .footer-socials { justify-content: flex-start; }
+  .guarantee__callout { grid-template-columns: 1fr; }
+  .guarantee-item { border-right: none; border-bottom: 1px solid rgba(34,120,172,0.1); padding: 20px 0; }
+  .guarantee-item:last-child { border-bottom: none; }
+  .sp-slide__photos { grid-template-columns: 1fr 1fr; }
+  .sp-photo { height: 308px; }
+  .sp-dots { flex-wrap: wrap; justify-content: center; max-width: 240px; }
+  .sp-dot { width: 6px; height: 6px; }
+  .trust-bar__track { gap: 40px; }
+  /* Hide sp-dots on mobile, show only arrows */
+  .sp-dots { display: none; }
+  /* Coach carousel */
+  #coachGrid { display: none; }
+  .coach-carousel { display: block; }
+}
+
+@media (max-width: 640px) {
+  .container, .container--narrow, .container--tight { padding: 0 20px; }
+  .section { padding: 64px 0; }
+  .hero { padding: 100px 0 56px; }
+  /* Foto 1: H1 hero - force 3 lines */
+  .hero h1 { font-size: clamp(2.33rem, 8.7vw, 3.15rem) !important; }
+  /* Foto 1: hero subtitle - 3 lines */
+  .hero__sub { font-size: 17px; }
+  nav { padding: 14px 20px; }
+  .litmus { padding: 28px 20px; }
+  .fit-panel { padding: 28px 20px; }
+  .final-cta { padding: 72px 0; }
+  .final-cta h2 { font-size: clamp(2.4rem, 8vw, 5rem); }
+  /* Foto 4: quote carousel fixed height */
+  .carousel-quote { padding: 24px 20px; min-height: 240px; height: 240px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .quote-carousel__track { min-height: 240px; }
+  /* Foto 2: problem pivot line break */
+  .problem__pivot { font-size: 10px; }
+  /* Foto 8: sp-slide headline smaller, card auto height on mobile */
+  .sp-slide__headline { font-size: 1.3rem; }
+  .sp-slide__card { padding: 20px 16px; min-height: 390px; }
+  .sp-slide__photos { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sp-photo { height: 242px; }
+  .sp-photo img { transform: scale(1.1); transform-origin: 50% 50%; }
+  .staff-grid { grid-template-columns: 1fr 1fr; }
+  .section__header h2 { font-size: clamp(2.2rem, 7vw, 4rem); }
+  .section__header { margin-bottom: 40px; }
+  /* Foto 7: section header p smaller to fit 3 lines */
+  .section__header p { font-size: 16px; }
+  /* Foto 10: team section header p even smaller */
+  .team-section .section__header p { font-size: 14px; }
+  .sp-nav { gap: 12px; }
+  .hero__cta-group .btn { width: 100%; justify-content: center; }
+  .cta-section__btns { flex-direction: column; align-items: center; }
+  .cta-section__btns .btn { width: 100%; max-width: 360px; justify-content: center; }
+  .process__steps::before { left: 26px; }
+  .founders-grid { gap: 16px; }
+  .coach-card { padding: 24px 16px; }
+  .coach-card p { font-size: 15px; }
+  .fit-panel__heading { font-size: 1.6rem; }
+  .footer__inner { padding: 0 4px; }
+  .footer__copy { text-align: center; }
+  .footer__bottom { justify-content: center; }
+  /* Foto 6: pillar accordion trigger font size larger */
+  .pillar-accordion-trigger { font-size: 16px; padding: 22px 0; }
+  .pillar-accordion-body--inner p { font-size: 16px !important; line-height: 1.7; }
+  .pillar-accordion-body--inner { padding: 0 0 24px; }
+  /* Foto 11: philosophy tagline line break handled via font-size */
+  .philosophy-tagline { font-size: clamp(1.6rem, 5vw, 2.5rem); }
+  /* Foto 9 & 12: micro-copy line break */
+  .micro-copy { font-size: 11px; }
+  .br-mobile { display: block; }
+}
+
+@media (max-width: 400px) {
+  .sp-slide__photos { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .sp-photo { height: 180px; }
+}
+</style>
 </head>
 <body>
-<!-- PAGE: Home -->
-<!-- Replace this file with your final HTML -->
+
+<!-- ═══════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-logo">
+    <!-- Logo placeholder — replace src with GHL CDN URL -->
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:24px;width:auto;display:block;">
+  </div>
+  <a href="#apply" class="btn btn-primary" style="font-size:13px;padding:12px 28px;">
+    Apply Now
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 1: HERO
+════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"><div class="hero-glow"></div></div>
+  <div class="container">
+    <div class="hero__inner">
+
+      <div class="hero__pre">
+        <div class="line"></div>
+        <span class="label">Strong Standard Coaching</span>
+        <div class="line"></div>
+      </div>
+
+      <h1 style="font-size:clamp(3rem,4.5vw,5rem);">Build the Body That<br>Makes You Stronger<br>in Every Area of Your Life.</h1>
+
+
+      <p class="hero__sub">Concierge nutrition, fitness, and lifestyle coaching. Grounded in science. Built around your real life. Designed to make results last.</p>
+
+      <div class="hero__cta-group">
+        <a href="#apply" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
+          Apply Now
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="micro-copy" style="margin-top:10px;">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     TRUST BAR
+════════════════════════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-bar__track">
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>385K+ Instagram Followers</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>The Dr. Joey Munoz Show &mdash; 4.8&#9733; Apple Podcasts</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>As Heard On: Jillian Michaels Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Jordan Syatt Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Andrew Coates, Lift Free and Diet Hard</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>HALO Talks</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>500+ Transformations</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>PhD, Nutritional Sciences, Florida State University</div>
+    <!-- Duplicates for seamless loop -->
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>385K+ Instagram Followers</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>The Dr. Joey Munoz Show &mdash; 4.8&#9733; Apple Podcasts</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>As Heard On: Jillian Michaels Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Jordan Syatt Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Andrew Coates, Lift Free and Diet Hard</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>HALO Talks</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>500+ Transformations</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>PhD, Nutritional Sciences, Florida State University</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 2: VSL
+════════════════════════════════════════════════════ -->
+<section class="vsl-section" id="vsl">
+  <div class="container--narrow">
+    <div class="vsl-label reveal">
+      <span class="label">Watch Before You Apply</span>
+    </div>
+    <p class="vsl-pre reveal">Dr. Joey breaks down exactly why most programs fail and what we do differently.</p>
+
+    <!-- Video placeholder — replace with Wistia embed -->
+    <div class="vsl-player reveal">
+      <div class="vsl-placeholder-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" color="rgba(56,153,204,0.7)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
+      <span class="vsl-placeholder-text">Video Placeholder</span>
+    </div>
+
+    <p class="vsl-below reveal">If this sounds like what you have been looking for, the next step is simple.</p>
+
+    <div style="text-align:center;" class="reveal">
+      <a href="#apply" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
+        Apply Now
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 2B: MINI SOCIAL PROOF STRIP
+════════════════════════════════════════════════════ -->
+<section class="proof-strip">
+  <div class="container">
+    <div class="proof-strip__grid">
+
+      <div class="proof-card reveal">
+        <div class="proof-card__top">
+          <div class="proof-card__stars">★★★★★</div>
+          <div class="proof-card__meta">
+            <div class="proof-card__result">Lost 10 lbs and 2 inches in 3 months</div>
+            <div class="proof-card__name">Penny E.</div>
+          </div>
+        </div>
+        <p class="proof-card__quote">"The best money we have ever spent as a family. I am a better wife, a better mother, and a better VP."</p>
+      </div>
+
+      <div class="proof-card reveal" style="transition-delay:0.1s">
+        <div class="proof-card__top">
+          <div class="proof-card__stars">★★★★★</div>
+          <div class="proof-card__meta">
+            <div class="proof-card__result">Lost 25 lbs in 5 months while raising four kids</div>
+            <div class="proof-card__name">Nate W.</div>
+          </div>
+        </div>
+        <p class="proof-card__quote">"I feel like I am building a new life and an improved one. This has been life-changing."</p>
+      </div>
+
+      <div class="proof-card reveal" style="transition-delay:0.2s">
+        <div class="proof-card__top">
+          <div class="proof-card__stars">★★★★★</div>
+          <div class="proof-card__meta">
+            <div class="proof-card__result">Lost 60+ lbs and feels stronger than ever at 62</div>
+            <div class="proof-card__name">Randy S.</div>
+          </div>
+        </div>
+        <p class="proof-card__quote">"I feel stronger than I have in a very long time. The payoff has been huge."</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 3: PROBLEM AGITATION
+════════════════════════════════════════════════════ -->
+<section class="problem-section" id="about">
+  <div class="container--tight">
+
+    <div class="section__header reveal">
+      <span class="label">Does This Sound Familiar</span>
+      <h2 style="font-size:clamp(2rem,2.8vw,3rem);">You Know Exactly<br>Who You Want to Be.<br>Getting There Is the Hard Part.</h2>
+    </div>
+
+    <!-- Block 1 - Desires as cards -->
+    <div class="problem__block-1 reveal">
+      <div class="desire-grid">
+        <div class="desire-card">
+          <div class="desire-card__icon">💑</div>
+          <div class="desire-card__text">You want to feel attractive and fully present with your partner.</div>
+        </div>
+        <div class="desire-card">
+          <div class="desire-card__icon">👨‍👩‍👧‍👦</div>
+          <div class="desire-card__text">You want to be the example of health your kids and family actually see, not just the one you intend to be.</div>
+        </div>
+        <div class="desire-card">
+          <div class="desire-card__icon">💼</div>
+          <div class="desire-card__text">You want to walk into work with the energy and confidence that used to come naturally.</div>
+        </div>
+        <div class="desire-card">
+          <div class="desire-card__icon">🪞</div>
+          <div class="desire-card__text">You want to feel genuinely proud and comfortable in your own body. Not perfect. Just good.</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="problem__transition reveal"><em>The gap between that person and where you are right now is something you feel every single day.</em></p>
+
+    <!-- Block 2 - Physical Reality -->
+    <div class="problem__block-2 reveal">
+      <p>You look in the mirror and the person looking back does not quite feel like you anymore.</p>
+      <p>The weight has crept up, your energy has dropped, and somewhere along the way you started feeling older and further from the shape you want to be in than you planned.</p>
+      <p>You want to become the strongest version of yourself.</p>
+      <p><em>Not just physically. In every area of your life.</em></p>
+      <p>You just have not been able to make it work the way you need it to.</p>
+    </div>
+
+    <div class="problem__pivot reveal">The problem is not your effort.<br class="br-mobile"> It is the approach.</div>
+
+    <!-- Block 3 - The Problems -->
+    <div class="problem__units reveal">
+      <div class="problem-unit">
+        <p class="problem-unit__quote">"This feels so hard. I am just not disciplined enough."</p>
+        <p class="problem-unit__body">Most programs are too rigid and too restrictive for how you actually live. When real life shows up, the plan falls apart because it was never built around you to begin with.</p>
+      </div>
+      <div class="problem-unit">
+        <p class="problem-unit__quote">"No matter what I try, nothing seems to work for me."</p>
+        <p class="problem-unit__body">You have read the articles, watched the videos, tried the programs. But the moment progress slows you have no idea why or what to change. Without a real education you will always feel like you are guessing.</p>
+      </div>
+      <div class="problem-unit">
+        <p class="problem-unit__quote">"I always self sabotage and fall off."</p>
+        <p class="problem-unit__body">This is not a willpower problem. It is a consistency and habit problem, and building lasting habits without the right structure and support around you is nearly impossible.</p>
+      </div>
+    </div>
+
+    <p class="problem__closing reveal">The desire has never been the problem.<br>You have just never had the right system to back it up.</p>
+
+    <!-- Quote Carousel -->
+    <div class="quote-carousel reveal">
+      <div class="quote-carousel__track">
+        <div class="carousel-quote active" data-index="0">
+          <p class="carousel-quote__text">"I used to think there was nothing I could do to change my habits. I thought I was just too busy. What has been eye opening is learning how to incorporate daily habits in a way that fits within the busy lifestyle."</p>
+          <div class="carousel-quote__author">Andrea Shannon</div>
+        </div>
+        <div class="carousel-quote" data-index="1">
+          <p class="carousel-quote__text">"I had tried everything and felt there was just no way to lose that weight. I thought it was just a consequence of menopause I was going to have to learn to live with."</p>
+          <div class="carousel-quote__author">Penny English</div>
+        </div>
+        <div class="carousel-quote" data-index="2">
+          <p class="carousel-quote__text">"As soon as I was off the program the weight started coming back. It had not changed me. The big difference here is the habits they build so that you can do this on your own."</p>
+          <div class="carousel-quote__author">Nate Waldron</div>
+        </div>
+        <div class="carousel-quote" data-index="3">
+          <p class="carousel-quote__text">"I had lost a significant amount of weight before, but I didn't really have a means to make it last. I slowly put the weight back on over a decade. This time I needed help building something that would actually stick."</p>
+          <div class="carousel-quote__author">Jonathan Siesholtz</div>
+        </div>
+        <div class="carousel-quote" data-index="4">
+          <p class="carousel-quote__text">"I feel like I was really taught how to navigate food and fitness in the midst of a busy life. I was empowered to make these decisions myself while being guided in a really kind and encouraging way."</p>
+          <div class="carousel-quote__author">Lauren Luna</div>
+        </div>
+        <div class="carousel-quote" data-index="5">
+          <p class="carousel-quote__text">"I feel great in my body now. I feel comfortable with how I look and how I feel. My pre-diabetic levels were completely dropped and back to normal."</p>
+          <div class="carousel-quote__author">Linda Abaray</div>
+        </div>
+        <div class="carousel-quote" data-index="6">
+          <p class="carousel-quote__text">"The biggest change has been my mindset. I am a lot nicer to myself. I have learned that the scale does not determine my worth. Having the right coach changes everything."</p>
+          <div class="carousel-quote__author">Brittni Mayagoitia</div>
+        </div>
+        <div class="carousel-quote" data-index="7">
+          <p class="carousel-quote__text">"I was working out consistently, meal prepping every week, getting seven hours of sleep, and still wasn't seeing results. I was stuck in the all-or-nothing mindset trap."</p>
+          <div class="carousel-quote__author">Kristin Kilburg</div>
+        </div>
+        <div class="carousel-quote" data-index="8">
+          <p class="carousel-quote__text">"It was losing weight without losing body fat. This is about changing your whole body composition. My coach is not just your guide. They are your cheerleader, your inspiration, the person who shoves you out of your comfort zone."</p>
+          <div class="carousel-quote__author">Rob Johnson</div>
+        </div>
+        <div class="carousel-quote" data-index="9">
+          <p class="carousel-quote__text">"My coach was there every step along the way during the frustrated times. She helped me see that a difficult moment was not going to stop me from seeing results. Having that constant feedback changed everything."</p>
+          <div class="carousel-quote__author">Shannon Slack</div>
+        </div>
+        <div class="carousel-quote" data-index="10">
+          <p class="carousel-quote__text">"I was in a constant state of information overload. I would constantly switch things up without having the consistency of a long-term plan. What I needed was someone to help me build that plan and actually stick to it."</p>
+          <div class="carousel-quote__author">Steve Saldivar</div>
+        </div>
+        <div class="carousel-quote" data-index="11">
+          <p class="carousel-quote__text">"I had conflicting objectives. I was under fueled for my training, not building the muscle I wanted, and overtraining all at once. The program changed everything by aligning my nutrition and training for the first time."</p>
+          <div class="carousel-quote__author">AJ Gracely</div>
+        </div>
+        <div class="carousel-quote" data-index="12">
+          <p class="carousel-quote__text">"I have lost at least 10 kilograms of fat. I feel more energetic, more healthy, more agile, more capable. Most importantly I found that part of myself that was missing."</p>
+          <div class="carousel-quote__author">Axel Rubio</div>
+        </div>
+        <div class="carousel-quote" data-index="13">
+          <p class="carousel-quote__text">"I feel stronger than I have in a very long time. My coach helped me redesign my training to fit not just my goals, but my life at 62. It is all about mindset."</p>
+          <div class="carousel-quote__author">Randy Splinter</div>
+        </div>
+        <div class="carousel-quote" data-index="14">
+          <p class="carousel-quote__text">"I love the long-term, habitual approach. Let us get it right. Let us not hurry through this. All the other coaches wanted to change my life in three months. This one actually wanted to change it for good."</p>
+          <div class="carousel-quote__author">Ben Jayne</div>
+        </div>
+      </div>
+      <div class="carousel-arrows">
+        <button class="carousel-arrow" id="qPrev" aria-label="Previous quote">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="carousel-dots">
+          <button class="carousel-dot active" data-q="0"></button>
+          <button class="carousel-dot" data-q="1"></button>
+          <button class="carousel-dot" data-q="2"></button>
+          <button class="carousel-dot" data-q="3"></button>
+          <button class="carousel-dot" data-q="4"></button>
+          <button class="carousel-dot" data-q="5"></button>
+          <button class="carousel-dot" data-q="6"></button>
+          <button class="carousel-dot" data-q="7"></button>
+          <button class="carousel-dot" data-q="8"></button>
+          <button class="carousel-dot" data-q="9"></button>
+          <button class="carousel-dot" data-q="10"></button>
+          <button class="carousel-dot" data-q="11"></button>
+          <button class="carousel-dot" data-q="12"></button>
+          <button class="carousel-dot" data-q="13"></button>
+          <button class="carousel-dot" data-q="14"></button>
+        </div>
+        <button class="carousel-arrow" id="qNext" aria-label="Next quote">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 4: THE STRONG STANDARD METHOD
+════════════════════════════════════════════════════ -->
+<section class="method-section" id="method">
+  <div class="container">
+
+    <div class="section__header reveal">
+      <span class="label">The Strong Standard Method</span>
+      <h2>The Three Pillars Behind Results That Actually Last.</h2>
+    </div>
+
+    <p class="method__bridge reveal"><em>Most programs give you a plan. We give you a system.<br class="br-mobile">Here is the difference.</em></p>
+
+    <!-- Pillar Cards (desktop) -->
+    <div class="pillars__grid">
+      <div class="pillar-card reveal">
+        <span class="pillar-card__num">01</span>
+        <div class="pillar-card__icon">🗺️</div>
+        <h3>The right game plan for your actual life</h3>
+        <p>Before we build anything, we get to know you. Your schedule, your work demands, the foods your family eats, how often you travel, how much time you actually have. Then we build your plan around that reality, not an ideal version of it that falls apart the moment life gets busy.</p>
+        <p class="pillar-card__analogy">Think of it like a GPS. It does not give you one route and tell you to figure it out. It builds the fastest path from where you are to where you want to go, and when life takes you off course, it recalculates. That is exactly what we do.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.1s">
+        <span class="pillar-card__num">02</span>
+        <div class="pillar-card__icon">🎓</div>
+        <h3>Learn to fish, not just follow a plan</h3>
+        <p>Most programs hand you a plan and tell you to follow it. That works until progress stalls or life gets in the way, and suddenly you have no idea what to change or why. We do not just tell you what to do. We teach you how everything actually works so that when things change, you know exactly how to adapt.</p>
+        <p class="pillar-card__analogy">Give someone a fish and you feed them for a day. Teach someone to fish and you feed them for life. By the time you are done working with us, you will not need us to hand you the answer. You will already know it.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.2s">
+        <span class="pillar-card__num">03</span>
+        <div class="pillar-card__icon">🤝</div>
+        <h3>The kind of support that builds habits for life</h3>
+        <p>We check in proactively every week, adjust your plan when life changes, and stay in your corner every single day. But the goal was never to make you dependent on accountability forever.</p>
+        <p class="pillar-card__analogy">Think about brushing your teeth. You did not stop brushing when things got stressful. You do it because it became a habit. That is exactly where we are trying to get you. Consistent. Automatic. Yours for life.</p>
+      </div>
+    </div>
+
+    <!-- Pillar Accordion (mobile) -->
+    <div class="pillar-accordion reveal">
+      <div class="pillar-accordion-item">
+        <button class="pillar-accordion-trigger">
+          01. The right game plan for your actual life
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="pillar-accordion-body">
+          <div class="pillar-accordion-body--inner">
+            <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px;">Before we build anything, we get to know you. Your schedule, your work demands, the foods your family eats, how often you travel, how much time you actually have. Then we build your plan around that reality, not an ideal version of it that falls apart the moment life gets busy.</p>
+            <p style="font-size:13px;font-style:italic;color:var(--faint);line-height:1.65;">Think of it like a GPS. It does not give you one route and tell you to figure it out. It builds the fastest path from where you are to where you want to go, and when life takes you off course, it recalculates. That is exactly what we do.</p>
+          </div>
+        </div>
+      </div>
+      <div class="pillar-accordion-item">
+        <button class="pillar-accordion-trigger">
+          02. Learn to fish, not just follow a plan
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="pillar-accordion-body">
+          <div class="pillar-accordion-body--inner">
+            <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px;">Most programs hand you a plan and tell you to follow it. That works until progress stalls or life gets in the way, and suddenly you have no idea what to change or why. We do not just tell you what to do. We teach you how everything actually works so that when things change, you know exactly how to adapt.</p>
+            <p style="font-size:13px;font-style:italic;color:var(--faint);line-height:1.65;">Give someone a fish and you feed them for a day. Teach someone to fish and you feed them for life. By the time you are done working with us, you will not need us to hand you the answer. You will already know it.</p>
+          </div>
+        </div>
+      </div>
+      <div class="pillar-accordion-item">
+        <button class="pillar-accordion-trigger">
+          03. The kind of support that builds habits for life
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="pillar-accordion-body">
+          <div class="pillar-accordion-body--inner">
+            <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px;">We check in proactively every week, adjust your plan when life changes, and stay in your corner every single day. But the goal was never to make you dependent on accountability forever.</p>
+            <p style="font-size:13px;font-style:italic;color:var(--faint);line-height:1.65;">Think about brushing your teeth. You did not stop brushing when things got stressful. You do it because it became a habit. That is exactly where we are trying to get you. Consistent. Automatic. Yours for life.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Five-Step Process — vertical layout -->
+    <div style="margin-top:80px;">
+      <p class="process__sublabel reveal">Here Is How It Works in Practice</p>
+
+      <div class="process__steps reveal">
+        <div class="process-step-v">
+          <div class="process-step-v__num">1</div>
+          <div class="process-step-v__content">
+            <h3>Clarify your strategy</h3>
+            <p>We build a fully personalized plan aligned with your goals, your schedule, your food preferences, and your real life constraints. From day one there is no guesswork. You know exactly what to do and why.</p>
+            <div class="process-step-v__voice">"This finally makes sense. I know exactly what I should be focusing on."</div>
+          </div>
+        </div>
+        <div class="process-step-v">
+          <div class="process-step-v__num">2</div>
+          <div class="process-step-v__content">
+            <h3>Build your understanding</h3>
+            <p>We teach you the why behind everything. How nutrition works, why your training is structured the way it is, and how to adjust intelligently when progress slows or life changes. You stop guessing and start making confident decisions.</p>
+            <div class="process-step-v__voice">"I am not just following a plan. I understand how this works."</div>
+          </div>
+        </div>
+        <div class="process-step-v">
+          <div class="process-step-v__num">3</div>
+          <div class="process-step-v__content">
+            <h3>Apply with proactive support</h3>
+            <p>Your coach checks in every week with real feedback, adjusts your plan proactively, and stays available every day through the app. You are never left to figure it out alone.</p>
+            <div class="process-step-v__voice">"I did not fall off this time. Someone was actually paying attention."</div>
+          </div>
+        </div>
+        <div class="process-step-v">
+          <div class="process-step-v__num">4</div>
+          <div class="process-step-v__content">
+            <h3>Adapt when life gets in the way</h3>
+            <p>Progress is never linear and we treat that as normal, not failure. When travel, stress, or schedule changes show up, we adapt the plan with you so you learn to move forward instead of starting over.</p>
+            <div class="process-step-v__voice">"When things go off track, I know exactly how to handle it."</div>
+          </div>
+        </div>
+        <div class="process-step-v">
+          <div class="process-step-v__num">5</div>
+          <div class="process-step-v__content">
+            <h3>Build strength that lasts</h3>
+            <p>Over time you develop the confidence, the habits, and the knowledge to maintain your results independently. Coaching becomes something you value, not something you depend on.</p>
+            <div class="process-step-v__voice">"This feels sustainable. I can do this for life."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="method__closing reveal">Strategy. Education. Accountability. The three things that turn short-term results into a lifetime of strength.</p>
+
+    <div style="text-align:center;margin-top:40px;" class="reveal">
+      <a href="#apply" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
+        Apply Now
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 5: SOCIAL PROOF CAROUSEL
+════════════════════════════════════════════════════ -->
+<section class="social-proof-section" id="results">
+  <div class="container">
+
+    <div class="section__header reveal">
+      <span class="label">Real Results</span>
+      <h2>Real People. Real Results.<br>Real Life.</h2>
+      <p><em>Every person you see here had a busy schedule, a history of failed attempts, and a life that did not stop for their health journey.</em></p>
+    </div>
+
+    <div class="sp-carousel reveal">
+      <div class="sp-carousel__inner">
+
+        <!-- Slide 1: Penny English -->
+        <div class="sp-slide active" data-sp="0">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5c29d8d5f6ae836d61a1.png" alt="Penny English before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5b88d8d5f6ae836d36d8.png" alt="Penny English after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Lost 10 lbs and 2 Inches in 3 Months</p>
+            <p class="sp-slide__story">She had tried every diet and exercise routine and convinced herself the weight was just a consequence of menopause she had to live with. What changed was not her effort. It was finally having a team that understood her body, her hormones, and her life, and built a strategy actually designed for her.</p>
+            <div class="sp-slide__client">Penny English</div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Nate Waldron -->
+        <div class="sp-slide" data-sp="1">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd46411774270f1d874989.jpg" alt="Nate Waldron before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5aedd8d5f6ae836d0ca8.jpeg" alt="Nate Waldron after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">25 Pounds Down While Raising Four Kids</p>
+            <p class="sp-slide__story">A married father of four who had struggled with his weight his entire life. Even running 50 races over 14 years did not fix it. What he needed was not another quick fix. It was a long-term, habitual approach that built the right foundation so he could maintain results on his own.</p>
+            <div class="sp-slide__client">Nate Waldron</div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Randy Splinter -->
+        <div class="sp-slide" data-sp="2">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd472ce34cc263fb774681.jpg" alt="Randy Splinter before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a7b3677cf2ce259dc65.jpeg" alt="Randy Splinter after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">60+ Pounds Lost and Stronger Than Ever at 62</p>
+            <p class="sp-slide__story">He came in with no preconceived notions, just a commitment to put his best foot forward. His coach redesigned his entire training to fit his age and goals. He left with his blood work improved, his energy back, and a routine he genuinely enjoys.</p>
+            <div class="sp-slide__client">Randy Splinter</div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Jonathan Siesholtz -->
+        <div class="sp-slide" data-sp="3">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a103d447256447dca07.png" alt="Jonathan Siesholtz before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a0fb935a2d764b3b640.png" alt="Jonathan Siesholtz after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">40+ Pounds Lost and a System That Actually Lasts</p>
+            <p class="sp-slide__story">He had lost significant weight before, but without a sustainable system it slowly came back over a decade. This time he stopped guessing and got the help he needed. The result was not just weight lost but a routine he could actually maintain through work, family, and real life.</p>
+            <div class="sp-slide__client">Jonathan Siesholtz</div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Lauren Luna -->
+        <div class="sp-slide" data-sp="4">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58fbd8d5f6ae836c8276.png" alt="Lauren Luna before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58fb80b446d0fb65f62f.png" alt="Lauren Luna after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">20 Pounds Lost and Finally Feeling Like Herself Again</p>
+            <p class="sp-slide__story">Going into her 40s she started noticing a shift in how her body responded to food and exercise. She had tried yoga, weight training, and multiple programs but nothing stuck. What made the difference was being taught how to navigate food and fitness in the middle of a full, busy life.</p>
+            <div class="sp-slide__client">Lauren Luna</div>
+          </div>
+        </div>
+
+        <!-- Slide 6: Axel Rubio -->
+        <div class="sp-slide" data-sp="5">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd5940caf24b80a0f8ba44.jpg" alt="Axel Rubio before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd5940376904eac22bf01a.jpg" alt="Axel Rubio after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">10+ Kilograms Lost and More Energy Than Ever</p>
+            <p class="sp-slide__story">He had always been health-conscious, but work demands, family commitments, and a busy social life made consistency feel impossible. The frustration and helplessness started to build. What he found was not just a transformation but a part of himself that had been missing.</p>
+            <div class="sp-slide__client">Axel Rubio</div>
+          </div>
+        </div>
+
+        <!-- Slide 7: Linda Abaray -->
+        <div class="sp-slide" data-sp="6">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5859e7237c4dd3fee7f4.png" alt="Linda Abaray before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58593d447256447d52f7.png" alt="Linda Abaray after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Pre-Diabetic Levels Normalized and Feeling Stronger Than Ever</p>
+            <p class="sp-slide__story">A former high school and college rugby player who lost her structure when life took over. She was educated on nutrition, watched the videos, read the articles, but could not put the pieces together as a vegetarian. Coaching gave her the framework she had been missing, and her bloodwork numbers proved it.</p>
+            <div class="sp-slide__client">Linda Abaray</div>
+          </div>
+        </div>
+
+        <!-- Slide 8: AJ Gracely -->
+        <div class="sp-slide" data-sp="7">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de57c2add632fcdc79318e.png" alt="AJ Gracely before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de57c2190683601a131e9e.png" alt="AJ Gracely after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Conflicting Objectives Solved With One Aligned System</p>
+            <p class="sp-slide__story">A 44-year-old working professional who struggled with diet consistency, conflicting fitness goals, and overtraining all at once. He had programmed his own workouts without enough structure or stimulus to actually build muscle. The program finally aligned his nutrition and training toward the same outcome.</p>
+            <div class="sp-slide__client">AJ Gracely</div>
+          </div>
+        </div>
+
+        <!-- Slide 9: Ben Jayne -->
+        <div class="sp-slide" data-sp="8">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de56f0190683601a12e147.png" alt="Ben Jayne before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de56f001e07d5dde2fdf49.png" alt="Ben Jayne after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">From Aimless Gym Sessions to Real, Lasting Progress at 52</p>
+            <p class="sp-slide__story">He had never worked with a coach. His fitness life was recreational running and aimless gym sessions he mostly hated. After a hip diagnosis and a frozen shoulder that lasted a year, he needed a system that could work around his real physical limitations. He found one that did.</p>
+            <div class="sp-slide__client">Ben Jayne</div>
+          </div>
+        </div>
+
+        <!-- Slide 10: Andrea Shannon -->
+        <div class="sp-slide" data-sp="9">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de567a01e07d5dde2fbef5.png" alt="Andrea Shannon before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de567a80b446d0fb654486.png" alt="Andrea Shannon after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Post-Pregnancy Weight Gone and Finally in Control</p>
+            <p class="sp-slide__story">After her second baby she found herself gaining weight despite trying to watch what she ate. Nothing was working and the scale kept moving the wrong direction. She wanted to become a physically fit person for her health and longevity, not just her appearance, and finally found the system to make it happen.</p>
+            <div class="sp-slide__client">Andrea Shannon</div>
+          </div>
+        </div>
+
+        <!-- Slide 11: Brittni Mayagoitia -->
+        <div class="sp-slide" data-sp="10">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de55c6acf21ea88ad2ed9a.png" alt="Brittni Mayagoitia before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de55c53d447256447c96c1.png" alt="Brittni Mayagoitia after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Six Months In and Signed Up for Six More</p>
+            <p class="sp-slide__story">She knew what to do but consistency was always the problem. She had tried keto, competition prep diets, extreme cardio, and everything in between. They all worked short term. She would lose the weight and gain it all back. This time she lost fat, built muscle, and immediately signed up for another six months.</p>
+            <div class="sp-slide__client">Brittni Mayagoitia</div>
+          </div>
+        </div>
+
+        <!-- Slide 12: Kristin Kilburg -->
+        <div class="sp-slide" data-sp="11">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de53eeb935a2d764b1fc9a.png" alt="Kristin Kilburg before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de53eeadd632fcdc7812f2.png" alt="Kristin Kilburg after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Consistent Workouts, Meal Prepping, Sleep, and Still Stuck — Until Now</p>
+            <p class="sp-slide__story">She was doing everything right and still not moving forward. She was overwhelmed by conflicting advice and trapped in an all-or-nothing mindset. On top of that, she felt guilty for having body composition goals because others told her she should feel lucky being small. The program gave her permission to pursue her goals with the right system behind her.</p>
+            <div class="sp-slide__client">Kristin Kilburg</div>
+          </div>
+        </div>
+
+        <!-- Slide 13: Rob Johnson -->
+        <div class="sp-slide" data-sp="12">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5345b935a2d764b1ce5b.png" alt="Rob Johnson before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5345add632fcdc77e0e6.png" alt="Rob Johnson after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">From Scale-Obsessed to Real Body Composition Change</p>
+            <p class="sp-slide__story">He was focused on the number on the scale and losing weight, not losing body fat. The distinction mattered enormously. His coach became more than a guide. They were his cheerleader, his inspiration, and the person who pushed him past what he thought was possible, then watched him prove it to himself.</p>
+            <div class="sp-slide__client">Rob Johnson</div>
+          </div>
+        </div>
+
+        <!-- Slide 14: Steve Saldivar -->
+        <div class="sp-slide" data-sp="13">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de52afd8d5f6ae836ac157.png" alt="Steve Saldivar before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de52afd8d5f6ae836ac158.png" alt="Steve Saldivar after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Information Overload Replaced With a Plan That Actually Works</p>
+            <p class="sp-slide__story">A demanding job had always come first and his health paid the price. He had tried every approach he could find, low carb, keto, intermittent fasting, AI-generated training programs, and nothing stuck because he kept changing the plan before it had a chance to work. Consistency and a long-term system changed everything.</p>
+            <div class="sp-slide__client">Steve Saldivar</div>
+          </div>
+        </div>
+
+        <!-- Slide 15: Shannon Slack -->
+        <div class="sp-slide" data-sp="14">
+          <div class="sp-slide__photos">
+            <div class="sp-photo">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de50a1190683601a112231.png" alt="Shannon Slack before">
+              <span class="sp-photo__label">Before</span>
+            </div>
+            <div class="sp-photo sp-photo--after">
+              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de50a1b935a2d764b11f2c.png" alt="Shannon Slack after">
+              <span class="sp-photo__label">After</span>
+            </div>
+          </div>
+          <div class="sp-slide__card">
+            <p class="sp-slide__headline">Out of Control Around Food to Finally at Peace With It</p>
+            <p class="sp-slide__story">She had been stuck in an endless cycle of losing and regaining, feeling out of control around food, and going through restrictive diets that made enjoying her life impossible. The biggest shift was not on the scale. It was her relationship with food, her energy, and her ability to be fully present for her family and her work.</p>
+            <div class="sp-slide__client">Shannon Slack</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sp-nav">
+        <button id="spPrev" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="sp-dots">
+          <button class="sp-dot active" data-sp="0"></button>
+          <button class="sp-dot" data-sp="1"></button>
+          <button class="sp-dot" data-sp="2"></button>
+          <button class="sp-dot" data-sp="3"></button>
+          <button class="sp-dot" data-sp="4"></button>
+          <button class="sp-dot" data-sp="5"></button>
+          <button class="sp-dot" data-sp="6"></button>
+          <button class="sp-dot" data-sp="7"></button>
+          <button class="sp-dot" data-sp="8"></button>
+          <button class="sp-dot" data-sp="9"></button>
+          <button class="sp-dot" data-sp="10"></button>
+          <button class="sp-dot" data-sp="11"></button>
+          <button class="sp-dot" data-sp="12"></button>
+          <button class="sp-dot" data-sp="13"></button>
+          <button class="sp-dot" data-sp="14"></button>
+        </div>
+        <button id="spNext" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="sp-cta-line reveal"><em>Ready to write your own story?</em></p>
+    <div style="text-align:center;" class="reveal">
+      <a href="#apply" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
+        Apply Now
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 6: WHO IS THIS FOR
+════════════════════════════════════════════════════ -->
+<section class="fit-section" id="fit">
+  <div class="container">
+
+    <div class="section__header reveal">
+      <span class="label">Is This for You</span>
+      <h2>Strong Standard Is Built for a Specific Kind of Person.</h2>
+      <p><em>We work with a small number of clients at a time. Getting this right matters to us. Read both sides honestly.</em></p>
+    </div>
+
+    <div class="fit__panels reveal">
+      <!-- Left panel: This is for you -->
+      <div class="fit-panel fit-panel--yes">
+        <h3 class="fit-panel__heading">This Is For You If...</h3>
+        <ul class="fit-panel__list">
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">✅</span>
+            You are ready to make your health a genuine priority, not just an intention.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">✅</span>
+            You have a busy, full life and you need a system that works inside it, not around it.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">✅</span>
+            You have tried other programs and you are done guessing. You want to understand how this actually works.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">✅</span>
+            You are willing to communicate when you are struggling, not go silent and disappear.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">✅</span>
+            You believe in the process even when progress feels slow, and you are ready to trust it.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">✅</span>
+            You want results that last because you have built the habits, not because you are dependent on a plan.
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right panel: Not for you -->
+      <div class="fit-panel fit-panel--no">
+        <h3 class="fit-panel__heading">This Is NOT For You If...</h3>
+        <ul class="fit-panel__list">
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">❌</span>
+            You are looking for a quick fix or a guaranteed number of pounds lost by a specific date.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">❌</span>
+            You want someone to hand you a plan and take full responsibility for your results.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">❌</span>
+            You tend to go silent when things get hard and wait to be chased rather than reaching out.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">❌</span>
+            You are not ready to be consistent yet, and you know it.
+          </li>
+          <li class="fit-panel__item">
+            <span class="fit-panel__icon">❌</span>
+            You are primarily motivated by price and you are looking for the cheapest option available.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Litmus Test -->
+    <div class="litmus reveal">
+      <div class="litmus__label">The Strong Standard Client</div>
+      <p class="litmus__quote">"I am willing to make this a priority, communicate when I am struggling, and trust the process, even when it is uncomfortable."</p>
+      <p class="litmus__line"><em>If you can say that honestly, you are exactly who we built this for.</em></p>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <a href="#apply" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
+        Apply Now
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 7: MEET THE TEAM
+════════════════════════════════════════════════════ -->
+<section class="team-section" id="team">
+  <div class="container">
+
+    <div class="section__header reveal">
+      <span class="label">The Team</span>
+      <h2>You Are in Expert Hands.</h2>
+      <p><em>Every coach on the Strong Standard team holds a graduate degree in nutrition science, exercise science, or a related health discipline. This is not a certification. This is a career.</em></p>
+    </div>
+
+    <!-- Founders: Joey + Bernardo side by side -->
+    <div class="founders-grid reveal">
+      <div class="founder-card">
+        <div class="founder-card__photo">
+          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/67e5b9cc82c9d84972bff43a.webp" alt="Dr. Joey Munoz" style="object-position:50% 15%;">
+        </div>
+        <div class="founder-card__body">
+          <div class="founder-card__degree">Ph.D. Nutritional Sciences, FSU</div>
+          <div class="founder-card__name">Dr. Joey Munoz</div>
+          <div class="founder-card__role">Founder and CEO</div>
+          <p class="founder-card__bio">Dr. Joey holds a PhD in Nutritional Sciences from Florida State University and has spent his career translating complex nutrition and exercise science into practical systems that work for real people in real life. He built Strong Standard because he grew up in the same struggle his clients face, and he knew the missing piece was never motivation. It was the right system, the right education, and the right support. He is the coach he wished he had.</p>
+        </div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-card__photo">
+          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93643677cf2ce269f55e.png" alt="Bernardo Lopez" style="object-fit:cover; object-position:50% 15%;">
+        </div>
+        <div class="founder-card__body">
+          <div class="founder-card__degree">M.S. Body Composition Improvement</div>
+          <div class="founder-card__name">Bernardo Lopez</div>
+          <div class="founder-card__role">Co-Founder and Head Coach</div>
+          <p class="founder-card__bio">Bernardo holds a Master's in Body Composition and leads the coaching team at Strong Standard. He specializes in muscle building, fat loss, and performance optimization through an evidence-based approach. He has coached hundreds of clients through sustainable body composition transformations with a focus on habit formation and long-term consistency.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coaching staff: 3 coaches in grid -->
+    <p class="coaches-sublabel reveal">The Coaching Staff</p>
+
+    <!-- Desktop grid -->
+    <div class="staff-grid reveal" id="coachGrid">
+      <div class="coach-card">
+        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92d39ef76eebec5600fb.png" alt="Dr. Brent Momb" style="object-position:50% 20%;"></div>
+        <div class="coach-card__degree">Ph.D. Muscle Biology</div>
+        <h4>Dr. Brent Momb</h4>
+        <div class="coach-card__role">Coach and Researcher</div>
+        <p>Dr. Brent holds a Ph.D. in Muscle Biology from UMass and is an active postdoctoral researcher. He brings the latest science directly into his coaching, helping clients break through plateaus and build strength sustainably.</p>
+      </div>
+      <div class="coach-card">
+        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de931bd8d5f6ae837c9b21.png" alt="Ceci Gonzalez" style="object-position:50% 15%;"></div>
+        <div class="coach-card__degree">M.S. Body Composition</div>
+        <h4>Ceci Gonzalez</h4>
+        <div class="coach-card__role">Coach</div>
+        <p>Ceci holds a Master's in Body Composition and is a certified personal trainer. A lifelong athlete and strength training enthusiast, she is known for her warm coaching style that makes fitness both effective and genuinely enjoyable.</p>
+      </div>
+      <div class="coach-card">
+        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93853d447256448daee5.png" alt="Miguel Mendes" style="object-position:50% 15%;"></div>
+        <div class="coach-card__degree">M.S. Sport and Exercise Nutrition</div>
+        <h4>Miguel Mendes</h4>
+        <div class="coach-card__role">Coach</div>
+        <p>Miguel is from Lisbon, Portugal and has been coaching for over 6 years. He holds a Master's in Sport and Exercise Nutrition and believes fitness should enhance your life, not consume it. It is about progress, not perfection.</p>
+      </div>
+      <div class="coach-card">
+        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92fae7237c4dd30f36ad.png" alt="Jacqueline Llovet" style="object-position:50% 15%;"></div>
+        <div class="coach-card__degree">Registered Nurse</div>
+        <h4>Jacqueline Llovet</h4>
+        <div class="coach-card__role">Coach</div>
+        <p>A Registered Nurse specializing in Women's Health since 1997, Jackie became a coach after her own transformation in her late 40s. She is especially passionate about helping busy parents and midlife women build strength and confidence at any age.</p>
+      </div>
+    </div>
+
+    <!-- Mobile carousel -->
+    <div class="coach-carousel" id="coachCarousel">
+      <div class="coach-carousel__inner">
+        <div class="coach-carousel__track" id="coachTrack">
+          <div class="coach-card">
+            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92d39ef76eebec5600fb.png" alt="Dr. Brent Momb" style="object-position:50% 20%;"></div>
+            <div class="coach-card__degree">Ph.D. Muscle Biology</div>
+            <h4>Dr. Brent Momb</h4>
+            <div class="coach-card__role">Coach and Researcher</div>
+            <p>Dr. Brent holds a Ph.D. in Muscle Biology from UMass and is an active postdoctoral researcher. He brings the latest science directly into his coaching, helping clients break through plateaus and build strength sustainably.</p>
+          </div>
+          <div class="coach-card">
+            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de931bd8d5f6ae837c9b21.png" alt="Ceci Gonzalez" style="object-position:50% 15%;"></div>
+            <div class="coach-card__degree">M.S. Body Composition</div>
+            <h4>Ceci Gonzalez</h4>
+            <div class="coach-card__role">Coach</div>
+            <p>Ceci holds a Master's in Body Composition and is a certified personal trainer. A lifelong athlete and strength training enthusiast, she is known for her warm coaching style that makes fitness both effective and genuinely enjoyable.</p>
+          </div>
+          <div class="coach-card">
+            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93853d447256448daee5.png" alt="Miguel Mendes" style="object-position:50% 15%;"></div>
+            <div class="coach-card__degree">M.S. Sport and Exercise Nutrition</div>
+            <h4>Miguel Mendes</h4>
+            <div class="coach-card__role">Coach</div>
+            <p>Miguel is from Lisbon, Portugal and has been coaching for over 6 years. He holds a Master's in Sport and Exercise Nutrition and believes fitness should enhance your life, not consume it. It is about progress, not perfection.</p>
+          </div>
+          <div class="coach-card">
+            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92fae7237c4dd30f36ad.png" alt="Jacqueline Llovet" style="object-position:50% 15%;"></div>
+            <div class="coach-card__degree">Registered Nurse</div>
+            <h4>Jacqueline Llovet</h4>
+            <div class="coach-card__role">Coach</div>
+            <p>A Registered Nurse specializing in Women's Health since 1997, Jackie became a coach after her own transformation in her late 40s. She is especially passionate about helping busy parents and midlife women build strength and confidence at any age.</p>
+          </div>
+        </div>
+      </div>
+      <div class="coach-carousel__nav">
+        <button class="coach-carousel__btn" id="coachPrev">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="coach-carousel__dots">
+          <button class="coach-carousel__dot active" data-c="0"></button>
+          <button class="coach-carousel__dot" data-c="1"></button>
+          <button class="coach-carousel__dot" data-c="2"></button>
+          <button class="coach-carousel__dot" data-c="3"></button>
+        </div>
+        <button class="coach-carousel__btn" id="coachNext">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 8: PHILOSOPHY
+════════════════════════════════════════════════════ -->
+<section class="philosophy-section" id="philosophy">
+  <div class="container">
+
+    <div class="section__header reveal">
+      <span class="label">What We Believe</span>
+      <h2>Strength Is Not the Goal.<br>It Is the Standard.</h2>
+      <p><em>These are the beliefs that shape every coaching decision we make.</em></p>
+    </div>
+
+    <div class="beliefs-list">
+      <div class="belief reveal">
+        <span class="belief__num">01</span>
+        <p class="belief__opening">We believe strength is not just physical. <span>It is the energy to show up fully for your family, the confidence to lead at work, and the discipline to hold a higher standard for yourself in every area of your life.</span></p>
+      </div>
+      <div class="belief reveal" style="transition-delay:0.08s">
+        <span class="belief__num">02</span>
+        <p class="belief__opening">We believe sustainable always beats fast. <span>A result you can maintain for the rest of your life is worth infinitely more than a transformation you lose in six months. We will never sacrifice your long-term success for a short-term win.</span></p>
+      </div>
+      <div class="belief reveal" style="transition-delay:0.12s">
+        <span class="belief__num">03</span>
+        <p class="belief__opening">We believe education is the real product. <span>Plans run out. Knowledge does not. Our job is not to tell you what to do forever. It is to teach you how this works so you never have to rely on anyone else to figure it out again.</span></p>
+      </div>
+      <div class="belief reveal" style="transition-delay:0.16s">
+        <span class="belief__num">04</span>
+        <p class="belief__opening">We believe your life should not have to stop for your health. <span>The right system works inside your schedule, your family, your travel, and your stress, not in spite of it. If it cannot survive your real life, it is not the right system.</span></p>
+      </div>
+      <div class="belief reveal" style="transition-delay:0.2s">
+        <span class="belief__num">05</span>
+        <p class="belief__opening">We believe the standard you set for yourself becomes the standard your family inherits. <span>Your kids are watching. Your partner is watching. The relationship you have with your own health is becoming the example the people you love most will carry forward. That is not pressure. That is purpose.</span></p>
+      </div>
+    </div>
+
+    <p class="philosophy-tagline reveal">Strength is not the goal.<br class="br-mobile"> It is the standard.</p>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 9: GUARANTEE
+════════════════════════════════════════════════════ -->
+<section class="guarantee-section" id="guarantee">
+  <div class="container">
+    <div class="guarantee__inner">
+      <div class="section__header reveal" style="margin-bottom:40px;">
+        <span class="guarantee__icon">🛡️</span>
+        <span class="label">Our Guarantee</span>
+        <h2>The Strong Standard Guarantee.</h2>
+      </div>
+      <div class="guarantee__body reveal">
+        <p>When you join Strong Standard, we build your fully personalized plan and walk through everything together on your kickoff call. You get to experience the program before you commit to it fully.</p>
+        <p>If after that kickoff call you genuinely feel this is not the right fit for you, reach out within 24 hours and we will refund your investment in full. No questions asked. No hoops to jump through.</p>
+        <p>We put this in place because we can explain everything on this page, but the only way to know if this is right for you is to experience it. We are confident enough in what we do to let the work speak for itself.</p>
+      </div>
+
+      <div class="guarantee__callout reveal">
+        <div class="guarantee-item">
+          <span class="guarantee-item__emoji">⏰</span>
+          <div class="guarantee-item__label">24 Hours</div>
+          <div class="guarantee-item__text">Request your refund within 24 hours of your kickoff call.</div>
+        </div>
+        <div class="guarantee-item">
+          <span class="guarantee-item__emoji">💰</span>
+          <div class="guarantee-item__label">100%</div>
+          <div class="guarantee-item__text">Every dollar returned. No partial refunds. No conditions.</div>
+        </div>
+        <div class="guarantee-item">
+          <span class="guarantee-item__emoji">🤐</span>
+          <div class="guarantee-item__label">0 Questions</div>
+          <div class="guarantee-item__text">We will not make you justify your decision or jump through hoops.</div>
+        </div>
+      </div>
+
+      <p class="guarantee__closing reveal"><em>The only risk is not finding out if this is the thing that finally works.</em></p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 10: APPLICATION CTA
+════════════════════════════════════════════════════ -->
+<section class="app-cta-section" id="apply">
+  <div class="container">
+    <div class="app-cta__inner">
+      <div class="section__header reveal" style="margin-bottom:32px;">
+        <span class="label">Your Next Step</span>
+        <h2 style="font-size:clamp(2rem,3vw,3.5rem);">Ready to Build the Body<br>That Makes You Stronger<br>in Every Area of Your Life?</h2>
+      </div>
+
+      <p class="app-cta__opening reveal"><em>The next step is simple<br class="br-mobile"> and takes less than 3 minutes.</em></p>
+
+      <ol class="app-steps reveal">
+        <li class="app-step">
+          <div class="app-step__num">1</div>
+          <div class="app-step__text">Complete a short application about your goals and current situation.</div>
+        </li>
+        <li class="app-step">
+          <div class="app-step__num">2</div>
+          <div class="app-step__text">If you are a fit, we will reach out within 48 hours to schedule your discovery call.</div>
+        </li>
+        <li class="app-step">
+          <div class="app-step__num">3</div>
+          <div class="app-step__text">On that call we will build your preliminary plan together and make sure this is right for you before anything else.</div>
+        </li>
+      </ol>
+
+      <p class="app-qualifying reveal"><em>Not everyone who applies is accepted. We review every application personally to make sure we can genuinely help you.</em></p>
+
+      <div class="reveal">
+        <a href="#" class="btn btn-primary" style="font-size:16px;padding:18px 44px;width:100%;justify-content:center;max-width:400px;">
+          Apply Now
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Your investment is protected by our full satisfaction guarantee.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 11: FAQ
+════════════════════════════════════════════════════ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="label">Common Questions</span>
+      <h2>Everything You Need to Know<br>Before You Apply.</h2>
+    </div>
+
+    <div class="faq-list">
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          How is Strong Standard different from other coaching programs I have tried?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">Most programs give you a plan and leave you to figure out the rest. Strong Standard is built on three pillars: Strategy, Education, and Accountability, that work together to make results sustainable, not temporary. We do not just tell you what to do. We teach you how it works so that when the program ends you do not need us anymore. That is the goal.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          What if I have tried everything and nothing has worked for me?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">The fact that previous programs did not work is not evidence that you cannot change. It is evidence that the approach was wrong. Every client who comes to us has a history of attempts. What made the difference was not more willpower or a better plan. It was finally having a system that was built around their actual life, with someone paying attention and catching them before they fell off.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          How much time does this actually require?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">Less than you think. Your weekly check-in takes about ten minutes. Your workouts are designed around the time you actually have, not an ideal schedule. Most clients are surprised by how little disruption the program creates in their day-to-day life. That is by design.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          What happens after I apply?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">Once you submit your application we review it personally and reach out within 48 hours if we feel you are a strong fit. We schedule a discovery call where we learn more about your goals and build a preliminary plan together. If we both decide to move forward, we onboard you, build your full personalized plan, and schedule your kickoff call. The whole process from application to kickoff typically takes less than a week.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          What is the investment?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">The program is a 6-month commitment. Every client also has the protection of our full satisfaction guarantee. If after your kickoff call you feel this is not the right fit, you receive a full refund within 24 hours. No questions asked.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          I travel a lot and have an unpredictable schedule. Can this work for me?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">Yes. This is exactly who we built the program for. We work with lawyers, executives, business owners, and parents who have chaotic schedules. Your plan is built around your travel, your work demands, and your real availability. When your schedule changes, your coach adapts the plan with you. The program was designed to survive real life, not ideal conditions.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          I already know a lot about nutrition and fitness. Is this still valuable for me?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">Almost always yes. Most people who come to us with significant knowledge still have gaps they are not aware of, a strategy that has not been tailored to their specific body and goals, and an accountability structure that does not catch them when life gets in the way. Knowledge alone has never been the problem. The system around applying it consistently is.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-trigger">
+          What happens after the 6 months? Will I maintain my results?
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-body">
+          <div class="faq-body--inner">That is the entire point of the program. By the time you finish six months with us you will have the education to understand what your body needs, the habits to act on it consistently, and the confidence to navigate setbacks without starting over. You will not need us to maintain your results. And that is exactly how we measure success.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="faq-link reveal">
+      Still have questions? <a href="#apply">Book a call and we will answer them directly.</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 12: FINAL CTA
+════════════════════════════════════════════════════ -->
+<section class="final-cta">
+  <div class="final-cta__inner">
+    <span class="label reveal">The Next Step</span>
+    <h2 class="reveal">The Best Time to Start Was Ten Years Ago. The Second Best Time Is Now.</h2>
+    <p class="final-cta__sub reveal"><em>This is the season you have been waiting for. Not because things slowed down. Because you decided they did not have to.</em></p>
+    <div class="reveal">
+      <a href="#apply" class="btn btn-primary" style="font-size:17px;padding:20px 52px;">
+        Apply Now
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Your investment is protected by our full satisfaction guarantee.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#" class="social-icon" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+      </a>
+      <a href="#" class="social-icon" aria-label="Spotify">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+// ── Sticky nav ──────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// ── Scroll reveal ───────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Quote Carousel ──────────────────────────────────────
+let qActive = 0;
+const qQuotes = document.querySelectorAll('.carousel-quote');
+const qDots = document.querySelectorAll('.carousel-dot');
+
+function goToQuote(n) {
+  qQuotes[qActive].classList.remove('active');
+  qDots[qActive].classList.remove('active');
+  qActive = (n + qQuotes.length) % qQuotes.length;
+  qQuotes[qActive].classList.add('active');
+  qDots[qActive].classList.add('active');
+}
+
+document.getElementById('qPrev').addEventListener('click', () => goToQuote(qActive - 1));
+document.getElementById('qNext').addEventListener('click', () => goToQuote(qActive + 1));
+qDots.forEach(d => d.addEventListener('click', () => goToQuote(parseInt(d.dataset.q))));
+
+let qTimer = setInterval(() => goToQuote(qActive + 1), 6000);
+document.querySelector('.quote-carousel').addEventListener('mouseenter', () => clearInterval(qTimer));
+document.querySelector('.quote-carousel').addEventListener('mouseleave', () => {
+  qTimer = setInterval(() => goToQuote(qActive + 1), 6000);
+});
+
+// ── Social Proof Carousel ───────────────────────────────
+let spActive = 0;
+const spSlides = document.querySelectorAll('.sp-slide');
+const spDots = document.querySelectorAll('.sp-dot');
+
+function goToSlide(n) {
+  spSlides[spActive].classList.remove('active');
+  spDots[spActive].classList.remove('active');
+  spActive = (n + spSlides.length) % spSlides.length;
+  spSlides[spActive].classList.add('active');
+  spDots[spActive].classList.add('active');
+}
+
+document.getElementById('spPrev').addEventListener('click', () => goToSlide(spActive - 1));
+document.getElementById('spNext').addEventListener('click', () => goToSlide(spActive + 1));
+spDots.forEach(d => d.addEventListener('click', () => goToSlide(parseInt(d.dataset.sp))));
+
+let spTimer = setInterval(() => goToSlide(spActive + 1), 8000);
+document.querySelector('.sp-carousel').addEventListener('mouseenter', () => clearInterval(spTimer));
+document.querySelector('.sp-carousel').addEventListener('mouseleave', () => {
+  spTimer = setInterval(() => goToSlide(spActive + 1), 8000);
+});
+
+// Touch/swipe for social proof
+let spTouchX = null;
+document.querySelector('.sp-carousel__inner').addEventListener('touchstart', e => { spTouchX = e.touches[0].clientX; }, { passive: true });
+document.querySelector('.sp-carousel__inner').addEventListener('touchend', e => {
+  if (!spTouchX) return;
+  const dx = spTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 40) goToSlide(dx > 0 ? spActive + 1 : spActive - 1);
+  spTouchX = null;
+}, { passive: true });
+
+// ── Pillar Accordion (mobile) ───────────────────────────
+document.querySelectorAll('.pillar-accordion-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const body = trigger.nextElementSibling;
+    const isOpen = trigger.classList.contains('open');
+    document.querySelectorAll('.pillar-accordion-trigger').forEach(t => {
+      t.classList.remove('open');
+      t.nextElementSibling.style.maxHeight = null;
+    });
+    if (!isOpen) {
+      trigger.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+const coachTrack = document.getElementById('coachTrack');
+const coachDots = document.querySelectorAll('.coach-carousel__dot');
+let coachActive = 0;
+const coachTotal = 4;
+
+function goToCoach(n) {
+  coachActive = (n + coachTotal) % coachTotal;
+  coachTrack.style.transform = `translateX(-${coachActive * 100}%)`;
+  coachDots.forEach((d, i) => d.classList.toggle('active', i === coachActive));
+}
+
+document.getElementById('coachPrev')?.addEventListener('click', () => goToCoach(coachActive - 1));
+document.getElementById('coachNext')?.addEventListener('click', () => goToCoach(coachActive + 1));
+coachDots.forEach(d => d.addEventListener('click', () => goToCoach(parseInt(d.dataset.c))));
+
+// Touch swipe for coach carousel
+let coachTouchX = null;
+coachTrack?.addEventListener('touchstart', e => { coachTouchX = e.touches[0].clientX; }, { passive: true });
+coachTrack?.addEventListener('touchend', e => {
+  if (!coachTouchX) return;
+  const dx = coachTouchX - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 40) goToCoach(dx > 0 ? coachActive + 1 : coachActive - 1);
+  coachTouchX = null;
+}, { passive: true });
+document.querySelectorAll('.faq-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const body = trigger.nextElementSibling;
+    const isOpen = trigger.classList.contains('open');
+    document.querySelectorAll('.faq-trigger').forEach(t => {
+      t.classList.remove('open');
+      t.nextElementSibling.style.maxHeight = null;
+    });
+    if (!isOpen) {
+      trigger.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+</script>
+
 </body>
 </html>
