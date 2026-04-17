@@ -507,103 +507,66 @@ footer {
   </div>
 </footer>
 
-<!-- Hidden GHL form iframe — processes the actual submission in background -->
-<iframe
-  id="ghlFrame"
-  src="https://api.leadconnectorhq.com/widget/form/Qp0z7CrzUJ9mw4XYNgr0"
-  data-form-id="Qp0z7CrzUJ9mw4XYNgr0"
-  data-layout-iframe-id="inline-Qp0z7CrzUJ9mw4XYNgr0"
-  style="position:absolute;width:0;height:0;border:none;opacity:0;pointer-events:none;overflow:hidden;"
-  tabindex="-1"
-  aria-hidden="true">
-</iframe>
-<script src="https://link.msgsndr.com/js/form_embed.js"></script>
-
 <script>
-const PROXY_URL   = 'https://script.google.com/macros/s/AKfycbzc2q-tI3pAreUZcepv45C6L_2lbbWhlhpxGJlyXWHRyAKaomwuzhWB-LIT31arWYhH1g/exec';
+const PROXY_URL    = 'https://script.google.com/macros/s/AKfycbzaFBPaCbNLt3D9KMNgMfAQ8VoFs1Nrtxl7QyV6663lXQIfcMa4pSekgGgAJj-_EaaoMA/exec';
 const REDIRECT_URL = 'https://strongstandard.com/freebies/blueprint/thank-you/';
 
 const form      = document.getElementById('blueprintForm');
 const submitBtn = document.getElementById('submitBtn');
 const success   = document.getElementById('formSuccess');
-const error     = document.getElementById('formError');
+const errorDiv  = document.getElementById('formError');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Reset states
-  success.style.display = 'none';
-  error.style.display   = 'none';
+  // Reset
+  success.style.display  = 'none';
+  errorDiv.style.display = 'none';
   document.querySelectorAll('.form-group input').forEach(i => i.classList.remove('error'));
 
-  // Validate
+  // Values
   const firstName = document.getElementById('first_name').value.trim();
   const email     = document.getElementById('email').value.trim();
-  const consent   = document.getElementById('consent').checked;
   const phone     = document.getElementById('phone').value.trim();
+  const consent   = document.getElementById('consent').checked;
 
+  // Validate
   let valid = true;
-
-  if (!firstName) {
-    document.getElementById('first_name').classList.add('error');
-    valid = false;
-  }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    document.getElementById('email').classList.add('error');
-    valid = false;
-  }
+  if (!firstName) { document.getElementById('first_name').classList.add('error'); valid = false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('email').classList.add('error'); valid = false; }
   if (!consent) {
-    valid = false;
-    error.style.display = 'block';
-    error.querySelector('.form-state__body').textContent = 'Please accept the consent checkbox to continue.';
+    errorDiv.querySelector('.form-state__body').textContent = 'Please accept the consent checkbox to continue.';
+    errorDiv.style.display = 'block';
     return;
   }
   if (!valid) return;
 
-  // Loading state
+  // Loading
   submitBtn.disabled = true;
-  submitBtn.innerHTML = `
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-    Sending...
-  `;
+  submitBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending...`;
 
   try {
-    // Submit to GHL endpoint
-    const payload = new FormData();
-    payload.append('first_name', firstName);
-    payload.append('email', email);
-    if (phone) payload.append('phone', phone);
-    payload.append('formId', GHL_FORM_ID);
+    await fetch(PROXY_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ first_name: firstName, email, phone }),
+    });
 
-    const response = await fetch(PROXY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name: firstName,
-          email:      email,
-          phone:      phone || '',
-        }),
-      });
-
-    // GHL may return non-200 but still process — show success and redirect
+    // no-cors never throws — assume success, show message and redirect
     success.style.display = 'block';
     form.querySelectorAll('input:not([type=checkbox])').forEach(i => i.value = '');
-
-    // Redirect after 2 seconds, same as GHL native behavior
-    setTimeout(() => {
-      window.location.href = REDIRECT_URL;
-    }, 2000);
+    setTimeout(() => { window.location.href = REDIRECT_URL; }, 2000);
 
   } catch (err) {
-    // Network error fallback
-    console.error('GHL submission error:', err);
-    error.style.display = 'block';
+    console.error(err);
+    errorDiv.querySelector('.form-state__body').textContent = 'Something went wrong. Please try again.';
+    errorDiv.style.display = 'block';
     submitBtn.disabled = false;
     submitBtn.innerHTML = `Get it now <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
   }
 });
 
-// CSS spin animation
 const style = document.createElement('style');
 style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
 document.head.appendChild(style);
