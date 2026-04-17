@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
 <style>
-/* ── VARIABLES ──────────────────────────────────────── */
 :root {
   --navy:        #080D1A;
   --navy-2:      #0D1526;
@@ -20,12 +20,10 @@
   --steel-mid:   #2278AC;
   --steel-light: #3899CC;
   --steel-glow:  rgba(34,120,172,0.18);
-  --ice:         #A8CDE0;
   --white:       #FFFFFF;
   --off-white:   #EEF3F7;
   --muted:       #8A9BB0;
   --faint:       #4A5A6E;
-  --gold:        #C8A96E;
   --success:     #3DD68C;
   --warning:     #E05555;
 
@@ -41,7 +39,6 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
 body {
   font-family: var(--font-body);
   background: var(--navy);
@@ -49,63 +46,50 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
 }
-
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 
-/* ── PAGE WRAPPER ───────────────────────────────────── */
+/* ── PAGE WRAPPER ── */
 .page-section {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 60px 24px 80px;
+  padding: 60px 24px 72px;
 }
-
-/* Grid background */
 .page-section::before {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image:
     linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
   background-size: 60px 60px;
   z-index: 0;
 }
-
 .page-section::after {
   content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,95,138,0.18) 0%, transparent 70%);
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,95,138,0.18) 0%, transparent 70%);
   z-index: 0;
 }
-
-/* Floating glow */
 .bg-glow {
   position: absolute;
-  width: 700px;
-  height: 700px;
+  width: 700px; height: 700px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(34,120,172,0.1) 0%, transparent 70%);
-  top: -10%;
-  left: 50%;
+  top: -10%; left: 50%;
   transform: translateX(-50%);
   animation: floatGlow 8s ease-in-out infinite;
   z-index: 0;
   pointer-events: none;
 }
-
 @keyframes floatGlow {
   0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
   50%       { transform: translateX(-50%) translateY(30px) scale(1.04); }
 }
 
-/* ── INNER CONTENT ──────────────────────────────────── */
+/* ── INNER ── */
 .inner {
   position: relative;
   z-index: 1;
@@ -114,35 +98,23 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
 }
 
-/* ── LOGO ───────────────────────────────────────────── */
+/* ── LOGO ── */
 .logo-wrap {
   margin-bottom: 24px;
   text-align: center;
 }
+.logo-wrap img { height: 24px; width: auto; margin: 0 auto; }
 
-.logo-wrap img {
-  height: 24px;
-  width: auto;
-  margin: 0 auto;
-}
-
-/* ── EYEBROW ────────────────────────────────────────── */
+/* ── EYEBROW ── */
 .eyebrow {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
 }
-
-.eyebrow .line {
-  width: 32px;
-  height: 1px;
-  background: var(--steel-mid);
-}
-
+.eyebrow .line { width: 32px; height: 1px; background: var(--steel-mid); }
 .eyebrow span {
   font-family: var(--font-body);
   font-size: 11px;
@@ -152,7 +124,7 @@ a { text-decoration: none; color: inherit; }
   color: var(--steel-light);
 }
 
-/* ── HEADLINE ───────────────────────────────────────── */
+/* ── HEADLINE ── */
 h1 {
   font-family: var(--font-display);
   font-size: clamp(2.1rem, 4.9vw, 3.85rem);
@@ -162,11 +134,7 @@ h1 {
   text-align: center;
   margin-bottom: 16px;
 }
-
-h1 .accent {
-  color: var(--steel-light);
-  display: block;
-}
+h1 .accent { color: var(--steel-light); display: block; }
 
 .subheadline {
   font-size: 18px;
@@ -177,13 +145,9 @@ h1 .accent {
   font-weight: 300;
   margin-bottom: 44px;
 }
+.subheadline strong { color: var(--off-white); font-weight: 500; }
 
-.subheadline strong {
-  color: var(--off-white);
-  font-weight: 500;
-}
-
-/* ── FORM CARD ──────────────────────────────────────── */
+/* ── FORM CARD ── */
 .form-card {
   width: 100%;
   background: var(--navy-2);
@@ -191,12 +155,8 @@ h1 .accent {
   border-radius: var(--r-lg);
   padding: 40px 40px 36px;
   position: relative;
-  box-shadow:
-    0 8px 32px rgba(0,0,0,0.4),
-    0 0 60px rgba(34,120,172,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 60px rgba(34,120,172,0.08);
 }
-
-/* Top accent line */
 .form-card::before {
   content: '';
   position: absolute;
@@ -205,7 +165,6 @@ h1 .accent {
   background: linear-gradient(90deg, var(--steel), var(--steel-light));
   border-radius: var(--r-lg) var(--r-lg) 0 0;
 }
-
 .form-card__heading {
   font-family: var(--font-body);
   font-size: 15px;
@@ -216,11 +175,8 @@ h1 .accent {
   letter-spacing: 0.01em;
 }
 
-/* ── FORM FIELDS ────────────────────────────────────── */
-.form-group {
-  margin-bottom: 16px;
-}
-
+/* ── FIELDS ── */
+.form-group { margin-bottom: 16px; }
 .form-group input {
   width: 100%;
   background: var(--navy-3);
@@ -236,19 +192,18 @@ h1 .accent {
   -webkit-appearance: none;
   appearance: none;
 }
-
-.form-group input::placeholder {
-  color: var(--faint);
-  font-weight: 300;
-}
-
+.form-group input::placeholder { color: var(--faint); font-weight: 300; }
 .form-group input:focus {
   border-color: rgba(34,120,172,0.55);
   box-shadow: 0 0 0 3px rgba(34,120,172,0.12);
   background: var(--navy-4);
 }
+.form-group input.error {
+  border-color: rgba(224,85,85,0.5);
+  box-shadow: 0 0 0 3px rgba(224,85,85,0.1);
+}
 
-/* Submit button */
+/* ── SUBMIT BUTTON ── */
 .btn-submit {
   display: flex;
   align-items: center;
@@ -269,59 +224,72 @@ h1 .accent {
   box-shadow: 0 0 30px rgba(34,120,172,0.35);
   transition: all 0.22s ease;
 }
-
-.btn-submit:hover {
+.btn-submit:hover:not(:disabled) {
   background: var(--steel-light);
   transform: translateY(-2px);
   box-shadow: 0 0 50px rgba(56,153,204,0.45);
 }
-
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
 .btn-submit svg { flex-shrink: 0; }
 
-/* ── CONSENT + LINKS ────────────────────────────────── */
+/* ── STATES ── */
+.form-state {
+  display: none;
+  text-align: center;
+  padding: 16px;
+  border-radius: var(--r-md);
+  margin-top: 16px;
+  font-size: 14px;
+}
+.form-state--success {
+  background: rgba(61,214,140,0.08);
+  border: 1px solid rgba(61,214,140,0.25);
+  color: var(--success);
+}
+.form-state--error {
+  background: rgba(224,85,85,0.08);
+  border: 1px solid rgba(224,85,85,0.2);
+  color: var(--warning);
+}
+.form-state__icon { font-size: 24px; margin-bottom: 6px; }
+.form-state__title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.form-state__body { font-size: 13px; color: var(--muted); }
+
+/* ── CONSENT ── */
 .consent-row {
   display: flex;
   gap: 10px;
   align-items: flex-start;
   margin-top: 20px;
 }
-
 .consent-row input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 16px; height: 16px;
   min-width: 16px;
-  min-height: 16px;
   margin-top: 2px;
   accent-color: var(--steel-mid);
   cursor: pointer;
   flex-shrink: 0;
 }
-
 .consent-row label {
   font-size: 12px;
   color: var(--faint);
   line-height: 1.5;
   cursor: pointer;
 }
-
 .policy-links {
   text-align: center;
   margin-top: 16px;
   font-size: 12px;
   color: var(--faint);
 }
+.policy-links a { color: var(--steel-light); transition: color 0.2s; }
+.policy-links a:hover { color: var(--white); text-decoration: underline; }
 
-.policy-links a {
-  color: var(--steel-light);
-  transition: color 0.2s;
-}
-
-.policy-links a:hover {
-  color: var(--white);
-  text-decoration: underline;
-}
-
-/* ── TRUST BULLETS ──────────────────────────────────── */
+/* ── TRUST BULLETS ── */
 .trust-bullets {
   display: flex;
   flex-wrap: wrap;
@@ -329,7 +297,6 @@ h1 .accent {
   gap: 10px 28px;
   margin-top: 36px;
 }
-
 .trust-bullet {
   display: flex;
   align-items: center;
@@ -338,27 +305,9 @@ h1 .accent {
   color: var(--muted);
   font-weight: 500;
 }
-
 .trust-bullet svg { color: var(--success); flex-shrink: 0; }
 
-/* ── DIVIDER ────────────────────────────────────────── */
-.divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
-  margin: 44px 0 0;
-}
-
-/* ── FOOTER ─────────────────────────────────────────── */
-.footer-note {
-  margin-top: 28px;
-  font-size: 12px;
-  color: var(--faint);
-  text-align: center;
-  line-height: 1.6;
-}
-
-/* ── FOOTER ─────────────────────────────────────────── */
+/* ── FOOTER ── */
 footer {
   background: var(--navy-2);
   border-top: 1px solid rgba(34,120,172,0.15);
@@ -379,31 +328,16 @@ footer {
   color: var(--faint);
   margin-top: 12px;
 }
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  flex-wrap: nowrap;
-}
-.footer-links a {
-  font-size: 13px;
-  color: var(--muted);
-  transition: color 0.2s;
-}
+.footer-links { display: flex; align-items: center; gap: 28px; }
+.footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
 .footer-links a:hover { color: var(--white); }
-.footer-socials {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-}
+.footer-socials { display: flex; gap: 16px; }
 .social-icon {
   width: 38px; height: 38px;
   border-radius: 50%;
   background: rgba(34,120,172,0.1);
   border: 1px solid rgba(34,120,172,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   color: var(--muted);
   transition: all 0.2s;
 }
@@ -422,23 +356,32 @@ footer {
 }
 .footer__copy { font-size: 13px; color: var(--faint); }
 
+/* ── RESPONSIVE ── */
 @media (max-width: 960px) {
   .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
+  .footer-links { flex-wrap: wrap; gap: 16px; }
   .footer-socials { justify-content: flex-start; }
 }
-
-/* ── RESPONSIVE ─────────────────────────────────────── */
-@media (max-width: 560px) {
-  .page-section { padding: 60px 20px; }
-  .form-card { padding: 32px 24px 28px; }
-  h1 { font-size: clamp(2.8rem, 9vw, 4rem); }
-  .subheadline { font-size: 16px; margin-bottom: 32px; }
-  .logo-wrap img { height: 24px; }
-  .trust-bullets { gap: 8px 16px; }
+@media (max-width: 640px) {
+  .page-section { padding: 48px 20px 56px; }
+  .form-card { padding: 28px 20px 24px; }
+  h1 { font-size: clamp(2.4rem, 9vw, 3.2rem); }
+  h1 .accent { font-size: clamp(2.6rem, 10vw, 3.5rem); }
+  .subheadline { font-size: 15px; margin-bottom: 28px; }
+  .logo-wrap { margin-bottom: 16px; }
+  .eyebrow { margin-bottom: 14px; }
+  .form-card__heading { font-size: 14px; margin-bottom: 20px; }
+  .form-group input { padding: 13px 16px; font-size: 16px; }
+  .btn-submit { font-size: 15px; padding: 15px 28px; }
+  .trust-bullets { gap: 8px 16px; flex-direction: column; align-items: center; }
+  footer { padding: 36px 20px 24px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 24px; }
+  .footer-links { flex-wrap: wrap; gap: 12px; }
+  .footer-socials { justify-content: flex-start; }
+  .footer__copy { font-size: 12px; }
+  .footer__bottom { justify-content: center; padding-top: 16px; }
 }
 </style>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 
@@ -447,75 +390,59 @@ footer {
 
   <div class="inner">
 
-    <!-- Logo -->
     <div class="logo-wrap">
-      <img
-        src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png"
-        alt="Strong Standard"
-      >
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard">
     </div>
 
-    <!-- Eyebrow -->
     <div class="eyebrow">
       <span class="line"></span>
       <span>Free Download</span>
       <span class="line"></span>
     </div>
 
-    <!-- Headline -->
     <h1>
       The Strong Standard
       <span class="accent">Blueprint</span>
     </h1>
 
-    <!-- Subheadline -->
     <p class="subheadline">
       Learn the <strong>science-backed nutrition, exercise, and lifestyle principles</strong>
       to help you lose fat, build muscle, and transform your body for life.
     </p>
 
-    <!-- Form Card -->
     <div class="form-card">
       <p class="form-card__heading">Enter your name and email below to download for free</p>
 
-      <form action="#" method="post" onsubmit="return false;">
+      <form id="blueprintForm" novalidate>
 
         <div class="form-group">
-          <input
-            type="text"
-            name="first_name"
-            id="first_name"
-            placeholder="First Name *"
-            autocomplete="given-name"
-            required
-          >
+          <input type="text" name="first_name" id="first_name" placeholder="First Name *" autocomplete="given-name" required>
         </div>
 
         <div class="form-group">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email Address *"
-            required
-            autocomplete="email"
-          >
+          <input type="email" name="email" id="email" placeholder="Email Address *" autocomplete="email" required>
         </div>
 
         <div class="form-group">
-          <input
-            type="tel"
-            name="phone"
-            id="phone"
-            placeholder="Phone Number (Optional)"
-            autocomplete="tel"
-          >
+          <input type="tel" name="phone" id="phone" placeholder="Phone Number (Optional)" autocomplete="tel">
         </div>
 
-        <button type="submit" class="btn-submit">
+        <button type="submit" class="btn-submit" id="submitBtn">
           Get it now
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
+
+        <!-- Success -->
+        <div class="form-state form-state--success" id="formSuccess">
+          <div class="form-state__icon">✓</div>
+          <div class="form-state__title">You are in!</div>
+          <div class="form-state__body">Check your inbox. Your Blueprint is on its way.</div>
+        </div>
+
+        <!-- Error -->
+        <div class="form-state form-state--error" id="formError">
+          <div class="form-state__body">Something went wrong. Please try again.</div>
+        </div>
 
         <div class="consent-row">
           <input type="checkbox" id="consent" name="consent" required>
@@ -526,15 +453,14 @@ footer {
         </div>
 
         <p class="policy-links">
-          <a href="https://drjoeymunoz.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="https://strongstandard.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
           &nbsp;|&nbsp;
-          <a href="https://drjoeymunoz.com/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
+          <a href="https://strongstandard.com/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
         </p>
 
       </form>
     </div>
 
-    <!-- Trust bullets -->
     <div class="trust-bullets">
       <div class="trust-bullet">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
@@ -553,9 +479,6 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════════════════ -->
 <footer>
   <div class="footer__inner">
     <div class="footer-brand">
@@ -563,18 +486,18 @@ footer {
       <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
     </div>
     <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Contact</a>
+      <a href="https://strongstandard.com/privacy-policy">Privacy Policy</a>
+      <a href="https://strongstandard.com/terms-of-service">Terms of Service</a>
+      <a href="mailto:support@strongstandard.com">Contact</a>
     </div>
     <div class="footer-socials">
-      <a href="#" class="social-icon" aria-label="Instagram">
+      <a href="https://www.instagram.com/dr.joeymunoz" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       </a>
-      <a href="#" class="social-icon" aria-label="YouTube">
+      <a href="https://www.youtube.com/@drjoeymunoz" target="_blank" rel="noopener" class="social-icon" aria-label="YouTube">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
       </a>
-      <a href="#" class="social-icon" aria-label="Spotify">
+      <a href="https://open.spotify.com/show/drjoeymunoz" target="_blank" rel="noopener" class="social-icon" aria-label="Podcast">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
       </a>
     </div>
@@ -583,6 +506,108 @@ footer {
     <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
   </div>
 </footer>
+
+<!-- Hidden GHL form iframe — processes the actual submission in background -->
+<iframe
+  id="ghlFrame"
+  src="https://api.leadconnectorhq.com/widget/form/Qp0z7CrzUJ9mw4XYNgr0"
+  data-form-id="Qp0z7CrzUJ9mw4XYNgr0"
+  data-layout-iframe-id="inline-Qp0z7CrzUJ9mw4XYNgr0"
+  style="position:absolute;width:0;height:0;border:none;opacity:0;pointer-events:none;overflow:hidden;"
+  tabindex="-1"
+  aria-hidden="true">
+</iframe>
+<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+<script>
+const PROXY_URL   = 'https://script.google.com/macros/s/AKfycbzc2q-tI3pAreUZcepv45C6L_2lbbWhlhpxGJlyXWHRyAKaomwuzhWB-LIT31arWYhH1g/exec';
+const REDIRECT_URL = 'https://strongstandard.com/freebies/blueprint/thank-you/';
+
+const form      = document.getElementById('blueprintForm');
+const submitBtn = document.getElementById('submitBtn');
+const success   = document.getElementById('formSuccess');
+const error     = document.getElementById('formError');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Reset states
+  success.style.display = 'none';
+  error.style.display   = 'none';
+  document.querySelectorAll('.form-group input').forEach(i => i.classList.remove('error'));
+
+  // Validate
+  const firstName = document.getElementById('first_name').value.trim();
+  const email     = document.getElementById('email').value.trim();
+  const consent   = document.getElementById('consent').checked;
+  const phone     = document.getElementById('phone').value.trim();
+
+  let valid = true;
+
+  if (!firstName) {
+    document.getElementById('first_name').classList.add('error');
+    valid = false;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('email').classList.add('error');
+    valid = false;
+  }
+  if (!consent) {
+    valid = false;
+    error.style.display = 'block';
+    error.querySelector('.form-state__body').textContent = 'Please accept the consent checkbox to continue.';
+    return;
+  }
+  if (!valid) return;
+
+  // Loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+    Sending...
+  `;
+
+  try {
+    // Submit to GHL endpoint
+    const payload = new FormData();
+    payload.append('first_name', firstName);
+    payload.append('email', email);
+    if (phone) payload.append('phone', phone);
+    payload.append('formId', GHL_FORM_ID);
+
+    const response = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name: firstName,
+          email:      email,
+          phone:      phone || '',
+        }),
+      });
+
+    // GHL may return non-200 but still process — show success and redirect
+    success.style.display = 'block';
+    form.querySelectorAll('input:not([type=checkbox])').forEach(i => i.value = '');
+
+    // Redirect after 2 seconds, same as GHL native behavior
+    setTimeout(() => {
+      window.location.href = REDIRECT_URL;
+    }, 2000);
+
+  } catch (err) {
+    // Network error fallback
+    console.error('GHL submission error:', err);
+    error.style.display = 'block';
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = `Get it now <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+  }
+});
+
+// CSS spin animation
+const style = document.createElement('style');
+style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+document.head.appendChild(style);
+</script>
 
 </body>
 </html>
