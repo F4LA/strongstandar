@@ -1,0 +1,31 @@
+name: Inject GHL Tracking
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Inject tracking script into all HTML files
+        run: |
+          SCRIPT='<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>'
+          for file in $(find . -name "*.html"); do
+            if ! grep -q "external-tracking.js" "$file"; then
+              sed -i "s|</head>|$SCRIPT\n</head>|" "$file"
+              echo "Injected tracking into $file"
+            else
+              echo "Already has tracking: $file"
+            fi
+          done
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Auto-inject GHL tracking script"
+          git push
