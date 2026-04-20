@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/scripts/utm-persist.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're In! | Lean & Strong 21 Day Challenge</title>
+<meta name="description" content="Welcome to Fit4Life Academy's 21 Day Lean & Strong Challenge. Check your email for next steps.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --success:     #3DD68C;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --r-full: 9999px;
+  --r-lg: 20px;
+  --r-md: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--off-white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-size: 17px;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* NAV */
+nav {
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(34,120,172,0.1);
+  background: rgba(8,13,26,0.98);
+}
+
+/* MAIN */
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+}
+main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 40%, rgba(26,95,138,0.18) 0%, transparent 70%);
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-lg);
+  padding: 56px 60px;
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: linear-gradient(90deg, transparent, var(--steel-mid), transparent);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.emoji {
+  font-size: 3.2rem;
+  margin-bottom: 24px;
+  animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+}
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.card h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.card h1 .accent { color: var(--steel-light); }
+
+.card .subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+  margin: 28px 0;
+}
+
+.card p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.75;
+  font-weight: 300;
+}
+.card p strong { color: var(--off-white); font-weight: 500; }
+.card p a {
+  color: var(--steel-light);
+  border-bottom: 1px solid rgba(56,153,204,0.3);
+  transition: border-color 0.2s;
+}
+.card p a:hover { border-color: var(--steel-light); }
+
+.check-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(61,214,140,0.08);
+  border: 1px solid rgba(61,214,140,0.25);
+  border-radius: var(--r-full);
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--success);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.check-badge svg { flex-shrink: 0; }
+
+/* FOOTER */
+footer {
+  padding: 28px 40px;
+  text-align: center;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  background: var(--navy-2);
+}
+footer p { font-size: 13px; color: var(--faint); }
+
+@media (max-width: 600px) {
+  nav { padding: 16px 20px; }
+  .card { padding: 40px 28px; }
+  main { padding: 48px 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/21-day-challenge/">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png"
+         alt="Fit4Life Academy" style="height:22px;width:auto;">
+  </a>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="emoji">🎉</div>
+
+    <div class="check-badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+      Registration Confirmed
+    </div>
+
+    <h1>It's Official<br><span class="accent">You're In!</span></h1>
+    <p class="subtitle">Lean &amp; Strong 21 Day Challenge</p>
+
+    <div class="divider"></div>
+
+    <p>
+      Welcome to <strong>Fit4Life Academy's 21 Day Lean &amp; Strong Challenge.</strong> We look forward to being part of your health and fitness journey.
+    </p>
+
+    <div class="divider"></div>
+
+    <p>
+      Please check your <strong>email inbox</strong> for instructions on how to download our app and get started. If for some reason you did not receive an email invite, please reach out to us at <a href="mailto:support@fit4lifeacademy.health">support@fit4lifeacademy.health</a>
+    </p>
+  </div>
+</main>
+
+<footer>
+  <p>Copyright 2026 Fit4Life Academy. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
