@@ -372,66 +372,41 @@ h1, h2 { font-family: var(--font-display); line-height: 1; letter-spacing: 0.02e
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #000;
+  background: var(--navy-3);
   cursor: pointer;
+  overflow: hidden;
 }
-.vt-card__embed iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
+.vt-card__thumb {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
 }
-.vt-card__embed video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.vt-card__play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.25); transition: background 0.2s;
 }
-.vt-play-btn {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.30);
-  transition: background 0.2s ease;
-  z-index: 2;
+.vt-card__embed:hover .vt-card__play-overlay { background: rgba(0,0,0,0.38); }
+.vt-card__play-btn {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(34,120,172,0.85);
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, background 0.2s;
 }
-.vt-card__embed:hover .vt-play-btn {
-  background: rgba(0,0,0,0.15);
+.vt-card__embed:hover .vt-card__play-btn { transform: scale(1.08); background: rgba(34,120,172,1); }
+.vt-card__player {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: none;
 }
-.vt-play-btn__circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.35);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.vt-card__embed:hover .vt-play-btn__circle {
-  transform: scale(1.1);
-  background: #fff;
-}
-.vt-play-btn__circle svg {
-  width: 26px;
-  height: 26px;
-  margin-left: 4px;
-  fill: var(--navy-1, #0a1628);
-}
-.vt-card__embed.playing .vt-play-btn { display: none; }
+.vt-card__embed.playing .vt-card__play-overlay,
+.vt-card__embed.playing .vt-card__thumb { display: none; }
+.vt-card__embed.playing .vt-card__player { display: block; }
 .vt-card__label {
-  padding: 14px 20px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  border-top: 1px solid rgba(34,120,172,0.12);
+  padding: 12px 16px;
+}
+.vt-card__result {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(61,214,140,0.08); border: 1px solid rgba(61,214,140,0.2);
+  border-radius: 999px; padding: 5px 12px;
+  font-size: 14px; font-weight: 600; color: var(--success, #3dd68c);
 }
 .vt-card__label strong { color: var(--off-white); display: block; font-size: 14px; margin-bottom: 2px; }
 
@@ -751,55 +726,71 @@ footer {
 
     <div class="vt-grid">
       <div class="vt-card reveal">
-        <div class="vt-card__embed" onclick="playVideo(this)">
-          <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69d7dd9193f130b200007cc9.mp4" preload="metadata" playsinline></video>
-          <div class="vt-play-btn">
-            <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+        <div class="vt-card__embed vt-video" onclick="playVtVideo(this)">
+          <img class="vt-card__thumb" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_900/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/68c321373164e94236feefec.png" alt="Down 56 lbs in under 12 months and stronger than ever at 62" loading="lazy">
+          <div class="vt-card__play-overlay">
+            <div class="vt-card__play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
+          <video class="vt-card__player" controls src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/68bf03c2c6b33b7d9be14964.mp4"></video>
         </div>
         <div class="vt-card__label">
-          <strong>Gained 20 Pounds of Muscle and Finally Built a Body He's Proud Of</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Down 56 lbs in under 12 months and stronger than ever at 62
+          </div>
         </div>
       </div>
       <div class="vt-card reveal" style="transition-delay:0.1s">
-        <div class="vt-card__embed" onclick="playVideo(this)">
-          <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6867ebaf84ceee716cc22a7f.mp4" preload="metadata" playsinline></video>
-          <div class="vt-play-btn">
-            <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+        <div class="vt-card__embed vt-video" onclick="playVtVideo(this)">
+          <img class="vt-card__thumb" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_900/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/68c3213739539561bdcd9eca.png" alt="Down 14 lbs to her lowest weight in 18 years" loading="lazy">
+          <div class="vt-card__play-overlay">
+            <div class="vt-card__play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
+          <video class="vt-card__player" controls src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/689b8ac6b52daebf8947cd53.mp4"></video>
         </div>
         <div class="vt-card__label">
-          <strong>Lost 10kg of Fat, Rebuilt His Strength, and Finally Took Control of His Health</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Down 14 lbs to her lowest weight in 18 years
+          </div>
         </div>
       </div>
       <div class="vt-card reveal" style="transition-delay:0.15s">
-        <div class="vt-card__embed" onclick="playVideo(this)">
-          <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69d7d9db9bcdf086d1e04301.mp4" preload="metadata" playsinline></video>
-          <div class="vt-play-btn">
-            <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+        <div class="vt-card__embed vt-video" onclick="playVtVideo(this)">
+          <img class="vt-card__thumb" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_900/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/transcoded_videos/48cbe17ffd699b38.jpg" alt="Down 13 lbs in 9 weeks and no longer ends the day exhausted" loading="lazy">
+          <div class="vt-card__play-overlay">
+            <div class="vt-card__play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
+          <video class="vt-card__player" controls src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/6813fe0cce8c974b8337ddde.mov"></video>
         </div>
         <div class="vt-card__label">
-          <strong>Balance A Busy Career, Family, and Fitness to Achieve His Dream Physique</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Down 13 lbs in 9 weeks and no longer ends the day exhausted
+          </div>
         </div>
       </div>
       <div class="vt-card reveal" style="transition-delay:0.2s">
-        <div class="vt-card__embed" onclick="playVideo(this)">
-          <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e782fd229beab4e36f7bbe.mp4" preload="metadata" playsinline></video>
-          <div class="vt-play-btn">
-            <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+        <div class="vt-card__embed vt-video" onclick="playVtVideo(this)">
+          <img class="vt-card__thumb" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_900/u_https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/transcoded_videos/b1acd61d97a0a4cd.jpg" alt="Down 25 lbs in 6 months and finally built habits to keep it off" loading="lazy">
+          <div class="vt-card__play-overlay">
+            <div class="vt-card__play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
+          <video class="vt-card__player" controls src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/67ed9601585902ffa97c6223.mp4"></video>
         </div>
         <div class="vt-card__label">
-          <strong>Broke Free from 15 Years of Yo-Yo Dieting and Reclaimed Her Health in Just 6 Weeks</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Down 25 lbs in 6 months and finally built habits to keep it off
+          </div>
         </div>
       </div>
     </div>
@@ -873,11 +864,10 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Testimonial videos
-function playVideo(wrapper) {
-  const video = wrapper.querySelector('video');
-  wrapper.classList.add('playing');
-  video.controls = true;
-  video.play();
+function playVtVideo(el) {
+  el.classList.add('playing');
+  const video = el.querySelector('video.vt-card__player');
+  if (video) { video.play(); }
 }
 </script>
 
