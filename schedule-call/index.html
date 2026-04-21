@@ -595,43 +595,43 @@ h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.30);
+  background: rgba(0,0,0,0.25);
   transition: background 0.2s ease;
   z-index: 2;
 }
 .vt-card__embed:hover .vt-play-btn {
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.38);
 }
 .vt-play-btn__circle {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.92);
+  background: rgba(34,120,172,0.85);
+  border: 2px solid rgba(255,255,255,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.35);
   transition: transform 0.2s ease, background 0.2s ease;
 }
 .vt-card__embed:hover .vt-play-btn__circle {
-  transform: scale(1.1);
-  background: #fff;
+  transform: scale(1.08);
+  background: rgba(34,120,172,1);
 }
 .vt-play-btn__circle svg {
-  width: 26px;
-  height: 26px;
-  margin-left: 4px;
-  fill: var(--navy-1, #0a1628);
+  width: 22px;
+  height: 22px;
+  fill: white;
 }
 .vt-card__embed.playing .vt-play-btn { display: none; }
 .vt-card__label {
-  padding: 14px 20px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  border-top: 1px solid rgba(34,120,172,0.12);
+  padding: 12px 16px;
 }
-.vt-card__label strong { color: var(--off-white); display: block; font-size: 14px; margin-bottom: 2px; }
+.vt-card__result {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(61,214,140,0.08); border: 1px solid rgba(61,214,140,0.2);
+  border-radius: 999px; padding: 5px 12px;
+  font-size: 14px; font-weight: 600; color: var(--success, #3dd68c);
+}
 
 /* ── FINAL CTA ── */
 .final-cta {
@@ -1116,12 +1116,15 @@ footer {
           <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69d7dd9193f130b200007cc9.mp4" preload="metadata" playsinline></video>
           <div class="vt-play-btn">
             <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
         </div>
         <div class="vt-card__label">
-          <strong>Gained 20 Pounds of Muscle and Finally Built a Body He's Proud Of</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Gained 20 Pounds of Muscle and Finally Built a Body He's Proud Of
+          </div>
         </div>
       </div>
       <div class="vt-card reveal" style="transition-delay:0.1s">
@@ -1129,12 +1132,15 @@ footer {
           <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6867ebaf84ceee716cc22a7f.mp4" preload="metadata" playsinline></video>
           <div class="vt-play-btn">
             <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
         </div>
         <div class="vt-card__label">
-          <strong>Lost 10kg of Fat, Rebuilt His Strength, and Finally Took Control of His Health</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Lost 10kg of Fat, Rebuilt His Strength, and Finally Took Control of His Health
+          </div>
         </div>
       </div>
       <div class="vt-card reveal" style="transition-delay:0.15s">
@@ -1142,12 +1148,15 @@ footer {
           <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69d7d9db9bcdf086d1e04301.mp4" preload="metadata" playsinline></video>
           <div class="vt-play-btn">
             <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
         </div>
         <div class="vt-card__label">
-          <strong>Balance A Busy Career, Family, and Fitness to Achieve His Dream Physique</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Balance A Busy Career, Family, and Fitness to Achieve His Dream Physique
+          </div>
         </div>
       </div>
       <div class="vt-card reveal" style="transition-delay:0.2s">
@@ -1155,12 +1164,15 @@ footer {
           <video src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e782fd229beab4e36f7bbe.mp4" preload="metadata" playsinline></video>
           <div class="vt-play-btn">
             <div class="vt-play-btn__circle">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 20,12 6,21"/></svg>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
         </div>
         <div class="vt-card__label">
-          <strong>Broke Free from 15 Years of Yo-Yo Dieting and Reclaimed Her Health in Just 6 Weeks</strong>
+          <div class="vt-card__result">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Broke Free from 15 Years of Yo-Yo Dieting and Reclaimed Her Health in Just 6 Weeks
+          </div>
         </div>
       </div>
     </div>
