@@ -669,49 +669,71 @@
 <footer>Strong Standard Coaching &nbsp;&middot;&nbsp; 21DC Launch Checklist</footer>
 
 <script>
-  const STORAGE_KEY = '21dc_checklist';
+  const SUPABASE_URL = 'https://akrxgohrlpiprqwnhkzc.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_k5qrLybTNeW3F8N3u9uTpg_ZXymerMh';
+  const API = `${SUPABASE_URL}/rest/v1/checklist`;
+  const HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'resolution=merge-duplicates'
+  };
 
-  function getState() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  // ── READ ──────────────────────────────────────────────────
+  async function loadFromDB() {
+    try {
+      const res = await fetch(`${API}?select=key,value`, { headers: HEADERS });
+      const rows = await res.json();
+      const map = {};
+      rows.forEach(r => { map[r.key] = r.value || ''; });
+
+      ['kickoff_date','kickoff_zoom','kickoff_gcal',
+       'closing_date','closing_zoom','closing_gcal',
+       'clarity_zoom','clarity_notes'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
+      });
+
+      if (map.checks && map.checks.trim()) {
+        const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
+        const els = document.querySelectorAll('.task, .subtask');
+        indices.forEach(i => { if (els[i]) els[i].classList.add('done'); });
+      }
+      updateProgress();
+    } catch(e) { console.warn('DB read error:', e); }
   }
-  function saveState(state) { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+  // ── WRITE ─────────────────────────────────────────────────
+  let writeTimers = {};
+  function saveField(id) {
+    const val = document.getElementById(id).value;
+    clearTimeout(writeTimers[id]);
+    writeTimers[id] = setTimeout(() => writeToDB(id, val), 800);
+  }
 
   function saveChecks() {
-    const state = getState();
-    state.checks = [];
+    const indices = [];
     document.querySelectorAll('.task, .subtask').forEach((el, i) => {
-      if (el.classList.contains('done')) state.checks.push(i);
+      if (el.classList.contains('done')) indices.push(i);
     });
-    saveState(state);
+    clearTimeout(writeTimers['checks']);
+    writeTimers['checks'] = setTimeout(() => writeToDB('checks', indices.join(',')), 500);
   }
 
-  function loadChecks() {
-    const { checks } = getState();
-    if (!checks) return;
-    const els = document.querySelectorAll('.task, .subtask');
-    checks.forEach(i => { if (els[i]) els[i].classList.add('done'); });
+  async function writeToDB(key, value) {
+    try {
+      await fetch(API, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({ key, value })
+      });
+    } catch(e) { console.warn('DB write error:', e); }
   }
 
-  function saveField(id) {
-    const state = getState();
-    if (!state.fields) state.fields = {};
-    state.fields[id] = document.getElementById(id).value;
-    saveState(state);
-  }
-
-  function loadFields() {
-    const { fields } = getState();
-    if (!fields) return;
-    Object.entries(fields).forEach(([id, val]) => {
-      const el = document.getElementById(id);
-      if (el) el.value = val;
-    });
-  }
-
+  // ── TOGGLE ────────────────────────────────────────────────
   function toggle(el) {
     const isDone = !el.classList.contains('done');
     el.classList.toggle('done');
-    // Auto-check/uncheck subtasks that immediately follow this task
     let next = el.nextElementSibling;
     while (next && next.classList.contains('subtasks')) {
       next.querySelectorAll('.subtask').forEach(sub => {
@@ -726,6 +748,7 @@
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function toggleCohort() { document.getElementById('cohortPanel').classList.toggle('collapsed'); }
 
+  // ── PROGRESS ──────────────────────────────────────────────
   function updateProgress() {
     const all  = document.querySelectorAll('.task, .subtask');
     const done = document.querySelectorAll('.task.done, .subtask.done');
@@ -743,19 +766,30 @@
     });
   }
 
-  function confirmReset() {
+  // ── RESET ─────────────────────────────────────────────────
+  async function confirmReset() {
     if (!confirm('Reset everything for a new challenge? This will clear all checks, dates, and links.')) return;
-    localStorage.removeItem(STORAGE_KEY);
     document.querySelectorAll('.task.done, .subtask.done').forEach(el => el.classList.remove('done'));
-    ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes']
-      .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal',
+                    'closing_date','closing_zoom','closing_gcal',
+                    'clarity_zoom','clarity_notes'];
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = id === 'clarity_zoom'
+        ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
+    });
     document.getElementById('cohortPanel').classList.remove('collapsed');
     updateProgress();
+    const resets = [...fields.map(k => ({
+      key: k,
+      value: k === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : ''
+    })), { key: 'checks', value: '' }];
+    for (const row of resets) await writeToDB(row.key, row.value);
   }
 
-  loadChecks();
-  loadFields();
+  // ── INIT ──────────────────────────────────────────────────
   updateProgress();
+  loadFromDB();
 </script>
 </body>
 </html>
