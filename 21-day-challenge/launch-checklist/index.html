@@ -129,18 +129,19 @@
 
   /* PHASE */
   .phase {
-    margin-bottom: 40px;
+    margin-bottom: 8px;
     border-radius: 14px;
     box-shadow: 0 2px 16px rgba(15,35,64,0.07);
     background: var(--white);
     border: 1px solid var(--border);
     transition: box-shadow 0.2s;
+    overflow: hidden;
   }
-  .phase.collapsed {
-    box-shadow: none;
-    border-color: transparent;
-    background: transparent;
-    margin-bottom: 4px;
+  .phase:not(.collapsed) {
+    margin-bottom: 40px;
+  }
+  .phase:hover:not(.collapsed) {
+    box-shadow: 0 4px 28px rgba(15,35,64,0.11);
   }
 
   .phase-header {
@@ -151,10 +152,6 @@
     cursor: pointer;
     user-select: none;
     position: relative;
-    border-radius: 14px;
-  }
-  .phase:not(.collapsed) .phase-header {
-    border-radius: 14px 14px 0 0;
   }
   .phase-num {
     font-size: 11px;
