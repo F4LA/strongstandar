@@ -430,6 +430,113 @@
     .phase.collapsed .phase-body { max-height: none !important; opacity: 1 !important; padding-bottom: 24px !important; }
     .reset-btn { display: none; }
   }
+
+  /* WHO ARE YOU MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10,25,47,0.85);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+  }
+  .modal-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  }
+  .modal-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px; color: var(--navy); margin-bottom: 8px;
+  }
+  .modal-sub {
+    font-size: 14px; color: var(--muted); margin-bottom: 32px;
+  }
+  .modal-btns { display: flex; gap: 12px; }
+  .modal-btn {
+    flex: 1; padding: 14px 20px;
+    border-radius: 10px; border: 2px solid var(--border);
+    background: var(--off-white); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    font-weight: 600; color: var(--navy);
+    transition: all 0.2s;
+  }
+  .modal-btn:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .modal-btn.primary { background: var(--navy); color: white; border-color: var(--navy); }
+  .modal-btn.primary:hover { background: var(--steel); border-color: var(--steel); }
+
+  /* USER BADGE */
+  .user-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1); border-radius: 999px;
+    padding: 6px 14px; font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,0.7); cursor: pointer;
+    transition: background 0.2s; margin-top: 16px;
+  }
+  .user-badge:hover { background: rgba(255,255,255,0.18); }
+
+  /* BERNARDO SECTION */
+  .bernardo-wrap { display: none; }
+  .bernardo-wrap.active { display: block; }
+  .joey-wrap { display: block; }
+  .joey-wrap.hidden { display: none; }
+
+  .bernardo-header {
+    background: linear-gradient(135deg, #1a3a2a, #2d6a4f);
+    border-radius: 14px; padding: 28px 32px; margin-bottom: 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  }
+  .bernardo-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px; color: white; margin-bottom: 4px;
+  }
+  .bernardo-header p { font-size: 14px; color: rgba(255,255,255,0.5); }
+  .bernardo-progress-wrap {
+    background: rgba(255,255,255,0.1); border-radius: 999px;
+    height: 5px; margin-top: 16px; overflow: hidden;
+  }
+  .bernardo-progress-bar {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, #52b788, #95d5b2);
+    transition: width 0.4s ease; width: 0%;
+  }
+  .bernardo-progress-label {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    margin-top: 8px; font-weight: 500;
+  }
+  .bernardo-progress-label span { color: #95d5b2; font-weight: 600; }
+
+  .b-phase {
+    margin-bottom: 12px; border-radius: 14px;
+    overflow: hidden; background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 16px rgba(15,35,64,0.07);
+  }
+  .b-phase:not(.collapsed) { margin-bottom: 32px; }
+  .b-phase-header {
+    padding: 18px 24px; display: flex; align-items: center; gap: 12px;
+    cursor: pointer; user-select: none;
+    background: linear-gradient(135deg, #1a3a2a, #2d6a4f);
+  }
+  .b-phase-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px; color: white; flex: 1;
+  }
+  .b-phase-body {
+    padding: 0 24px 20px; overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s, padding 0.3s;
+    max-height: 1000px; opacity: 1;
+  }
+  .b-phase.collapsed .b-phase-body { max-height: 0; opacity: 0; padding-bottom: 0; }
+  .b-phase.collapsed .phase-toggle svg { transform: rotate(-90deg); }
 </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
@@ -448,6 +555,7 @@
 </div>
 
 <div class="container">
+  <div class="joey-wrap" id="joeyWrap">
 
   <!-- COHORT REFERENCE -->
   <div class="cohort-panel" id="cohortPanel">
@@ -655,6 +763,79 @@
       <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome email arrives with correct dates and links</div></div>
       <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call reminder sequence is active</div></div>
     </div>
+
+  </div><!-- end joey-wrap -->
+
+  <!-- BERNARDO SECTION -->
+  <div class="bernardo-wrap" id="bernardoWrap">
+    <div class="bernardo-header">
+      <h2>Bernardo's Checklist</h2>
+      <p>Tasks to complete before each 21DC launch</p>
+      <div class="bernardo-progress-wrap">
+        <div class="bernardo-progress-bar" id="bProgressBar"></div>
+      </div>
+      <div class="bernardo-progress-label"><span id="bDoneCount">0</span> of <span id="bTotalCount">0</span> tasks completed</div>
+    </div>
+
+    <div class="b-phase collapsed" id="bphase1">
+      <div class="b-phase-header" onclick="toggleBPhase('bphase1')">
+        <div class="b-phase-title">App &amp; Content Review</div>
+        <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+      </div>
+      <div class="b-phase-body">
+        <div class="section" style="margin-top:16px">
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Revisar Autoflow y ver que todo esté bien (tasks, mensajes, anuncios, workouts, etc)</div></div>
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Revisar Workouts y ver que los ejercicios tengan alternate options</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b-phase collapsed" id="bphase2">
+      <div class="b-phase-header" onclick="toggleBPhase('bphase2')">
+        <div class="b-phase-title">Tech &amp; Automations</div>
+        <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+      </div>
+      <div class="b-phase-body">
+        <div class="section" style="margin-top:16px">
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Crear Nuevo Foro y actualizar Zapier con nuevo código</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b-phase collapsed" id="bphase3">
+      <div class="b-phase-header" onclick="toggleBPhase('bphase3')">
+        <div class="b-phase-title">Comms &amp; Branding</div>
+        <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+      </div>
+      <div class="b-phase-body">
+        <div class="section" style="margin-top:16px">
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Revisar Comms Calendar + Copy Tab, mejorar copy, actualizar las fechas de los post en document y actualizar Asana con nuevas fechas</div></div>
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Actualizar welcome guide con nuevo branding</div></div>
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Actualizar offer doc con nuevo branding</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b-phase collapsed" id="bphase4">
+      <div class="b-phase-header" onclick="toggleBPhase('bphase4')">
+        <div class="b-phase-title">Deniz &amp; Onboarding</div>
+        <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+      </div>
+      <div class="b-phase-body">
+        <div class="section" style="margin-top:16px">
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Mejorar SOP de Deniz: ¿Cuándo llamar a alguien? ¿Cuándo enviar offer doc?</div></div>
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Crear Task reminders con fechas del challenge con respecto a Deniz (fechas en donde Deniz debe empezar a llamar o enviar offer docs)</div></div>
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reunirme con Deniz para clarificar rol y eventos/instancias importantes que debe tener claro</div></div>
+          <div class="task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Crear proceso de onboarding de 21DC a 1-1 (con Miguel)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="reset-btn" style="border-color:#d0e8d8;color:#2d6a4f;" onclick="confirmBReset()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
+      Reset checklist
+    </button>
+  </div><!-- end bernardo-wrap -->
     <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Bernardo's document has all final links and dates updated</div></div>
     <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Challenge is live and ready to accept registrations</div></div>
   </div>
@@ -671,7 +852,6 @@
 <script>
   const SUPABASE_URL = 'https://akrxgohrlpiprqwnhkzc.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_k5qrLybTNeW3F8N3u9uTpg_ZXymerMh';
-  const API = `${SUPABASE_URL}/rest/v1/checklist`;
   const HEADERS = {
     'apikey': SUPABASE_KEY,
     'Authorization': `Bearer ${SUPABASE_KEY}`,
@@ -679,58 +859,95 @@
     'Prefer': 'resolution=merge-duplicates'
   };
 
-  // ── READ ──────────────────────────────────────────────────
+  let currentUser = null;
+
+  // ── USER SELECTION ────────────────────────────────────────
+  function selectUser(user) {
+    currentUser = user;
+    sessionStorage.setItem('21dc_user', user);
+    document.getElementById('modalOverlay').classList.add('hidden');
+    document.getElementById('joeyWrap').classList.toggle('hidden', user !== 'joey');
+    document.getElementById('bernardoWrap').classList.toggle('active', user === 'bernardo');
+    if (user === 'joey') loadFromDB();
+    else loadBernardoFromDB();
+  }
+
+  // ── JOEY DB ───────────────────────────────────────────────
+  const JOEY_API = `${SUPABASE_URL}/rest/v1/checklist`;
+
   async function loadFromDB() {
     try {
-      const res = await fetch(`${API}?select=key,value`, { headers: HEADERS });
+      const res = await fetch(`${JOEY_API}?select=key,value`, { headers: HEADERS });
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-
-      ['kickoff_date','kickoff_zoom','kickoff_gcal',
-       'closing_date','closing_zoom','closing_gcal',
-       'clarity_zoom','clarity_notes'].forEach(id => {
+      ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
-
       if (map.checks && map.checks.trim()) {
         const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
-        const els = document.querySelectorAll('.task, .subtask');
+        const els = document.querySelectorAll('#joeyWrap .task, #joeyWrap .subtask');
         indices.forEach(i => { if (els[i]) els[i].classList.add('done'); });
       }
       updateProgress();
     } catch(e) { console.warn('DB read error:', e); }
   }
 
-  // ── WRITE ─────────────────────────────────────────────────
   let writeTimers = {};
   function saveField(id) {
     const val = document.getElementById(id).value;
     clearTimeout(writeTimers[id]);
-    writeTimers[id] = setTimeout(() => writeToDB(id, val), 800);
+    writeTimers[id] = setTimeout(() => writeToDB(JOEY_API, id, val), 800);
   }
 
   function saveChecks() {
     const indices = [];
-    document.querySelectorAll('.task, .subtask').forEach((el, i) => {
+    document.querySelectorAll('#joeyWrap .task, #joeyWrap .subtask').forEach((el, i) => {
       if (el.classList.contains('done')) indices.push(i);
     });
     clearTimeout(writeTimers['checks']);
-    writeTimers['checks'] = setTimeout(() => writeToDB('checks', indices.join(',')), 500);
+    writeTimers['checks'] = setTimeout(() => writeToDB(JOEY_API, 'checks', indices.join(',')), 500);
   }
 
-  async function writeToDB(key, value) {
+  // ── BERNARDO DB ───────────────────────────────────────────
+  const BERN_API = `${SUPABASE_URL}/rest/v1/checklist_bernardo`;
+
+  async function loadBernardoFromDB() {
     try {
-      await fetch(API, {
-        method: 'POST',
-        headers: HEADERS,
+      const res = await fetch(`${BERN_API}?select=key,value`, { headers: HEADERS });
+      const rows = await res.json();
+      const map = {};
+      rows.forEach(r => { map[r.key] = r.value || ''; });
+      if (map.checks && map.checks.trim()) {
+        const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
+        const els = document.querySelectorAll('#bernardoWrap .task');
+        indices.forEach(i => { if (els[i]) els[i].classList.add('done'); });
+      }
+      updateBProgress();
+    } catch(e) { console.warn('Bernardo DB read error:', e); }
+  }
+
+  function saveBChecks() {
+    const indices = [];
+    document.querySelectorAll('#bernardoWrap .task').forEach((el, i) => {
+      if (el.classList.contains('done')) indices.push(i);
+    });
+    clearTimeout(writeTimers['bchecks']);
+    writeTimers['bchecks'] = setTimeout(() => writeToDB(BERN_API, 'checks', indices.join(',')), 500);
+  }
+
+  // ── SHARED WRITE ──────────────────────────────────────────
+  async function writeToDB(api, key, value) {
+    try {
+      await fetch(api, {
+        method: 'POST', headers: HEADERS,
         body: JSON.stringify({ key, value })
       });
     } catch(e) { console.warn('DB write error:', e); }
   }
 
-  // ── TOGGLE ────────────────────────────────────────────────
+  // ── JOEY TOGGLE ───────────────────────────────────────────
   function toggle(el) {
     const isDone = !el.classList.contains('done');
     el.classList.toggle('done');
@@ -748,10 +965,14 @@
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function toggleCohort() { document.getElementById('cohortPanel').classList.toggle('collapsed'); }
 
+  // ── BERNARDO TOGGLE ───────────────────────────────────────
+  function btoggle(el) { el.classList.toggle('done'); saveBChecks(); updateBProgress(); }
+  function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
+
   // ── PROGRESS ──────────────────────────────────────────────
   function updateProgress() {
-    const all  = document.querySelectorAll('.task, .subtask');
-    const done = document.querySelectorAll('.task.done, .subtask.done');
+    const all  = document.querySelectorAll('#joeyWrap .task, #joeyWrap .subtask');
+    const done = document.querySelectorAll('#joeyWrap .task.done, #joeyWrap .subtask.done');
     const total = all.length, count = done.length;
     document.getElementById('progressBar').style.width = (total ? count/total*100 : 0) + '%';
     document.getElementById('doneCount').textContent = count;
@@ -766,30 +987,58 @@
     });
   }
 
+  function updateBProgress() {
+    const all  = document.querySelectorAll('#bernardoWrap .task');
+    const done = document.querySelectorAll('#bernardoWrap .task.done');
+    const total = all.length, count = done.length;
+    document.getElementById('bProgressBar').style.width = (total ? count/total*100 : 0) + '%';
+    document.getElementById('bDoneCount').textContent = count;
+    document.getElementById('bTotalCount').textContent = total;
+  }
+
   // ── RESET ─────────────────────────────────────────────────
   async function confirmReset() {
-    if (!confirm('Reset everything for a new challenge? This will clear all checks, dates, and links.')) return;
-    document.querySelectorAll('.task.done, .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal',
-                    'closing_date','closing_zoom','closing_gcal',
-                    'clarity_zoom','clarity_notes'];
+    if (!confirm('Reset everything for a new challenge?')) return;
+    document.querySelectorAll('#joeyWrap .task.done, #joeyWrap .subtask.done').forEach(el => el.classList.remove('done'));
+    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes'];
     fields.forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.value = id === 'clarity_zoom'
-        ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
+      if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
     });
     document.getElementById('cohortPanel').classList.remove('collapsed');
     updateProgress();
-    const resets = [...fields.map(k => ({
-      key: k,
-      value: k === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : ''
-    })), { key: 'checks', value: '' }];
-    for (const row of resets) await writeToDB(row.key, row.value);
+    for (const key of [...fields, 'checks']) {
+      const val = key === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
+      await writeToDB(JOEY_API, key, val);
+    }
+  }
+
+  async function confirmBReset() {
+    if (!confirm('Reset Bernardo checklist for a new challenge?')) return;
+    document.querySelectorAll('#bernardoWrap .task.done').forEach(el => el.classList.remove('done'));
+    updateBProgress();
+    await writeToDB(BERN_API, 'checks', '');
   }
 
   // ── INIT ──────────────────────────────────────────────────
   updateProgress();
-  loadFromDB();
+  updateBProgress();
+  // Check if user already selected in this session
+  const savedUser = sessionStorage.getItem('21dc_user');
+  if (savedUser) selectUser(savedUser);
 </script>
+
+<!-- WHO ARE YOU MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-tag">Strong Standard Coaching</div>
+    <div class="modal-title">Who are you?</div>
+    <div class="modal-sub">Select your name to see your checklist</div>
+    <div class="modal-btns">
+      <button class="modal-btn primary" onclick="selectUser('joey')">Joey</button>
+      <button class="modal-btn" onclick="selectUser('bernardo')">Bernardo</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
