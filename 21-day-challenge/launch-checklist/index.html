@@ -131,7 +131,6 @@
   .phase {
     margin-bottom: 40px;
     border-radius: 14px;
-    overflow: hidden;
     box-shadow: 0 2px 16px rgba(15,35,64,0.07);
     background: var(--white);
     border: 1px solid var(--border);
@@ -149,6 +148,10 @@
     cursor: pointer;
     user-select: none;
     position: relative;
+    border-radius: 14px;
+  }
+  .phase:not(.collapsed) .phase-header {
+    border-radius: 14px 14px 0 0;
   }
   .phase-num {
     font-size: 11px;
@@ -192,7 +195,7 @@
   .phase-body {
     padding: 0 28px 24px;
     overflow: hidden;
-    transition: max-height 0.35s ease, opacity 0.3s;
+    transition: max-height 0.35s ease, opacity 0.3s, padding 0.3s;
     max-height: 2000px;
     opacity: 1;
   }
