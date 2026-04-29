@@ -477,8 +477,7 @@
         </div>
         <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
-          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="clarity_date" oninput="saveField('clarity_date')"></div>
-          <div class="cohort-field"><label>Zoom Join Link</label><input type="url" id="clarity_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('clarity_zoom')"></div>
+          <div class="cohort-field"><label>GHL Booking Link</label><input type="url" id="clarity_zoom" placeholder="https://..." oninput="saveField('clarity_zoom')"></div>
           <div class="cohort-field"><label>Notes</label><input type="text" id="clarity_notes" placeholder="Any extra notes..." oninput="saveField('clarity_notes')"></div>
         </div>
       </div>
@@ -500,7 +499,6 @@
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Kickoff Call date and time</div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Closing Webinar date and time</div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Clarity Call date and time</div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Upload all links and dates to Bernardo's reference document</div></div>
       </div>
       <div class="section">
         <div class="section-title">1.2 — Create Zoom Events</div>
@@ -510,6 +508,7 @@
         <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Copy the join link for use in later steps</div></div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create Zoom event for Clarity Call</div></div>
         <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Copy the join link for use in later steps</div></div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Upload all links and dates to Bernardo's reference document</div></div>
       </div>
     </div>
   </div>
@@ -709,7 +708,20 @@
     });
   }
 
-  function toggle(el) { el.classList.toggle('done'); saveChecks(); updateProgress(); }
+  function toggle(el) {
+    const isDone = !el.classList.contains('done');
+    el.classList.toggle('done');
+    // Auto-check/uncheck subtasks that immediately follow this task
+    let next = el.nextElementSibling;
+    while (next && next.classList.contains('subtasks')) {
+      next.querySelectorAll('.subtask').forEach(sub => {
+        if (isDone) sub.classList.add('done');
+        else sub.classList.remove('done');
+      });
+      next = next.nextElementSibling;
+    }
+    saveChecks(); updateProgress();
+  }
   function toggleSub(el) { el.classList.toggle('done'); saveChecks(); updateProgress(); }
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function toggleCohort() { document.getElementById('cohortPanel').classList.toggle('collapsed'); }
@@ -735,7 +747,7 @@
     if (!confirm('Reset everything for a new challenge? This will clear all checks, dates, and links.')) return;
     localStorage.removeItem(STORAGE_KEY);
     document.querySelectorAll('.task.done, .subtask.done').forEach(el => el.classList.remove('done'));
-    ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_date','clarity_zoom','clarity_notes']
+    ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes']
       .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     document.getElementById('cohortPanel').classList.remove('collapsed');
     updateProgress();
