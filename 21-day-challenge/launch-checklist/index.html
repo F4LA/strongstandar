@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>21DC Launch Checklist — Strong Standard Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2340;
+    --navy-mid: #1b3a5c;
+    --steel: #2c5282;
+    --accent: #4a90d9;
+    --accent-light: #e8f0fb;
+    --gold: #c9a84c;
+    --gold-light: #fdf6e3;
+    --white: #ffffff;
+    --off-white: #f7f9fc;
+    --text: #1a2a3a;
+    --muted: #6b7f94;
+    --border: #d4e0ee;
+    --check-done: #2e7d5e;
+    --check-done-bg: #eaf4ef;
+
+    --phase1: #1b3a5c;
+    --phase2: #2c5282;
+    --phase3: #1a5276;
+    --phase4: #154360;
+    --phase5: #0d3b5e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 48px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,144,217,0.15) 0%, transparent 70%);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .header-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .header h1 span {
+    color: var(--accent);
+  }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    height: 6px;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+  }
+  .progress-label span {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* MAIN LAYOUT */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 60px 80px;
+  }
+
+  /* PHASE */
+  .phase {
+    margin-bottom: 40px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(15,35,64,0.07);
+    background: var(--white);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .phase:hover {
+    box-shadow: 0 4px 28px rgba(15,35,64,0.11);
+  }
+
+  .phase-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+  .phase-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+  .phase-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--white);
+    flex: 1;
+  }
+  .phase-count {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .phase-toggle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .phase-toggle svg {
+    transition: transform 0.3s;
+    stroke: rgba(255,255,255,0.7);
+  }
+  .phase.collapsed .phase-toggle svg {
+    transform: rotate(-90deg);
+  }
+
+  .phase-body {
+    padding: 0 28px 24px;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s;
+    max-height: 2000px;
+    opacity: 1;
+  }
+  .phase.collapsed .phase-body {
+    max-height: 0;
+    opacity: 0;
+    padding-bottom: 0;
+  }
+
+  /* SECTION */
+  .section {
+    margin-top: 20px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* TASK */
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(212,224,238,0.4);
+    transition: background 0.15s;
+    border-radius: 6px;
+    padding: 9px 8px;
+    cursor: pointer;
+  }
+  .task:hover { background: var(--accent-light); }
+  .task:last-child { border-bottom: none; }
+  .task.done .task-text { color: var(--muted); text-decoration: line-through; opacity: 0.7; }
+
+  .checkbox {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    background: var(--white);
+  }
+  .task.done .checkbox {
+    background: var(--check-done);
+    border-color: var(--check-done);
+  }
+  .checkbox svg { display: none; }
+  .task.done .checkbox svg { display: block; }
+
+  .task-text {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text);
+    transition: color 0.2s;
+    flex: 1;
+  }
+
+  /* SUB TASKS */
+  .subtasks {
+    padding-left: 32px;
+  }
+  .subtask {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .subtask:hover { background: var(--accent-light); }
+  .subtask.done .subtask-text { color: var(--muted); text-decoration: line-through; opacity: 0.6; }
+  .subtask-dot {
+    width: 16px; height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white);
+    transition: all 0.2s;
+  }
+  .subtask.done .subtask-dot {
+    background: var(--check-done);
+    border-color: var(--check-done);
+  }
+  .subtask-dot svg { display: none; }
+  .subtask.done .subtask-dot svg { display: block; }
+  .subtask-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* NOTE */
+  .note-box {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 12px 0 6px;
+    font-size: 13px;
+    color: #7a5a1a;
+    line-height: 1.5;
+  }
+  .note-box strong { color: #5a3d0a; }
+
+  /* FINAL CHECK */
+  .final-section {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 14px;
+    padding: 32px 36px;
+    margin-top: 40px;
+    box-shadow: 0 4px 24px rgba(15,35,64,0.18);
+  }
+  .final-section .section-title {
+    color: rgba(255,255,255,0.4);
+    border-bottom-color: rgba(255,255,255,0.1);
+    margin-bottom: 14px;
+  }
+  .final-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .final-note {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 20px;
+  }
+  .final-section .task {
+    border-bottom-color: rgba(255,255,255,0.08);
+  }
+  .final-section .task:hover { background: rgba(255,255,255,0.06); }
+  .final-section .task-text { color: rgba(255,255,255,0.85); }
+  .final-section .task.done .task-text { color: rgba(255,255,255,0.35); }
+  .final-section .checkbox { background: transparent; border-color: rgba(255,255,255,0.2); }
+  .final-section .task.done .checkbox { background: var(--check-done); border-color: var(--check-done); }
+  .final-section .subtask-text { color: rgba(255,255,255,0.45); }
+  .final-section .subtask:hover { background: rgba(255,255,255,0.05); }
+  .final-section .subtask-dot { background: transparent; border-color: rgba(255,255,255,0.15); }
+  .final-section .subtask.done .subtask-dot { background: var(--check-done); border-color: var(--check-done); }
+
+  /* RESET */
+  .reset-btn {
+    display: block;
+    margin: 32px auto 0;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .reset-btn:hover {
+    border-color: var(--steel);
+    color: var(--steel);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 0 0 48px;
+    font-size: 12px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  /* PHASE COLORS */
+  .phase:nth-child(1) .phase-header { background: linear-gradient(135deg, #1b3a5c, #2c5282); }
+  .phase:nth-child(2) .phase-header { background: linear-gradient(135deg, #1a4a6b, #2e6899); }
+  .phase:nth-child(3) .phase-header { background: linear-gradient(135deg, #1a3d5e, #25597d); }
+  .phase:nth-child(4) .phase-header { background: linear-gradient(135deg, #154360, #1f5e80); }
+  .phase:nth-child(5) .phase-header { background: linear-gradient(135deg, #0d3b5e, #1a5276); }
+
+  @media print {
+    .phase.collapsed .phase-body { max-height: none; opacity: 1; padding-bottom: 24px; }
+    .reset-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">Strong Standard Coaching</div>
+    <h1>21 Day Challenge<br><span>Launch Checklist</span></h1>
+    <p class="header-sub">Complete all phases in order. Each step depends on the previous one.</p>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-label"><span id="doneCount">0</span> of <span id="totalCount">0</span> tasks completed</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PHASE 1 -->
+  <div class="phase" id="phase1">
+    <div class="phase-header" onclick="togglePhase('phase1')">
+      <div class="phase-num">Phase 1</div>
+      <div class="phase-title">Confirm Dates & Create Zoom Events</div>
+      <div class="phase-count" id="phase1-count"></div>
+      <div class="phase-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2 5 7 10 12 5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="phase-body">
+
+      <div class="section">
+        <div class="section-title">1.1 — Confirm All Call Dates</div>
+        <div class="note-box"><strong>Before touching anything else,</strong> lock in all three dates. Everything downstream depends on these.</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Confirm Kickoff Call date and time</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Confirm Closing Webinar date and time</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Confirm Clarity Call date and time</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Upload all links and dates to Bernardo's reference document</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">1.2 — Create Zoom Events</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Create Zoom event for Kickoff Call</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Copy the join link for use in later steps</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Create Zoom event for Closing Webinar</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Copy the join link for use in later steps</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Create Zoom event for Clarity Call</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Copy the join link for use in later steps</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase" id="phase2">
+    <div class="phase-header" onclick="togglePhase('phase2')">
+      <div class="phase-num">Phase 2</div>
+      <div class="phase-title">Update Google Calendar</div>
+      <div class="phase-count" id="phase2-count"></div>
+      <div class="phase-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2 5 7 10 12 5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="section">
+        <div class="section-title">2.1 — Add Events to 21DC Google Calendar</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Add Kickoff Call event</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Include Zoom join link in the event description</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Add Closing Webinar event</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Include Zoom join link in the event description</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Add Clarity Call event</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Include Zoom join link in the event description</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase" id="phase3">
+    <div class="phase-header" onclick="togglePhase('phase3')">
+      <div class="phase-num">Phase 3</div>
+      <div class="phase-title">Update Landing Pages</div>
+      <div class="phase-count" id="phase3-count"></div>
+      <div class="phase-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2 5 7 10 12 5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="phase-body">
+
+      <div class="section">
+        <div class="section-title">3.1 — Challenge Home Page</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update all visible dates</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Set countdown timer to the correct date</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Verify spot count is correct</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Confirm price logic is correct</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Price starts at $97 for the first 30 spots</div>
+          </div>
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Price automatically switches to $147 after 30 spots are filled</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.2 — Kickoff Call Registration Page</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update date and time displayed on the page</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Verify registration form is connected to the correct Zoom event</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">3.3 — Closing Webinar Registration Page</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update date and time displayed on the page</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Verify registration form is connected to the correct Zoom event</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase" id="phase4">
+    <div class="phase-header" onclick="togglePhase('phase4')">
+      <div class="phase-num">Phase 4</div>
+      <div class="phase-title">Update GHL Automations</div>
+      <div class="phase-count" id="phase4-count"></div>
+      <div class="phase-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2 5 7 10 12 5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="phase-body">
+
+      <div class="note-box" style="margin-top:16px"><strong>Note:</strong> All automations below are inside the "Move Leads Around Pipeline" workflow unless noted otherwise.</div>
+
+      <div class="section">
+        <div class="section-title">4.1 — Post-Purchase Automation</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update dates inside the post-purchase automation sequence</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update Welcome Email</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Kickoff Call date and time</div>
+          </div>
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Kickoff Call Zoom link</div>
+          </div>
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Any other relevant dates or links</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.2 — Kickoff Call Registration Automation</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update Welcome Email for Kickoff Call registrants</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Confirm date, time, and Zoom link are current</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update all countdown timers inside this automation</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update reminder emails</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Verify the Zoom join link is correct in every reminder</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.3 — Closing Webinar Registration Automation</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update Welcome Email for Closing Webinar registrants</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Confirm date, time, and Zoom link are current</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update all countdown timers inside this automation</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update reminder emails</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Verify the Zoom join link is correct in every reminder</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">4.4 — Reminder Automations (Did Not Register)</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update HR4KC — Has Not Registered for Kickoff Call</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Update all dates and messaging</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update HR4CW — Has Not Registered for Closing Webinar</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Update all dates and messaging</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update "Did Not Schedule Clarity Call" automation</div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)">
+            <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="subtask-text">Update all dates and messaging</div>
+          </div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Confirm GHL Mastersheet automation is routing new leads correctly</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase" id="phase5">
+    <div class="phase-header" onclick="togglePhase('phase5')">
+      <div class="phase-num">Phase 5</div>
+      <div class="phase-title">Update Zapier Automations</div>
+      <div class="phase-count" id="phase5-count"></div>
+      <div class="phase-toggle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2 5 7 10 12 5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="phase-body">
+
+      <div class="section">
+        <div class="section-title">5.1 — 21 Day Challenge Flow Zap</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Open the "21 Day Challenge Flow" Zap</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update the date when full challenge access expires</div>
+        </div>
+        <div class="note-box">This is the date Zapier uses to cut off access to challenge materials after the cohort ends.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.2 — Custom Access Zap</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Open the "Custom Access" Zap</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Update the access expiration date to match the new cohort end date</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">5.3 — Challenge Materials Access</div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Verify the Zap that delivers access to 21DC materials is active</div>
+        </div>
+        <div class="task" onclick="toggle(this)">
+          <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="task-text">Confirm delivery triggers are working correctly after a test purchase</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FINAL VERIFICATION -->
+  <div class="final-section">
+    <div class="section-title">Final Step</div>
+    <div class="final-label">Final Verification</div>
+    <div class="final-note">Run through the full funnel from the buyer's perspective before going live.</div>
+
+    <div class="task" onclick="toggle(this)">
+      <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="task-text">Do a test purchase and confirm the full sequence fires correctly</div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask" onclick="toggleSub(this)">
+        <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="subtask-text">TY Page loads and shows correct info</div>
+      </div>
+      <div class="subtask" onclick="toggleSub(this)">
+        <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="subtask-text">Welcome email arrives with correct dates and links</div>
+      </div>
+      <div class="subtask" onclick="toggleSub(this)">
+        <div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="subtask-text">Kickoff Call reminder sequence is active</div>
+      </div>
+    </div>
+    <div class="task" onclick="toggle(this)">
+      <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="task-text">Confirm Bernardo's document has all final links and dates updated</div>
+    </div>
+    <div class="task" onclick="toggle(this)">
+      <div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="task-text">Challenge is live and ready to accept registrations</div>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">Reset checklist</button>
+
+</div>
+
+<footer>Strong Standard Coaching &nbsp;·&nbsp; 21DC Launch Checklist</footer>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+  function toggleSub(el) {
+    el.classList.toggle('done');
+    updateProgress();
+  }
+  function togglePhase(id) {
+    document.getElementById(id).classList.toggle('collapsed');
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.task, .subtask');
+    const done = document.querySelectorAll('.task.done, .subtask.done');
+    const total = all.length;
+    const count = done.length;
+    const pct = total ? (count / total) * 100 : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('doneCount').textContent = count;
+    document.getElementById('totalCount').textContent = total;
+
+    // Per-phase counts
+    ['phase1','phase2','phase3','phase4','phase5'].forEach(pid => {
+      const phase = document.getElementById(pid);
+      if (!phase) return;
+      const pAll = phase.querySelectorAll('.task, .subtask');
+      const pDone = phase.querySelectorAll('.task.done, .subtask.done');
+      const el = document.getElementById(pid + '-count');
+      if (el) el.textContent = pDone.length + ' / ' + pAll.length;
+    });
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.task.done, .subtask.done').forEach(el => el.classList.remove('done'));
+    updateProgress();
+  }
+
+  // Init
+  updateProgress();
+</script>
+</body>
+</html>
