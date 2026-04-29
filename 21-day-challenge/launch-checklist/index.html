@@ -382,6 +382,25 @@
   .phase:nth-child(4) .phase-header { background: linear-gradient(135deg, #154360, #1f5e80); }
   .phase:nth-child(5) .phase-header { background: linear-gradient(135deg, #0d3b5e, #1a5276); }
 
+
+  /* COHORT BODY COLLAPSE */
+  .cohort-body {
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s;
+    max-height: 1000px;
+    opacity: 1;
+  }
+  .cohort-panel.collapsed .cohort-body {
+    max-height: 0;
+    opacity: 0;
+  }
+  .cohort-panel.collapsed #cohortToggle svg {
+    transform: rotate(-90deg);
+  }
+  #cohortToggle svg {
+    transition: transform 0.3s;
+  }
+
   @media print {
     .phase.collapsed .phase-body { max-height: none; opacity: 1; padding-bottom: 24px; }
     .reset-btn { display: none; }
@@ -405,8 +424,85 @@
 
 <div class="container">
 
+  <!-- COHORT INFO PANEL -->
+  <div class="cohort-panel" id="cohortPanel">
+    <div class="cohort-panel__header" onclick="toggleCohort()" style="cursor:pointer;user-select:none;">
+      <div class="cohort-panel__title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Cohort Reference
+      </div>
+      <span class="cohort-panel__sub">Dates, links, and Zoom info for this launch</span>
+    </div>
+      <div class="phase-toggle" id="cohortToggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgba(255,255,255,0.7)"><polyline points="2 5 7 10 12 5"/></svg></div>
+
+    <div class="cohort-body" id="cohortBody">
+    <div class="cohort-grid">
+
+      <!-- KICKOFF CALL -->
+      <div class="cohort-card">
+        <div class="cohort-card__label">
+          <span class="cohort-dot cohort-dot--blue"></span>
+          Kickoff Call
+        </div>
+        <div class="cohort-field">
+          <label>Date & Time</label>
+          <input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date')">
+        </div>
+        <div class="cohort-field">
+          <label>Zoom Join Link</label>
+          <input type="url" id="kickoff_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('kickoff_zoom')">
+        </div>
+        <div class="cohort-field">
+          <label>Google Calendar Link</label>
+          <input type="url" id="kickoff_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('kickoff_gcal')">
+        </div>
+      </div>
+
+      <!-- CLOSING WEBINAR -->
+      <div class="cohort-card">
+        <div class="cohort-card__label">
+          <span class="cohort-dot cohort-dot--gold"></span>
+          Closing Webinar
+        </div>
+        <div class="cohort-field">
+          <label>Date & Time</label>
+          <input type="datetime-local" id="closing_date" oninput="saveField('closing_date')">
+        </div>
+        <div class="cohort-field">
+          <label>Zoom Join Link</label>
+          <input type="url" id="closing_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('closing_zoom')">
+        </div>
+        <div class="cohort-field">
+          <label>Google Calendar Link</label>
+          <input type="url" id="closing_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('closing_gcal')">
+        </div>
+      </div>
+
+      <!-- CLARITY CALL -->
+      <div class="cohort-card cohort-card--wide">
+        <div class="cohort-card__label">
+          <span class="cohort-dot cohort-dot--green"></span>
+          Clarity Call
+        </div>
+        <div class="cohort-field">
+          <label>Date & Time</label>
+          <input type="datetime-local" id="clarity_date" oninput="saveField('clarity_date')">
+        </div>
+        <div class="cohort-field">
+          <label>Zoom Join Link</label>
+          <input type="url" id="clarity_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('clarity_zoom')">
+        </div>
+        <div class="cohort-field">
+          <label>Notes</label>
+          <input type="text" id="clarity_notes" placeholder="Any extra notes..." oninput="saveField('clarity_notes')">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- PHASE 1 -->
-  <div class="phase" id="phase1">
+  <div class="phase collapsed" id="phase1">
     <div class="phase-header" onclick="togglePhase('phase1')">
       <div class="phase-num">Phase 1</div>
       <div class="phase-title">Confirm Dates & Create Zoom Events</div>
@@ -478,7 +574,7 @@
   </div>
 
   <!-- PHASE 2 -->
-  <div class="phase" id="phase2">
+  <div class="phase collapsed" id="phase2">
     <div class="phase-header" onclick="togglePhase('phase2')">
       <div class="phase-num">Phase 2</div>
       <div class="phase-title">Update Google Calendar</div>
@@ -527,7 +623,7 @@
   </div>
 
   <!-- PHASE 3 -->
-  <div class="phase" id="phase3">
+  <div class="phase collapsed" id="phase3">
     <div class="phase-header" onclick="togglePhase('phase3')">
       <div class="phase-num">Phase 3</div>
       <div class="phase-title">Update Landing Pages</div>
@@ -598,7 +694,7 @@
   </div>
 
   <!-- PHASE 4 -->
-  <div class="phase" id="phase4">
+  <div class="phase collapsed" id="phase4">
     <div class="phase-header" onclick="togglePhase('phase4')">
       <div class="phase-num">Phase 4</div>
       <div class="phase-title">Update GHL Automations</div>
@@ -737,7 +833,7 @@
   </div>
 
   <!-- PHASE 5 -->
-  <div class="phase" id="phase5">
+  <div class="phase collapsed" id="phase5">
     <div class="phase-header" onclick="togglePhase('phase5')">
       <div class="phase-num">Phase 5</div>
       <div class="phase-title">Update Zapier Automations</div>
@@ -824,80 +920,7 @@
     </div>
   </div>
 
-  <!-- COHORT INFO PANEL -->
-  <div class="cohort-panel" id="cohortPanel">
-    <div class="cohort-panel__header">
-      <div class="cohort-panel__title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Cohort Reference
-      </div>
-      <span class="cohort-panel__sub">Dates, links, and Zoom info for this launch</span>
-    </div>
 
-    <div class="cohort-grid">
-
-      <!-- KICKOFF CALL -->
-      <div class="cohort-card">
-        <div class="cohort-card__label">
-          <span class="cohort-dot cohort-dot--blue"></span>
-          Kickoff Call
-        </div>
-        <div class="cohort-field">
-          <label>Date & Time</label>
-          <input type="text" id="kickoff_date" placeholder="e.g. Saturday, May 10 · 10:00 AM EST" oninput="saveField('kickoff_date')">
-        </div>
-        <div class="cohort-field">
-          <label>Zoom Join Link</label>
-          <input type="url" id="kickoff_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('kickoff_zoom')">
-        </div>
-        <div class="cohort-field">
-          <label>Google Calendar Link</label>
-          <input type="url" id="kickoff_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('kickoff_gcal')">
-        </div>
-      </div>
-
-      <!-- CLOSING WEBINAR -->
-      <div class="cohort-card">
-        <div class="cohort-card__label">
-          <span class="cohort-dot cohort-dot--gold"></span>
-          Closing Webinar
-        </div>
-        <div class="cohort-field">
-          <label>Date & Time</label>
-          <input type="text" id="closing_date" placeholder="e.g. Saturday, May 31 · 10:00 AM EST" oninput="saveField('closing_date')">
-        </div>
-        <div class="cohort-field">
-          <label>Zoom Join Link</label>
-          <input type="url" id="closing_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('closing_zoom')">
-        </div>
-        <div class="cohort-field">
-          <label>Google Calendar Link</label>
-          <input type="url" id="closing_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('closing_gcal')">
-        </div>
-      </div>
-
-      <!-- CLARITY CALL -->
-      <div class="cohort-card cohort-card--wide">
-        <div class="cohort-card__label">
-          <span class="cohort-dot cohort-dot--green"></span>
-          Clarity Call
-        </div>
-        <div class="cohort-field">
-          <label>Date & Time</label>
-          <input type="text" id="clarity_date" placeholder="e.g. Sunday, June 1 · 2:00 PM EST" oninput="saveField('clarity_date')">
-        </div>
-        <div class="cohort-field">
-          <label>Zoom Join Link</label>
-          <input type="url" id="clarity_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('clarity_zoom')">
-        </div>
-        <div class="cohort-field">
-          <label>Notes</label>
-          <input type="text" id="clarity_notes" placeholder="Any extra notes..." oninput="saveField('clarity_notes')">
-        </div>
-      </div>
-
-    </div>
-  </div>
 
   <!-- RESET BUTTON -->
   <button class="reset-btn" onclick="confirmReset()">
@@ -1088,6 +1111,9 @@
     saveChecks();
     updateProgress();
   }
+  function toggleCohort() {
+    document.getElementById('cohortPanel').classList.toggle('collapsed');
+  }
   function togglePhase(id) {
     document.getElementById(id).classList.toggle('collapsed');
   }
@@ -1116,6 +1142,7 @@
   function confirmReset() {
     if (!confirm('Reset everything for a new challenge? This will clear all checks, dates, and links.')) return;
     localStorage.removeItem(STORAGE_KEY);
+    document.getElementById('cohortPanel').classList.remove('collapsed');
     document.querySelectorAll('.task.done, .subtask.done').forEach(el => el.classList.remove('done'));
     ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_date','clarity_zoom','clarity_notes']
       .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
