@@ -496,13 +496,19 @@
 
 <div class="header-tabs" style="background:var(--navy);border-top:1px solid rgba(255,255,255,0.08);">
   <div class="tabs">
-    <button class="tab-btn active" id="tab-joey" onclick="switchTab('joey')">Joey</button>
+    <button class="tab-btn active" id="tab-miguel" onclick="switchTab('miguel')">Miguel</button>
     <button class="tab-btn" id="tab-bernardo" onclick="switchTab('bernardo')">Bernardo</button>
   </div>
 </div>
 
 <div class="container">
   <div class="joey-section" id="joeySection">
+    <div class="b-header" style="margin-bottom:0;border-radius:14px 14px 0 0;">
+      <h2>Miguel's Checklist</h2>
+      <p>Launch tasks to complete before each 21DC cohort</p>
+      <div class="b-progress-wrap"><div class="b-progress-bar" id="mProgressBar"></div></div>
+      <div class="b-progress-label"><span id="mDoneCount">0</span> of <span id="mTotalCount">0</span> tasks completed</div>
+    </div>
 
   <!-- COHORT REFERENCE -->
   <div class="cohort-panel" id="cohortPanel">
@@ -789,9 +795,9 @@
 
   // ── TABS ──────────────────────────────────────────────────
   function switchTab(tab) {
-    document.getElementById('joeySection').classList.toggle('hidden', tab !== 'joey');
+    document.getElementById('joeySection').classList.toggle('hidden', tab !== 'miguel');
     document.getElementById('bernardoSection').classList.toggle('active', tab === 'bernardo');
-    document.getElementById('tab-joey').classList.toggle('active', tab === 'joey');
+    document.getElementById('tab-miguel').classList.toggle('active', tab === 'miguel');
     document.getElementById('tab-bernardo').classList.toggle('active', tab === 'bernardo');
     sessionStorage.setItem('21dc_tab', tab);
   }
@@ -886,12 +892,13 @@
 
   // ── PROGRESS ──────────────────────────────────────────────
   function updateProgress() {
-    const all  = document.querySelectorAll('#joeySection .task, #joeySection .subtask');
-    const done = document.querySelectorAll('#joeySection .task.done, #joeySection .subtask.done');
-    const total = all.length, count = done.length;
-    document.getElementById('progressBar').style.width = (total ? count/total*100 : 0) + '%';
-    document.getElementById('doneCount').textContent = count;
-    document.getElementById('totalCount').textContent = total;
+    // Miguel section
+    const mAll  = document.querySelectorAll('#joeySection .task, #joeySection .subtask');
+    const mDone = document.querySelectorAll('#joeySection .task.done, #joeySection .subtask.done');
+    const mTotal = mAll.length, mCount = mDone.length;
+    document.getElementById('mProgressBar').style.width = (mTotal ? mCount/mTotal*100 : 0) + '%';
+    document.getElementById('mDoneCount').textContent = mCount;
+    document.getElementById('mTotalCount').textContent = mTotal;
     ['phase1','phase2','phase3','phase4','phase5'].forEach(pid => {
       const phase = document.getElementById(pid);
       if (!phase) return;
@@ -900,6 +907,7 @@
       const el = document.getElementById(pid + '-count');
       if (el) el.textContent = pDone.length + ' / ' + pAll.length;
     });
+    updateGlobalProgress();
   }
 
   function updateBProgress() {
@@ -909,6 +917,16 @@
     document.getElementById('bProgressBar').style.width = (total ? count/total*100 : 0) + '%';
     document.getElementById('bDoneCount').textContent = count;
     document.getElementById('bTotalCount').textContent = total;
+    updateGlobalProgress();
+  }
+
+  function updateGlobalProgress() {
+    const allTasks = document.querySelectorAll('#joeySection .task, #joeySection .subtask, #bernardoSection .b-task');
+    const doneTasks = document.querySelectorAll('#joeySection .task.done, #joeySection .subtask.done, #bernardoSection .b-task.done');
+    const total = allTasks.length, count = doneTasks.length;
+    document.getElementById('progressBar').style.width = (total ? count/total*100 : 0) + '%';
+    document.getElementById('doneCount').textContent = count;
+    document.getElementById('totalCount').textContent = total;
   }
 
   // ── RESET ─────────────────────────────────────────────────
