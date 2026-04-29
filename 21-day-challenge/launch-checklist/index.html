@@ -136,8 +136,11 @@
     border: 1px solid var(--border);
     transition: box-shadow 0.2s;
   }
-  .phase:hover {
-    box-shadow: 0 4px 28px rgba(15,35,64,0.11);
+  .phase.collapsed {
+    box-shadow: none;
+    border-color: transparent;
+    background: transparent;
+    margin-bottom: 4px;
   }
 
   .phase-header {
