@@ -824,52 +824,307 @@
     </div>
   </div>
 
-  <button class="reset-btn" onclick="resetAll()">Reset checklist</button>
+  <!-- COHORT INFO PANEL -->
+  <div class="cohort-panel" id="cohortPanel">
+    <div class="cohort-panel__header">
+      <div class="cohort-panel__title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Cohort Reference
+      </div>
+      <span class="cohort-panel__sub">Dates, links, and Zoom info for this launch</span>
+    </div>
+
+    <div class="cohort-grid">
+
+      <!-- KICKOFF CALL -->
+      <div class="cohort-card">
+        <div class="cohort-card__label">
+          <span class="cohort-dot cohort-dot--blue"></span>
+          Kickoff Call
+        </div>
+        <div class="cohort-field">
+          <label>Date & Time</label>
+          <input type="text" id="kickoff_date" placeholder="e.g. Saturday, May 10 · 10:00 AM EST" oninput="saveField('kickoff_date')">
+        </div>
+        <div class="cohort-field">
+          <label>Zoom Join Link</label>
+          <input type="url" id="kickoff_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('kickoff_zoom')">
+        </div>
+        <div class="cohort-field">
+          <label>Google Calendar Link</label>
+          <input type="url" id="kickoff_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('kickoff_gcal')">
+        </div>
+      </div>
+
+      <!-- CLOSING WEBINAR -->
+      <div class="cohort-card">
+        <div class="cohort-card__label">
+          <span class="cohort-dot cohort-dot--gold"></span>
+          Closing Webinar
+        </div>
+        <div class="cohort-field">
+          <label>Date & Time</label>
+          <input type="text" id="closing_date" placeholder="e.g. Saturday, May 31 · 10:00 AM EST" oninput="saveField('closing_date')">
+        </div>
+        <div class="cohort-field">
+          <label>Zoom Join Link</label>
+          <input type="url" id="closing_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('closing_zoom')">
+        </div>
+        <div class="cohort-field">
+          <label>Google Calendar Link</label>
+          <input type="url" id="closing_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('closing_gcal')">
+        </div>
+      </div>
+
+      <!-- CLARITY CALL -->
+      <div class="cohort-card cohort-card--wide">
+        <div class="cohort-card__label">
+          <span class="cohort-dot cohort-dot--green"></span>
+          Clarity Call
+        </div>
+        <div class="cohort-field">
+          <label>Date & Time</label>
+          <input type="text" id="clarity_date" placeholder="e.g. Sunday, June 1 · 2:00 PM EST" oninput="saveField('clarity_date')">
+        </div>
+        <div class="cohort-field">
+          <label>Zoom Join Link</label>
+          <input type="url" id="clarity_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('clarity_zoom')">
+        </div>
+        <div class="cohort-field">
+          <label>Notes</label>
+          <input type="text" id="clarity_notes" placeholder="Any extra notes..." oninput="saveField('clarity_notes')">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESET BUTTON -->
+  <button class="reset-btn" onclick="confirmReset()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
+    Reset for new challenge
+  </button>
 
 </div>
 
 <footer>Strong Standard Coaching &nbsp;·&nbsp; 21DC Launch Checklist</footer>
 
+<style>
+  /* COHORT PANEL */
+  .cohort-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(15,35,64,0.07);
+    margin-top: 40px;
+  }
+  .cohort-panel__header {
+    background: linear-gradient(135deg, #0f2340, #1b3a5c);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .cohort-panel__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--white);
+  }
+  .cohort-panel__title svg { stroke: var(--accent); }
+  .cohort-panel__sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+  .cohort-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+  .cohort-card {
+    background: var(--white);
+    padding: 20px 24px;
+  }
+  .cohort-card--wide {
+    grid-column: 1 / -1;
+    background: var(--off-white);
+  }
+  .cohort-card__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .cohort-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cohort-dot--blue  { background: var(--accent); }
+  .cohort-dot--gold  { background: var(--gold); }
+  .cohort-dot--green { background: var(--check-done); }
+
+  .cohort-field {
+    margin-bottom: 12px;
+  }
+  .cohort-field:last-child { margin-bottom: 0; }
+  .cohort-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+  }
+  .cohort-field input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .cohort-field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(74,144,217,0.12);
+  }
+  .cohort-field input::placeholder { color: #b0bec5; }
+
+  /* RESET BUTTON */
+  .reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 32px auto 0;
+    background: transparent;
+    border: 1.5px solid #f0d0d0;
+    color: #c0605a;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .reset-btn:hover {
+    background: #fff5f5;
+    border-color: #c0605a;
+  }
+
+  @media (max-width: 620px) {
+    .cohort-grid { grid-template-columns: 1fr; }
+    .cohort-card--wide { grid-column: 1; }
+  }
+</style>
+
 <script>
+  const STORAGE_KEY = '21dc_checklist';
+
+  // ── PERSISTENCE ──────────────────────────────────────────
+  function getState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  }
+  function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function saveChecks() {
+    const state = getState();
+    state.checks = [];
+    document.querySelectorAll('.task, .subtask').forEach((el, i) => {
+      if (el.classList.contains('done')) state.checks.push(i);
+    });
+    saveState(state);
+  }
+
+  function loadChecks() {
+    const { checks } = getState();
+    if (!checks) return;
+    const els = document.querySelectorAll('.task, .subtask');
+    checks.forEach(i => { if (els[i]) els[i].classList.add('done'); });
+  }
+
+  function saveField(id) {
+    const state = getState();
+    if (!state.fields) state.fields = {};
+    state.fields[id] = document.getElementById(id).value;
+    saveState(state);
+  }
+
+  function loadFields() {
+    const { fields } = getState();
+    if (!fields) return;
+    Object.entries(fields).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+  }
+
+  // ── TOGGLE ────────────────────────────────────────────────
   function toggle(el) {
     el.classList.toggle('done');
+    saveChecks();
     updateProgress();
   }
   function toggleSub(el) {
     el.classList.toggle('done');
+    saveChecks();
     updateProgress();
   }
   function togglePhase(id) {
     document.getElementById(id).classList.toggle('collapsed');
   }
 
+  // ── PROGRESS ──────────────────────────────────────────────
   function updateProgress() {
-    const all = document.querySelectorAll('.task, .subtask');
+    const all  = document.querySelectorAll('.task, .subtask');
     const done = document.querySelectorAll('.task.done, .subtask.done');
-    const total = all.length;
-    const count = done.length;
+    const total = all.length, count = done.length;
     const pct = total ? (count / total) * 100 : 0;
     document.getElementById('progressBar').style.width = pct + '%';
     document.getElementById('doneCount').textContent = count;
     document.getElementById('totalCount').textContent = total;
 
-    // Per-phase counts
     ['phase1','phase2','phase3','phase4','phase5'].forEach(pid => {
       const phase = document.getElementById(pid);
       if (!phase) return;
-      const pAll = phase.querySelectorAll('.task, .subtask');
+      const pAll  = phase.querySelectorAll('.task, .subtask');
       const pDone = phase.querySelectorAll('.task.done, .subtask.done');
       const el = document.getElementById(pid + '-count');
       if (el) el.textContent = pDone.length + ' / ' + pAll.length;
     });
   }
 
-  function resetAll() {
+  // ── RESET ─────────────────────────────────────────────────
+  function confirmReset() {
+    if (!confirm('Reset everything for a new challenge? This will clear all checks, dates, and links.')) return;
+    localStorage.removeItem(STORAGE_KEY);
     document.querySelectorAll('.task.done, .subtask.done').forEach(el => el.classList.remove('done'));
+    ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_date','clarity_zoom','clarity_notes']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     updateProgress();
   }
 
-  // Init
+  // ── INIT ──────────────────────────────────────────────────
+  loadChecks();
+  loadFields();
   updateProgress();
 </script>
 </body>
