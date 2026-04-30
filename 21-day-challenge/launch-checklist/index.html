@@ -792,8 +792,6 @@
 <footer>Strong Standard Coaching &nbsp;&middot;&nbsp; 21DC Launch Checklist</footer>
 
 <script>
-  const ZOOM_FN = 'https://akrxgohrlpiprqwnhkzc.supabase.co/functions/v1/smart-service';
-
   async function createZoomMeeting(type) {
     const dateEl = document.getElementById(`${type}_date`);
     const zoomEl = document.getElementById(`${type}_zoom`);
@@ -839,6 +837,7 @@
   };
   const JOEY_API = `${SUPABASE_URL}/rest/v1/checklist`;
   const BERN_API = `${SUPABASE_URL}/rest/v1/checklist_bernardo`;
+  const ZOOM_FN = 'https://akrxgohrlpiprqwnhkzc.supabase.co/functions/v1/smart-service';
   let writeTimers = {};
 
   // ── TABS ──────────────────────────────────────────────────
