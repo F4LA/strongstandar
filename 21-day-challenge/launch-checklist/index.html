@@ -214,6 +214,15 @@
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(74,144,217,0.12);
   }
+  .zoom-btn {
+    width: 100%; padding: 9px 12px;
+    background: #2D8CFF; color: white;
+    border: none; border-radius: 7px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .zoom-btn:hover { background: #1a7aee; }
+  .zoom-btn:disabled { background: #9bb8d4; cursor: not-allowed; }
 
   /* PHASE */
   .phase {
@@ -528,12 +537,14 @@
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--blue"></span>Kickoff Call</div>
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date')"></div>
           <div class="cohort-field"><label>Zoom Join Link</label><input type="url" id="kickoff_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('kickoff_zoom')"></div>
+          <div class="cohort-field"><button class="zoom-btn" onclick="createZoomMeeting('kickoff')">⚡ Create Zoom Meeting</button></div>
           <div class="cohort-field"><label>Google Calendar Link</label><input type="url" id="kickoff_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('kickoff_gcal')"></div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--gold"></span>Closing Webinar</div>
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="closing_date" oninput="saveField('closing_date')"></div>
           <div class="cohort-field"><label>Zoom Join Link</label><input type="url" id="closing_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('closing_zoom')"></div>
+          <div class="cohort-field"><button class="zoom-btn" onclick="createZoomMeeting('closing')">⚡ Create Zoom Meeting</button></div>
           <div class="cohort-field"><label>Google Calendar Link</label><input type="url" id="closing_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('closing_gcal')"></div>
         </div>
         <div class="cohort-card cohort-card--wide">
@@ -781,7 +792,44 @@
 <footer>Strong Standard Coaching &nbsp;&middot;&nbsp; 21DC Launch Checklist</footer>
 
 <script>
-  const SUPABASE_URL = 'https://akrxgohrlpiprqwnhkzc.supabase.co';
+  const ZOOM_FN = 'https://akrxgohrlpiprqwnhkzc.supabase.co/functions/v1/smart-service';
+
+  async function createZoomMeeting(type) {
+    const dateEl = document.getElementById(`${type}_date`);
+    const zoomEl = document.getElementById(`${type}_zoom`);
+    const btn = event.target;
+
+    if (!dateEl.value) { alert('Please set a date and time first.'); return; }
+
+    const topics = { kickoff: 'Strong Standard — Kickoff Call', closing: 'Strong Standard — Closing Webinar' };
+    btn.disabled = true;
+    btn.textContent = 'Creating...';
+
+    try {
+      const res = await fetch(ZOOM_FN, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        body: JSON.stringify({
+          topic: topics[type],
+          start_time: new Date(dateEl.value).toISOString(),
+          duration: 60
+        })
+      });
+      const data = await res.json();
+      if (data.join_url) {
+        zoomEl.value = data.join_url;
+        saveField(`${type}_zoom`);
+        btn.textContent = '✅ Meeting Created!';
+        btn.style.background = '#2e7d5e';
+      } else {
+        throw new Error(data.error || 'Unknown error');
+      }
+    } catch(e) {
+      alert('Error creating meeting: ' + e.message);
+      btn.textContent = '⚡ Create Zoom Meeting';
+      btn.disabled = false;
+    }
+  }
   const SUPABASE_KEY = 'sb_publishable_k5qrLybTNeW3F8N3u9uTpg_ZXymerMh';
   const HEADERS = {
     'apikey': SUPABASE_KEY,
