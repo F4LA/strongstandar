@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/scripts/utm-persist.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Blueprint Is On Its Way | Fit4Life Academy</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --navy-4:      #17243B;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --success:     #3DD68C;
+  --warning:     #E05555;
+  --amber:       #F59E0B;
+  --amber-glow:  rgba(245,158,11,0.12);
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'DM Serif Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   20px;
+  --r-full: 9999px;
+
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.35);
+  --shadow-glow: 0 0 40px rgba(34,120,172,0.25);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--off-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+.label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+}
+h1, h2 {
+  font-family: var(--font-display);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
+
+.container       { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+.container--narrow { max-width: 780px; margin: 0 auto; padding: 0 32px; }
+.container--tight  { max-width: 640px; margin: 0 auto; padding: 0 32px; }
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 8px 32px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, rgba(8,13,26,0.98), rgba(8,13,26,0));
+  transition: background 0.3s, padding 0.3s;
+}
+.topbar.scrolled {
+  background: rgba(8,13,26,0.97);
+  border-bottom: 1px solid rgba(34,120,172,0.2);
+  padding: 6px 32px 8px;
+}
+.topbar__logo img { height: 24px; width: auto; display: block; }
+
+/* ── CONFIRMATION BANNER ── */
+.confirm-banner {
+  background: rgba(61,214,140,0.06);
+  border-bottom: 1px solid rgba(61,214,140,0.2);
+  padding: 14px 32px;
+  text-align: center;
+  margin-top: 60px;
+}
+.confirm-banner__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--success);
+}
+.confirm-banner__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-dot 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── HERO: FREEBIE CONFIRMED ── */
+.hero-confirm {
+  background: var(--navy);
+  padding: 56px 0 64px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.hero-confirm::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-confirm::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(26,95,138,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-confirm__inner { position: relative; z-index: 1; }
+
+.checkmark-circle {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(61,214,140,0.1);
+  border: 2px solid rgba(61,214,140,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.checkmark-circle svg { color: var(--success); }
+
+.hero-confirm h1 {
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  color: var(--white);
+  margin: 8px 0 16px;
+}
+.hero-confirm h1 .accent { color: var(--steel-light); }
+.hero-confirm p {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── WHAT'S INSIDE STRIP ── */
+.inside-strip {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.12);
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+  padding: 36px 0;
+}
+.inside-strip__grid {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.inside-item {
+  flex: 1;
+  min-width: 130px;
+  max-width: 220px;
+  text-align: center;
+  padding: 16px 20px;
+  position: relative;
+}
+.inside-item + .inside-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; height: 60%; width: 1px;
+  background: rgba(34,120,172,0.2);
+}
+.inside-item__icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.inside-item__title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--off-white);
+  margin-bottom: 4px;
+}
+.inside-item__sub {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.3), transparent);
+}
+
+/* ── CHALLENGE SECTION ── */
+.challenge-section {
+  background: var(--navy);
+  padding: 88px 0;
+  position: relative;
+  overflow: hidden;
+}
+.challenge-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(245,158,11,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.challenge-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--amber-glow);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: var(--r-full);
+  padding: 8px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.challenge-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.challenge-header h2 {
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  color: var(--white);
+  margin: 0 0 20px;
+  line-height: 1;
+}
+.challenge-header h2 .accent { color: var(--amber); }
+.challenge-header .subhead {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* Main challenge card */
+.challenge-card {
+  background: var(--navy-2);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(245,158,11,0.06), var(--shadow-md);
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+}
+.challenge-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--amber), #FBBF24, var(--amber), transparent);
+}
+
+.challenge-card__body {
+  padding: 48px 48px 40px;
+}
+
+/* Spots remaining counter */
+.spots-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(224,85,85,0.08);
+  border: 1px solid rgba(224,85,85,0.25);
+  border-radius: var(--r-full);
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--warning);
+  margin-bottom: 28px;
+}
+.spots-counter__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--warning);
+  animation: pulse-dot 1.6s infinite;
+}
+
+.challenge-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  color: var(--white);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.challenge-card h3 .accent { color: var(--amber); }
+
+.challenge-card .desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+
+/* Deliverables list */
+.deliverables {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.deliverable-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.12);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+}
+.deliverable-item__check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(61,214,140,0.1);
+  border: 1.5px solid rgba(61,214,140,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.deliverable-item__check svg { color: var(--success); }
+.deliverable-item__text {
+  font-size: 13px;
+  color: var(--off-white);
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+/* Price + CTA */
+.challenge-card__footer {
+  background: var(--navy-3);
+  border-top: 1px solid rgba(34,120,172,0.12);
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.price-block { display: flex; flex-direction: column; gap: 2px; }
+.price-block__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.price-block__amount {
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+.price-block__amount .currency {
+  font-size: 1.8rem;
+  vertical-align: top;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.price-block__note {
+  font-size: 12px;
+  color: var(--amber);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.price-block__sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.btn-challenge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  border-radius: var(--r-full);
+  border: none;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--amber);
+  color: #080D1A;
+  padding: 18px 40px;
+  box-shadow: 0 0 40px rgba(245,158,11,0.3);
+}
+.btn-challenge:hover {
+  background: #FBBF24;
+  transform: translateY(-2px);
+  box-shadow: 0 0 60px rgba(245,158,11,0.5);
+}
+.btn-challenge svg { flex-shrink: 0; }
+
+/* Guarantee line */
+.guarantee-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+.guarantee-line svg { color: var(--success); flex-shrink: 0; }
+
+/* ── SOCIAL PROOF STRIP ── */
+.proof-strip {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.12);
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+  padding: 40px 0;
+}
+.proof-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.proof-card {
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.12);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.proof-card__stars {
+  display: flex;
+  gap: 3px;
+  color: var(--amber);
+}
+.proof-card__quote {
+  font-size: 14px;
+  color: var(--off-white);
+  line-height: 1.6;
+  font-style: italic;
+  font-family: var(--font-serif);
+  flex: 1;
+}
+.proof-card__result {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(61,214,140,0.08);
+  border: 1px solid rgba(61,214,140,0.2);
+  border-radius: var(--r-full);
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--success);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.proof-card__result svg { flex-shrink: 0; }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: var(--navy);
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, rgba(245,158,11,0.06) 0%, transparent 65%),
+    linear-gradient(to bottom, var(--navy-2), var(--navy));
+}
+.final-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,120,172,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,120,172,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.final-cta__inner { position: relative; z-index: 1; }
+.final-cta h2 {
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  color: var(--white);
+  margin: 16px 0 24px;
+  line-height: 1;
+}
+.final-cta h2 .accent { color: var(--amber); }
+.final-cta p {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 40px;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy-2);
+  border-top: 1px solid rgba(34,120,172,0.15);
+  padding: 48px 32px 32px;
+}
+.footer__inner {
+  max-width: 1120px;
+  margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--faint);
+  margin-top: 10px;
+}
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer__bottom {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(34,120,172,0.1);
+  display: flex;
+  justify-content: center;
+}
+.footer__copy { font-size: 13px; color: var(--faint); }
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .proof-strip__grid { grid-template-columns: 1fr; gap: 14px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
+@media (max-width: 700px) {
+  .challenge-card__body { padding: 32px 24px 24px; }
+  .challenge-card__footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+  .deliverables { grid-template-columns: 1fr; gap: 10px; }
+  .btn-challenge { width: 100%; justify-content: center; font-size: 15px; padding: 16px 32px; }
+}
+@media (max-width: 640px) {
+  .container, .container--narrow, .container--tight { padding: 0 20px; }
+  .topbar { padding: 8px 20px; }
+  .confirm-banner { padding: 12px 20px; }
+  .confirm-banner__inner { flex-direction: column; gap: 6px; font-size: 13px; text-align: center; }
+  .hero-confirm { padding: 40px 0 48px; }
+  .hero-confirm h1 { font-size: clamp(2rem, 8vw, 3.2rem); }
+  .inside-strip__grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .inside-item + .inside-item::before { display: none; }
+  .inside-item:nth-child(odd) { border-right: 1px solid rgba(34,120,172,0.12); }
+  .inside-item:nth-child(1),
+  .inside-item:nth-child(2) { border-bottom: 1px solid rgba(34,120,172,0.12); }
+  .challenge-section { padding: 56px 0; }
+  .challenge-header h2 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+  .challenge-header .subhead { font-size: 15px; }
+  .final-cta { padding: 64px 0; }
+  .final-cta h2 { font-size: clamp(2.4rem, 9vw, 4.5rem); }
+  .final-cta p { font-size: 15px; }
+  footer { padding: 36px 20px 24px; }
+  .footer__inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .footer-links { flex-wrap: wrap; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="topbar" id="topbar">
+  <div class="topbar__logo">
+    <a href="https://strongstandard.com">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard Coaching">
+    </a>
+  </div>
+</header>
+
+<!-- CONFIRMATION BANNER -->
+<div class="confirm-banner">
+  <div class="confirm-banner__inner">
+    <span class="confirm-banner__dot"></span>
+    <strong>CONFIRMED:</strong>&nbsp; Your Strong Standard Blueprint is on its way to your inbox.
+  </div>
+</div>
+
+<!-- HERO: FREEBIE CONFIRMED -->
+<section class="hero-confirm">
+  <div class="container container--tight">
+    <div class="hero-confirm__inner">
+      <div class="checkmark-circle">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <span class="label reveal">You're all set</span>
+      <h1 class="reveal" style="transition-delay:0.05s">Your Blueprint Is<br><span class="accent">On Its Way</span></h1>
+      <p class="reveal" style="transition-delay:0.1s">Check your inbox in the next few minutes. While you wait, there's something you're going to want to see below.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S IN THE BLUEPRINT -->
+<div class="inside-strip">
+  <div class="container">
+    <div class="inside-strip__grid">
+      <div class="inside-item reveal">
+        <div class="inside-item__icon">📋</div>
+        <div class="inside-item__title">Nutrition Strategy</div>
+        <div class="inside-item__sub">Science-backed framework for your goals</div>
+      </div>
+      <div class="inside-item reveal" style="transition-delay:0.08s">
+        <div class="inside-item__icon">💪</div>
+        <div class="inside-item__title">Training Principles</div>
+        <div class="inside-item__sub">Build muscle without wasting hours</div>
+      </div>
+      <div class="inside-item reveal" style="transition-delay:0.16s">
+        <div class="inside-item__icon">📊</div>
+        <div class="inside-item__title">Macro Targets</div>
+        <div class="inside-item__sub">Personalized to your body & schedule</div>
+      </div>
+      <div class="inside-item reveal" style="transition-delay:0.24s">
+        <div class="inside-item__icon">🔬</div>
+        <div class="inside-item__title">PhD-Level Research</div>
+        <div class="inside-item__sub">No fluff, no bro-science</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CHALLENGE SECTION -->
+<section class="challenge-section" id="challenge">
+  <div class="container container--narrow">
+
+    <div class="challenge-header reveal">
+      <div class="challenge-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        One More Thing
+      </div>
+      <h2>Ready to Put That<br>Blueprint to <span class="accent">Work?</span></h2>
+      <p class="subhead">The Blueprint gives you the knowledge. The 21-Day Challenge gives you the coaching, the community, and the structure to actually make it happen — in 3 weeks.</p>
+    </div>
+
+    <div class="challenge-card reveal" style="transition-delay:0.1s">
+      <div class="challenge-card__body">
+
+        <div class="spots-counter">
+          <span class="spots-counter__dot"></span>
+          Only 5 of 60 spots remaining at $97
+        </div>
+
+        <h3>Lean &amp; Strong<br><span class="accent">21-Day Challenge</span></h3>
+        <p class="desc">Join the science-backed challenge that's helped 375+ people start transforming their bodies, with expert coaching from a PhD-led team, personalized nutrition, and a community that actually shows up for you.</p>
+
+        <div class="deliverables">
+          <div class="deliverable-item">
+            <div class="deliverable-item__check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="deliverable-item__text">3–4 Day Workout Plans (home or gym)</span>
+          </div>
+          <div class="deliverable-item">
+            <div class="deliverable-item__check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="deliverable-item__text">Tailored Nutrition &amp; Macro Targets</span>
+          </div>
+          <div class="deliverable-item">
+            <div class="deliverable-item__check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="deliverable-item__text">Weekly Live Coaching Calls</span>
+          </div>
+          <div class="deliverable-item">
+            <div class="deliverable-item__check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="deliverable-item__text">1-on-1 Coaching Call (bonus)</span>
+          </div>
+          <div class="deliverable-item">
+            <div class="deliverable-item__check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="deliverable-item__text">Fit4Life App + Recipe Guides</span>
+          </div>
+          <div class="deliverable-item">
+            <div class="deliverable-item__check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <span class="deliverable-item__text">$500 Cash Prize for Top Transformation</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="challenge-card__footer">
+        <div class="price-block">
+          <span class="price-block__label">Early Bird Price</span>
+          <div class="price-block__amount"><span class="currency">$</span>97</div>
+          <div class="price-block__note">↑ Goes to $147 after first 30 spots</div>
+          <div class="price-block__sub">Starts May 9, 2026 · Led by Dr. Joey Munoz, PhD</div>
+        </div>
+        <a href="https://challenge.drjoeymunoz.com/" class="btn-challenge" target="_blank" rel="noopener">
+          Join the Challenge
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="guarantee-line reveal" style="transition-delay:0.2s">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      21-day 100% money-back guarantee — you have nothing to lose.
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-strip">
+  <div class="container">
+    <div class="proof-strip__grid">
+      <div class="proof-card reveal">
+        <div class="proof-card__stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="proof-card__quote">"I've lost over 25 lbs. of fat working with Fit4Life Academy and built substantial muscle!"</p>
+        <div class="proof-card__result">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Lost 25+ lbs of fat
+        </div>
+      </div>
+      <div class="proof-card reveal" style="transition-delay:0.08s">
+        <div class="proof-card__stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="proof-card__quote">"I lost over 40 lbs of fat and my latest blood draw showed a tremendous drop in all the numbers I was worried about!"</p>
+        <div class="proof-card__result">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Lost 40+ lbs & improved blood work
+        </div>
+      </div>
+      <div class="proof-card reveal" style="transition-delay:0.16s">
+        <div class="proof-card__stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="proof-card__quote">"I added 10 lbs of lean muscle and shed 16 lbs of fat in just 6 months. My results were better than I expected."</p>
+        <div class="proof-card__result">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          +10 lbs muscle · −16 lbs fat
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="container final-cta__inner">
+    <span class="label reveal">The next 21 days are going to pass anyway</span>
+    <h2 class="reveal" style="transition-delay:0.05s">Make Them<br><span class="accent">Count.</span></h2>
+    <p class="reveal" style="transition-delay:0.1s">Stop waiting for the right time. You have the blueprint — now you have the chance to put it into action with a team behind you.</p>
+    <div class="reveal" style="transition-delay:0.15s">
+      <a href="https://challenge.drjoeymunoz.com/" class="btn-challenge" target="_blank" rel="noopener" style="font-size:17px; padding:20px 48px;">
+        Join the 21-Day Challenge — $97
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="guarantee-line" style="margin-top:16px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        21-day money-back guarantee · Starts May 9, 2026 · Only 5 spots left at $97
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms-of-service">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Fit4Life Academy. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+// Sticky nav
+const topbar = document.getElementById('topbar');
+window.addEventListener('scroll', () => {
+  topbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
