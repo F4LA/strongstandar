@@ -2844,6 +2844,11 @@ footer {
       .catch(() => {});
   }
 
+  // Apply params to checkout links immediately on load (don't wait for Sheet fetch)
+  document.querySelectorAll('.checkout-link').forEach(link => {
+    link.href = buildCheckoutUrl(link.href);
+  });
+
   fetchPurchaseCount();
   setInterval(fetchPurchaseCount, 60000);
 
