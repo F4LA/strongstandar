@@ -2762,6 +2762,14 @@ footer {
   const LINK_97  = 'https://drjoeymunoz.com/21-day-challenge-checkout';
   const LINK_147 = 'https://drjoeymunoz.com/21-day-challenge-checkout-147';
 
+  // Forward all incoming URL params (utm_source, coupon, etc.) to checkout links
+  function buildCheckoutUrl(base) {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.toString()) return base;
+    const separator = base.includes('?') ? '&' : '?';
+    return base + separator + params.toString();
+  }
+
   let purchaseCount = 0;
 
   function updateSpotsUI() {
@@ -2780,7 +2788,7 @@ footer {
     const offerPrice = document.getElementById('offer-price');
     if (offerPrice) offerPrice.innerHTML = 'Join Today for <span class="dynamic-price">' + priceStr + '</span>';
 
-    const baseUrl = inTier2 ? LINK_147 : LINK_97;
+    const baseUrl = buildCheckoutUrl(inTier2 ? LINK_147 : LINK_97);
     document.querySelectorAll('.checkout-link').forEach(link => { link.href = baseUrl; });
 
     const tierEarly   = document.getElementById('tier-early');
