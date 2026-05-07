@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>F4LA Payment Plan Parser</title>
+<title>Strong Standard Payment Plan Parser</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
 
@@ -250,13 +250,12 @@
   .summary-item { font-size: 11px; color: var(--muted); }
   .summary-item span { color: var(--text); font-weight: 600; }
 </style>
-<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
 <body>
 
 <header>
   <div class="logo-dot"></div>
-  <h1>F4LA — Payment Plan Parser</h1>
+  <h1>Strong Standard — Payment Plan Parser</h1>
 </header>
 
 <div class="layout">
@@ -370,6 +369,27 @@ function parseInvoice() {
         payment_plan: `${payNum}/${payTotal}`,
         payment_amount: amount,
         status: payNum === 1 ? 'Paid' : 'Pending'
+      });
+    }
+  }
+
+  // Fallback: single payment invoice (PAID, no payment plan structure)
+  if (parsedRows.length === 0) {
+    const amountPaidMatch = text.match(/Amount Paid[^\n]*\n[^\n]*(\$[\d,]+\.?\d*)/i);
+    const completedMatch = text.match(/Completed on[:\s]+([A-Za-z]+ \d+,?\s*\d{4})/i);
+    const issueDateMatch = text.match(/Issue Date\s*\n([A-Za-z]+ \d+,?\s*\d{4})/i);
+
+    const amount = amountPaidMatch ? amountPaidMatch[1] : '';
+    const date = completedMatch ? completedMatch[1] : (issueDateMatch ? issueDateMatch[1] : '');
+
+    if (amount && name) {
+      parsedRows.push({
+        full_name: name,
+        email: email,
+        date: formatDate(date || 'Unknown'),
+        payment_plan: '1/1',
+        payment_amount: amount,
+        status: 'Paid'
       });
     }
   }
