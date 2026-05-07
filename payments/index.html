@@ -250,7 +250,6 @@
   .summary-item { font-size: 11px; color: var(--muted); }
   .summary-item span { color: var(--text); font-weight: 600; }
 </style>
-<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
 <body>
 
@@ -428,7 +427,7 @@ function renderPreview() {
   setStatus('idle', `${parsedRows.length} filas listas para enviar`);
 }
 
-async function sendToSheet() {
+function sendToSheet() {
   if (!parsedRows.length) return;
 
   const btn = document.getElementById('sendBtn');
@@ -436,15 +435,24 @@ async function sendToSheet() {
   btn.textContent = 'Enviando...';
   setStatus('loading', 'Enviando al Google Sheet...');
 
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ rows: parsedRows })
-    });
+  // Use JSONP to bypass CORS
+  const callbackName = 'cb_' + Date.now();
+  const timeout = setTimeout(() => {
+    cleanup();
+    setStatus('error', 'Timeout — verifica que el script esté desplegado');
+    btn.disabled = false;
+    btn.textContent = 'Enviar al Sheet';
+  }, 15000);
 
-    const result = await response.json();
+  function cleanup() {
+    clearTimeout(timeout);
+    delete window[callbackName];
+    const script = document.getElementById('jsonp_script');
+    if (script) script.remove();
+  }
 
+  window[callbackName] = function(result) {
+    cleanup();
     if (result.success) {
       setStatus('ok', `${result.rows_added} filas añadidas al sheet`);
       btn.textContent = '✓ Enviado';
@@ -457,11 +465,20 @@ async function sendToSheet() {
       btn.disabled = false;
       btn.textContent = 'Enviar al Sheet';
     }
-  } catch(err) {
-    setStatus('error', 'Error de conexión: ' + err.message);
+  };
+
+  const encoded = encodeURIComponent(JSON.stringify({ rows: parsedRows }));
+  const url = `${SCRIPT_URL}?callback=${callbackName}&data=${encoded}`;
+  const script = document.createElement('script');
+  script.id = 'jsonp_script';
+  script.src = url;
+  script.onerror = () => {
+    cleanup();
+    setStatus('error', 'Error al cargar el script');
     btn.disabled = false;
     btn.textContent = 'Enviar al Sheet';
-  }
+  };
+  document.body.appendChild(script);
 }
 
 function setStatus(type, msg) {
