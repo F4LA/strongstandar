@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4LA Payment Plan Parser</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0d12;
+    --surface: #111418;
+    --border: #1e2530;
+    --accent: #2278AC;
+    --accent-light: #3899CC;
+    --green: #22ac6e;
+    --yellow: #e0a830;
+    --red: #e05030;
+    --text: #e8edf2;
+    --muted: #5a6472;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .logo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 1000px;
+  }
+
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  textarea {
+    width: 100%;
+    height: 320px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 16px;
+    resize: none;
+  }
+
+  textarea::placeholder { color: var(--muted); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--accent-light); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  .actions {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .preview-area {
+    padding: 16px;
+    min-height: 320px;
+  }
+
+  .empty-state {
+    height: 288px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 28px; opacity: 0.3; }
+
+  .empty-state p {
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .row-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px;
+    align-items: start;
+  }
+
+  .row-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .row-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .badge-paid { background: rgba(34,172,110,0.15); color: var(--green); }
+  .badge-pending { background: rgba(224,168,48,0.15); color: var(--yellow); }
+
+  .status-bar {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-idle { background: var(--muted); }
+  .dot-ok { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-error { background: var(--red); box-shadow: 0 0 8px var(--red); }
+  .dot-loading {
+    background: var(--accent-light);
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .status-text { color: var(--muted); font-family: var(--mono); }
+  .status-ok { color: var(--green); }
+  .status-error { color: var(--red); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  .summary {
+    padding: 10px 16px;
+    display: flex;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-item { font-size: 11px; color: var(--muted); }
+  .summary-item span { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-dot"></div>
+  <h1>F4LA — Payment Plan Parser</h1>
+</header>
+
+<div class="layout">
+  <!-- Input Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Invoice Text</span>
+    </div>
+    <textarea id="invoiceInput" placeholder="Pega aquí el texto del invoice de GHL...
+
+Ejemplo:
+Billed to
+John Doe
+john@example.com
+
+Payment 1 of 3
+Due May 2, 2026
+$2,100.00
+..."></textarea>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="parseInvoice()" id="parseBtn">
+        Parse Invoice
+      </button>
+      <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+    </div>
+  </div>
+
+  <!-- Preview Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Preview</span>
+    </div>
+
+    <div id="previewArea" class="preview-area">
+      <div class="empty-state">
+        <div class="empty-icon">⬡</div>
+        <p>Pega un invoice y dale Parse<br>para ver las filas aquí</p>
+      </div>
+    </div>
+
+    <div class="actions" id="sendActions" style="display:none;">
+      <button class="btn btn-primary" onclick="sendToSheet()" id="sendBtn">
+        Enviar al Sheet
+      </button>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot dot-idle" id="statusDot"></div>
+      <span class="status-text" id="statusText">Esperando invoice...</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRIoE7Bu9mPWvjYtdQzdZXF7xp_KtGeitBCkObRfQKjRyfWFWrkrE5YEUYpt2sOPpo/exec";
+
+let parsedRows = [];
+
+function parseInvoice() {
+  const text = document.getElementById('invoiceInput').value.trim();
+  if (!text) return;
+
+  parsedRows = [];
+
+  // Extract name - look for "Billed to" section
+  let name = '';
+  let email = '';
+
+  const billedMatch = text.match(/Billed to\s*\n([^\n]+)/i);
+  if (billedMatch) {
+    name = billedMatch[1].trim();
+  }
+
+  // Extract email
+  const emailMatch = text.match(/([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})/);
+  if (emailMatch) email = emailMatch[1].trim();
+
+  // Extract payment lines: "Payment X of Y\nDue [date]\n$amount"
+  const paymentRegex = /Payment\s+(\d+)\s+of\s+(\d+)\s*\n[^\n]*?(?:Due\s+)?([A-Za-z]+ \d+,?\s*\d{4})\s*\n\s*(\$[\d,]+\.?\d*)/gi;
+  let match;
+
+  while ((match = paymentRegex.exec(text)) !== null) {
+    const payNum = parseInt(match[1]);
+    const payTotal = parseInt(match[2]);
+    const date = match[3].replace(',', '').trim();
+    const amount = match[4].trim();
+    const status = payNum === 1 ? 'Paid' : 'Pending';
+
+    parsedRows.push({
+      full_name: name,
+      email: email,
+      date: formatDate(date),
+      payment_plan: `${payNum}/${payTotal}`,
+      payment_amount: amount,
+      status: status
+    });
+  }
+
+  // Fallback: try alternate format without "Due" keyword
+  if (parsedRows.length === 0) {
+    const altRegex = /Payment\s+(\d+)\s+of\s+(\d+)\s*\n([A-Za-z]+ \d+,?\s*\d{4})\s*\n\s*(\$[\d,]+\.?\d*)/gi;
+    while ((match = altRegex.exec(text)) !== null) {
+      const payNum = parseInt(match[1]);
+      const payTotal = parseInt(match[2]);
+      const date = match[3].replace(',', '').trim();
+      const amount = match[4].trim();
+      parsedRows.push({
+        full_name: name,
+        email: email,
+        date: formatDate(date),
+        payment_plan: `${payNum}/${payTotal}`,
+        payment_amount: amount,
+        status: payNum === 1 ? 'Paid' : 'Pending'
+      });
+    }
+  }
+
+  renderPreview();
+}
+
+function formatDate(dateStr) {
+  // Normalize date to "Month D, YYYY"
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  } catch(e) { return dateStr; }
+}
+
+function renderPreview() {
+  const area = document.getElementById('previewArea');
+  const sendActions = document.getElementById('sendActions');
+
+  if (parsedRows.length === 0) {
+    area.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠</div>
+        <p>No se pudo parsear el invoice.<br>Verifica que tenga el formato de GHL.</p>
+      </div>`;
+    sendActions.style.display = 'none';
+    setStatus('idle', 'No se encontraron pagos en el invoice');
+    return;
+  }
+
+  const paidCount = parsedRows.filter(r => r.status === 'Paid').length;
+  const pendingCount = parsedRows.filter(r => r.status === 'Pending').length;
+
+  let html = `<div class="summary">
+    <div class="summary-item">Cliente: <span>${parsedRows[0].full_name || '—'}</span></div>
+    <div class="summary-item">Pagos: <span>${parsedRows.length}</span></div>
+    <div class="summary-item">Paid: <span>${paidCount}</span></div>
+    <div class="summary-item">Pending: <span>${pendingCount}</span></div>
+  </div><div style="padding:12px 16px;">`;
+
+  parsedRows.forEach(row => {
+    html += `
+    <div class="row-card">
+      <div>
+        <div class="row-name">${row.full_name} <span style="color:var(--muted);font-weight:400">${row.payment_plan}</span></div>
+        <div class="row-meta">${row.date} · ${row.payment_amount} · ${row.email}</div>
+      </div>
+      <span class="badge ${row.status === 'Paid' ? 'badge-paid' : 'badge-pending'}">${row.status}</span>
+    </div>`;
+  });
+
+  html += '</div>';
+  area.innerHTML = html;
+  sendActions.style.display = 'flex';
+  setStatus('idle', `${parsedRows.length} filas listas para enviar`);
+}
+
+async function sendToSheet() {
+  if (!parsedRows.length) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  setStatus('loading', 'Enviando al Google Sheet...');
+
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rows: parsedRows })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      setStatus('ok', `${result.rows_added} filas añadidas al sheet`);
+      btn.textContent = '✓ Enviado';
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = 'Enviar al Sheet';
+      }, 3000);
+    } else {
+      setStatus('error', result.error || 'Error desconocido');
+      btn.disabled = false;
+      btn.textContent = 'Enviar al Sheet';
+    }
+  } catch(err) {
+    setStatus('error', 'Error de conexión: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = 'Enviar al Sheet';
+  }
+}
+
+function setStatus(type, msg) {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  dot.className = 'status-dot';
+  text.className = 'status-text';
+
+  if (type === 'ok') {
+    dot.classList.add('dot-ok');
+    text.classList.add('status-ok');
+  } else if (type === 'error') {
+    dot.classList.add('dot-error');
+    text.classList.add('status-error');
+  } else if (type === 'loading') {
+    dot.classList.add('dot-loading');
+  } else {
+    dot.classList.add('dot-idle');
+  }
+  text.textContent = msg;
+}
+
+function clearAll() {
+  document.getElementById('invoiceInput').value = '';
+  document.getElementById('previewArea').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">⬡</div>
+      <p>Pega un invoice y dale Parse<br>para ver las filas aquí</p>
+    </div>`;
+  document.getElementById('sendActions').style.display = 'none';
+  parsedRows = [];
+  setStatus('idle', 'Esperando invoice...');
+}
+</script>
+</body>
+</html>
