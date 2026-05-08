@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="/scripts/utm-persist.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D1A">
 <title>Strong Standard Coaching | Dr. Joey Munoz, PhD</title>
 <meta name="description" content="Personalized nutrition, fitness, and lifestyle coaching. Grounded in science. Built around your real life. Designed to make results last.">
+<script src="/scripts/utm-persist.js" defer></script>
+<link rel="preconnect" href="https://assets.cdn.filesafe.space" crossorigin>
+<link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -44,7 +47,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; color-scheme: dark; }
 
 body {
   font-family: var(--font-body);
@@ -53,7 +56,28 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   font-size: 17px;
+  -webkit-tap-highlight-color: rgba(34,120,172,0.15);
 }
+
+
+/* ── ANCHOR SCROLL OFFSET ───────────────────────────── */
+[id] { scroll-margin-top: 80px; }
+/* ── SKIP LINK ───────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: var(--steel-mid);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: var(--r-full);
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 9999;
+  transition: top 0.2s;
+  text-decoration: none;
+}
+.skip-link:focus { top: 16px; }
 
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
@@ -88,9 +112,14 @@ h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
   border-radius: var(--r-full);
   border: none;
   cursor: pointer;
-  transition: all 0.22s ease;
+  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, color 0.22s ease;
   text-decoration: none;
   white-space: nowrap;
+  touch-action: manipulation;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--steel-light);
+  outline-offset: 3px;
 }
 
 .btn-primary {
@@ -148,7 +177,7 @@ h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
 }
 .section__header p {
   font-size: 19px;
-  color: var(--muted);
+  color: var(--off-white);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.75;
@@ -161,6 +190,8 @@ nav {
   top: 0; left: 0; right: 0;
   z-index: 100;
   padding: 20px 32px;
+  padding-left: max(32px, env(safe-area-inset-left));
+  padding-right: max(32px, env(safe-area-inset-right));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -245,7 +276,7 @@ nav.scrolled {
 }
 .hero__sub {
   font-size: 20px;
-  color: var(--muted);
+  color: var(--off-white);
   line-height: 1.75;
   font-weight: 300;
   max-width: 600px;
@@ -289,16 +320,19 @@ nav.scrolled {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s;
   flex-shrink: 0;
+  touch-action: manipulation;
 }
+.hero-proof-carousel__btn:focus-visible { outline: 2px solid var(--steel-light); outline-offset: 2px; }
 .hero-proof-carousel__btn:hover { border-color: var(--steel-light); color: var(--steel-light); }
 .hero-proof-carousel__dots { display: flex; gap: 8px; }
 .hero-proof-carousel__dot {
-  width: 6px; height: 6px;
+  display: block;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--faint);
-  border: none;
   cursor: pointer;
   transition: background 0.2s;
   flex-shrink: 0;
@@ -408,8 +442,9 @@ nav.scrolled {
   background: var(--navy-2);
   border: 1px solid rgba(34,120,172,0.13);
   border-radius: var(--r-lg);
-  padding: 36px 32px;
+  padding: 36px 28px;
   transition: transform 0.25s ease, border-color 0.25s ease;
+  text-align: center;
 }
 .proof-card:hover {
   transform: translateY(-5px);
@@ -417,16 +452,16 @@ nav.scrolled {
 }
 .proof-card__top {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 14px;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(34,120,172,0.12);
 }
 .proof-card__avatar {
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -438,7 +473,7 @@ nav.scrolled {
   object-fit: cover;
   object-position: 50% 20%;
 }
-.proof-card__right { flex: 1; }
+.proof-card__right { width: 100%; }
 .proof-card__stars {
   color: var(--gold);
   font-size: 14px;
@@ -464,7 +499,7 @@ nav.scrolled {
 }
 .proof-card__quote {
   font-family: var(--font-body);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 400;
   color: var(--off-white);
   line-height: 1.7;
@@ -479,54 +514,43 @@ nav.scrolled {
 .problem__block-1 {
   margin-bottom: 40px;
 }
-.desire-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  max-width: 720px;
+.desire-list {
+  max-width: 660px;
   margin: 0 auto;
-}
-.desire-card {
   display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  background: var(--navy-3);
-  border: 1px solid rgba(34,120,172,0.15);
-  border-radius: var(--r-lg);
-  padding: 24px 22px;
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  flex-direction: column;
+  gap: 0;
 }
-.desire-card:hover {
-  border-color: rgba(34,120,172,0.4);
-  transform: translateY(-3px);
-}
-.desire-card__icon {
-  flex-shrink: 0;
-  width: 44px; height: 44px;
-  border-radius: var(--r-md);
-  background: var(--steel-glow);
-  border: 1px solid rgba(34,120,172,0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  margin-top: 2px;
-}
-.desire-card__text {
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 500;
+.desire-item {
+  font-size: 18px;
   color: var(--off-white);
-  line-height: 1.55;
+  line-height: 1.75;
+  font-weight: 300;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(34,120,172,0.08);
 }
+.desire-item:last-child { border-bottom: none; }
 .problem__transition {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-style: italic;
-  color: var(--muted);
-  margin: 36px 0;
+  color: var(--off-white);
+  margin: 48px 0;
   text-align: center;
+  padding: 32px 40px;
+  position: relative;
 }
+.problem__transition::before,
+.problem__transition::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,120,172,0.35), transparent);
+  margin: 0 auto;
+  width: 80%;
+}
+.problem__transition::before { margin-bottom: 28px; }
+.problem__transition::after { margin-top: 28px; }
 .problem__block-2 { margin-bottom: 40px; }
 .problem__block-2 p {
   font-size: 18px;
@@ -538,16 +562,21 @@ nav.scrolled {
 .problem__block-2 p strong { color: var(--off-white); font-weight: 500; }
 .problem__block-2 em { color: var(--off-white); font-style: italic; font-size: 18px; }
 .problem__pivot {
-  font-size: 12px;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--steel-light);
+  color: var(--white);
   text-align: center;
-  padding: 24px 0;
-  border-top: 1px solid rgba(34,120,172,0.15);
-  border-bottom: 1px solid rgba(34,120,172,0.15);
-  margin: 36px 0;
+  padding: 32px 24px;
+  border-top: 1px solid rgba(34,120,172,0.2);
+  border-bottom: 1px solid rgba(34,120,172,0.2);
+  margin: 40px 0;
+  font-family: var(--font-display);
+  background: rgba(34,120,172,0.07);
+  border-radius: var(--r-md);
+  border-left: none;
+  border-right: none;
 }
 .problem__units { display: flex; flex-direction: column; gap: 0; }
 .problem-unit {
@@ -586,7 +615,7 @@ nav.scrolled {
 }
 .quote-carousel__track {
   position: relative;
-  min-height: 260px;
+  min-height: 280px;
 }
 .carousel-quote {
   position: absolute;
@@ -594,12 +623,11 @@ nav.scrolled {
   opacity: 0;
   transition: opacity 0.6s ease;
   text-align: center;
-  padding: 36px 48px;
+  padding: 48px 56px;
   background: var(--navy-3);
   border: 1px solid rgba(34,120,172,0.15);
   border-radius: var(--r-lg);
-  min-height: 220px;
-  height: 220px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -608,12 +636,12 @@ nav.scrolled {
 }
 .carousel-quote.active { opacity: 1; position: relative; }
 .carousel-quote__avatar {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid rgba(34,120,172,0.35);
-  margin: 0 auto 14px;
+  margin: 0 auto 16px;
   flex-shrink: 0;
 }
 .carousel-quote__avatar img {
@@ -623,17 +651,18 @@ nav.scrolled {
 }
 .carousel-quote__text {
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-style: italic;
   font-weight: 400;
   color: var(--off-white);
-  line-height: 1.65;
-  margin-bottom: 14px;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  max-width: 640px;
 }
 .carousel-quote__author {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--steel-light);
 }
@@ -644,12 +673,13 @@ nav.scrolled {
   margin-top: 20px;
 }
 .carousel-dot {
-  width: 5px; height: 5px;
+  display: block;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--faint);
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  border: none;
   flex-shrink: 0;
 }
 .carousel-dot.active { background: var(--steel-light); box-shadow: 0 0 8px rgba(56,153,204,0.6); }
@@ -669,11 +699,16 @@ nav.scrolled {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s;
+  touch-action: manipulation;
 }
 .carousel-arrow:hover {
   border-color: var(--steel-light);
   color: var(--steel-light);
+}
+.carousel-arrow:focus-visible {
+  outline: 2px solid var(--steel-light);
+  outline-offset: 2px;
 }
 
 /* ── METHOD SECTION ──────────────────────────────────── */
@@ -683,7 +718,7 @@ nav.scrolled {
   font-family: var(--font-serif);
   font-size: 1.1rem;
   font-style: italic;
-  color: var(--muted);
+  color: var(--off-white);
   margin-bottom: 56px;
   max-width: 560px;
   margin-left: auto;
@@ -793,7 +828,15 @@ nav.scrolled {
   overflow: hidden;
   transition: max-height 0.35s ease;
 }
-.pillar-accordion-body--inner { padding: 0 0 24px; }
+.pillar-accordion-body--inner {
+  padding: 0 0 24px;
+}
+.pillar-accordion-body--inner p {
+  font-size: 15px;
+  color: var(--off-white);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
 
 /* Process — vertical layout (funnel style) */
 .process__sublabel {
@@ -981,26 +1024,6 @@ nav.scrolled {
   height: auto;
   min-height: 140px;
 }
-.sp-slide__card-inner {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-.sp-slide__avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  border: 2px solid rgba(34,120,172,0.35);
-  margin-top: 2px;
-}
-.sp-slide__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.sp-slide__card-body { flex: 1; min-width: 0; }
 .sp-slide__headline {
   font-family: var(--font-display);
   font-size: 1.6rem;
@@ -1008,13 +1031,15 @@ nav.scrolled {
   margin-bottom: 12px;
   letter-spacing: 0.02em;
   line-height: 1.1;
+  text-align: left;
 }
 .sp-slide__story {
   font-size: 16px;
   color: var(--off-white);
   line-height: 1.8;
   font-weight: 300;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  text-align: left;
 }
 .sp-slide__client {
   font-size: 11px;
@@ -1022,6 +1047,10 @@ nav.scrolled {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--steel-light);
+  padding-top: 14px;
+  border-top: 1px solid rgba(34,120,172,0.15);
+  display: block;
+  text-align: left;
 }
 .sp-nav {
   display: flex;
@@ -1041,26 +1070,30 @@ nav.scrolled {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s;
+  touch-action: manipulation;
 }
 .sp-nav button:hover { border-color: var(--steel-light); color: var(--steel-light); }
+.sp-nav button:focus-visible { outline: 2px solid var(--steel-light); outline-offset: 2px; }
 .sp-dots { display: flex; gap: 8px; }
 .sp-dot {
-  width: 5px; height: 5px;
+  display: block;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--faint);
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  border: none;
   flex-shrink: 0;
+  touch-action: manipulation;
 }
-.sp-dot.active { background: var(--steel-light); box-shadow: 0 0 8px rgba(56,153,204,0.6); }
+.sp-dot.active { background: var(--steel-light); box-shadow: 0 0 6px rgba(56,153,204,0.6); }
 .sp-cta-line {
   text-align: center;
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1rem;
-  color: var(--muted);
+  color: var(--off-white);
   margin: 36px 0 20px;
 }
 
@@ -1147,7 +1180,7 @@ nav.scrolled {
 }
 .litmus__line {
   font-size: 15px;
-  color: var(--muted);
+  color: var(--off-white);
   font-style: italic;
   font-family: var(--font-serif);
 }
@@ -1168,17 +1201,22 @@ nav.scrolled {
   border-radius: var(--r-lg);
   overflow: hidden;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 32px 36px;
   transition: border-color 0.25s;
 }
 .founder-card:hover { border-color: rgba(34,120,172,0.4); }
 .founder-card__photo {
-  width: 220px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
   flex-shrink: 0;
+  overflow: hidden;
+  border: 2px solid rgba(34,120,172,0.4);
   background: var(--navy-4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
+  margin-bottom: 20px;
 }
 .founder-card__photo img {
   width: 100%;
@@ -1186,7 +1224,7 @@ nav.scrolled {
   object-fit: cover;
   object-position: top center;
 }
-.founder-card__body { padding: 28px 24px; flex: 1; }
+.founder-card__body { flex: 1; width: 100%; }
 .founder-card__degree {
   display: inline-block;
   background: var(--steel-glow);
@@ -1197,14 +1235,14 @@ nav.scrolled {
   font-weight: 600;
   color: var(--steel-light);
   letter-spacing: 0.06em;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .founder-card__name {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--white);
   font-family: var(--font-body);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .founder-card__role {
   font-size: 11px;
@@ -1212,13 +1250,13 @@ nav.scrolled {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .founder-card__bio {
   font-size: 14px;
   color: var(--off-white);
-  line-height: 1.7;
-  margin-bottom: 16px;
+  line-height: 1.75;
+  text-align: left;
 }
 .founder-card__pills {
   display: flex;
@@ -1235,11 +1273,95 @@ nav.scrolled {
   font-weight: 500;
 }
 
-/* Staff grid — 4 coaches in 2x2 */
+/* ── FOUNDER FEATURED CARD (Joey solo) ───────────────── */
+.founder-featured {
+  display: flex;
+  gap: 40px;
+  background: var(--navy-3);
+  border: 1px solid rgba(34,120,172,0.2);
+  border-radius: var(--r-lg);
+  padding: 40px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.founder-featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+}
+.founder-featured__avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid rgba(34,120,172,0.4);
+  background: var(--steel-glow);
+}
+.founder-featured__avatar img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.founder-featured__body { flex: 1; }
+.founder-featured__badge {
+  display: inline-block;
+  background: var(--steel-glow);
+  border: 1px solid rgba(34,120,172,0.3);
+  border-radius: var(--r-full);
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--steel-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.founder-featured__name {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.founder-featured__role {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--steel-light);
+  margin-bottom: 16px;
+}
+.founder-featured__bio {
+  font-size: 15px;
+  color: var(--off-white);
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* Staff grid — 4 coaches */
 .staff-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+
+/* Bernardo: highlighted first card */
+.coach-card--featured {
+  border-color: var(--steel-mid) !important;
+  background: var(--navy-3);
+  position: relative;
+}
+.coach-card--featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
 }
 .coaches-sublabel {
   font-size: 11px;
@@ -1368,11 +1490,11 @@ nav.scrolled {
   line-height: 1.8;
   font-weight: 300;
   margin-bottom: 20px;
-  text-align: left;
+  text-align: center;
 }
 .guarantee__callout {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(2,1fr);
   gap: 20px;
   margin: 40px 0 28px;
   background: var(--navy-3);
@@ -1400,14 +1522,14 @@ nav.scrolled {
 }
 .guarantee-item__text {
   font-size: 13px;
-  color: var(--muted);
+  color: var(--off-white);
   line-height: 1.5;
 }
 .guarantee__closing {
   font-family: var(--font-serif);
   font-size: 1.05rem;
   font-style: italic;
-  color: var(--muted);
+  color: var(--off-white);
   text-align: center;
 }
 
@@ -1418,7 +1540,7 @@ nav.scrolled {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.1rem;
-  color: var(--muted);
+  color: var(--off-white);
   margin-bottom: 36px;
 }
 .app-steps {
@@ -1460,7 +1582,7 @@ nav.scrolled {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 0.95rem;
-  color: var(--faint);
+  color: var(--muted);
   margin-bottom: 32px;
 }
 
@@ -1538,16 +1660,19 @@ nav.scrolled {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: border-color 0.2s, color 0.2s;
   flex-shrink: 0;
+  touch-action: manipulation;
 }
+.coach-carousel__btn:focus-visible { outline: 2px solid var(--steel-light); outline-offset: 2px; }
 .coach-carousel__btn:hover { border-color: var(--steel-light); color: var(--steel-light); }
 .coach-carousel__dots { display: flex; gap: 8px; }
 .coach-carousel__dot {
-  width: 7px; height: 7px;
+  display: block;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--faint);
-  border: none;
   cursor: pointer;
   transition: background 0.2s;
   flex-shrink: 0;
@@ -1641,7 +1766,7 @@ nav.scrolled {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.1rem;
-  color: var(--muted);
+  color: var(--off-white);
   line-height: 1.65;
   margin-bottom: 40px;
   max-width: 480px;
@@ -1653,7 +1778,8 @@ nav.scrolled {
 footer {
   background: var(--navy-2);
   border-top: 1px solid rgba(34,120,172,0.15);
-  padding: 56px 32px 36px;
+  padding: 56px max(32px, env(safe-area-inset-right)) 36px max(32px, env(safe-area-inset-left));
+  padding-bottom: max(36px, env(safe-area-inset-bottom));
 }
 .footer__inner {
   max-width: 1120px;
@@ -1696,13 +1822,15 @@ footer {
   align-items: center;
   justify-content: center;
   color: var(--muted);
-  transition: all 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  touch-action: manipulation;
 }
 .social-icon:hover {
   background: var(--steel-glow);
   border-color: var(--steel-light);
   color: var(--steel-light);
 }
+.social-icon:focus-visible { outline: 2px solid var(--steel-light); outline-offset: 2px; }
 .footer__bottom {
   max-width: 1120px;
   margin: 0 auto;
@@ -1721,18 +1849,37 @@ footer {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* ── TEXT WRAP ───────────────────────────────────────── */
+h1, h2 { text-wrap: balance; }
+
+/* Mobile-only founder featured */
+.founder-featured--mobile { display: none; }
+
+/* ── REDUCED MOTION ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .trust-bar__track { animation: none; }
+  .hero-glow { animation: none; }
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 960px) {
   .hero__inner { max-width: 100%; }
   .proof-strip__grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .hero-proof-grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
-  .desire-grid { max-width: 100%; grid-template-columns: 1fr; }
+  .desire-list { max-width: 100%; }
   .pillars__grid { display: none; }
   .pillar-accordion { display: block; }
   .founders-grid { grid-template-columns: 1fr; }
   .staff-grid { grid-template-columns: repeat(2, 1fr); }
-  .founder-card { flex-direction: column; }
-  .founder-card__photo { width: 100%; min-height: 260px; aspect-ratio: 4/3; }
+  .founder-featured { flex-direction: column; align-items: center; text-align: center; padding: 32px 24px; }
+  .founder-featured__avatar { width: 140px; height: 140px; }
+  .founder-featured__bio { text-align: left; }
   .fit__panels { grid-template-columns: 1fr; }
   .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
   .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
@@ -1743,16 +1890,17 @@ footer {
   .sp-slide__photos { grid-template-columns: 1fr 1fr; }
   .sp-photo { height: 308px; }
   .sp-dots { flex-wrap: wrap; justify-content: center; max-width: 240px; }
-  .sp-dot { width: 6px; height: 6px; }
   .trust-bar__track { gap: 40px; }
-  /* Hide sp-dots on mobile, show only arrows */
   .sp-dots { display: none; }
-  /* Team grid: stack all to 2 cols on tablet */
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   .founder-coach-card { grid-column: span 2; }
-  /* Coach carousel */
   #coachGrid { display: none; }
   .coach-carousel { display: block; }
+  /* Joey featured: hide desktop founders grid, show mobile featured + carousel */
+  .founders-grid { display: none !important; }
+  .staff-grid { display: none !important; }
+  .founder-featured--mobile { display: flex; margin-bottom: 32px; }
+  #mobileStaffLabel { display: block !important; }
 }
 
 @media (max-width: 640px) {
@@ -1760,16 +1908,16 @@ footer {
   .section { padding: 64px 0; }
   .hero { padding: 100px 0 56px; width: 100%; }
   /* Foto 1: H1 hero - force 3 lines */
-  .hero h1 { font-size: clamp(2.33rem, 8.7vw, 3.15rem) !important; }
+  .hero h1 { font-size: clamp(2.33rem, 8.7vw, 3.15rem); }
   /* Foto 1: hero subtitle - 3 lines */
   .hero__sub { font-size: 17px; }
-  .hero__cta-group .btn { font-size: 14px !important; padding: 14px 32px !important; }
-  .hero__cta-group .btn-primary { font-size: 13px !important; padding: 12px 28px !important; }
+  .hero__cta-group .btn { font-size: 14px; padding: 14px 32px; }
+  .hero__cta-group .btn-primary { font-size: 13px; padding: 12px 28px; }
   .hero-proof-grid { display: none; }
   .hero-proof-carousel { display: block; width: 100%; }
   .hero__pre { display: none; }
   .vsl-player { aspect-ratio: 16/9; height: auto; }
-  .vsl-label { margin-bottom: 6px !important; }
+  .vsl-label { margin-bottom: 6px; }
   .vsl-pre { font-size: 15px; margin-bottom: 16px; }
   .vsl-below { margin-top: 16px; margin-bottom: 16px; font-size: 16px; }
   .hero__inner { max-width: 100%; width: 100%; }
@@ -1778,20 +1926,21 @@ footer {
   .hero__sub { margin-bottom: 24px; font-size: 16px; }
   .hero-proof-carousel { margin-top: 24px; }
   nav { padding: 14px 20px; }
-  nav .btn-primary { font-size: 11px !important; padding: 8px 14px !important; }
+  nav .btn-primary { font-size: 12px; padding: 8px 14px; }
   nav .btn-primary svg { width: 13px; height: 13px; }
   .litmus { padding: 28px 20px; }
   .fit-panel { padding: 28px 20px; }
   .final-cta { padding: 72px 0; }
   .final-cta h2 { font-size: clamp(2.4rem, 8vw, 5rem); }
-  /* Foto 4: quote carousel fixed height */
-  .carousel-quote { padding: 24px 20px; min-height: 260px; height: 260px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-  .quote-carousel__track { min-height: 260px; }
-  /* Foto 2: problem pivot line break */
-  .problem__pivot { font-size: 10px; }
+  /* Quote carousel mobile */
+  .carousel-quote { padding: 32px 24px; min-height: auto; height: auto; }
+  .quote-carousel__track { min-height: auto; }
+  .carousel-quote__text { font-size: 1rem; }
+  /* Problem pivot: keep it impactful on mobile */
+  .problem__pivot { font-size: clamp(0.9rem, 4vw, 1.2rem); }
   /* Foto 8: sp-slide headline smaller, card auto height on mobile */
   .sp-slide__headline { font-size: 1.3rem; }
-  .sp-slide__card { padding: 20px 16px; min-height: 390px; }
+  .sp-slide__card { padding: 20px 16px; min-height: auto; }
   .sp-slide__photos { grid-template-columns: 1fr 1fr; gap: 8px; }
   .sp-photo { height: 242px; }
   .sp-photo img { transform: scale(1.1); transform-origin: 50% 50%; }
@@ -1811,12 +1960,13 @@ footer {
   .coach-carousel { display: block; }
   .team-grid { grid-template-columns: 1fr; }
   .founders-grid { grid-template-columns: 1fr; gap: 16px; }
-  .founder-card { flex-direction: column; }
-  .founder-card__photo { width: 100%; min-height: 220px; aspect-ratio: 4/3; }
-  .founder-card__body { padding: 20px 16px; }
-  .founder-card__degree { font-size: 10px; }
+  .founder-card { padding: 28px 20px 24px; }
+  .founder-card__photo { width: 120px; height: 120px; }
   .founder-card__name { font-size: 18px; }
   .founder-card__bio { font-size: 13px; }
+  .founder-featured { gap: 20px; padding: 24px 16px; }
+  .founder-featured__avatar { width: 110px; height: 110px; }
+  .staff-grid { grid-template-columns: 1fr 1fr; }
   .coach-card { padding: 24px 16px; }
   .coach-card p { font-size: 15px; }
   .fit-panel__heading { font-size: 1.6rem; }
@@ -1825,7 +1975,7 @@ footer {
   .footer__bottom { justify-content: center; }
   /* Foto 6: pillar accordion trigger font size larger */
   .pillar-accordion-trigger { font-size: 16px; padding: 22px 0; }
-  .pillar-accordion-body--inner p { font-size: 16px !important; line-height: 1.7; }
+  .pillar-accordion-body--inner p { font-size: 16px; line-height: 1.7; }
   .pillar-accordion-body--inner { padding: 0 0 24px; }
   /* Foto 11: philosophy tagline line break handled via font-size */
   .philosophy-tagline { font-size: clamp(1.6rem, 5vw, 2.5rem); }
@@ -1838,6 +1988,8 @@ footer {
   .sp-slide__photos { grid-template-columns: 1fr 1fr; gap: 6px; }
   .sp-photo { height: 180px; }
 }
+
+/* ── VIDEO OVERLAY ───────────────────────────────────── */
 .video-frame__overlay {
   position: absolute;
   inset: 0;
@@ -1847,6 +1999,9 @@ footer {
   cursor: pointer;
   transition: opacity 0.3s;
   z-index: 2;
+  background: transparent;
+  border: none;
+  width: 100%;
 }
 .video-frame__overlay.hidden { display: none; }
 .video-frame__play-btn {
@@ -1858,28 +2013,35 @@ footer {
   align-items: center;
   justify-content: center;
   transition: transform 0.2s, background 0.2s;
+  pointer-events: none;
 }
-.video-frame__overlay:hover .video-frame__play-btn {
+.video-frame__overlay:hover .video-frame__play-btn,
+.video-frame__overlay:focus-visible .video-frame__play-btn {
   transform: scale(1.08);
   background: rgba(34,120,172,1);
+}
+.video-frame__overlay:focus-visible {
+  outline: 2px solid var(--steel-light);
+  outline-offset: -4px;
+  border-radius: var(--r-lg);
 }
 </style>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- ═══════════════════════════════════════════════════
      NAV
 ════════════════════════════════════════════════════ -->
-<nav id="nav">
+<nav id="nav" aria-label="Main navigation">
   <div class="nav-logo">
-    <!-- Logo placeholder — replace src with GHL CDN URL -->
-    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:24px;width:auto;display:block;">
+    <img fetchpriority="high" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="120" height="24" style="height:24px;width:auto;display:block;">
   </div>
   <a href="/schedule-call/" class="btn btn-primary" style="font-size:13px;padding:12px 28px;">
     Apply Now
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </nav>
 
@@ -1887,7 +2049,8 @@ footer {
      SECTION 1: HERO
 ════════════════════════════════════════════════════ -->
 <section class="hero" id="home">
-  <div class="hero-bg"><div class="hero-glow"></div></div>
+  <div id="main"></div>
+  <div class="hero-bg"><div class="hero-glow" aria-hidden="true"></div></div>
   <div class="container">
     <div class="hero__inner">
 
@@ -1903,7 +2066,7 @@ footer {
 
       <!-- VSL inside hero -->
       <div class="vsl-label reveal" style="margin-bottom:12px;">
-        <span class="label" style="color:#3DD68C;">Watch Before You Apply</span>
+        <span class="label" style="color:var(--steel-light);">Watch Before You Apply</span>
       </div>
       <div class="vsl-player reveal" style="margin-bottom:32px;position:relative;">
         <video
@@ -1913,17 +2076,17 @@ footer {
           preload="metadata"
           style="width:100%;height:100%;object-fit:cover;display:block;"
         ></video>
-        <div class="video-frame__overlay" id="vslOverlay" onclick="playVsl()">
+        <button class="video-frame__overlay" id="vslOverlay" aria-label="Play video">
           <div class="video-frame__play-btn">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
           </div>
-        </div>
+        </button>
       </div>
 
       <div class="hero__cta-group">
         <a href="/schedule-call/" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
           Apply Now
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <p class="micro-copy" style="margin-top:10px;">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
       </div>
@@ -1932,7 +2095,7 @@ footer {
       <div class="hero-proof-grid reveal" style="margin-top:48px;">
         <div class="proof-card">
           <div class="proof-card__top">
-            <div class="proof-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny E."></div>
+            <div class="proof-card__avatar"><img width="64" height="64" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny E."></div>
             <div class="proof-card__right">
               <div class="proof-card__stars">★★★★★</div>
               <div class="proof-card__meta">
@@ -1945,7 +2108,7 @@ footer {
         </div>
         <div class="proof-card">
           <div class="proof-card__top">
-            <div class="proof-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate W."></div>
+            <div class="proof-card__avatar"><img width="64" height="64" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate W."></div>
             <div class="proof-card__right">
               <div class="proof-card__stars">★★★★★</div>
               <div class="proof-card__meta">
@@ -1958,7 +2121,7 @@ footer {
         </div>
         <div class="proof-card">
           <div class="proof-card__top">
-            <div class="proof-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy S."></div>
+            <div class="proof-card__avatar"><img width="64" height="64" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy S."></div>
             <div class="proof-card__right">
               <div class="proof-card__stars">★★★★★</div>
               <div class="proof-card__meta">
@@ -1977,7 +2140,7 @@ footer {
           <div class="hero-proof-carousel__track">
             <div class="proof-card">
               <div class="proof-card__top">
-                <div class="proof-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny E."></div>
+                <div class="proof-card__avatar"><img width="64" height="64" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny E."></div>
                 <div class="proof-card__right">
                   <div class="proof-card__stars">★★★★★</div>
                   <div class="proof-card__meta">
@@ -1990,7 +2153,7 @@ footer {
             </div>
             <div class="proof-card">
               <div class="proof-card__top">
-                <div class="proof-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate W."></div>
+                <div class="proof-card__avatar"><img width="64" height="64" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate W."></div>
                 <div class="proof-card__right">
                   <div class="proof-card__stars">★★★★★</div>
                   <div class="proof-card__meta">
@@ -2003,7 +2166,7 @@ footer {
             </div>
             <div class="proof-card">
               <div class="proof-card__top">
-                <div class="proof-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy S."></div>
+                <div class="proof-card__avatar"><img width="64" height="64" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy S."></div>
                 <div class="proof-card__right">
                   <div class="proof-card__stars">★★★★★</div>
                   <div class="proof-card__meta">
@@ -2018,15 +2181,15 @@ footer {
         </div>
         <div class="hero-proof-carousel__nav">
           <button class="hero-proof-carousel__btn" id="proofPrev">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           <div class="hero-proof-carousel__dots">
-            <button class="hero-proof-carousel__dot active" data-proof="0"></button>
-            <button class="hero-proof-carousel__dot" data-proof="1"></button>
-            <button class="hero-proof-carousel__dot" data-proof="2"></button>
+            <span role="button" tabindex="0" class="hero-proof-carousel__dot active" data-proof="0" aria-label="Go to testimonial 1"></span>
+            <span role="button" tabindex="0" class="hero-proof-carousel__dot" data-proof="1" aria-label="Go to testimonial 2"></span>
+            <span role="button" tabindex="0" class="hero-proof-carousel__dot" data-proof="2" aria-label="Go to testimonial 3"></span>
           </div>
           <button class="hero-proof-carousel__btn" id="proofNext">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
       </div>
@@ -2040,27 +2203,25 @@ footer {
 ════════════════════════════════════════════════════ -->
 <div class="trust-bar">
   <div class="trust-bar__track">
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>385K+ Instagram Followers</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>The Dr. Joey Munoz Show &mdash; 4.8&#9733; Apple Podcasts</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>As Heard On: Jillian Michaels Podcast</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Jordan Syatt Podcast</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Andrew Coates, Lift Free and Diet Hard</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>HALO Talks</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>500+ Transformations</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>PhD, Nutritional Sciences, Florida State University</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>385K+ Instagram Followers</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>The Dr. Joey Munoz Show, 4.8&#9733; Apple Podcasts</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>As Heard On: Jillian Michaels Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Jordan Syatt Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Andrew Coates, Lift Free and Diet Hard</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>HALO Talks</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>500+ Transformations</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>PhD, Nutritional Sciences, Florida State University</div>
     <!-- Duplicates for seamless loop -->
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>385K+ Instagram Followers</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>The Dr. Joey Munoz Show &mdash; 4.8&#9733; Apple Podcasts</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>As Heard On: Jillian Michaels Podcast</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Jordan Syatt Podcast</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Andrew Coates, Lift Free and Diet Hard</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>HALO Talks</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>500+ Transformations</div>
-    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>PhD, Nutritional Sciences, Florida State University</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>385K+ Instagram Followers</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>The Dr. Joey Munoz Show, 4.8&#9733; Apple Podcasts</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>As Heard On: Jillian Michaels Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Jordan Syatt Podcast</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>Andrew Coates, Lift Free and Diet Hard</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/></svg>HALO Talks</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>500+ Transformations</div>
+    <div class="trust-bar__item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>PhD, Nutritional Sciences, Florida State University</div>
   </div>
 </div>
-
-<div class="divider"></div>
 
 <!-- ═══════════════════════════════════════════════════
      SECTION 3: PROBLEM AGITATION
@@ -2070,28 +2231,16 @@ footer {
 
     <div class="section__header reveal">
       <span class="label">Does This Sound Familiar</span>
-      <h2 style="font-size:clamp(2rem,2.8vw,3rem);">You Know Exactly<br>Who You Want to Be.<br>Getting There Is the Hard Part.</h2>
+      <h2>You Know Exactly<br>Who You Want to Be.<br>Getting There Is the Hard Part.</h2>
     </div>
 
-    <!-- Block 1 - Desires as cards -->
+    <!-- Block 1 - Desires as plain text -->
     <div class="problem__block-1 reveal">
-      <div class="desire-grid">
-        <div class="desire-card">
-          <div class="desire-card__icon">💑</div>
-          <div class="desire-card__text">You want to feel attractive and fully present with your partner.</div>
-        </div>
-        <div class="desire-card">
-          <div class="desire-card__icon">👨‍👩‍👧‍👦</div>
-          <div class="desire-card__text">You want to be the example of health your kids and family actually see, not just the one you intend to be.</div>
-        </div>
-        <div class="desire-card">
-          <div class="desire-card__icon">💼</div>
-          <div class="desire-card__text">You want to walk into work with the energy and confidence that used to come naturally.</div>
-        </div>
-        <div class="desire-card">
-          <div class="desire-card__icon">🪞</div>
-          <div class="desire-card__text">You want to feel genuinely proud and comfortable in your own body. Not perfect. Just good.</div>
-        </div>
+      <div class="desire-list">
+        <p class="desire-item">You want to feel attractive and fully present with your partner.</p>
+        <p class="desire-item">You want to be the example of health your kids and family actually see, not just the one you intend to be.</p>
+        <p class="desire-item">You want to walk into work with the energy and confidence that used to come naturally.</p>
+        <p class="desire-item">You want to feel genuinely proud and comfortable in your own body. Not perfect. Just good.</p>
       </div>
     </div>
 
@@ -2130,104 +2279,104 @@ footer {
     <div class="quote-carousel reveal">
       <div class="quote-carousel__track">
         <div class="carousel-quote active" data-index="0">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e106972c135a8c8390b0e7.jpeg" alt="Andrea Shannon"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e106972c135a8c8390b0e7.jpeg" alt="Andrea Shannon"></div>
           <p class="carousel-quote__text">"I used to think there was nothing I could do to change my habits. I thought I was just too busy. What has been eye opening is learning how to incorporate daily habits in a way that fits within the busy lifestyle."</p>
           <div class="carousel-quote__author">Andrea Shannon</div>
         </div>
         <div class="carousel-quote" data-index="1">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny English"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny English"></div>
           <p class="carousel-quote__text">"I had tried everything and felt there was just no way to lose that weight. I thought it was just a consequence of menopause I was going to have to learn to live with."</p>
           <div class="carousel-quote__author">Penny English</div>
         </div>
         <div class="carousel-quote" data-index="2">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate Waldron"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate Waldron"></div>
           <p class="carousel-quote__text">"As soon as I was off the program the weight started coming back. It had not changed me. The big difference here is the habits they build so that you can do this on your own."</p>
           <div class="carousel-quote__author">Nate Waldron</div>
         </div>
         <div class="carousel-quote" data-index="3">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1097c50b9a3263a4fc90b.png" alt="Jonathan Siesholtz"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1097c50b9a3263a4fc90b.png" alt="Jonathan Siesholtz"></div>
           <p class="carousel-quote__text">"I had lost a significant amount of weight before, but I didn't really have a means to make it last. I slowly put the weight back on over a decade. This time I needed help building something that would actually stick."</p>
           <div class="carousel-quote__author">Jonathan Siesholtz</div>
         </div>
         <div class="carousel-quote" data-index="4">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e108fb0b562c72811b24d4.png" alt="Lauren Luna"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e108fb0b562c72811b24d4.png" alt="Lauren Luna"></div>
           <p class="carousel-quote__text">"I feel like I was really taught how to navigate food and fitness in the midst of a busy life. I was empowered to make these decisions myself while being guided in a really kind and encouraging way."</p>
           <div class="carousel-quote__author">Lauren Luna</div>
         </div>
         <div class="carousel-quote" data-index="5">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1089a036302171d7e6ced.png" alt="Linda Abaray"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1089a036302171d7e6ced.png" alt="Linda Abaray"></div>
           <p class="carousel-quote__text">"I feel great in my body now. I feel comfortable with how I look and how I feel. My pre-diabetic levels were completely dropped and back to normal."</p>
           <div class="carousel-quote__author">Linda Abaray</div>
         </div>
         <div class="carousel-quote" data-index="6">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1066bc56ad279081e2499.jpeg" alt="Brittni Mayagoitia" style="object-position:50% 40%;"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1066bc56ad279081e2499.jpeg" alt="Brittni Mayagoitia" style="object-position:50% 40%;"></div>
           <p class="carousel-quote__text">"The biggest change has been my mindset. I am a lot nicer to myself. I have learned that the scale does not determine my worth. Having the right coach changes everything."</p>
           <div class="carousel-quote__author">Brittni Mayagoitia</div>
         </div>
         <div class="carousel-quote" data-index="7">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10fe20b562c72811d250c.png" alt="Kristin Kilburg"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10fe20b562c72811d250c.png" alt="Kristin Kilburg"></div>
           <p class="carousel-quote__text">"I was working out consistently, meal prepping every week, getting seven hours of sleep, and still wasn't seeing results. I was stuck in the all-or-nothing mindset trap."</p>
           <div class="carousel-quote__author">Kristin Kilburg</div>
         </div>
         <div class="carousel-quote" data-index="8">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1075b12a3b92a680d385f.jpg" alt="Rob Johnson"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1075b12a3b92a680d385f.jpg" alt="Rob Johnson"></div>
           <p class="carousel-quote__text">"It was losing weight without losing body fat. This is about changing your whole body composition. My coach is not just your guide. They are your cheerleader, your inspiration, the person who shoves you out of your comfort zone."</p>
           <div class="carousel-quote__author">Rob Johnson</div>
         </div>
         <div class="carousel-quote" data-index="9">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e107010b562c72811a976f.jpeg" alt="Shannon Slack"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e107010b562c72811a976f.jpeg" alt="Shannon Slack"></div>
           <p class="carousel-quote__text">"My coach was there every step along the way during the frustrated times. She helped me see that a difficult moment was not going to stop me from seeing results. Having that constant feedback changed everything."</p>
           <div class="carousel-quote__author">Shannon Slack</div>
         </div>
         <div class="carousel-quote" data-index="10">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10730a2661c2e8f91a922.jpeg" alt="Steve Saldivar" style="object-position:65% 5%;"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10730a2661c2e8f91a922.jpeg" alt="Steve Saldivar" style="object-position:65% 5%;"></div>
           <p class="carousel-quote__text">"I was in a constant state of information overload. I would constantly switch things up without having the consistency of a long-term plan. What I needed was someone to help me build that plan and actually stick to it."</p>
           <div class="carousel-quote__author">Steve Saldivar</div>
         </div>
         <div class="carousel-quote" data-index="11">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1080f12a3b92a680d6bd9.png" alt="AJ Gracely"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1080f12a3b92a680d6bd9.png" alt="AJ Gracely"></div>
           <p class="carousel-quote__text">"I had conflicting objectives. I was under fueled for my training, not building the muscle I wanted, and overtraining all at once. The program changed everything by aligning my nutrition and training for the first time."</p>
           <div class="carousel-quote__author">AJ Gracely</div>
         </div>
         <div class="carousel-quote" data-index="12">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10aeac56ad279081f6c61.png" alt="Axel Rubio"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10aeac56ad279081f6c61.png" alt="Axel Rubio"></div>
           <p class="carousel-quote__text">"I have lost at least 10 kilograms of fat. I feel more energetic, more healthy, more agile, more capable. Most importantly I found that part of myself that was missing."</p>
           <div class="carousel-quote__author">Axel Rubio</div>
         </div>
         <div class="carousel-quote" data-index="13">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy Splinter"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy Splinter"></div>
           <p class="carousel-quote__text">"I feel stronger than I have in a very long time. My coach helped me redesign my training to fit not just my goals, but my life at 62. It is all about mindset."</p>
           <div class="carousel-quote__author">Randy Splinter</div>
         </div>
         <div class="carousel-quote" data-index="14">
-          <div class="carousel-quote__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e107ac0b562c72811ac6ea.png" alt="Ben Jayne"></div>
+          <div class="carousel-quote__avatar"><img width="56" height="56" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e107ac0b562c72811ac6ea.png" alt="Ben Jayne"></div>
           <p class="carousel-quote__text">"I love the long-term, habitual approach. Let us get it right. Let us not hurry through this. All the other coaches wanted to change my life in three months. This one actually wanted to change it for good."</p>
           <div class="carousel-quote__author">Ben Jayne</div>
         </div>
       </div>
       <div class="carousel-arrows">
         <button class="carousel-arrow" id="qPrev" aria-label="Previous quote">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <div class="carousel-dots">
-          <button class="carousel-dot active" data-q="0"></button>
-          <button class="carousel-dot" data-q="1"></button>
-          <button class="carousel-dot" data-q="2"></button>
-          <button class="carousel-dot" data-q="3"></button>
-          <button class="carousel-dot" data-q="4"></button>
-          <button class="carousel-dot" data-q="5"></button>
-          <button class="carousel-dot" data-q="6"></button>
-          <button class="carousel-dot" data-q="7"></button>
-          <button class="carousel-dot" data-q="8"></button>
-          <button class="carousel-dot" data-q="9"></button>
-          <button class="carousel-dot" data-q="10"></button>
-          <button class="carousel-dot" data-q="11"></button>
-          <button class="carousel-dot" data-q="12"></button>
-          <button class="carousel-dot" data-q="13"></button>
-          <button class="carousel-dot" data-q="14"></button>
+          <span role="button" tabindex="0" class="carousel-dot active" data-q="0" aria-label="Go to quote 1"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="1" aria-label="Go to quote 2"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="2" aria-label="Go to quote 3"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="3" aria-label="Go to quote 4"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="4" aria-label="Go to quote 5"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="5" aria-label="Go to quote 6"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="6" aria-label="Go to quote 7"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="7" aria-label="Go to quote 8"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="8" aria-label="Go to quote 9"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="9" aria-label="Go to quote 10"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="10" aria-label="Go to quote 11"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="11" aria-label="Go to quote 12"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="12" aria-label="Go to quote 13"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="13" aria-label="Go to quote 14"></span>
+          <span role="button" tabindex="0" class="carousel-dot" data-q="14" aria-label="Go to quote 15"></span>
         </div>
         <button class="carousel-arrow" id="qNext" aria-label="Next quote">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
     </div>
@@ -2278,38 +2427,38 @@ footer {
     <!-- Pillar Accordion (mobile) -->
     <div class="pillar-accordion reveal">
       <div class="pillar-accordion-item">
-        <button class="pillar-accordion-trigger">
+        <button class="pillar-accordion-trigger" aria-expanded="false">
           01. The right game plan for your actual life
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="pillar-accordion-body">
           <div class="pillar-accordion-body--inner">
-            <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px;">Before we build anything, we get to know you. Your schedule, your work demands, the foods your family eats, how often you travel, how much time you actually have. Then we build your plan around that reality, not an ideal version of it that falls apart the moment life gets busy.</p>
-            <p style="font-size:13px;font-style:italic;color:var(--faint);line-height:1.65;">Think of it like a GPS. It does not give you one route and tell you to figure it out. It builds the fastest path from where you are to where you want to go, and when life takes you off course, it recalculates. That is exactly what we do.</p>
+            <p style="font-size:14px;color:var(--off-white);line-height:1.7;margin-bottom:14px;">Before we build anything, we get to know you. Your schedule, your work demands, the foods your family eats, how often you travel, how much time you actually have. Then we build your plan around that reality, not an ideal version of it that falls apart the moment life gets busy.</p>
+            <p style="font-size:13px;font-style:italic;color:var(--muted);line-height:1.65;">Think of it like a GPS. It does not give you one route and tell you to figure it out. It builds the fastest path from where you are to where you want to go, and when life takes you off course, it recalculates. That is exactly what we do.</p>
           </div>
         </div>
       </div>
       <div class="pillar-accordion-item">
-        <button class="pillar-accordion-trigger">
+        <button class="pillar-accordion-trigger" aria-expanded="false">
           02. Learn to fish, not just follow a plan
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="pillar-accordion-body">
           <div class="pillar-accordion-body--inner">
-            <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px;">Most programs hand you a plan and tell you to follow it. That works until progress stalls or life gets in the way, and suddenly you have no idea what to change or why. We do not just tell you what to do. We teach you how everything actually works so that when things change, you know exactly how to adapt.</p>
-            <p style="font-size:13px;font-style:italic;color:var(--faint);line-height:1.65;">Give someone a fish and you feed them for a day. Teach someone to fish and you feed them for life. By the time you are done working with us, you will not need us to hand you the answer. You will already know it.</p>
+            <p style="font-size:14px;color:var(--off-white);line-height:1.7;margin-bottom:14px;">Most programs hand you a plan and tell you to follow it. That works until progress stalls or life gets in the way, and suddenly you have no idea what to change or why. We do not just tell you what to do. We teach you how everything actually works so that when things change, you know exactly how to adapt.</p>
+            <p style="font-size:13px;font-style:italic;color:var(--muted);line-height:1.65;">Give someone a fish and you feed them for a day. Teach someone to fish and you feed them for life. By the time you are done working with us, you will not need us to hand you the answer. You will already know it.</p>
           </div>
         </div>
       </div>
       <div class="pillar-accordion-item">
-        <button class="pillar-accordion-trigger">
+        <button class="pillar-accordion-trigger" aria-expanded="false">
           03. The kind of support that builds habits for life
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="pillar-accordion-body">
           <div class="pillar-accordion-body--inner">
-            <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:14px;">We check in proactively every week, adjust your plan when life changes, and stay in your corner every single day. But the goal was never to make you dependent on accountability forever.</p>
-            <p style="font-size:13px;font-style:italic;color:var(--faint);line-height:1.65;">Think about brushing your teeth. You did not stop brushing when things got stressful. You do it because it became a habit. That is exactly where we are trying to get you. Consistent. Automatic. Yours for life.</p>
+            <p style="font-size:14px;color:var(--off-white);line-height:1.7;margin-bottom:14px;">We check in proactively every week, adjust your plan when life changes, and stay in your corner every single day. But the goal was never to make you dependent on accountability forever.</p>
+            <p style="font-size:13px;font-style:italic;color:var(--muted);line-height:1.65;">Think about brushing your teeth. You did not stop brushing when things got stressful. You do it because it became a habit. That is exactly where we are trying to get you. Consistent. Automatic. Yours for life.</p>
           </div>
         </div>
       </div>
@@ -2369,7 +2518,7 @@ footer {
     <div style="text-align:center;margin-top:40px;" class="reveal">
       <a href="/schedule-call/" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
         Apply Now
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
     </div>
@@ -2398,23 +2547,20 @@ footer {
         <div class="sp-slide active" data-sp="0">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5c29d8d5f6ae836d61a1.png" alt="Penny English before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5c29d8d5f6ae836d61a1.png" alt="Penny English before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5b88d8d5f6ae836d36d8.png" alt="Penny English after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5b88d8d5f6ae836d36d8.png" alt="Penny English after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a462c135a8c8391be2f.png" alt="Penny English" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Lost 10 lbs and 2 Inches in 3 Months</p>
                 <p class="sp-slide__story">She had tried every diet and exercise routine and convinced herself the weight was just a consequence of menopause she had to live with. What changed was not her effort. It was finally having a team that understood her body, her hormones, and her life, and built a strategy actually designed for her.</p>
-                <div class="sp-slide__client">Penny English</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Penny English
+          </div>
           </div>
         </div>
 
@@ -2422,23 +2568,20 @@ footer {
         <div class="sp-slide" data-sp="1">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd46411774270f1d874989.jpg" alt="Nate Waldron before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd46411774270f1d874989.jpg" alt="Nate Waldron before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5aedd8d5f6ae836d0ca8.jpeg" alt="Nate Waldron after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fe46e47285562721cfed91.jpg" alt="Nate Waldron after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10a120b562c72811b748b.png" alt="Nate Waldron" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">25 Pounds Down While Raising Four Kids</p>
                 <p class="sp-slide__story">A married father of four who had struggled with his weight his entire life. Even running 50 races over 14 years did not fix it. What he needed was not another quick fix. It was a long-term, habitual approach that built the right foundation so he could maintain results on his own.</p>
-                <div class="sp-slide__client">Nate Waldron</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Nate Waldron
+          </div>
           </div>
         </div>
 
@@ -2446,23 +2589,20 @@ footer {
         <div class="sp-slide" data-sp="2">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd472ce34cc263fb774681.jpg" alt="Randy Splinter before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd472ce34cc263fb774681.jpg" alt="Randy Splinter before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a7b3677cf2ce259dc65.jpeg" alt="Randy Splinter after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a7b3677cf2ce259dc65.jpeg" alt="Randy Splinter after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e109ebc56ad279081f2494.png" alt="Randy Splinter" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">60+ Pounds Lost and Stronger Than Ever at 62</p>
                 <p class="sp-slide__story">He came in with no preconceived notions, just a commitment to put his best foot forward. His coach redesigned his entire training to fit his age and goals. He left with his blood work improved, his energy back, and a routine he genuinely enjoys.</p>
-                <div class="sp-slide__client">Randy Splinter</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Randy Splinter
+          </div>
           </div>
         </div>
 
@@ -2470,23 +2610,20 @@ footer {
         <div class="sp-slide" data-sp="3">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a103d447256447dca07.png" alt="Jonathan Siesholtz before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a103d447256447dca07.png" alt="Jonathan Siesholtz before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a0fb935a2d764b3b640.png" alt="Jonathan Siesholtz after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5a0fb935a2d764b3b640.png" alt="Jonathan Siesholtz after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1097c50b9a3263a4fc90b.png" alt="Jonathan Siesholtz" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">40+ Pounds Lost and a System That Actually Lasts</p>
                 <p class="sp-slide__story">He had lost significant weight before, but without a sustainable system it slowly came back over a decade. This time he stopped guessing and got the help he needed. The result was not just weight lost but a routine he could actually maintain through work, family, and real life.</p>
-                <div class="sp-slide__client">Jonathan Siesholtz</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Jonathan Siesholtz
+          </div>
           </div>
         </div>
 
@@ -2494,23 +2631,20 @@ footer {
         <div class="sp-slide" data-sp="4">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58fbd8d5f6ae836c8276.png" alt="Lauren Luna before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58fbd8d5f6ae836c8276.png" alt="Lauren Luna before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58fb80b446d0fb65f62f.png" alt="Lauren Luna after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58fb80b446d0fb65f62f.png" alt="Lauren Luna after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e108fb0b562c72811b24d4.png" alt="Lauren Luna" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">20 Pounds Lost and Finally Feeling Like Herself Again</p>
                 <p class="sp-slide__story">Going into her 40s she started noticing a shift in how her body responded to food and exercise. She had tried yoga, weight training, and multiple programs but nothing stuck. What made the difference was being taught how to navigate food and fitness in the middle of a full, busy life.</p>
-                <div class="sp-slide__client">Lauren Luna</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Lauren Luna
+          </div>
           </div>
         </div>
 
@@ -2518,23 +2652,20 @@ footer {
         <div class="sp-slide" data-sp="5">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd5940caf24b80a0f8ba44.jpg" alt="Axel Rubio before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd5940caf24b80a0f8ba44.jpg" alt="Axel Rubio before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd5940376904eac22bf01a.jpg" alt="Axel Rubio after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69dd5940376904eac22bf01a.jpg" alt="Axel Rubio after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10aeac56ad279081f6c61.png" alt="Axel Rubio" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">10+ Kilograms Lost and More Energy Than Ever</p>
                 <p class="sp-slide__story">He had always been health-conscious, but work demands, family commitments, and a busy social life made consistency feel impossible. The frustration and helplessness started to build. What he found was not just a transformation but a part of himself that had been missing.</p>
-                <div class="sp-slide__client">Axel Rubio</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Axel Rubio
+          </div>
           </div>
         </div>
 
@@ -2542,23 +2673,20 @@ footer {
         <div class="sp-slide" data-sp="6">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5859e7237c4dd3fee7f4.png" alt="Linda Abaray before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5859e7237c4dd3fee7f4.png" alt="Linda Abaray before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58593d447256447d52f7.png" alt="Linda Abaray after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de58593d447256447d52f7.png" alt="Linda Abaray after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1089a036302171d7e6ced.png" alt="Linda Abaray" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Pre-Diabetic Levels Normalized and Feeling Stronger Than Ever</p>
                 <p class="sp-slide__story">A former high school and college rugby player who lost her structure when life took over. She was educated on nutrition, watched the videos, read the articles, but could not put the pieces together as a vegetarian. Coaching gave her the framework she had been missing, and her bloodwork numbers proved it.</p>
-                <div class="sp-slide__client">Linda Abaray</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Linda Abaray
+          </div>
           </div>
         </div>
 
@@ -2566,23 +2694,20 @@ footer {
         <div class="sp-slide" data-sp="7">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de57c2add632fcdc79318e.png" alt="AJ Gracely before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de57c2add632fcdc79318e.png" alt="AJ Gracely before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de57c2190683601a131e9e.png" alt="AJ Gracely after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de57c2190683601a131e9e.png" alt="AJ Gracely after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1080f12a3b92a680d6bd9.png" alt="AJ Gracely" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Conflicting Objectives Solved With One Aligned System</p>
                 <p class="sp-slide__story">A 44-year-old working professional who struggled with diet consistency, conflicting fitness goals, and overtraining all at once. He had programmed his own workouts without enough structure or stimulus to actually build muscle. The program finally aligned his nutrition and training toward the same outcome.</p>
-                <div class="sp-slide__client">AJ Gracely</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">AJ Gracely
+          </div>
           </div>
         </div>
 
@@ -2590,23 +2715,20 @@ footer {
         <div class="sp-slide" data-sp="8">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de56f0190683601a12e147.png" alt="Ben Jayne before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fe466825c3d6001ab2864b.png" alt="Ben Jayne before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de56f001e07d5dde2fdf49.png" alt="Ben Jayne after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fe4668114de79afe0e19ea.jpg" alt="Ben Jayne after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e107ac0b562c72811ac6ea.png" alt="Ben Jayne" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">From Aimless Gym Sessions to Real, Lasting Progress at 52</p>
                 <p class="sp-slide__story">He had never worked with a coach. His fitness life was recreational running and aimless gym sessions he mostly hated. After a hip diagnosis and a frozen shoulder that lasted a year, he needed a system that could work around his real physical limitations. He found one that did.</p>
-                <div class="sp-slide__client">Ben Jayne</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Ben Jayne
+          </div>
           </div>
         </div>
 
@@ -2614,23 +2736,20 @@ footer {
         <div class="sp-slide" data-sp="9">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de567a01e07d5dde2fbef5.png" alt="Andrea Shannon before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de567a01e07d5dde2fbef5.png" alt="Andrea Shannon before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de567a80b446d0fb654486.png" alt="Andrea Shannon after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de567a80b446d0fb654486.png" alt="Andrea Shannon after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e106972c135a8c8390b0e7.jpeg" alt="Andrea Shannon" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Post-Pregnancy Weight Gone and Finally in Control</p>
                 <p class="sp-slide__story">After her second baby she found herself gaining weight despite trying to watch what she ate. Nothing was working and the scale kept moving the wrong direction. She wanted to become a physically fit person for her health and longevity, not just her appearance, and finally found the system to make it happen.</p>
-                <div class="sp-slide__client">Andrea Shannon</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Andrea Shannon
+          </div>
           </div>
         </div>
 
@@ -2638,23 +2757,20 @@ footer {
         <div class="sp-slide" data-sp="10">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de55c6acf21ea88ad2ed9a.png" alt="Brittni Mayagoitia before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de55c6acf21ea88ad2ed9a.png" alt="Brittni Mayagoitia before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de55c53d447256447c96c1.png" alt="Brittni Mayagoitia after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fe472b6ca44fd334a377c8.jpg" alt="Brittni Mayagoitia after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1066bc56ad279081e2499.jpeg" alt="Brittni Mayagoitia" style="object-position:50% 40%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Six Months In and Signed Up for Six More</p>
                 <p class="sp-slide__story">She knew what to do but consistency was always the problem. She had tried keto, competition prep diets, extreme cardio, and everything in between. They all worked short term. She would lose the weight and gain it all back. This time she lost fat, built muscle, and immediately signed up for another six months.</p>
-                <div class="sp-slide__client">Brittni Mayagoitia</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Brittni Mayagoitia
+          </div>
           </div>
         </div>
 
@@ -2662,23 +2778,20 @@ footer {
         <div class="sp-slide" data-sp="11">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de53eeb935a2d764b1fc9a.png" alt="Kristin Kilburg before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de53eeb935a2d764b1fc9a.png" alt="Kristin Kilburg before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de53eeadd632fcdc7812f2.png" alt="Kristin Kilburg after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de53eeadd632fcdc7812f2.png" alt="Kristin Kilburg after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10fe20b562c72811d250c.png" alt="Kristin Kilburg" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Consistent Workouts, Meal Prepping, Sleep, and Still Stuck — Until Now</p>
                 <p class="sp-slide__story">She was doing everything right and still not moving forward. She was overwhelmed by conflicting advice and trapped in an all-or-nothing mindset. On top of that, she felt guilty for having body composition goals because others told her she should feel lucky being small. The program gave her permission to pursue her goals with the right system behind her.</p>
-                <div class="sp-slide__client">Kristin Kilburg</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Kristin Kilburg
+          </div>
           </div>
         </div>
 
@@ -2686,23 +2799,20 @@ footer {
         <div class="sp-slide" data-sp="12">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5345b935a2d764b1ce5b.png" alt="Rob Johnson before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5345b935a2d764b1ce5b.png" alt="Rob Johnson before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5345add632fcdc77e0e6.png" alt="Rob Johnson after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de5345add632fcdc77e0e6.png" alt="Rob Johnson after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1075b12a3b92a680d385f.jpg" alt="Rob Johnson" style="object-position:50% 15%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">From Scale-Obsessed to Real Body Composition Change</p>
                 <p class="sp-slide__story">He was focused on the number on the scale and losing weight, not losing body fat. The distinction mattered enormously. His coach became more than a guide. They were his cheerleader, his inspiration, and the person who pushed him past what he thought was possible, then watched him prove it to himself.</p>
-                <div class="sp-slide__client">Rob Johnson</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Rob Johnson
+          </div>
           </div>
         </div>
 
@@ -2710,23 +2820,20 @@ footer {
         <div class="sp-slide" data-sp="13">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de52afd8d5f6ae836ac157.png" alt="Steve Saldivar before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de52afd8d5f6ae836ac157.png" alt="Steve Saldivar before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de52afd8d5f6ae836ac158.png" alt="Steve Saldivar after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de52afd8d5f6ae836ac158.png" alt="Steve Saldivar after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10730a2661c2e8f91a922.jpeg" alt="Steve Saldivar" style="object-position:65% 5%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Information Overload Replaced With a Plan That Actually Works</p>
                 <p class="sp-slide__story">A demanding job had always come first and his health paid the price. He had tried every approach he could find, low carb, keto, intermittent fasting, AI-generated training programs, and nothing stuck because he kept changing the plan before it had a chance to work. Consistency and a long-term system changed everything.</p>
-                <div class="sp-slide__client">Steve Saldivar</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Steve Saldivar
+          </div>
           </div>
         </div>
 
@@ -2734,23 +2841,20 @@ footer {
         <div class="sp-slide" data-sp="14">
           <div class="sp-slide__photos">
             <div class="sp-photo">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de50a1190683601a112231.png" alt="Shannon Slack before">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de50a1190683601a112231.png" alt="Shannon Slack before">
               <span class="sp-photo__label">Before</span>
             </div>
             <div class="sp-photo sp-photo--after">
-              <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de50a1b935a2d764b11f2c.png" alt="Shannon Slack after">
+              <img width="530" height="520" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de50a1b935a2d764b11f2c.png" alt="Shannon Slack after">
               <span class="sp-photo__label">After</span>
             </div>
           </div>
           <div class="sp-slide__card">
-            <div class="sp-slide__card-inner">
-              <div class="sp-slide__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e107010b562c72811a976f.jpeg" alt="Shannon Slack" style="object-position:50% 5%;"></div>
-              <div class="sp-slide__card-body">
+
                 <p class="sp-slide__headline">Out of Control Around Food to Finally at Peace With It</p>
                 <p class="sp-slide__story">She had been stuck in an endless cycle of losing and regaining, feeling out of control around food, and going through restrictive diets that made enjoying her life impossible. The biggest shift was not on the scale. It was her relationship with food, her energy, and her ability to be fully present for her family and her work.</p>
-                <div class="sp-slide__client">Shannon Slack</div>
-              </div>
-            </div>
+                <div class="sp-slide__client">Shannon Slack
+          </div>
           </div>
         </div>
 
@@ -2758,27 +2862,27 @@ footer {
 
       <div class="sp-nav">
         <button id="spPrev" aria-label="Previous">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <div class="sp-dots">
-          <button class="sp-dot active" data-sp="0"></button>
-          <button class="sp-dot" data-sp="1"></button>
-          <button class="sp-dot" data-sp="2"></button>
-          <button class="sp-dot" data-sp="3"></button>
-          <button class="sp-dot" data-sp="4"></button>
-          <button class="sp-dot" data-sp="5"></button>
-          <button class="sp-dot" data-sp="6"></button>
-          <button class="sp-dot" data-sp="7"></button>
-          <button class="sp-dot" data-sp="8"></button>
-          <button class="sp-dot" data-sp="9"></button>
-          <button class="sp-dot" data-sp="10"></button>
-          <button class="sp-dot" data-sp="11"></button>
-          <button class="sp-dot" data-sp="12"></button>
-          <button class="sp-dot" data-sp="13"></button>
-          <button class="sp-dot" data-sp="14"></button>
+          <span role="button" tabindex="0" class="sp-dot active" data-sp="0" aria-label="Go to story 1"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="1" aria-label="Go to story 2"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="2" aria-label="Go to story 3"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="3" aria-label="Go to story 4"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="4" aria-label="Go to story 5"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="5" aria-label="Go to story 6"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="6" aria-label="Go to story 7"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="7" aria-label="Go to story 8"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="8" aria-label="Go to story 9"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="9" aria-label="Go to story 10"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="10" aria-label="Go to story 11"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="11" aria-label="Go to story 12"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="12" aria-label="Go to story 13"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="13" aria-label="Go to story 14"></span>
+          <span role="button" tabindex="0" class="sp-dot" data-sp="14" aria-label="Go to story 15"></span>
         </div>
         <button id="spNext" aria-label="Next">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
     </div>
@@ -2787,7 +2891,7 @@ footer {
     <div style="text-align:center;" class="reveal">
       <a href="/schedule-call/" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
         Apply Now
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
     </div>
@@ -2812,7 +2916,7 @@ footer {
     <div class="fit__panels reveal">
       <!-- Left panel: This is for you -->
       <div class="fit-panel fit-panel--yes">
-        <h3 class="fit-panel__heading">This Is For You If...</h3>
+        <h3 class="fit-panel__heading">This Is For You If&hellip;</h3>
         <ul class="fit-panel__list">
           <li class="fit-panel__item">
             <span class="fit-panel__icon">✅</span>
@@ -2843,7 +2947,7 @@ footer {
 
       <!-- Right panel: Not for you -->
       <div class="fit-panel fit-panel--no">
-        <h3 class="fit-panel__heading">This Is NOT For You If...</h3>
+        <h3 class="fit-panel__heading">This Is NOT For You If&hellip;</h3>
         <ul class="fit-panel__list">
           <li class="fit-panel__item">
             <span class="fit-panel__icon">❌</span>
@@ -2879,7 +2983,7 @@ footer {
     <div style="text-align:center;margin-top:48px;" class="reveal">
       <a href="/schedule-call/" class="btn btn-primary" style="font-size:16px;padding:18px 44px;">
         Apply Now
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Book your discovery call instantly after submitting.</p>
     </div>
@@ -2901,61 +3005,71 @@ footer {
       <p><em>Every coach on the Strong Standard team holds a graduate degree in nutrition science, exercise science, or a related health discipline. This is not a certification. This is a career.</em></p>
     </div>
 
-    <!-- Founders + Staff: unified 4-col grid -->
-    <div class="team-grid reveal" id="coachGrid">
+    <!-- Desktop: Joey + Bernardo side by side, then 4 coaches -->
+    <div class="founders-grid reveal" id="coachGrid">
 
-      <!-- Joey: spans col 1-2 -->
-      <div class="founder-coach-card">
-        <div class="founder-coach-card__avatar">
-          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz" style="object-position:50% 15%; transform: scale(1.15);">
+      <!-- Joey -->
+      <div class="founder-card">
+        <div class="founder-card__photo">
+          <img width="160" height="160" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz" style="object-position:50% 15%;">
         </div>
-        <div class="coach-card__degree">Ph.D. Nutritional Sciences, FSU</div>
-        <h4>Dr. Joey Munoz</h4>
-        <div class="coach-card__role">Founder and CEO</div>
-        <p>Dr. Joey holds a PhD in Nutritional Sciences from Florida State University and has spent his career translating complex nutrition and exercise science into practical systems that work for real people in real life. He built Strong Standard because he grew up in the same struggle his clients face, and he knew the missing piece was never motivation. It was the right system, the right education, and the right support. He is the coach he wished he had.</p>
+        <div class="founder-card__body">
+          <div class="founder-card__degree">Ph.D. Nutritional Sciences, FSU</div>
+          <div class="founder-card__name">Dr. Joey Munoz</div>
+          <div class="founder-card__role">Founder and CEO</div>
+          <p class="founder-card__bio">Dr. Joey holds a PhD in Nutritional Sciences from Florida State University and has spent his career translating complex nutrition and exercise science into practical systems that work for real people in real life. He built Strong Standard because he grew up in the same struggle his clients face, and he knew the missing piece was never motivation. It was the right system, the right education, and the right support. His work has been featured on some of the most respected voices in the industry, including the Jordan Syatt Podcast, Andrew Coates' Lift Free and Diet Hard, and HALO Talks. He is the coach he wished he had.</p>
+        </div>
       </div>
 
-      <!-- Bernardo: spans col 3-4 -->
-      <div class="founder-coach-card">
-        <div class="founder-coach-card__avatar">
-          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b010b562c7281204e18.png" alt="Bernardo Lopez" style="object-fit:cover; object-position:50% 15%; transform: scale(1.15);">
+      <!-- Bernardo -->
+      <div class="founder-card">
+        <div class="founder-card__photo">
+          <img width="160" height="160" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b010b562c7281204e18.png" alt="Bernardo Lopez" style="object-position:50% 15%;">
         </div>
-        <div class="coach-card__degree">M.S. Body Composition Improvement</div>
-        <h4>Bernardo Lopez</h4>
-        <div class="coach-card__role">Co-Founder and Head Coach</div>
-        <p>Bernardo holds a Master's in Body Composition and leads the coaching team at Strong Standard. He specializes in muscle building, fat loss, and performance optimization through an evidence-based approach. He has coached hundreds of clients through sustainable body composition transformations with a focus on habit formation and long-term consistency.</p>
+        <div class="founder-card__body">
+          <div class="founder-card__degree">M.S. Body Composition</div>
+          <div class="founder-card__name">Bernardo Lopez</div>
+          <div class="founder-card__role">Co-Founder and Head Coach</div>
+          <p class="founder-card__bio">Bernardo is the co-founder and Head Coach of Strong Standard Coaching. He holds a Master's in Body Composition Improvement and helps clients build muscle, lose fat, and optimize performance through an evidence-based approach.
+
+His path into fitness started with capoeira, but it was strength training that stuck. The experience of figuring out what actually works, cutting through the noise and finding what the science really says, is what shaped how he coaches today: practical, evidence-based, and built around the real life of the person in front of him.
+
+Outside of coaching, Bernardo is a husband and father of two. He is the person who insists on cooking for everyone when guests come over, and yes, the smash burgers are worth it.</p>
+        </div>
       </div>
 
-      <!-- Brent -->
+    </div>
+
+    <!-- 4 coaches grid (desktop) -->
+    <p class="coaches-sublabel reveal" style="margin-top:48px;">The Coaching Staff</p>
+    <div class="staff-grid reveal">
+
       <div class="coach-card">
-        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92d39ef76eebec5600fb.png" alt="Dr. Brent Momb" style="object-position:50% 20%;"></div>
+        <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92d39ef76eebec5600fb.png" alt="Dr. Brent Momb" style="object-position:50% 20%;"></div>
         <div class="coach-card__degree">Ph.D. Muscle Biology</div>
         <h4>Dr. Brent Momb</h4>
         <div class="coach-card__role">Coach and Researcher</div>
         <p>Dr. Brent holds a Ph.D. in Muscle Biology from UMass and is an active postdoctoral researcher. He brings the latest science directly into his coaching, helping clients break through plateaus and build strength sustainably.</p>
       </div>
 
-      <!-- Ceci -->
       <div class="coach-card">
-        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de931bd8d5f6ae837c9b21.png" alt="Ceci Gonzalez" style="object-position:50% 15%;"></div>
+        <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de931bd8d5f6ae837c9b21.png" alt="Ceci Gonzalez" style="object-position:50% 15%;"></div>
         <div class="coach-card__degree">M.S. Body Composition</div>
         <h4>Ceci Gonzalez</h4>
         <div class="coach-card__role">Coach</div>
         <p>Ceci holds a Master's in Body Composition and is a certified personal trainer. A lifelong athlete and strength training enthusiast, she is known for her warm coaching style that makes fitness both effective and genuinely enjoyable.</p>
       </div>
 
-      <!-- Miguel -->
       <div class="coach-card">
-        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93853d447256448daee5.png" alt="Miguel Mendes" style="object-position:50% 15%;"></div>
+        <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93853d447256448daee5.png" alt="Miguel Mendes" style="object-position:50% 15%;"></div>
         <div class="coach-card__degree">M.S. Sport and Exercise Nutrition</div>
         <h4>Miguel Mendes</h4>
         <div class="coach-card__role">Coach</div>
         <p>Miguel is from Lisbon, Portugal and has been coaching for over 6 years. He holds a Master's in Sport and Exercise Nutrition and believes fitness should enhance your life, not consume it. It is about progress, not perfection.</p>
       </div>
 
-      <!-- Jackie -->
       <div class="coach-card">
-        <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92fae7237c4dd30f36ad.png" alt="Jacqueline Llovet" style="object-position:50% 15%;"></div>
+        <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92fae7237c4dd30f36ad.png" alt="Jacqueline Llovet" style="object-position:50% 15%;"></div>
         <div class="coach-card__degree">Registered Nurse</div>
         <h4>Jacqueline Llovet</h4>
         <div class="coach-card__role">Coach</div>
@@ -2964,81 +3078,80 @@ footer {
 
     </div>
 
-    <!-- Mobile carousel (4 coaches only) -->
+    <!-- Mobile: Joey featured solo, then carousel (Bernardo + coaches) -->
+    <div class="founder-featured founder-featured--mobile reveal">
+      <div class="founder-featured__avatar">
+        <img width="180" height="180" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz" style="object-position:50% 15%;">
+      </div>
+      <div class="founder-featured__body">
+        <div class="founder-featured__badge">Ph.D. Nutritional Sciences, FSU</div>
+        <h3 class="founder-featured__name">Dr. Joey Munoz</h3>
+        <div class="founder-featured__role">Founder and CEO</div>
+        <p class="founder-featured__bio">Dr. Joey holds a PhD in Nutritional Sciences from Florida State University. He built Strong Standard because he grew up in the same struggle his clients face, and he knew the missing piece was never motivation. It was the right system, the right education, and the right support.</p>
+      </div>
+    </div>
+
+    <p class="coaches-sublabel reveal" style="margin-top:40px; display:none;" id="mobileStaffLabel">The Coaching Staff</p>
+
     <div class="coach-carousel" id="coachCarousel">
       <div class="coach-carousel__inner">
         <div class="coach-carousel__track" id="coachTrack">
-          <!-- Joey -->
-          <div class="coach-card">
-            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz" style="object-position:50% 15%; transform: scale(1.15);"></div>
-            <div class="coach-card__degree">Ph.D. Nutritional Sciences, FSU</div>
-            <h4>Dr. Joey Munoz</h4>
-            <div class="coach-card__role">Founder and CEO</div>
-            <p>Dr. Joey holds a PhD in Nutritional Sciences from Florida State University and has spent his career translating complex nutrition and exercise science into practical systems that work for real people in real life. He built Strong Standard because he grew up in the same struggle his clients face, and he knew the missing piece was never motivation. It was the right system, the right education, and the right support. He is the coach he wished he had.</p>
-          </div>
-          <!-- Bernardo -->
-          <div class="coach-card">
-            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b010b562c7281204e18.png" alt="Bernardo Lopez" style="object-fit:cover; object-position:50% 15%; transform: scale(1.15);"></div>
-            <div class="coach-card__degree">M.S. Body Composition Improvement</div>
+          <div class="coach-card coach-card--featured">
+            <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b010b562c7281204e18.png" alt="Bernardo Lopez" style="object-position:50% 15%;"></div>
+            <div class="coach-card__degree">M.S. Body Composition</div>
             <h4>Bernardo Lopez</h4>
             <div class="coach-card__role">Co-Founder and Head Coach</div>
-            <p>Bernardo holds a Master's in Body Composition and leads the coaching team at Strong Standard. He specializes in muscle building, fat loss, and performance optimization through an evidence-based approach. He has coached hundreds of clients through sustainable body composition transformations with a focus on habit formation and long-term consistency.</p>
+            <p>Bernardo is the co-founder and Head Coach of Strong Standard. He holds a Master's in Body Composition Improvement and helps clients build muscle, lose fat, and optimize performance through an evidence-based approach. Outside of coaching he is a husband and father of two with a passion for strength training, good food, and Marvel movies.</p>
           </div>
-          <!-- Brent -->
           <div class="coach-card">
-            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92d39ef76eebec5600fb.png" alt="Dr. Brent Momb" style="object-position:50% 20%;"></div>
+            <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92d39ef76eebec5600fb.png" alt="Dr. Brent Momb" style="object-position:50% 20%;"></div>
             <div class="coach-card__degree">Ph.D. Muscle Biology</div>
             <h4>Dr. Brent Momb</h4>
             <div class="coach-card__role">Coach and Researcher</div>
             <p>Dr. Brent holds a Ph.D. in Muscle Biology from UMass and is an active postdoctoral researcher. He brings the latest science directly into his coaching, helping clients break through plateaus and build strength sustainably.</p>
           </div>
-          <!-- Ceci -->
           <div class="coach-card">
-            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de931bd8d5f6ae837c9b21.png" alt="Ceci Gonzalez" style="object-position:50% 15%;"></div>
+            <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de931bd8d5f6ae837c9b21.png" alt="Ceci Gonzalez" style="object-position:50% 15%;"></div>
             <div class="coach-card__degree">M.S. Body Composition</div>
             <h4>Ceci Gonzalez</h4>
             <div class="coach-card__role">Coach</div>
-            <p>Ceci holds a Master's in Body Composition and is a certified personal trainer. A lifelong athlete and strength training enthusiast, she is known for her warm coaching style that makes fitness both effective and genuinely enjoyable.</p>
+            <p>Ceci holds a Master's in Body Composition and is a certified personal trainer. Known for her warm coaching style that makes fitness both effective and genuinely enjoyable.</p>
           </div>
-          <!-- Miguel -->
           <div class="coach-card">
-            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93853d447256448daee5.png" alt="Miguel Mendes" style="object-position:50% 15%;"></div>
+            <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de93853d447256448daee5.png" alt="Miguel Mendes" style="object-position:50% 15%;"></div>
             <div class="coach-card__degree">M.S. Sport and Exercise Nutrition</div>
             <h4>Miguel Mendes</h4>
             <div class="coach-card__role">Coach</div>
-            <p>Miguel is from Lisbon, Portugal and has been coaching for over 6 years. He holds a Master's in Sport and Exercise Nutrition and believes fitness should enhance your life, not consume it. It is about progress, not perfection.</p>
+            <p>Miguel is from Lisbon, Portugal and has been coaching for over 6 years. He believes fitness should enhance your life, not consume it. It is about progress, not perfection.</p>
           </div>
-          <!-- Jackie -->
           <div class="coach-card">
-            <div class="coach-card__avatar"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92fae7237c4dd30f36ad.png" alt="Jacqueline Llovet" style="object-position:50% 15%;"></div>
+            <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de92fae7237c4dd30f36ad.png" alt="Jacqueline Llovet" style="object-position:50% 15%;"></div>
             <div class="coach-card__degree">Registered Nurse</div>
             <h4>Jacqueline Llovet</h4>
             <div class="coach-card__role">Coach</div>
-            <p>A Registered Nurse specializing in Women's Health since 1997, Jackie became a coach after her own transformation in her late 40s. She is especially passionate about helping busy parents and midlife women build strength and confidence at any age.</p>
+            <p>A Registered Nurse specializing in Women's Health since 1997, Jackie became a coach after her own transformation in her late 40s. Especially passionate about helping busy parents and midlife women.</p>
           </div>
         </div>
       </div>
       <div class="coach-carousel__nav">
-        <button class="coach-carousel__btn" id="coachPrev">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        <button class="coach-carousel__btn" id="coachPrev" aria-label="Previous coach">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <div class="coach-carousel__dots">
-          <button class="coach-carousel__dot active" data-c="0"></button>
-          <button class="coach-carousel__dot" data-c="1"></button>
-          <button class="coach-carousel__dot" data-c="2"></button>
-          <button class="coach-carousel__dot" data-c="3"></button>
-          <button class="coach-carousel__dot" data-c="4"></button>
-          <button class="coach-carousel__dot" data-c="5"></button>
+          <span role="button" tabindex="0" class="coach-carousel__dot active" data-c="0" aria-label="Go to coach 1"></span>
+          <span role="button" tabindex="0" class="coach-carousel__dot" data-c="1" aria-label="Go to coach 2"></span>
+          <span role="button" tabindex="0" class="coach-carousel__dot" data-c="2" aria-label="Go to coach 3"></span>
+          <span role="button" tabindex="0" class="coach-carousel__dot" data-c="3" aria-label="Go to coach 4"></span>
+          <span role="button" tabindex="0" class="coach-carousel__dot" data-c="4" aria-label="Go to coach 5"></span>
         </div>
-        <button class="coach-carousel__btn" id="coachNext">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        <button class="coach-carousel__btn" id="coachNext" aria-label="Next coach">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
     </div>
 
   </div>
 </section>
-
 <div class="divider"></div>
 
 <!-- ═══════════════════════════════════════════════════
@@ -3095,30 +3208,24 @@ footer {
         <h2>The Strong Standard Guarantee.</h2>
       </div>
       <div class="guarantee__body reveal">
-        <p>When you join Strong Standard, we build your fully personalized plan and walk through everything together on your kickoff call. You get to experience the program before you commit to it fully.</p>
-        <p>If after that kickoff call you genuinely feel this is not the right fit for you, reach out within 24 hours and we will refund your investment in full. No questions asked. No hoops to jump through.</p>
-        <p>We put this in place because we can explain everything on this page, but the only way to know if this is right for you is to experience it. We are confident enough in what we do to let the work speak for itself.</p>
+        <p>We are confident enough in what we do to let the work speak for itself.</p>
+        <p>If after your kickoff call you feel this is not the right fit, we will refund your investment in full. No conditions. No questions asked.</p>
+        <p><em>The only risk is not finding out if this is what finally works.</em></p>
       </div>
 
       <div class="guarantee__callout reveal">
         <div class="guarantee-item">
-          <span class="guarantee-item__emoji">⏰</span>
-          <div class="guarantee-item__label">24 Hours</div>
-          <div class="guarantee-item__text">Request your refund within 24 hours of your kickoff call.</div>
-        </div>
-        <div class="guarantee-item">
           <span class="guarantee-item__emoji">💰</span>
-          <div class="guarantee-item__label">100%</div>
+          <div class="guarantee-item__label">Full Refund</div>
           <div class="guarantee-item__text">Every dollar returned. No partial refunds. No conditions.</div>
         </div>
-        <div class="guarantee-item">
+        <div class="guarantee-item" style="border-right:none;">
           <span class="guarantee-item__emoji">🤐</span>
-          <div class="guarantee-item__label">0 Questions</div>
-          <div class="guarantee-item__text">We will not make you justify your decision or jump through hoops.</div>
+          <div class="guarantee-item__label">No Questions</div>
+          <div class="guarantee-item__text">We will not ask you to justify your decision.</div>
         </div>
       </div>
 
-      <p class="guarantee__closing reveal"><em>The only risk is not finding out if this is the thing that finally works.</em></p>
     </div>
   </div>
 </section>
@@ -3158,7 +3265,7 @@ footer {
       <div class="reveal">
         <a href="/schedule-call/" class="btn btn-primary" style="font-size:16px;padding:18px 44px;width:100%;justify-content:center;max-width:400px;">
           Apply Now
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Your investment is protected by our full satisfaction guarantee.</p>
       </div>
@@ -3181,9 +3288,9 @@ footer {
     <div class="faq-list">
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           How is Strong Standard different from other coaching programs I have tried?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">Most programs give you a plan and leave you to figure out the rest. Strong Standard is built on three pillars: Strategy, Education, and Accountability, that work together to make results sustainable, not temporary. We do not just tell you what to do. We teach you how it works so that when the program ends you do not need us anymore. That is the goal.</div>
@@ -3191,9 +3298,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           What if I have tried everything and nothing has worked for me?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">The fact that previous programs did not work is not evidence that you cannot change. It is evidence that the approach was wrong. Every client who comes to us has a history of attempts. What made the difference was not more willpower or a better plan. It was finally having a system that was built around their actual life, with someone paying attention and catching them before they fell off.</div>
@@ -3201,9 +3308,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           How much time does this actually require?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">Less than you think. Your weekly check-in takes about ten minutes. Your workouts are designed around the time you actually have, not an ideal schedule. Most clients are surprised by how little disruption the program creates in their day-to-day life. That is by design.</div>
@@ -3211,9 +3318,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           What happens after I apply?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">Once you submit your application we review it personally and reach out within 48 hours if we feel you are a strong fit. We schedule a discovery call where we learn more about your goals and build a preliminary plan together. If we both decide to move forward, we onboard you, build your full personalized plan, and schedule your kickoff call. The whole process from application to kickoff typically takes less than a week.</div>
@@ -3221,9 +3328,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           What is the investment?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">The program is a 6-month commitment. Every client also has the protection of our full satisfaction guarantee. If after your kickoff call you feel this is not the right fit, you receive a full refund within 24 hours. No questions asked.</div>
@@ -3231,9 +3338,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           I travel a lot and have an unpredictable schedule. Can this work for me?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">Yes. This is exactly who we built the program for. We work with lawyers, executives, business owners, and parents who have chaotic schedules. Your plan is built around your travel, your work demands, and your real availability. When your schedule changes, your coach adapts the plan with you. The program was designed to survive real life, not ideal conditions.</div>
@@ -3241,9 +3348,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           I already know a lot about nutrition and fitness. Is this still valuable for me?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">Almost always yes. Most people who come to us with significant knowledge still have gaps they are not aware of, a strategy that has not been tailored to their specific body and goals, and an accountability structure that does not catch them when life gets in the way. Knowledge alone has never been the problem. The system around applying it consistently is.</div>
@@ -3251,9 +3358,9 @@ footer {
       </div>
 
       <div class="faq-item reveal">
-        <button class="faq-trigger">
+        <button class="faq-trigger" aria-expanded="false">
           What happens after the 6 months? Will I maintain my results?
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-body">
           <div class="faq-body--inner">That is the entire point of the program. By the time you finish six months with us you will have the education to understand what your body needs, the habits to act on it consistently, and the confidence to navigate setbacks without starting over. You will not need us to maintain your results. And that is exactly how we measure success.</div>
@@ -3281,7 +3388,7 @@ footer {
     <div class="reveal">
       <a href="/schedule-call/" class="btn btn-primary" style="font-size:17px;padding:20px 52px;">
         Apply Now
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <p class="micro-copy">Takes less than 3 minutes.<br class="br-mobile"> Your investment is protected by our full satisfaction guarantee.</p>
     </div>
@@ -3294,7 +3401,7 @@ footer {
 <footer>
   <div class="footer__inner">
     <div class="footer-brand">
-      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <img fetchpriority="high" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="110" height="22" style="height:22px;width:auto;display:block;margin-bottom:8px;">
       <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
     </div>
     <div class="footer-links">
@@ -3304,13 +3411,13 @@ footer {
     </div>
     <div class="footer-socials">
       <a href="#" class="social-icon" aria-label="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></svg>
       </a>
       <a href="#" class="social-icon" aria-label="YouTube">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></svg>
       </a>
       <a href="#" class="social-icon" aria-label="Spotify">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg>
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 13.5c2.5-1 5.5-1 8 0M7 10c3-1.5 6.5-1.5 10 0M9 17c2-0.7 4-0.7 6 0"/></svg></svg>
       </a>
     </div>
   </div>
@@ -3320,6 +3427,7 @@ footer {
 </footer>
 
 <script>
+(function() {
 // ── Sticky nav ──────────────────────────────────────────
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
@@ -3334,8 +3442,23 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.05 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── VSL Play ────────────────────────────────────────────
+const vslOverlay = document.getElementById('vslOverlay');
+const heroVsl = document.getElementById('heroVsl');
+if (vslOverlay && heroVsl) {
+  function playVsl() {
+    vslOverlay.classList.add('hidden');
+    heroVsl.controls = true;
+    heroVsl.play();
+  }
+  vslOverlay.addEventListener('click', playVsl);
+  vslOverlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playVsl(); }
+  });
+}
 
 // ── Proof Cards Carousel (mobile) ───────────────────────
 const proofTrack = document.querySelector('.hero-proof-carousel__track');
@@ -3345,15 +3468,17 @@ const proofTotal = 3;
 
 function goToProof(n) {
   proofActive = (n + proofTotal) % proofTotal;
-  proofTrack.style.transform = `translateX(-${proofActive * 100}%)`;
+  if (proofTrack) proofTrack.style.transform = `translateX(-${proofActive * 100}%)`;
   proofDots.forEach((d, i) => d.classList.toggle('active', i === proofActive));
 }
 
 document.getElementById('proofPrev')?.addEventListener('click', () => goToProof(proofActive - 1));
 document.getElementById('proofNext')?.addEventListener('click', () => goToProof(proofActive + 1));
-proofDots.forEach(d => d.addEventListener('click', () => goToProof(parseInt(d.dataset.proof))));
+proofDots.forEach(d => {
+  d.addEventListener('click', () => goToProof(parseInt(d.dataset.proof)));
+  d.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToProof(parseInt(d.dataset.proof)); } });
+});
 
-// Touch swipe for proof carousel
 let proofTouchX = null;
 proofTrack?.addEventListener('touchstart', e => { proofTouchX = e.touches[0].clientX; }, { passive: true });
 proofTrack?.addEventListener('touchend', e => {
@@ -3369,20 +3494,24 @@ const qQuotes = document.querySelectorAll('.carousel-quote');
 const qDots = document.querySelectorAll('.carousel-dot');
 
 function goToQuote(n) {
+  if (!qQuotes.length) return;
   qQuotes[qActive].classList.remove('active');
-  qDots[qActive].classList.remove('active');
+  qDots[qActive]?.classList.remove('active');
   qActive = (n + qQuotes.length) % qQuotes.length;
   qQuotes[qActive].classList.add('active');
-  qDots[qActive].classList.add('active');
+  qDots[qActive]?.classList.add('active');
 }
 
-document.getElementById('qPrev').addEventListener('click', () => goToQuote(qActive - 1));
-document.getElementById('qNext').addEventListener('click', () => goToQuote(qActive + 1));
-qDots.forEach(d => d.addEventListener('click', () => goToQuote(parseInt(d.dataset.q))));
+document.getElementById('qPrev')?.addEventListener('click', () => goToQuote(qActive - 1));
+document.getElementById('qNext')?.addEventListener('click', () => goToQuote(qActive + 1));
+qDots.forEach(d => {
+  d.addEventListener('click', () => goToQuote(parseInt(d.dataset.q)));
+  d.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToQuote(parseInt(d.dataset.q)); } });
+});
 
 let qTimer = setInterval(() => goToQuote(qActive + 1), 6000);
-document.querySelector('.quote-carousel').addEventListener('mouseenter', () => clearInterval(qTimer));
-document.querySelector('.quote-carousel').addEventListener('mouseleave', () => {
+document.querySelector('.quote-carousel')?.addEventListener('mouseenter', () => clearInterval(qTimer));
+document.querySelector('.quote-carousel')?.addEventListener('mouseleave', () => {
   qTimer = setInterval(() => goToQuote(qActive + 1), 6000);
 });
 
@@ -3392,34 +3521,37 @@ const spSlides = document.querySelectorAll('.sp-slide');
 const spDots = document.querySelectorAll('.sp-dot');
 
 function goToSlide(n) {
+  if (!spSlides.length) return;
   spSlides[spActive].classList.remove('active');
-  spDots[spActive].classList.remove('active');
+  spDots[spActive]?.classList.remove('active');
   spActive = (n + spSlides.length) % spSlides.length;
   spSlides[spActive].classList.add('active');
-  spDots[spActive].classList.add('active');
+  spDots[spActive]?.classList.add('active');
 }
 
-document.getElementById('spPrev').addEventListener('click', () => goToSlide(spActive - 1));
-document.getElementById('spNext').addEventListener('click', () => goToSlide(spActive + 1));
-spDots.forEach(d => d.addEventListener('click', () => goToSlide(parseInt(d.dataset.sp))));
+document.getElementById('spPrev')?.addEventListener('click', () => goToSlide(spActive - 1));
+document.getElementById('spNext')?.addEventListener('click', () => goToSlide(spActive + 1));
+spDots.forEach(d => {
+  d.addEventListener('click', () => goToSlide(parseInt(d.dataset.sp)));
+  d.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToSlide(parseInt(d.dataset.sp)); } });
+});
 
 let spTimer = setInterval(() => goToSlide(spActive + 1), 8000);
-document.querySelector('.sp-carousel').addEventListener('mouseenter', () => clearInterval(spTimer));
-document.querySelector('.sp-carousel').addEventListener('mouseleave', () => {
+document.querySelector('.sp-carousel')?.addEventListener('mouseenter', () => clearInterval(spTimer));
+document.querySelector('.sp-carousel')?.addEventListener('mouseleave', () => {
   spTimer = setInterval(() => goToSlide(spActive + 1), 8000);
 });
 
-// Touch/swipe for social proof
 let spTouchX = null;
-document.querySelector('.sp-carousel__inner').addEventListener('touchstart', e => { spTouchX = e.touches[0].clientX; }, { passive: true });
-document.querySelector('.sp-carousel__inner').addEventListener('touchend', e => {
+document.querySelector('.sp-carousel__inner')?.addEventListener('touchstart', e => { spTouchX = e.touches[0].clientX; }, { passive: true });
+document.querySelector('.sp-carousel__inner')?.addEventListener('touchend', e => {
   if (!spTouchX) return;
   const dx = spTouchX - e.changedTouches[0].clientX;
   if (Math.abs(dx) > 40) goToSlide(dx > 0 ? spActive + 1 : spActive - 1);
   spTouchX = null;
 }, { passive: true });
 
-// ── Equalize sp-slide__card heights ────────────────────
+// ── Equalize sp-slide__card heights (debounced) ─────────
 function equalizeSlideCards() {
   const cards = document.querySelectorAll('.sp-slide__card');
   cards.forEach(c => { c.style.height = 'auto'; });
@@ -3433,39 +3565,50 @@ function equalizeSlideCards() {
   });
   cards.forEach(c => { c.style.height = maxH + 'px'; });
 }
+let equalizeTimer;
 window.addEventListener('load', equalizeSlideCards);
-window.addEventListener('resize', equalizeSlideCards);
+window.addEventListener('resize', () => {
+  clearTimeout(equalizeTimer);
+  equalizeTimer = setTimeout(equalizeSlideCards, 150);
+});
+
+// ── Pillar Accordion ────────────────────────────────────
 document.querySelectorAll('.pillar-accordion-trigger').forEach(trigger => {
   trigger.addEventListener('click', () => {
     const body = trigger.nextElementSibling;
     const isOpen = trigger.classList.contains('open');
     document.querySelectorAll('.pillar-accordion-trigger').forEach(t => {
       t.classList.remove('open');
+      t.setAttribute('aria-expanded', 'false');
       t.nextElementSibling.style.maxHeight = null;
     });
     if (!isOpen) {
       trigger.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
       body.style.maxHeight = body.scrollHeight + 'px';
     }
   });
 });
 
+// ── Coach Carousel ──────────────────────────────────────
 const coachTrack = document.getElementById('coachTrack');
 const coachDots = document.querySelectorAll('.coach-carousel__dot');
 let coachActive = 0;
-const coachTotal = 6;
+const coachTotal = 5; // Bernardo + Brent + Ceci + Miguel + Jackie
 
 function goToCoach(n) {
   coachActive = (n + coachTotal) % coachTotal;
-  coachTrack.style.transform = `translateX(-${coachActive * 100}%)`;
+  if (coachTrack) coachTrack.style.transform = `translateX(-${coachActive * 100}%)`;
   coachDots.forEach((d, i) => d.classList.toggle('active', i === coachActive));
 }
 
 document.getElementById('coachPrev')?.addEventListener('click', () => goToCoach(coachActive - 1));
 document.getElementById('coachNext')?.addEventListener('click', () => goToCoach(coachActive + 1));
-coachDots.forEach(d => d.addEventListener('click', () => goToCoach(parseInt(d.dataset.c))));
+coachDots.forEach(d => {
+  d.addEventListener('click', () => goToCoach(parseInt(d.dataset.c)));
+  d.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToCoach(parseInt(d.dataset.c)); } });
+});
 
-// Touch swipe for coach carousel
 let coachTouchX = null;
 coachTrack?.addEventListener('touchstart', e => { coachTouchX = e.touches[0].clientX; }, { passive: true });
 coachTrack?.addEventListener('touchend', e => {
@@ -3474,28 +3617,26 @@ coachTrack?.addEventListener('touchend', e => {
   if (Math.abs(dx) > 40) goToCoach(dx > 0 ? coachActive + 1 : coachActive - 1);
   coachTouchX = null;
 }, { passive: true });
+
+// ── FAQ Accordion ───────────────────────────────────────
 document.querySelectorAll('.faq-trigger').forEach(trigger => {
   trigger.addEventListener('click', () => {
     const body = trigger.nextElementSibling;
     const isOpen = trigger.classList.contains('open');
     document.querySelectorAll('.faq-trigger').forEach(t => {
       t.classList.remove('open');
+      t.setAttribute('aria-expanded', 'false');
       t.nextElementSibling.style.maxHeight = null;
     });
     if (!isOpen) {
       trigger.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
       body.style.maxHeight = body.scrollHeight + 'px';
     }
   });
 });
 
-function playVsl() {
-  const video = document.getElementById('heroVsl');
-  const overlay = document.getElementById('vslOverlay');
-  overlay.classList.add('hidden');
-  video.controls = true;
-  video.play();
-}
+})();
 </script>
 
 </body>
