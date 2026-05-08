@@ -1197,7 +1197,7 @@ nav.scrolled {
 }
 .founder-card {
   background: var(--navy-3);
-  border: 1px solid rgba(34,120,172,0.15);
+  border: 1px solid var(--steel-mid);
   border-radius: var(--r-lg);
   overflow: hidden;
   display: flex;
@@ -1206,8 +1206,16 @@ nav.scrolled {
   text-align: center;
   padding: 40px 32px 36px;
   transition: border-color 0.25s;
+  position: relative;
 }
-.founder-card:hover { border-color: rgba(34,120,172,0.4); }
+.founder-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--steel), var(--steel-light));
+}
+.founder-card:hover { border-color: var(--steel-light); }
 .founder-card__photo {
   width: 160px;
   height: 160px;
@@ -1900,6 +1908,7 @@ h1, h2 { text-wrap: balance; }
   /* Joey featured: hide desktop founders grid, show mobile featured + carousel */
   .founders-grid { display: none !important; }
   .staff-grid { display: none !important; }
+  #desktopStaffLabel { display: none !important; }
   .founder-featured--mobile { display: flex; margin-bottom: 32px; }
   #mobileStaffLabel { display: block !important; }
 }
@@ -1909,7 +1918,7 @@ h1, h2 { text-wrap: balance; }
   .section { padding: 64px 0; }
   .hero { padding: 100px 0 56px; width: 100%; }
   /* Foto 1: H1 hero - force 3 lines */
-  .hero h1 { font-size: clamp(2rem, 7.8vw, 2.8rem); }
+  .hero h1 { font-size: clamp(1.85rem, 7.2vw, 2.6rem); }
   /* Foto 1: hero subtitle - 3 lines */
   .hero__sub { font-size: 17px; }
   .hero__cta-group .btn { font-size: 14px; padding: 14px 32px; }
@@ -2061,7 +2070,7 @@ h1, h2 { text-wrap: balance; }
         <div class="line"></div>
       </div>
 
-      <h1 style="font-size:clamp(3rem,4.5vw,5rem);">Build the Body That<br>Makes You Strong In<br>Every Area of Your Life.</h1>
+      <h1 style="font-size:clamp(3rem,4.5vw,5rem);">Build the Body That Makes You Strong In Every Area of Your Life.</h1>
 
       <p class="hero__sub">Personalized nutrition, fitness, and lifestyle coaching. Grounded in science. Built around your real life. Designed to make results last.</p>
 
@@ -2073,8 +2082,9 @@ h1, h2 { text-wrap: balance; }
         <video
           id="heroVsl"
           src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fa2056d38dd6188702e45a.mp4"
+          poster="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fe627f114de79afe13da80.png"
           playsinline
-          preload="metadata"
+          preload="auto"
           style="width:100%;height:100%;object-fit:cover;display:block;"
         ></video>
         <button class="video-frame__overlay" id="vslOverlay" aria-label="Play video">
@@ -3042,7 +3052,7 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
     </div>
 
     <!-- 4 coaches grid (desktop) -->
-    <p class="coaches-sublabel reveal" style="margin-top:48px;">The Coaching Staff</p>
+    <p class="coaches-sublabel reveal" id="desktopStaffLabel" style="margin-top:48px;">The Coaching Staff</p>
     <div class="staff-grid reveal">
 
       <div class="coach-card">
