@@ -1172,7 +1172,7 @@ nav.scrolled {
   font-size: 1.3rem;
   font-style: italic;
   color: var(--white);
-  line-height: 1.55;
+  line-height: 1.6;
   margin-bottom: 20px;
   max-width: 580px;
   margin-left: auto;
@@ -1354,6 +1354,7 @@ nav.scrolled {
   border-color: var(--steel-mid) !important;
   background: var(--navy-3);
   position: relative;
+  overflow: hidden;
 }
 .coach-card--featured::before {
   content: '';
@@ -1908,7 +1909,7 @@ h1, h2 { text-wrap: balance; }
   .section { padding: 64px 0; }
   .hero { padding: 100px 0 56px; width: 100%; }
   /* Foto 1: H1 hero - force 3 lines */
-  .hero h1 { font-size: clamp(2.33rem, 8.7vw, 3.15rem); }
+  .hero h1 { font-size: clamp(2rem, 7.8vw, 2.8rem); }
   /* Foto 1: hero subtitle - 3 lines */
   .hero__sub { font-size: 17px; }
   .hero__cta-group .btn { font-size: 14px; padding: 14px 32px; }
@@ -1929,13 +1930,13 @@ h1, h2 { text-wrap: balance; }
   nav .btn-primary { font-size: 12px; padding: 8px 14px; }
   nav .btn-primary svg { width: 13px; height: 13px; }
   .litmus { padding: 28px 20px; }
+  .litmus__quote { font-size: 1.1rem; font-style: normal; font-weight: 500; font-family: var(--font-body); line-height: 1.65; }
   .fit-panel { padding: 28px 20px; }
   .final-cta { padding: 72px 0; }
   .final-cta h2 { font-size: clamp(2.4rem, 8vw, 5rem); }
   /* Quote carousel mobile */
-  .carousel-quote { padding: 32px 24px; min-height: auto; height: auto; }
-  .quote-carousel__track { min-height: auto; }
-  .carousel-quote__text { font-size: 1rem; }
+  .carousel-quote { padding: 28px 20px; }
+  .carousel-quote__text { font-size: 0.95rem; line-height: 1.65; }
   /* Problem pivot: keep it impactful on mobile */
   .problem__pivot { font-size: clamp(0.9rem, 4vw, 1.2rem); }
   /* Foto 8: sp-slide headline smaller, card auto height on mobile */
@@ -2397,7 +2398,7 @@ h1, h2 { text-wrap: balance; }
       <h2>The Three Pillars Behind Results That Actually Last.</h2>
     </div>
 
-    <p class="method__bridge reveal"><em>Most programs give you a plan. We give you a system.<br>Here is the difference.</em></p>
+    <p class="method__bridge reveal"><em>Most programs give you a plan.<br>We give you a system.<br class="br-mobile">Here is the difference.</em></p>
 
     <!-- Pillar Cards (desktop) -->
     <div class="pillars__grid">
@@ -3079,6 +3080,7 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
     </div>
 
     <!-- Mobile: Joey featured solo, then carousel (Bernardo + coaches) -->
+    <p class="coaches-sublabel reveal" style="margin-top:0; margin-bottom:28px;">Meet the Team</p>
     <div class="founder-featured founder-featured--mobile reveal">
       <div class="founder-featured__avatar">
         <img width="180" height="180" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz" style="object-position:50% 15%;">
@@ -3501,7 +3503,6 @@ function goToQuote(n) {
   qQuotes[qActive].classList.add('active');
   qDots[qActive]?.classList.add('active');
 }
-
 document.getElementById('qPrev')?.addEventListener('click', () => goToQuote(qActive - 1));
 document.getElementById('qNext')?.addEventListener('click', () => goToQuote(qActive + 1));
 qDots.forEach(d => {
@@ -3565,11 +3566,27 @@ function equalizeSlideCards() {
   });
   cards.forEach(c => { c.style.height = maxH + 'px'; });
 }
+
+function equalizeQuoteCards() {
+  const track = document.querySelector('.quote-carousel__track');
+  if (!track) return;
+  const quotes = document.querySelectorAll('.carousel-quote');
+  // Temporarily make all visible to measure
+  quotes.forEach(q => { q.style.position = 'relative'; q.style.opacity = '1'; });
+  let maxH = 0;
+  quotes.forEach(q => { maxH = Math.max(maxH, q.offsetHeight); });
+  // Restore positioning
+  quotes.forEach(q => { q.style.position = ''; q.style.opacity = ''; });
+  // Set track height to tallest card
+  track.style.minHeight = maxH + 'px';
+}
+
 let equalizeTimer;
 window.addEventListener('load', equalizeSlideCards);
+window.addEventListener('load', equalizeQuoteCards);
 window.addEventListener('resize', () => {
   clearTimeout(equalizeTimer);
-  equalizeTimer = setTimeout(equalizeSlideCards, 150);
+  equalizeTimer = setTimeout(() => { equalizeSlideCards(); equalizeQuoteCards(); }, 150);
 });
 
 // ── Pillar Accordion ────────────────────────────────────
