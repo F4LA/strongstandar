@@ -1888,7 +1888,7 @@ h1, h2 { text-wrap: balance; }
   .staff-grid { grid-template-columns: repeat(2, 1fr); }
   .founder-featured { flex-direction: column; align-items: center; text-align: center; padding: 32px 24px; }
   .founder-featured__avatar { width: 140px; height: 140px; }
-  .founder-featured__bio { text-align: left; }
+  .founder-featured__bio { text-align: center; }
   .fit__panels { grid-template-columns: 1fr; }
   .footer__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
   .footer-links { justify-content: flex-start; flex-wrap: wrap; gap: 16px; }
@@ -1909,6 +1909,7 @@ h1, h2 { text-wrap: balance; }
   .founders-grid { display: none !important; }
   .staff-grid { display: none !important; }
   #desktopStaffLabel { display: none !important; }
+  #meetTeamLabel { display: block !important; }
   .founder-featured--mobile { display: flex; margin-bottom: 32px; }
   #mobileStaffLabel { display: block !important; }
 }
@@ -3090,7 +3091,7 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
     </div>
 
     <!-- Mobile: Joey featured solo, then carousel (Bernardo + coaches) -->
-    <p class="coaches-sublabel reveal" style="margin-top:0; margin-bottom:28px;">Meet the Team</p>
+    <p class="coaches-sublabel reveal" id="meetTeamLabel" style="margin-top:0; margin-bottom:28px; display:none;">Meet the Team</p>
     <div class="founder-featured founder-featured--mobile reveal">
       <div class="founder-featured__avatar">
         <img width="180" height="180" loading="lazy" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz" style="object-position:50% 15%;">
