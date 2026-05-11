@@ -349,34 +349,6 @@
 
     .step-card .btn { width: 100%; justify-content: center; }
 
-    /* calendar icons row */
-    .cal-icons {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .cal-icons a {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--navy-4);
-      border: 1px solid rgba(34,120,172,0.2);
-      border-radius: var(--r-sm);
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--off-white);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .cal-icons a:hover {
-      background: var(--steel-glow);
-      border-color: var(--steel-light);
-    }
-    .cal-icons a svg { flex-shrink: 0; }
-
     /* ── WHAT TO EXPECT ──────────────────────────────────── */
     .expect {
       padding: clamp(64px, 8vw, 112px) 0;
@@ -620,25 +592,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
           <h3>Add to Your Calendar</h3>
-          <p>Save the webinar link and add it to your calendar now so you don't forget. Pick your calendar app below.</p>
-          <div class="cal-icons">
-            <a href="APPLE_CAL_PLACEHOLDER" target="_blank" rel="noopener" title="Apple Calendar">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              Apple
-            </a>
-            <a href="GOOGLE_CAL_PLACEHOLDER" target="_blank" rel="noopener" title="Google Calendar">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Google
-            </a>
-            <a href="OUTLOOK_CAL_PLACEHOLDER" target="_blank" rel="noopener" title="Outlook">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg>
-              Outlook
-            </a>
-            <a href="YAHOO_CAL_PLACEHOLDER" target="_blank" rel="noopener" title="Yahoo">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg>
-              Yahoo
-            </a>
-          </div>
+          <p>Add the webinar to your Google Calendar now so you don't forget. One click and you're set.</p>
           <a href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NzVrdTBhMTd1aHFzYTRwc29lNWdkMnFkcjIgY19kZjVmZWE3NmQ2ZGJkNDQxMDRmNGE4NDhjMjkzZTA2ZjFmYmE3M2E0YzhhZWZiYzRkNGJlNWZkNWFkYjM1ZmY5QGc&tmsrc=c_df5fea76d6dbd44104f4a848c293e06f1fba73a4c8aefbc4d4be5fd5adb35ff9%40group.calendar.google.com" class="btn btn-primary" target="_blank" rel="noopener" style="width:100%;justify-content:center;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Add to Google Calendar
@@ -649,7 +603,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="step-card">
           <div class="step-card__number">STEP 03</div>
           <div class="step-card__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </div>
           <h3>Follow on Instagram</h3>
           <p>Follow Dr. Joey on Instagram for daily tips, behind-the-scenes content, and inspiration to keep you on track.</p>
