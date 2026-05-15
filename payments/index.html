@@ -63,7 +63,6 @@
   .panel-header { padding: 12px 16px; border-bottom: 1px solid var(--border); }
   .panel-title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-  /* URL row */
   .url-row {
     display: flex;
     gap: 8px;
@@ -210,7 +209,6 @@
       <span class="panel-title">Invoice Input</span>
     </div>
 
-    <!-- URL fetch row -->
     <div class="url-row">
       <input type="text" id="invoiceUrl" placeholder="https://link.fastpaydirect.com/invoice/..." />
       <button class="btn-fetch" onclick="fetchFromUrl()" id="fetchBtn">↓ Fetch URL</button>
@@ -261,10 +259,11 @@ $2,100.00
 
 <script>
 const SCRIPT_URL = "https://script.google.com/a/macros/fit4lifeacademy.health/s/AKfycbwRT6JoF-9ehXQ2sWYjRymWt6imu7vS6vt9OjagWwwsWf4ZzWCrcltNzKsW9ETiVcHcXA/exec";
+const WORKER_URL = "https://ss-invoice-proxy.membership-74d.workers.dev";
 
 let parsedRows = [];
 
-// ── FETCH FROM URL ─────────────────────────────────────────────────────────
+// ── FETCH FROM URL via Cloudflare Worker ───────────────────────────────────
 async function fetchFromUrl() {
   const url = document.getElementById('invoiceUrl').value.trim();
   if (!url) return;
@@ -274,98 +273,78 @@ async function fetchFromUrl() {
   btn.textContent = 'Fetching...';
   setStatus('loading', 'Descargando invoice...');
 
-  const proxies = [
-    `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-  ];
+  try {
+    const res = await fetch(`${WORKER_URL}/?url=${encodeURIComponent(url)}`, {
+      signal: AbortSignal.timeout(15000)
+    });
 
-  let html = null;
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-  for (let i = 0; i < proxies.length; i++) {
-    try {
-      setStatus('loading', `Proxy ${i + 1}/${proxies.length}...`);
-      const res = await fetch(proxies[i], { signal: AbortSignal.timeout(12000) });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        const data = await res.json();
-        html = data.contents || '';
-      } else {
-        html = await res.text();
-      }
-      if (html && html.length > 100) break;
-    } catch (err) {
-      if (i === proxies.length - 1) {
-        setStatus('error', 'No se pudo descargar la URL');
-        btn.disabled = false;
-        btn.textContent = '↓ Fetch URL';
-        return;
-      }
+    const html = await res.text();
+    if (!html || html.length < 100) throw new Error('Respuesta vacía');
+
+    setStatus('loading', 'Extrayendo datos...');
+
+    // Try NUXT_DATA JSON first (FastPayDirect format)
+    const rows = parseFromNuxtData(html);
+
+    if (rows.length > 0) {
+      parsedRows = rows;
+      renderPreview();
+      setStatus('idle', `✓ ${parsedRows.length} filas extraídas`);
+    } else {
+      // Fallback: plain text parse
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('script, style, noscript, svg').forEach(el => el.remove());
+      const text = (doc.body?.innerText || '').replace(/\n{3,}/g, '\n\n').trim();
+      document.getElementById('invoiceInput').value = text;
+      setStatus('idle', 'Texto extraído — parseando...');
+      parseInvoice();
     }
+
+  } catch (e) {
+    setStatus('error', e.message || 'Error al descargar');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '↓ Fetch URL';
   }
-
-  // Try to parse NUXT_DATA JSON directly (FastPayDirect format)
-  const rows = parseFromNuxtData(html);
-
-  if (rows.length > 0) {
-    // Got data directly from JSON — skip textarea, go straight to preview
-    parsedRows = rows;
-    renderPreview();
-    setStatus('idle', `✓ ${parsedRows.length} filas extraídas desde URL`);
-  } else {
-    // Fallback: extract plain text and put in textarea for manual parsing
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    doc.querySelectorAll('script, style, noscript, svg').forEach(el => el.remove());
-    const text = (doc.body?.innerText || '').replace(/\n{3,}/g, '\n\n').trim();
-    document.getElementById('invoiceInput').value = text;
-    setStatus('idle', `✓ Texto extraído — parseando...`);
-    parseInvoice();
-  }
-
-  btn.disabled = false;
-  btn.textContent = '↓ Fetch URL';
 }
 
-// ── PARSE NUXT DATA JSON (FastPayDirect specific) ──────────────────────────
+// ── PARSE NUXT DATA JSON (FastPayDirect) ──────────────────────────────────
 function parseFromNuxtData(html) {
   try {
     const match = html.match(/<script[^>]+id="__NUXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
     if (!match) return [];
 
-    const nuxtArray = JSON.parse(match[1]);
+    const arr = JSON.parse(match[1]);
 
-    // Find the invoice object by looking for contactDetails with email
-    let name = '', email = '', schedules = [];
-
-    // Walk through the array to find email
-    for (let i = 0; i < nuxtArray.length; i++) {
-      const item = nuxtArray[i];
-      if (typeof item === 'string' && item.includes('@') && item.includes('.')) {
+    // Extract email
+    let email = '';
+    for (const item of arr) {
+      if (typeof item === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item)) {
         email = item;
+        break;
       }
     }
 
-    // Find name near email — look for "Vanessa Ashtin" style strings (2 capitalized words)
-    for (let i = 0; i < nuxtArray.length; i++) {
-      const item = nuxtArray[i];
+    // Extract name (two capitalized words)
+    let name = '';
+    for (const item of arr) {
       if (typeof item === 'string' && /^[A-Z][a-z]+ [A-Z][a-z]+$/.test(item)) {
         name = item;
+        break;
       }
     }
 
-    // Find payment schedules — look for objects with status "paid"/"pending" and dueDate + value
+    // Extract payment schedule entries
     const rows = [];
-    let totalPayments = 0;
-
-    // Count payment schedule entries
-    for (let i = 0; i < nuxtArray.length; i++) {
-      const item = nuxtArray[i];
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i];
       if (item && typeof item === 'object' && !Array.isArray(item)) {
-        if ('status' in item && 'value' in item && 'dueDate' in item && '_id' in item) {
-          // This looks like a payment schedule entry
-          const status = resolveRef(nuxtArray, item.status);
-          const value = resolveRef(nuxtArray, item.value);
-          const dueDate = resolveRef(nuxtArray, item.dueDate);
+        if ('status' in item && 'value' in item && 'dueDate' in item) {
+          const status = typeof item.status === 'string' ? item.status : arr[item.status];
+          const value = typeof item.value === 'number' ? item.value : arr[item.value];
+          const dueDate = typeof item.dueDate === 'string' ? item.dueDate : arr[item.dueDate];
 
           if ((status === 'paid' || status === 'pending') && value && dueDate) {
             rows.push({ status, value, dueDate });
@@ -374,13 +353,12 @@ function parseFromNuxtData(html) {
       }
     }
 
-    totalPayments = rows.length;
-
+    const total = rows.length;
     return rows.map((r, idx) => ({
       full_name: name,
       email: email,
       date: formatDate(r.dueDate),
-      payment_plan: `${idx + 1}/${totalPayments}`,
+      payment_plan: `${idx + 1}/${total}`,
       payment_amount: `$${Number(r.value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
       status: r.status === 'paid' ? 'Paid' : 'Pending'
     }));
@@ -391,19 +369,7 @@ function parseFromNuxtData(html) {
   }
 }
 
-function resolveRef(arr, ref) {
-  if (typeof ref === 'string' || typeof ref === 'number') {
-    // Could be a direct value or an index into the array
-    if (typeof ref === 'number' && ref < arr.length) {
-      const val = arr[ref];
-      if (typeof val === 'string' || typeof val === 'number') return val;
-    }
-    return ref;
-  }
-  return ref;
-}
-
-// ── ORIGINAL PARSE FROM TEXT ───────────────────────────────────────────────
+// ── PARSE FROM TEXT (original) ─────────────────────────────────────────────
 function parseInvoice() {
   const text = document.getElementById('invoiceInput').value.trim();
   if (!text) return;
@@ -423,13 +389,11 @@ function parseInvoice() {
   while ((match = paymentRegex.exec(text)) !== null) {
     const payNum = parseInt(match[1]);
     const payTotal = parseInt(match[2]);
-    const date = match[3].replace(',', '').trim();
-    const amount = match[4].trim();
     parsedRows.push({
       full_name: name, email,
-      date: formatDate(date),
+      date: formatDate(match[3].replace(',', '').trim()),
       payment_plan: `${payNum}/${payTotal}`,
-      payment_amount: amount,
+      payment_amount: match[4].trim(),
       status: payNum === 1 ? 'Paid' : 'Pending'
     });
   }
