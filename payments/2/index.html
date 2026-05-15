@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strong Standard — Payment Agent</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0d12;
+    --surface: #111418;
+    --border: #1e2530;
+    --accent: #2278AC;
+    --accent-light: #3899CC;
+    --green: #22ac6e;
+    --yellow: #e0a830;
+    --red: #e05030;
+    --text: #e8edf2;
+    --muted: #5a6472;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .logo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 1000px;
+  }
+
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .url-input-wrap {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input[type="text"]:focus { border-color: var(--accent); }
+  input[type="text"]::placeholder { color: var(--muted); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent-light); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  .actions {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .preview-area {
+    padding: 16px;
+    min-height: 280px;
+  }
+
+  .empty-state {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 28px; opacity: 0.3; }
+  .empty-state p { font-size: 12px; text-align: center; line-height: 1.5; }
+
+  .log-area {
+    padding: 12px 16px;
+    min-height: 120px;
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid var(--border);
+  }
+
+  .log-line {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+  }
+
+  .log-line.ok { color: var(--green); }
+  .log-line.error { color: var(--red); }
+  .log-line.info { color: var(--accent-light); }
+  .log-time { opacity: 0.5; flex-shrink: 0; }
+
+  .row-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px;
+    align-items: start;
+  }
+
+  .row-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .row-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .badge-paid { background: rgba(34,172,110,0.15); color: var(--green); }
+  .badge-pending { background: rgba(224,168,48,0.15); color: var(--yellow); }
+
+  .status-bar {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+  }
+
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-idle { background: var(--muted); }
+  .dot-ok { background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dot-error { background: var(--red); box-shadow: 0 0 8px var(--red); }
+  .dot-loading { background: var(--accent-light); animation: pulse 1s infinite; }
+
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .status-text { color: var(--muted); font-family: var(--mono); }
+  .status-ok { color: var(--green); }
+  .status-error { color: var(--red); }
+
+  .summary {
+    padding: 10px 16px;
+    display: flex;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-item { font-size: 11px; color: var(--muted); }
+  .summary-item span { color: var(--text); font-weight: 600; }
+
+  .step-indicator {
+    display: flex;
+    gap: 0;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .step-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .step.active .step-num { background: var(--accent); color: white; }
+  .step.done .step-num { background: var(--green); color: white; }
+  .step.active { color: var(--text); }
+  .step.done { color: var(--green); }
+
+  .step-arrow { color: var(--border); margin: 0 4px; font-size: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-dot"></div>
+  <h1>Strong Standard — Payment Agent</h1>
+</header>
+
+<div class="layout">
+  <!-- Input Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Invoice URL</span>
+    </div>
+
+    <div class="url-input-wrap">
+      <input type="text" id="invoiceUrl"
+        placeholder="https://link.fastpaydirect.com/invoice/..."
+        value=""
+      />
+      <div style="font-size:11px; color:var(--muted); line-height:1.6;">
+        Pega la URL del invoice de GHL/FastPayDirect.<br>
+        El agente extrae los datos y los envía al Sheet automáticamente.
+      </div>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step" id="step1"><div class="step-num">1</div> Fetch</div>
+      <span class="step-arrow">›</span>
+      <div class="step" id="step2"><div class="step-num">2</div> Parse</div>
+      <span class="step-arrow">›</span>
+      <div class="step" id="step3"><div class="step-num">3</div> Sheet</div>
+    </div>
+
+    <div class="log-area" id="logArea">
+      <div class="log-line">
+        <span class="log-time">--:--:--</span>
+        <span>Agente listo. Ingresa una URL y presiona Run.</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="runAgent()" id="runBtn">
+        ▶ Run Agent
+      </button>
+      <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+    </div>
+  </div>
+
+  <!-- Preview Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Preview</span>
+    </div>
+
+    <div id="previewArea" class="preview-area">
+      <div class="empty-state">
+        <div class="empty-icon">⬡</div>
+        <p>Las filas parseadas<br>aparecerán aquí</p>
+      </div>
+    </div>
+
+    <div class="actions" id="sendActions" style="display:none;">
+      <button class="btn btn-primary" onclick="sendToSheet()" id="sendBtn">
+        Enviar al Sheet
+      </button>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot dot-idle" id="statusDot"></div>
+      <span class="status-text" id="statusText">Esperando URL...</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/a/macros/fit4lifeacademy.health/s/AKfycbwRT6JoF-9ehXQ2sWYjRymWt6imu7vS6vt9OjagWwwsWf4ZzWCrcltNzKsW9ETiVcHcXA/exec";
+const CLAUDE_API = "https://api.anthropic.com/v1/messages";
+
+let parsedRows = [];
+
+function log(msg, type = '') {
+  const area = document.getElementById('logArea');
+  const now = new Date().toLocaleTimeString('en-US', { hour12: false });
+  const line = document.createElement('div');
+  line.className = 'log-line' + (type ? ' ' + type : '');
+  line.innerHTML = `<span class="log-time">${now}</span><span>${msg}</span>`;
+  area.appendChild(line);
+  area.scrollTop = area.scrollHeight;
+}
+
+function setStep(n) {
+  ['step1','step2','step3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'step';
+    if (i + 1 < n) el.classList.add('done');
+    else if (i + 1 === n) el.classList.add('active');
+  });
+}
+
+function setStatus(type, msg) {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  dot.className = 'status-dot';
+  text.className = 'status-text';
+  if (type === 'ok') { dot.classList.add('dot-ok'); text.classList.add('status-ok'); }
+  else if (type === 'error') { dot.classList.add('dot-error'); text.classList.add('status-error'); }
+  else if (type === 'loading') { dot.classList.add('dot-loading'); }
+  else { dot.classList.add('dot-idle'); }
+  text.textContent = msg;
+}
+
+async function fetchInvoicePage(url) {
+  // Use a CORS proxy to fetch the invoice page HTML
+  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  const res = await fetch(proxyUrl);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return data.contents;
+}
+
+function extractTextFromHtml(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  // Remove scripts and styles
+  doc.querySelectorAll('script, style, noscript').forEach(el => el.remove());
+  return doc.body ? doc.body.innerText : doc.documentElement.innerText;
+}
+
+async function parseWithClaude(invoiceText) {
+  const prompt = `You are a payment data extractor. Extract all payment rows from this invoice text and return ONLY a JSON array with no markdown, no explanation, just the raw JSON array.
+
+Each object must have exactly these fields:
+- full_name: string
+- email: string  
+- date: string (format: "Month D, YYYY" e.g. "May 8, 2026")
+- payment_plan: string (format: "1/3", "2/3", etc.)
+- payment_amount: string (format: "$1,000.00")
+- status: "Paid" or "Pending"
+
+Rules:
+- First payment is usually Paid, rest are Pending
+- If a payment is explicitly marked "Paid", use Paid
+- If marked "Pending", use Pending
+- Extract ALL payments from the payment plan
+
+Invoice text:
+${invoiceText}
+
+Return ONLY the JSON array, nothing else.`;
+
+  const response = await fetch(CLAUDE_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error?.message || `API error ${response.status}`);
+  }
+
+  const data = await response.json();
+  const text = data.content[0].text.trim();
+
+  // Strip markdown fences if present
+  const clean = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  return JSON.parse(clean);
+}
+
+async function runAgent() {
+  const url = document.getElementById('invoiceUrl').value.trim();
+  if (!url) { log('⚠ Ingresa una URL primero', 'error'); return; }
+
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Procesando...';
+  parsedRows = [];
+  document.getElementById('sendActions').style.display = 'none';
+  document.getElementById('previewArea').innerHTML = '<div class="empty-state"><div class="empty-icon">⬡</div><p>Procesando...</p></div>';
+
+  try {
+    // Step 1: Fetch
+    setStep(1);
+    setStatus('loading', 'Fetching invoice...');
+    log(`Fetching: ${url}`, 'info');
+
+    const html = await fetchInvoicePage(url);
+    const invoiceText = extractTextFromHtml(html);
+    log(`✓ Página obtenida (${invoiceText.length} chars)`, 'ok');
+
+    // Step 2: Parse with Claude
+    setStep(2);
+    setStatus('loading', 'Parseando con IA...');
+    log('Enviando a Claude para parseo...', 'info');
+
+    parsedRows = await parseWithClaude(invoiceText);
+    log(`✓ ${parsedRows.length} filas extraídas`, 'ok');
+
+    // Step 3: Preview
+    setStep(3);
+    renderPreview();
+    setStatus('idle', `${parsedRows.length} filas listas para enviar`);
+    log('Preview listo — presiona "Enviar al Sheet"', 'info');
+
+  } catch (err) {
+    log(`✗ Error: ${err.message}`, 'error');
+    setStatus('error', err.message);
+    document.getElementById('previewArea').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠</div>
+        <p>${err.message}</p>
+      </div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '▶ Run Agent';
+  }
+}
+
+function renderPreview() {
+  const area = document.getElementById('previewArea');
+  const sendActions = document.getElementById('sendActions');
+
+  if (!parsedRows.length) {
+    area.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠</div><p>No se encontraron pagos</p></div>';
+    sendActions.style.display = 'none';
+    return;
+  }
+
+  const paidCount = parsedRows.filter(r => r.status === 'Paid').length;
+  const pendingCount = parsedRows.filter(r => r.status === 'Pending').length;
+
+  let html = `<div class="summary">
+    <div class="summary-item">Cliente: <span>${parsedRows[0].full_name || '—'}</span></div>
+    <div class="summary-item">Pagos: <span>${parsedRows.length}</span></div>
+    <div class="summary-item">Paid: <span>${paidCount}</span></div>
+    <div class="summary-item">Pending: <span>${pendingCount}</span></div>
+  </div><div style="padding:12px 16px;">`;
+
+  parsedRows.forEach(row => {
+    html += `
+    <div class="row-card">
+      <div>
+        <div class="row-name">${row.full_name} <span style="color:var(--muted);font-weight:400">${row.payment_plan}</span></div>
+        <div class="row-meta">${row.date} · ${row.payment_amount} · ${row.email}</div>
+      </div>
+      <span class="badge ${row.status === 'Paid' ? 'badge-paid' : 'badge-pending'}">${row.status}</span>
+    </div>`;
+  });
+
+  html += '</div>';
+  area.innerHTML = html;
+  sendActions.style.display = 'flex';
+}
+
+function sendToSheet() {
+  if (!parsedRows.length) return;
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  setStatus('loading', 'Enviando al Google Sheet...');
+  log('Enviando filas al Sheet...', 'info');
+
+  const callbackName = 'cb_' + Date.now();
+  const timeout = setTimeout(() => {
+    cleanup();
+    setStatus('error', 'Timeout — verifica que el script esté desplegado');
+    log('✗ Timeout al enviar al Sheet', 'error');
+    btn.disabled = false;
+    btn.textContent = 'Enviar al Sheet';
+  }, 15000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    delete window[callbackName];
+    const script = document.getElementById('jsonp_script');
+    if (script) script.remove();
+  }
+
+  window[callbackName] = function(result) {
+    cleanup();
+    if (result.success) {
+      setStatus('ok', `✓ ${result.rows_added} filas añadidas al sheet`);
+      log(`✓ ${result.rows_added} filas añadidas exitosamente`, 'ok');
+      btn.textContent = '✓ Enviado';
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = 'Enviar al Sheet';
+      }, 3000);
+    } else {
+      setStatus('error', result.error || 'Error desconocido');
+      log(`✗ ${result.error || 'Error desconocido'}`, 'error');
+      btn.disabled = false;
+      btn.textContent = 'Enviar al Sheet';
+    }
+  };
+
+  const encoded = encodeURIComponent(JSON.stringify({ rows: parsedRows }));
+  const url = `${SCRIPT_URL}?callback=${callbackName}&data=${encoded}`;
+  const script = document.createElement('script');
+  script.id = 'jsonp_script';
+  script.src = url;
+  script.onerror = () => {
+    cleanup();
+    setStatus('error', 'Error al cargar el script');
+    log('✗ Error al conectar con Apps Script', 'error');
+    btn.disabled = false;
+    btn.textContent = 'Enviar al Sheet';
+  };
+  document.body.appendChild(script);
+}
+
+function clearAll() {
+  document.getElementById('invoiceUrl').value = '';
+  document.getElementById('logArea').innerHTML = '<div class="log-line"><span class="log-time">--:--:--</span><span>Agente listo. Ingresa una URL y presiona Run.</span></div>';
+  document.getElementById('previewArea').innerHTML = '<div class="empty-state"><div class="empty-icon">⬡</div><p>Las filas parseadas<br>aparecerán aquí</p></div>';
+  document.getElementById('sendActions').style.display = 'none';
+  parsedRows = [];
+  setStatus('idle', 'Esperando URL...');
+  setStep(0);
+  ['step1','step2','step3'].forEach(id => { document.getElementById(id).className = 'step'; });
+}
+</script>
+</body>
+</html>
