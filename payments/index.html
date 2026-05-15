@@ -32,12 +32,7 @@
     padding: 32px 24px;
   }
 
-  header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
+  header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
 
   .logo-dot {
     width: 10px; height: 10px;
@@ -62,34 +57,13 @@
     max-width: 1000px;
   }
 
-  @media (max-width: 700px) {
-    .layout { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 700px) { .layout { grid-template-columns: 1fr; } }
 
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .panel-header { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .panel-title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-  .panel-header {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .panel-title {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* URL fetch row */
+  /* URL row */
   .url-row {
     display: flex;
     gap: 8px;
@@ -97,7 +71,6 @@
     padding: 10px 12px;
     border-bottom: 1px solid var(--border);
   }
-
   .url-row input[type="text"] {
     flex: 1;
     background: var(--bg);
@@ -150,7 +123,7 @@
 
   textarea {
     width: 100%;
-    height: 260px;
+    height: 220px;
     background: transparent;
     border: none;
     outline: none;
@@ -161,7 +134,6 @@
     padding: 16px;
     resize: none;
   }
-
   textarea::placeholder { color: var(--muted); }
 
   .btn {
@@ -177,48 +149,18 @@
     border: none;
     transition: all 0.15s;
   }
-
   .btn-primary { background: var(--accent); color: white; }
   .btn-primary:hover { background: var(--accent-light); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--border);
-  }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
   .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
 
-  .actions {
-    padding: 12px 16px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+  .actions { padding: 12px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
 
-  .preview-area {
-    padding: 16px;
-    min-height: 320px;
-  }
-
-  .empty-state {
-    height: 288px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: var(--muted);
-  }
-
+  .preview-area { padding: 16px; min-height: 320px; }
+  .empty-state { height: 288px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--muted); }
   .empty-icon { font-size: 28px; opacity: 0.3; }
-
-  .empty-state p {
-    font-size: 12px;
-    text-align: center;
-    line-height: 1.5;
-  }
+  .empty-state p { font-size: 12px; text-align: center; line-height: 1.5; }
 
   .row-card {
     background: var(--bg);
@@ -231,68 +173,31 @@
     gap: 4px;
     align-items: start;
   }
-
   .row-name { font-size: 13px; font-weight: 500; color: var(--text); }
   .row-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-  .badge {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
+  .badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
   .badge-paid { background: rgba(34,172,110,0.15); color: var(--green); }
   .badge-pending { background: rgba(224,168,48,0.15); color: var(--yellow); }
 
-  .status-bar {
-    padding: 10px 16px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 40px;
-  }
-
+  .status-bar { padding: 10px 16px; border-top: 1px solid var(--border); font-size: 12px; display: flex; align-items: center; gap: 8px; min-height: 40px; }
   .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .dot-idle { background: var(--muted); }
   .dot-ok { background: var(--green); box-shadow: 0 0 8px var(--green); }
   .dot-error { background: var(--red); box-shadow: 0 0 8px var(--red); }
   .dot-loading { background: var(--accent-light); animation: pulse 1s infinite; }
-
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
   .status-text { color: var(--muted); font-family: var(--mono); }
   .status-ok { color: var(--green); }
   .status-error { color: var(--red); }
 
-  .summary {
-    padding: 10px 16px;
-    display: flex;
-    gap: 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
+  .summary { padding: 10px 16px; display: flex; gap: 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .summary-item { font-size: 11px; color: var(--muted); }
   .summary-item span { color: var(--text); font-weight: 600; }
 </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
-<!-- End Google Tag Manager -->
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <header>
   <div class="logo-dot"></div>
@@ -300,13 +205,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 
 <div class="layout">
-  <!-- Input Panel -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">Invoice Input</span>
     </div>
 
-    <!-- URL fetch row (NEW) -->
+    <!-- URL fetch row -->
     <div class="url-row">
       <input type="text" id="invoiceUrl" placeholder="https://link.fastpaydirect.com/invoice/..." />
       <button class="btn-fetch" onclick="fetchFromUrl()" id="fetchBtn">↓ Fetch URL</button>
@@ -314,7 +218,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="url-divider">o pega el texto manualmente</div>
 
-    <!-- Original textarea -->
     <textarea id="invoiceInput" placeholder="Pega aquí el texto del invoice de GHL...
 
 Ejemplo:
@@ -328,14 +231,11 @@ $2,100.00
 ..."></textarea>
 
     <div class="actions">
-      <button class="btn btn-primary" onclick="parseInvoice()" id="parseBtn">
-        Parse Invoice
-      </button>
+      <button class="btn btn-primary" onclick="parseInvoice()" id="parseBtn">Parse Invoice</button>
       <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
     </div>
   </div>
 
-  <!-- Preview Panel — 100% original -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">Preview</span>
@@ -344,14 +244,12 @@ $2,100.00
     <div id="previewArea" class="preview-area">
       <div class="empty-state">
         <div class="empty-icon">⬡</div>
-        <p>Pega un invoice y dale Parse<br>para ver las filas aquí</p>
+        <p>Pega un invoice o fetch URL<br>para ver las filas aquí</p>
       </div>
     </div>
 
     <div class="actions" id="sendActions" style="display:none;">
-      <button class="btn btn-primary" onclick="sendToSheet()" id="sendBtn">
-        Enviar al Sheet
-      </button>
+      <button class="btn btn-primary" onclick="sendToSheet()" id="sendBtn">Enviar al Sheet</button>
     </div>
 
     <div class="status-bar">
@@ -366,7 +264,7 @@ const SCRIPT_URL = "https://script.google.com/a/macros/fit4lifeacademy.health/s/
 
 let parsedRows = [];
 
-// ── NEW: Fetch invoice page from URL via CORS proxy ────────────────────────
+// ── FETCH FROM URL ─────────────────────────────────────────────────────────
 async function fetchFromUrl() {
   const url = document.getElementById('invoiceUrl').value.trim();
   if (!url) return;
@@ -378,7 +276,6 @@ async function fetchFromUrl() {
 
   const proxies = [
     `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-    `https://corsproxy.io/?${encodeURIComponent(url)}`,
     `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
   ];
 
@@ -397,7 +294,6 @@ async function fetchFromUrl() {
         html = await res.text();
       }
       if (html && html.length > 100) break;
-      throw new Error('Respuesta vacía');
     } catch (err) {
       if (i === proxies.length - 1) {
         setStatus('error', 'No se pudo descargar la URL');
@@ -408,45 +304,119 @@ async function fetchFromUrl() {
     }
   }
 
-  // Extract plain text from HTML
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  doc.querySelectorAll('script, style, noscript, svg').forEach(el => el.remove());
-  const text = (doc.body?.innerText || doc.documentElement.innerText)
-    .replace(/\n{3,}/g, '\n\n').trim();
+  // Try to parse NUXT_DATA JSON directly (FastPayDirect format)
+  const rows = parseFromNuxtData(html);
 
-  // Put extracted text into the textarea and parse automatically
-  document.getElementById('invoiceInput').value = text;
-  setStatus('idle', `✓ Texto extraído (${text.length} chars) — parseando...`);
+  if (rows.length > 0) {
+    // Got data directly from JSON — skip textarea, go straight to preview
+    parsedRows = rows;
+    renderPreview();
+    setStatus('idle', `✓ ${parsedRows.length} filas extraídas desde URL`);
+  } else {
+    // Fallback: extract plain text and put in textarea for manual parsing
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    doc.querySelectorAll('script, style, noscript, svg').forEach(el => el.remove());
+    const text = (doc.body?.innerText || '').replace(/\n{3,}/g, '\n\n').trim();
+    document.getElementById('invoiceInput').value = text;
+    setStatus('idle', `✓ Texto extraído — parseando...`);
+    parseInvoice();
+  }
 
   btn.disabled = false;
   btn.textContent = '↓ Fetch URL';
-
-  // Auto-parse
-  parseInvoice();
 }
 
-// ── ORIGINAL CODE (untouched) ──────────────────────────────────────────────
+// ── PARSE NUXT DATA JSON (FastPayDirect specific) ──────────────────────────
+function parseFromNuxtData(html) {
+  try {
+    const match = html.match(/<script[^>]+id="__NUXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+    if (!match) return [];
 
+    const nuxtArray = JSON.parse(match[1]);
+
+    // Find the invoice object by looking for contactDetails with email
+    let name = '', email = '', schedules = [];
+
+    // Walk through the array to find email
+    for (let i = 0; i < nuxtArray.length; i++) {
+      const item = nuxtArray[i];
+      if (typeof item === 'string' && item.includes('@') && item.includes('.')) {
+        email = item;
+      }
+    }
+
+    // Find name near email — look for "Vanessa Ashtin" style strings (2 capitalized words)
+    for (let i = 0; i < nuxtArray.length; i++) {
+      const item = nuxtArray[i];
+      if (typeof item === 'string' && /^[A-Z][a-z]+ [A-Z][a-z]+$/.test(item)) {
+        name = item;
+      }
+    }
+
+    // Find payment schedules — look for objects with status "paid"/"pending" and dueDate + value
+    const rows = [];
+    let totalPayments = 0;
+
+    // Count payment schedule entries
+    for (let i = 0; i < nuxtArray.length; i++) {
+      const item = nuxtArray[i];
+      if (item && typeof item === 'object' && !Array.isArray(item)) {
+        if ('status' in item && 'value' in item && 'dueDate' in item && '_id' in item) {
+          // This looks like a payment schedule entry
+          const status = resolveRef(nuxtArray, item.status);
+          const value = resolveRef(nuxtArray, item.value);
+          const dueDate = resolveRef(nuxtArray, item.dueDate);
+
+          if ((status === 'paid' || status === 'pending') && value && dueDate) {
+            rows.push({ status, value, dueDate });
+          }
+        }
+      }
+    }
+
+    totalPayments = rows.length;
+
+    return rows.map((r, idx) => ({
+      full_name: name,
+      email: email,
+      date: formatDate(r.dueDate),
+      payment_plan: `${idx + 1}/${totalPayments}`,
+      payment_amount: `$${Number(r.value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      status: r.status === 'paid' ? 'Paid' : 'Pending'
+    }));
+
+  } catch (e) {
+    console.error('NUXT parse error:', e);
+    return [];
+  }
+}
+
+function resolveRef(arr, ref) {
+  if (typeof ref === 'string' || typeof ref === 'number') {
+    // Could be a direct value or an index into the array
+    if (typeof ref === 'number' && ref < arr.length) {
+      const val = arr[ref];
+      if (typeof val === 'string' || typeof val === 'number') return val;
+    }
+    return ref;
+  }
+  return ref;
+}
+
+// ── ORIGINAL PARSE FROM TEXT ───────────────────────────────────────────────
 function parseInvoice() {
   const text = document.getElementById('invoiceInput').value.trim();
   if (!text) return;
 
   parsedRows = [];
-
-  // Extract name - look for "Billed to" section
-  let name = '';
-  let email = '';
+  let name = '', email = '';
 
   const billedMatch = text.match(/Billed to\s*\n([^\n]+)/i);
-  if (billedMatch) {
-    name = billedMatch[1].trim();
-  }
+  if (billedMatch) name = billedMatch[1].trim();
 
-  // Extract email
   const emailMatch = text.match(/([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})/);
   if (emailMatch) email = emailMatch[1].trim();
 
-  // Extract payment lines: "Payment X of Y\nDue [date]\n$amount"
   const paymentRegex = /Payment\s+(\d+)\s+of\s+(\d+)\s*\n[^\n]*?(?:Due\s+)?([A-Za-z]+ \d+,?\s*\d{4})\s*\n\s*(\$[\d,]+\.?\d*)/gi;
   let match;
 
@@ -455,55 +425,38 @@ function parseInvoice() {
     const payTotal = parseInt(match[2]);
     const date = match[3].replace(',', '').trim();
     const amount = match[4].trim();
-    const status = payNum === 1 ? 'Paid' : 'Pending';
-
     parsedRows.push({
-      full_name: name,
-      email: email,
+      full_name: name, email,
       date: formatDate(date),
       payment_plan: `${payNum}/${payTotal}`,
       payment_amount: amount,
-      status: status
+      status: payNum === 1 ? 'Paid' : 'Pending'
     });
   }
 
-  // Fallback: try alternate format without "Due" keyword
   if (parsedRows.length === 0) {
     const altRegex = /Payment\s+(\d+)\s+of\s+(\d+)\s*\n([A-Za-z]+ \d+,?\s*\d{4})\s*\n\s*(\$[\d,]+\.?\d*)/gi;
     while ((match = altRegex.exec(text)) !== null) {
       const payNum = parseInt(match[1]);
       const payTotal = parseInt(match[2]);
-      const date = match[3].replace(',', '').trim();
-      const amount = match[4].trim();
       parsedRows.push({
-        full_name: name,
-        email: email,
-        date: formatDate(date),
+        full_name: name, email,
+        date: formatDate(match[3].replace(',', '').trim()),
         payment_plan: `${payNum}/${payTotal}`,
-        payment_amount: amount,
+        payment_amount: match[4].trim(),
         status: payNum === 1 ? 'Paid' : 'Pending'
       });
     }
   }
 
-  // Fallback: single payment invoice
   if (parsedRows.length === 0) {
     const amountPaidMatch = text.match(/Amount Paid[^\n]*\n[^\n]*(\$[\d,]+\.?\d*)/i);
     const completedMatch = text.match(/Completed on[:\s]+([A-Za-z]+ \d+,?\s*\d{4})/i);
     const issueDateMatch = text.match(/Issue Date\s*\n([A-Za-z]+ \d+,?\s*\d{4})/i);
-
     const amount = amountPaidMatch ? amountPaidMatch[1] : '';
     const date = completedMatch ? completedMatch[1] : (issueDateMatch ? issueDateMatch[1] : '');
-
     if (amount && name) {
-      parsedRows.push({
-        full_name: name,
-        email: email,
-        date: formatDate(date || 'Unknown'),
-        payment_plan: '1/1',
-        payment_amount: amount,
-        status: 'Paid'
-      });
+      parsedRows.push({ full_name: name, email, date: formatDate(date || 'Unknown'), payment_plan: '1/1', payment_amount: amount, status: 'Paid' });
     }
   }
 
@@ -523,13 +476,9 @@ function renderPreview() {
   const sendActions = document.getElementById('sendActions');
 
   if (parsedRows.length === 0) {
-    area.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">⚠</div>
-        <p>No se pudo parsear el invoice.<br>Verifica que tenga el formato de GHL.</p>
-      </div>`;
+    area.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠</div><p>No se pudo parsear el invoice.<br>Verifica el formato.</p></div>`;
     sendActions.style.display = 'none';
-    setStatus('idle', 'No se encontraron pagos en el invoice');
+    setStatus('idle', 'No se encontraron pagos');
     return;
   }
 
@@ -544,8 +493,7 @@ function renderPreview() {
   </div><div style="padding:12px 16px;">`;
 
   parsedRows.forEach(row => {
-    html += `
-    <div class="row-card">
+    html += `<div class="row-card">
       <div>
         <div class="row-name">${row.full_name} <span style="color:var(--muted);font-weight:400">${row.payment_plan}</span></div>
         <div class="row-meta">${row.date} · ${row.payment_amount} · ${row.email}</div>
@@ -588,10 +536,7 @@ function sendToSheet() {
     if (result.success) {
       setStatus('ok', `${result.rows_added} filas añadidas al sheet`);
       btn.textContent = '✓ Enviado';
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.textContent = 'Enviar al Sheet';
-      }, 3000);
+      setTimeout(() => { btn.disabled = false; btn.textContent = 'Enviar al Sheet'; }, 3000);
     } else {
       setStatus('error', result.error || 'Error desconocido');
       btn.disabled = false;
@@ -618,29 +563,17 @@ function setStatus(type, msg) {
   const text = document.getElementById('statusText');
   dot.className = 'status-dot';
   text.className = 'status-text';
-
-  if (type === 'ok') {
-    dot.classList.add('dot-ok');
-    text.classList.add('status-ok');
-  } else if (type === 'error') {
-    dot.classList.add('dot-error');
-    text.classList.add('status-error');
-  } else if (type === 'loading') {
-    dot.classList.add('dot-loading');
-  } else {
-    dot.classList.add('dot-idle');
-  }
+  if (type === 'ok') { dot.classList.add('dot-ok'); text.classList.add('status-ok'); }
+  else if (type === 'error') { dot.classList.add('dot-error'); text.classList.add('status-error'); }
+  else if (type === 'loading') { dot.classList.add('dot-loading'); }
+  else { dot.classList.add('dot-idle'); }
   text.textContent = msg;
 }
 
 function clearAll() {
   document.getElementById('invoiceInput').value = '';
   document.getElementById('invoiceUrl').value = '';
-  document.getElementById('previewArea').innerHTML = `
-    <div class="empty-state">
-      <div class="empty-icon">⬡</div>
-      <p>Pega un invoice y dale Parse<br>para ver las filas aquí</p>
-    </div>`;
+  document.getElementById('previewArea').innerHTML = `<div class="empty-state"><div class="empty-icon">⬡</div><p>Pega un invoice o fetch URL<br>para ver las filas aquí</p></div>`;
   document.getElementById('sendActions').style.display = 'none';
   parsedRows = [];
   setStatus('idle', 'Esperando invoice...');
