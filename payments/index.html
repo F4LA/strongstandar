@@ -89,9 +89,68 @@
     color: var(--muted);
   }
 
+  /* URL fetch row */
+  .url-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .url-row input[type="text"] {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .url-row input[type="text"]:focus { border-color: var(--accent); }
+  .url-row input[type="text"]::placeholder { color: var(--muted); }
+
+  .btn-fetch {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-fetch:hover { background: var(--accent-light); }
+  .btn-fetch:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .url-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .url-divider::before, .url-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
   textarea {
     width: 100%;
-    height: 320px;
+    height: 260px;
     background: transparent;
     border: none;
     outline: none;
@@ -119,10 +178,7 @@
     transition: all 0.15s;
   }
 
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-  }
+  .btn-primary { background: var(--accent); color: white; }
   .btn-primary:hover { background: var(--accent-light); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -176,18 +232,8 @@
     align-items: start;
   }
 
-  .row-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .row-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .row-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .row-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
 
   .badge {
     font-size: 10px;
@@ -211,34 +257,17 @@
     min-height: 40px;
   }
 
-  .status-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .dot-idle { background: var(--muted); }
   .dot-ok { background: var(--green); box-shadow: 0 0 8px var(--green); }
   .dot-error { background: var(--red); box-shadow: 0 0 8px var(--red); }
-  .dot-loading {
-    background: var(--accent-light);
-    animation: pulse 1s infinite;
-  }
+  .dot-loading { background: var(--accent-light); animation: pulse 1s infinite; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   .status-text { color: var(--muted); font-family: var(--mono); }
   .status-ok { color: var(--green); }
   .status-error { color: var(--red); }
-
-  .divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0;
-  }
 
   .summary {
     padding: 10px 16px;
@@ -274,8 +303,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- Input Panel -->
   <div class="panel">
     <div class="panel-header">
-      <span class="panel-title">Invoice Text</span>
+      <span class="panel-title">Invoice Input</span>
     </div>
+
+    <!-- URL fetch row (NEW) -->
+    <div class="url-row">
+      <input type="text" id="invoiceUrl" placeholder="https://link.fastpaydirect.com/invoice/..." />
+      <button class="btn-fetch" onclick="fetchFromUrl()" id="fetchBtn">↓ Fetch URL</button>
+    </div>
+
+    <div class="url-divider">o pega el texto manualmente</div>
+
+    <!-- Original textarea -->
     <textarea id="invoiceInput" placeholder="Pega aquí el texto del invoice de GHL...
 
 Ejemplo:
@@ -287,6 +326,7 @@ Payment 1 of 3
 Due May 2, 2026
 $2,100.00
 ..."></textarea>
+
     <div class="actions">
       <button class="btn btn-primary" onclick="parseInvoice()" id="parseBtn">
         Parse Invoice
@@ -295,7 +335,7 @@ $2,100.00
     </div>
   </div>
 
-  <!-- Preview Panel -->
+  <!-- Preview Panel — 100% original -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-title">Preview</span>
@@ -325,6 +365,67 @@ $2,100.00
 const SCRIPT_URL = "https://script.google.com/a/macros/fit4lifeacademy.health/s/AKfycbwRT6JoF-9ehXQ2sWYjRymWt6imu7vS6vt9OjagWwwsWf4ZzWCrcltNzKsW9ETiVcHcXA/exec";
 
 let parsedRows = [];
+
+// ── NEW: Fetch invoice page from URL via CORS proxy ────────────────────────
+async function fetchFromUrl() {
+  const url = document.getElementById('invoiceUrl').value.trim();
+  if (!url) return;
+
+  const btn = document.getElementById('fetchBtn');
+  btn.disabled = true;
+  btn.textContent = 'Fetching...';
+  setStatus('loading', 'Descargando invoice...');
+
+  const proxies = [
+    `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+    `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+  ];
+
+  let html = null;
+
+  for (let i = 0; i < proxies.length; i++) {
+    try {
+      setStatus('loading', `Proxy ${i + 1}/${proxies.length}...`);
+      const res = await fetch(proxies[i], { signal: AbortSignal.timeout(12000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        html = data.contents || '';
+      } else {
+        html = await res.text();
+      }
+      if (html && html.length > 100) break;
+      throw new Error('Respuesta vacía');
+    } catch (err) {
+      if (i === proxies.length - 1) {
+        setStatus('error', 'No se pudo descargar la URL');
+        btn.disabled = false;
+        btn.textContent = '↓ Fetch URL';
+        return;
+      }
+    }
+  }
+
+  // Extract plain text from HTML
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  doc.querySelectorAll('script, style, noscript, svg').forEach(el => el.remove());
+  const text = (doc.body?.innerText || doc.documentElement.innerText)
+    .replace(/\n{3,}/g, '\n\n').trim();
+
+  // Put extracted text into the textarea and parse automatically
+  document.getElementById('invoiceInput').value = text;
+  setStatus('idle', `✓ Texto extraído (${text.length} chars) — parseando...`);
+
+  btn.disabled = false;
+  btn.textContent = '↓ Fetch URL';
+
+  // Auto-parse
+  parseInvoice();
+}
+
+// ── ORIGINAL CODE (untouched) ──────────────────────────────────────────────
 
 function parseInvoice() {
   const text = document.getElementById('invoiceInput').value.trim();
@@ -385,7 +486,7 @@ function parseInvoice() {
     }
   }
 
-  // Fallback: single payment invoice (PAID, no payment plan structure)
+  // Fallback: single payment invoice
   if (parsedRows.length === 0) {
     const amountPaidMatch = text.match(/Amount Paid[^\n]*\n[^\n]*(\$[\d,]+\.?\d*)/i);
     const completedMatch = text.match(/Completed on[:\s]+([A-Za-z]+ \d+,?\s*\d{4})/i);
@@ -410,7 +511,6 @@ function parseInvoice() {
 }
 
 function formatDate(dateStr) {
-  // Normalize date to "Month D, YYYY"
   try {
     const d = new Date(dateStr);
     if (isNaN(d)) return dateStr;
@@ -468,7 +568,6 @@ function sendToSheet() {
   btn.textContent = 'Enviando...';
   setStatus('loading', 'Enviando al Google Sheet...');
 
-  // Use JSONP to bypass CORS
   const callbackName = 'cb_' + Date.now();
   const timeout = setTimeout(() => {
     cleanup();
@@ -536,6 +635,7 @@ function setStatus(type, msg) {
 
 function clearAll() {
   document.getElementById('invoiceInput').value = '';
+  document.getElementById('invoiceUrl').value = '';
   document.getElementById('previewArea').innerHTML = `
     <div class="empty-state">
       <div class="empty-icon">⬡</div>
