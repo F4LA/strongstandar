@@ -318,21 +318,34 @@ function parseFromNuxtData(html) {
 
     const arr = JSON.parse(match[1]);
 
-    // Extract email
+    // Extract email and name from contactDetails object
+    // contactDetails has: { id, name, phoneNo, email, address }
     let email = '';
-    for (const item of arr) {
-      if (typeof item === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item)) {
-        email = item;
-        break;
+    let name = '';
+
+    for (let i = 0; i < arr.length; i++) {
+      const item = arr[i];
+      if (item && typeof item === 'object' && !Array.isArray(item)) {
+        // Look for object with both 'name' and 'email' and 'phoneNo' keys — that's contactDetails
+        if ('name' in item && 'email' in item && 'phoneNo' in item) {
+          const n = typeof item.name === 'string' ? item.name : arr[item.name];
+          const e = typeof item.email === 'string' ? item.email : arr[item.email];
+          if (n && e && e.includes('@')) {
+            name = n;
+            email = e;
+            break;
+          }
+        }
       }
     }
 
-    // Extract name (two capitalized words)
-    let name = '';
-    for (const item of arr) {
-      if (typeof item === 'string' && /^[A-Z][a-z]+ [A-Z][a-z]+$/.test(item)) {
-        name = item;
-        break;
+    // Fallback: find email directly
+    if (!email) {
+      for (const item of arr) {
+        if (typeof item === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item)) {
+          email = item;
+          break;
+        }
       }
     }
 
