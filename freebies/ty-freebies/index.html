@@ -497,7 +497,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fa2056d38dd6188702e45a.mp4"
             preload="metadata"
             playsinline
-            style="position:absolute;inset:0;width:100%;height:100%;border:none;display:block;background:#000;">
+            style="position:absolute;inset:0;width:100%;height:100%;border:none;display:block;background:#000;pointer-events:none;">
           </video>
           <button class="video-frame__overlay" id="tyVslOverlay" aria-label="Play video">
             <div class="video-frame__play-btn">
@@ -760,6 +760,7 @@ const tyVsl = document.getElementById('tyVsl');
 if (tyVslOverlay && tyVsl) {
   function playTyVsl() {
     tyVslOverlay.classList.add('hidden');
+    tyVsl.style.pointerEvents = 'auto';
     tyVsl.controls = true;
     tyVsl.play();
   }
