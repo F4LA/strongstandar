@@ -21,514 +21,257 @@
     --border: #d4e0ee;
     --check-done: #2e7d5e;
     --check-done-bg: #eaf4ef;
+    --pending: #b45309;
+    --pending-bg: #fef3c7;
+    --pending-border: #d97706;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off-white);
-    color: var(--text);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text); min-height: 100vh; }
 
   /* HEADER */
-  .header {
-    background: var(--navy);
-    padding: 48px 60px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(74,144,217,0.15) 0%, transparent 70%);
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -40px; left: 30%;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
-  }
-  .header-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-  .header-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-  .header h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 48px;
-    color: var(--white);
-    line-height: 1.1;
-    margin-bottom: 10px;
-  }
-  .header h1 span { color: var(--accent); }
-  .header-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.55);
-    font-weight: 300;
-    margin-bottom: 32px;
-  }
-  .progress-wrap {
-    background: rgba(255,255,255,0.08);
-    border-radius: 999px;
-    height: 6px;
-    width: 100%;
-    max-width: 500px;
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--gold));
-    border-radius: 999px;
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-  .progress-label {
-    font-size: 12px;
-    color: rgba(255,255,255,0.4);
-    font-weight: 500;
-  }
-  .progress-label span { color: var(--accent); font-weight: 600; }
+  .header { background: var(--navy); padding: 48px 60px 40px; position: relative; overflow: hidden; }
+  .header::before { content:''; position:absolute; top:-60px; right:-60px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(74,144,217,0.15) 0%,transparent 70%); }
+  .header::after { content:''; position:absolute; bottom:-40px; left:30%; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(201,168,76,0.1) 0%,transparent 70%); }
+  .header-inner { max-width:860px; margin:0 auto; position:relative; z-index:1; }
+  .header-tag { display:inline-block; font-size:11px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:48px; color:var(--white); line-height:1.1; margin-bottom:10px; }
+  .header h1 span { color:var(--accent); }
+  .header-sub { font-size:15px; color:rgba(255,255,255,0.55); font-weight:300; margin-bottom:32px; }
+  .progress-wrap { background:rgba(255,255,255,0.08); border-radius:999px; height:6px; width:100%; max-width:500px; overflow:hidden; margin-bottom:10px; }
+  .progress-bar { height:100%; background:linear-gradient(90deg,var(--accent),var(--gold)); border-radius:999px; transition:width 0.4s ease; width:0%; }
+  .progress-label { font-size:12px; color:rgba(255,255,255,0.4); font-weight:500; }
+  .progress-label span { color:var(--accent); font-weight:600; }
 
   /* CONTAINER */
-  .container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 48px 60px 80px;
-  }
+  .container { max-width:860px; margin:0 auto; padding:48px 60px 80px; }
 
   /* COHORT PANEL */
-  .cohort-panel {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(15,35,64,0.07);
-    margin-bottom: 40px;
-  }
-  .cohort-panel__header {
-    background: linear-gradient(135deg, #0f2340, #1b3a5c);
-    padding: 20px 28px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .cohort-panel__title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    color: var(--white);
-    flex: 1;
-  }
-  .cohort-panel__title svg { stroke: var(--accent); flex-shrink: 0; }
-  .cohort-panel__sub {
-    font-size: 12px;
-    color: rgba(255,255,255,0.4);
-    margin-right: 8px;
-  }
-  .cohort-body {
-    overflow: hidden;
-    transition: max-height 0.35s ease, opacity 0.3s;
-    max-height: 1000px;
-    opacity: 1;
-  }
-  .cohort-panel.collapsed .cohort-body {
-    max-height: 0;
-    opacity: 0;
-  }
-  .cohort-panel.collapsed #cohortToggle svg { transform: rotate(-90deg); }
-  #cohortToggle svg { transition: transform 0.3s; }
-  .cohort-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-  }
-  .cohort-card {
-    background: var(--white);
-    padding: 20px 24px;
-  }
-  .cohort-card--wide {
-    grid-column: 1 / -1;
-    background: var(--off-white);
-  }
-  .cohort-card__label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 14px;
-  }
-  .cohort-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .cohort-dot--blue  { background: var(--accent); }
-  .cohort-dot--gold  { background: var(--gold); }
-  .cohort-dot--green { background: var(--check-done); }
-  .cohort-field { margin-bottom: 12px; }
-  .cohort-field:last-child { margin-bottom: 0; }
-  .cohort-field label {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 5px;
-    letter-spacing: 0.5px;
-  }
-  .cohort-field input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 7px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    color: var(--text);
-    background: var(--white);
-    transition: border-color 0.2s, box-shadow 0.2s;
-    outline: none;
-  }
-  .cohort-field input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(74,144,217,0.12);
-  }
-  .zoom-btn {
-    width: 100%; padding: 9px 12px;
-    background: #2D8CFF; color: white;
-    border: none; border-radius: 7px;
-    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .zoom-btn:hover { background: #1a7aee; }
-  .zoom-btn:disabled { background: #9bb8d4; cursor: not-allowed; }
-
-  /* PHASE */
-  .phase {
-    margin-bottom: 16px;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(15,35,64,0.07);
-    background: var(--white);
-    border: 1px solid var(--border);
-  }
-  .phase:not(.collapsed) { margin-bottom: 40px; }
-
-  .phase-header {
-    padding: 20px 28px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .phase-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    background: rgba(255,255,255,0.12);
-    border-radius: 6px;
-    padding: 4px 10px;
-    white-space: nowrap;
-  }
-  .phase-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: var(--white);
-    flex: 1;
-  }
-  .phase-count {
-    font-size: 12px;
-    color: rgba(255,255,255,0.5);
-    font-weight: 500;
-    white-space: nowrap;
-  }
-  .phase-toggle {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .phase-toggle svg { transition: transform 0.3s; stroke: rgba(255,255,255,0.7); }
-  .phase.collapsed .phase-toggle svg { transform: rotate(-90deg); }
-
-  .phase-body {
-    padding: 0 28px 24px;
-    overflow: hidden;
-    transition: max-height 0.35s ease, opacity 0.3s, padding 0.3s;
-    max-height: 2000px;
-    opacity: 1;
-  }
-  .phase.collapsed .phase-body {
-    max-height: 0;
-    opacity: 0;
-    padding-bottom: 0;
-  }
-
-  /* PHASE COLORS - by ID */
-  #phase1 .phase-header { background: linear-gradient(135deg, #1b3a5c, #2c5282); }
-  #phase2 .phase-header { background: linear-gradient(135deg, #1a4a6b, #2e6899); }
-  #phase3 .phase-header { background: linear-gradient(135deg, #1a3d5e, #25597d); }
-  #phase4 .phase-header { background: linear-gradient(135deg, #154360, #1f5e80); }
-  #phase5 .phase-header { background: linear-gradient(135deg, #0d3b5e, #1a5276); }
-
-  /* SECTION */
-  .section { margin-top: 20px; }
-  .section-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* TASK */
-  .task {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    border-bottom: 1px solid rgba(212,224,238,0.4);
-    border-radius: 6px;
-    padding: 9px 8px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .task:hover { background: var(--accent-light); }
-  .task:last-child { border-bottom: none; }
-  .task.done .task-text { color: var(--muted); text-decoration: line-through; opacity: 0.7; }
-  .checkbox {
-    width: 20px; height: 20px;
-    border: 2px solid var(--border);
-    border-radius: 5px;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-    background: var(--white);
-  }
-  .task.done .checkbox { background: var(--check-done); border-color: var(--check-done); }
-  .checkbox svg { display: none; }
-  .task.done .checkbox svg { display: block; }
-  .task-text { font-size: 14.5px; line-height: 1.5; color: var(--text); flex: 1; }
-
-  /* SUBTASKS */
-  .subtasks { padding-left: 32px; }
-  .subtask {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 5px 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .subtask:hover { background: var(--accent-light); }
-  .subtask.done .subtask-text { color: var(--muted); text-decoration: line-through; opacity: 0.6; }
-  .subtask-dot {
-    width: 16px; height: 16px;
-    border: 2px solid var(--border);
-    border-radius: 3px;
-    flex-shrink: 0;
-    margin-top: 2px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--white);
-    transition: all 0.2s;
-  }
-  .subtask.done .subtask-dot { background: var(--check-done); border-color: var(--check-done); }
-  .subtask-dot svg { display: none; }
-  .subtask.done .subtask-dot svg { display: block; }
-  .subtask-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
-
-  /* NOTE */
-  .note-box {
-    background: var(--gold-light);
-    border-left: 3px solid var(--gold);
-    border-radius: 0 6px 6px 0;
-    padding: 10px 14px;
-    margin: 12px 0 6px;
-    font-size: 13px;
-    color: #7a5a1a;
-    line-height: 1.5;
-  }
-  .note-box strong { color: #5a3d0a; }
-
-  /* FINAL SECTION */
-  .final-section {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-    border-radius: 14px;
-    padding: 32px 36px;
-    margin-top: 40px;
-    box-shadow: 0 4px 24px rgba(15,35,64,0.18);
-  }
-  .final-section .section-title { color: rgba(255,255,255,0.4); border-bottom-color: rgba(255,255,255,0.1); margin-bottom: 14px; }
-  .final-label { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--white); margin-bottom: 6px; }
-  .final-note { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 20px; }
-  .final-section .task { border-bottom-color: rgba(255,255,255,0.08); }
-  .final-section .task:hover { background: rgba(255,255,255,0.06); }
-  .final-section .task-text { color: rgba(255,255,255,0.85); }
-  .final-section .task.done .task-text { color: rgba(255,255,255,0.35); }
-  .final-section .checkbox { background: transparent; border-color: rgba(255,255,255,0.2); }
-  .final-section .task.done .checkbox { background: var(--check-done); border-color: var(--check-done); }
-  .final-section .subtask-text { color: rgba(255,255,255,0.45); }
-  .final-section .subtask:hover { background: rgba(255,255,255,0.05); }
-  .final-section .subtask-dot { background: transparent; border-color: rgba(255,255,255,0.15); }
-  .final-section .subtask.done .subtask-dot { background: var(--check-done); border-color: var(--check-done); }
-
-  /* RESET */
-  .reset-btn {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin: 32px auto 0;
-    background: transparent;
-    border: 1.5px solid #f0d0d0;
-    color: #c0605a;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 9px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .reset-btn:hover { background: #fff5f5; border-color: #c0605a; }
-
-  footer {
-    text-align: center;
-    padding: 0 0 48px;
-    font-size: 12px;
-    color: var(--muted);
-    opacity: 0.6;
-  }
-
-  @media (max-width: 620px) {
-    .cohort-grid { grid-template-columns: 1fr; }
-    .cohort-card--wide { grid-column: 1; }
-    .container { padding: 32px 20px 60px; }
-    .header { padding: 32px 20px 28px; }
-  }
-
-  @media print {
-    .phase.collapsed .phase-body { max-height: none !important; opacity: 1 !important; padding-bottom: 24px !important; }
-    .reset-btn { display: none; }
-  }
+  .cohort-panel { background:var(--white); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 16px rgba(15,35,64,0.07); margin-bottom:40px; }
+  .cohort-panel__header { background:linear-gradient(135deg,#0f2340,#1b3a5c); padding:20px 28px; display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; }
+  .cohort-panel__title { display:flex; align-items:center; gap:8px; font-family:'DM Serif Display',serif; font-size:18px; color:var(--white); flex:1; }
+  .cohort-panel__title svg { stroke:var(--accent); flex-shrink:0; }
+  .cohort-panel__sub { font-size:12px; color:rgba(255,255,255,0.4); margin-right:8px; }
+  .cohort-body { overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s; max-height:1000px; opacity:1; }
+  .cohort-panel.collapsed .cohort-body { max-height:0; opacity:0; }
+  .cohort-panel.collapsed #cohortToggle svg { transform:rotate(-90deg); }
+  #cohortToggle svg { transition:transform 0.3s; }
+  .cohort-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
+  .cohort-card { background:var(--white); padding:20px 24px; }
+  .cohort-card--wide { grid-column:1/-1; background:var(--off-white); }
+  .cohort-card__label { display:flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+  .cohort-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .cohort-dot--blue { background:var(--accent); }
+  .cohort-dot--gold { background:var(--gold); }
+  .cohort-dot--green { background:var(--check-done); }
+  .cohort-field { margin-bottom:12px; }
+  .cohort-field:last-child { margin-bottom:0; }
+  .cohort-field label { display:block; font-size:11px; font-weight:600; color:var(--muted); margin-bottom:5px; letter-spacing:0.5px; }
+  .cohort-field input { width:100%; padding:8px 12px; border:1.5px solid var(--border); border-radius:7px; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--text); background:var(--white); transition:border-color 0.2s,box-shadow 0.2s; outline:none; }
+  .cohort-field input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(74,144,217,0.12); }
 
   /* TABS */
-  .tabs {
-    display: flex; gap: 8px;
-    max-width: 860px; margin: 0 auto;
-    padding: 24px 60px 0;
-  }
-  .tab-btn {
-    padding: 10px 28px; border-radius: 10px 10px 0 0;
-    border: none; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
-    transition: all 0.2s; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);
-  }
-  .tab-btn.active { background: var(--white); color: var(--navy); }
-  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.8); }
+  .tab-bar { background:var(--navy); border-top:1px solid rgba(255,255,255,0.08); }
+  .tabs { display:flex; gap:8px; max-width:860px; margin:0 auto; padding:24px 60px 0; }
+  .tab-btn { padding:10px 28px; border-radius:10px 10px 0 0; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; transition:all 0.2s; background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5); }
+  .tab-btn.active { background:var(--white); color:var(--navy); }
+  .tab-btn:hover:not(.active) { background:rgba(255,255,255,0.18); color:rgba(255,255,255,0.8); }
 
-  /* BERNARDO */
-  .b-section { display: none; }
-  .b-section.active { display: block; }
-  .joey-section { display: block; }
-  .joey-section.hidden { display: none; }
+  /* SECTION WRAPS */
+  .section-wrap { display:none; }
+  .section-wrap.active { display:block; }
 
-  .b-header {
-    background: linear-gradient(135deg, #1a3a2a, #2d6a4f);
-    border-radius: 14px; padding: 28px 32px; margin-bottom: 24px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  }
-  .b-header h2 { font-family: 'DM Serif Display', serif; font-size: 26px; color: white; margin-bottom: 4px; }
-  .b-header p { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
-  .b-progress-wrap { background: rgba(255,255,255,0.1); border-radius: 999px; height: 5px; overflow: hidden; }
-  .b-progress-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #52b788, #95d5b2); transition: width 0.4s; width: 0%; }
-  .b-progress-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 8px; }
-  .b-progress-label span { color: #95d5b2; font-weight: 600; }
+  /* PHASE */
+  .phase { margin-bottom:16px; border-radius:14px; overflow:hidden; box-shadow:0 2px 16px rgba(15,35,64,0.07); background:var(--white); border:1px solid var(--border); }
+  .phase:not(.collapsed) { margin-bottom:40px; }
+  .phase-header { padding:20px 28px; display:flex; align-items:center; gap:16px; cursor:pointer; user-select:none; }
+  .phase-num { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); background:rgba(255,255,255,0.12); border-radius:6px; padding:4px 10px; white-space:nowrap; }
+  .phase-title { font-family:'DM Serif Display',serif; font-size:20px; color:var(--white); flex:1; }
+  .phase-count { font-size:12px; color:rgba(255,255,255,0.5); font-weight:500; white-space:nowrap; }
+  .phase-toggle { width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .phase-toggle svg { transition:transform 0.3s; stroke:rgba(255,255,255,0.7); }
+  .phase.collapsed .phase-toggle svg { transform:rotate(-90deg); }
+  .phase-body { padding:0 28px 24px; overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s,padding 0.3s; max-height:3000px; opacity:1; }
+  .phase.collapsed .phase-body { max-height:0; opacity:0; padding-bottom:0; }
 
-  .b-phase { margin-bottom: 10px; border-radius: 14px; overflow: hidden; background: var(--white); border: 1px solid var(--border); box-shadow: 0 2px 16px rgba(15,35,64,0.07); }
-  .b-phase:not(.collapsed) { margin-bottom: 32px; }
-  .b-phase-header { padding: 18px 24px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; background: linear-gradient(135deg, #1a3a2a, #2d6a4f); }
-  .b-phase-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: white; flex: 1; }
-  .b-phase-body { padding: 0 24px 20px; overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s, padding 0.3s; max-height: 1000px; opacity: 1; }
-  .b-phase.collapsed .b-phase-body { max-height: 0; opacity: 0; padding-bottom: 0; }
-  .b-phase.collapsed .phase-toggle svg { transform: rotate(-90deg); }
+  /* PHASE COLORS */
+  #phase1 .phase-header { background:linear-gradient(135deg,#1b3a5c,#2c5282); }
+  #phase2 .phase-header { background:linear-gradient(135deg,#1a4a6b,#2e6899); }
+  #phase3 .phase-header { background:linear-gradient(135deg,#1a3d5e,#25597d); }
+  #phase4 .phase-header { background:linear-gradient(135deg,#154360,#1f5e80); }
+  #phase5 .phase-header { background:linear-gradient(135deg,#0d3b5e,#1a5276); }
+
+  /* OWNER BADGE */
+  .owner-badge { display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 10px; border-radius:4px; margin:18px 0 10px; }
+  .owner-miguel { background:#e8f0fb; color:#2c5282; }
+  .owner-bernardo { background:#eaf4ef; color:#1a5c3a; }
+  .owner-joey { background:var(--gold-light); color:#7a5a1a; }
+
+  /* SECTION */
+  .section { margin-top:20px; }
+  .section-title { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+
+  /* TASK */
+  .task { display:flex; align-items:flex-start; gap:12px; border-bottom:1px solid rgba(212,224,238,0.4); border-radius:6px; padding:9px 8px; cursor:pointer; transition:background 0.15s; }
+  .task:hover { background:var(--accent-light); }
+  .task:last-child { border-bottom:none; }
+  .task.done .task-text { color:var(--muted); text-decoration:line-through; opacity:0.7; }
+  .checkbox { width:20px; height:20px; border:2px solid var(--border); border-radius:5px; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; background:var(--white); }
+  .task.done .checkbox { background:var(--check-done); border-color:var(--check-done); }
+  .checkbox svg { display:none; }
+  .task.done .checkbox svg { display:block; }
+  .task-text { font-size:14.5px; line-height:1.5; color:var(--text); flex:1; }
+
+  /* SUBTASKS */
+  .subtasks { padding-left:32px; }
+  .subtask { display:flex; align-items:flex-start; gap:10px; padding:5px 8px; border-radius:5px; cursor:pointer; transition:background 0.15s; }
+  .subtask:hover { background:var(--accent-light); }
+  .subtask.done .subtask-text { color:var(--muted); text-decoration:line-through; opacity:0.6; }
+  .subtask-dot { width:16px; height:16px; border:2px solid var(--border); border-radius:3px; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; background:var(--white); transition:all 0.2s; }
+  .subtask.done .subtask-dot { background:var(--check-done); border-color:var(--check-done); }
+  .subtask-dot svg { display:none; }
+  .subtask.done .subtask-dot svg { display:block; }
+  .subtask-text { font-size:13px; color:var(--muted); line-height:1.5; }
+
+  /* NOTE */
+  .note-box { background:var(--gold-light); border-left:3px solid var(--gold); border-radius:0 6px 6px 0; padding:10px 14px; margin:12px 0 6px; font-size:13px; color:#7a5a1a; line-height:1.5; }
+  .note-box strong { color:#5a3d0a; }
+
+  /* FINAL SECTION */
+  .final-section { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%); border-radius:14px; padding:32px 36px; margin-top:40px; box-shadow:0 4px 24px rgba(15,35,64,0.18); }
+  .final-section .section-title { color:rgba(255,255,255,0.4); border-bottom-color:rgba(255,255,255,0.1); margin-bottom:14px; }
+  .final-label { font-family:'DM Serif Display',serif; font-size:22px; color:var(--white); margin-bottom:6px; }
+  .final-note { font-size:13px; color:rgba(255,255,255,0.45); margin-bottom:20px; }
+  .final-section .task { border-bottom-color:rgba(255,255,255,0.08); }
+  .final-section .task:hover { background:rgba(255,255,255,0.06); }
+  .final-section .task-text { color:rgba(255,255,255,0.85); }
+  .final-section .task.done .task-text { color:rgba(255,255,255,0.35); }
+  .final-section .checkbox { background:transparent; border-color:rgba(255,255,255,0.2); }
+  .final-section .task.done .checkbox { background:var(--check-done); border-color:var(--check-done); }
+  .final-section .subtask-text { color:rgba(255,255,255,0.45); }
+  .final-section .subtask:hover { background:rgba(255,255,255,0.05); }
+  .final-section .subtask-dot { background:transparent; border-color:rgba(255,255,255,0.15); }
+  .final-section .subtask.done .subtask-dot { background:var(--check-done); border-color:var(--check-done); }
+
+  /* RESET */
+  .reset-btn { display:flex; align-items:center; gap:7px; margin:32px auto 0; background:transparent; border:1.5px solid #f0d0d0; color:#c0605a; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; padding:9px 24px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
+  .reset-btn:hover { background:#fff5f5; border-color:#c0605a; }
+
+  footer { text-align:center; padding:0 0 48px; font-size:12px; color:var(--muted); opacity:0.6; }
+
+  /* BERNARDO SECTION */
+  .b-header { background:linear-gradient(135deg,#1a3a2a,#2d6a4f); border-radius:14px; padding:28px 32px; margin-bottom:24px; box-shadow:0 4px 24px rgba(0,0,0,0.15); }
+  .b-header h2 { font-family:'DM Serif Display',serif; font-size:26px; color:white; margin-bottom:4px; }
+  .b-header p { font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
+  .b-progress-wrap { background:rgba(255,255,255,0.1); border-radius:999px; height:5px; overflow:hidden; }
+  .b-progress-bar { height:100%; border-radius:999px; background:linear-gradient(90deg,#52b788,#95d5b2); transition:width 0.4s; width:0%; }
+  .b-progress-label { font-size:12px; color:rgba(255,255,255,0.4); margin-top:8px; }
+  .b-progress-label span { color:#95d5b2; font-weight:600; }
+  .b-phase { margin-bottom:10px; border-radius:14px; overflow:hidden; background:var(--white); border:1px solid var(--border); box-shadow:0 2px 16px rgba(15,35,64,0.07); }
+  .b-phase:not(.collapsed) { margin-bottom:32px; }
+  .b-phase-header { padding:18px 24px; display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; background:linear-gradient(135deg,#1a3a2a,#2d6a4f); }
+  .b-phase-title { font-family:'DM Serif Display',serif; font-size:18px; color:white; flex:1; }
+  .b-phase-body { padding:0 24px 20px; overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s,padding 0.3s; max-height:2000px; opacity:1; }
+  .b-phase.collapsed .b-phase-body { max-height:0; opacity:0; padding-bottom:0; }
+  .b-phase.collapsed .phase-toggle svg { transform:rotate(-90deg); }
   .b-task { display:flex; align-items:flex-start; gap:12px; border-bottom:1px solid rgba(212,224,238,0.4); border-radius:6px; padding:9px 8px; cursor:pointer; transition:background 0.15s; }
   .b-task:hover { background:var(--accent-light); }
   .b-task:last-child { border-bottom:none; }
   .b-task.done .task-text { color:var(--muted); text-decoration:line-through; opacity:0.7; }
   .b-task.done .checkbox { background:var(--check-done); border-color:var(--check-done); }
 
+  /* ESPECIFICOS SECTION */
+  .e-header { background:linear-gradient(135deg,#2d1b69,#4c1d95); border-radius:14px; padding:28px 32px; margin-bottom:24px; box-shadow:0 4px 24px rgba(0,0,0,0.15); }
+  .e-header h2 { font-family:'DM Serif Display',serif; font-size:26px; color:white; margin-bottom:4px; }
+  .e-header p { font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
+  .e-progress-wrap { background:rgba(255,255,255,0.1); border-radius:999px; height:5px; overflow:hidden; }
+  .e-progress-bar { height:100%; border-radius:999px; background:linear-gradient(90deg,#a78bfa,#c4b5fd); transition:width 0.4s; width:0%; }
+  .e-progress-label { font-size:12px; color:rgba(255,255,255,0.4); margin-top:8px; }
+  .e-progress-label span { color:#c4b5fd; font-weight:600; }
+  .e-phase { margin-bottom:10px; border-radius:14px; overflow:hidden; background:var(--white); border:1px solid var(--border); box-shadow:0 2px 16px rgba(15,35,64,0.07); }
+  .e-phase:not(.collapsed) { margin-bottom:32px; }
+  .e-phase-header { padding:18px 24px; display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; background:linear-gradient(135deg,#2d1b69,#4c1d95); }
+  .e-phase-title { font-family:'DM Serif Display',serif; font-size:18px; color:white; flex:1; }
+  .e-phase-body { padding:0 24px 20px; overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s,padding 0.3s; max-height:2000px; opacity:1; }
+  .e-phase.collapsed .e-phase-body { max-height:0; opacity:0; padding-bottom:0; }
+  .e-phase.collapsed .phase-toggle svg { transform:rotate(-90deg); }
+  .e-task { display:flex; align-items:flex-start; gap:12px; border-bottom:1px solid rgba(212,224,238,0.4); border-radius:6px; padding:9px 8px; cursor:pointer; transition:background 0.15s; }
+  .e-task:hover { background:#f5f3ff; }
+  .e-task:last-child { border-bottom:none; }
+  .e-task.done .task-text { color:var(--muted); text-decoration:line-through; opacity:0.7; }
+  .e-task.done .checkbox { background:#7c3aed; border-color:#7c3aed; }
+
+  /* E-PERSON (outer person collapsible in Este Challenge tab) */
+  .e-person { margin-bottom:16px; border-radius:14px; overflow:hidden; background:var(--white); border:1px solid var(--border); box-shadow:0 2px 16px rgba(15,35,64,0.07); }
+  .e-person:not(.collapsed) { margin-bottom:32px; }
+  .e-person-header { padding:20px 28px; display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none; background:var(--off-white); border-bottom:1px solid var(--border); }
+  .e-person-count { font-size:12px; color:var(--muted); font-weight:500; white-space:nowrap; flex:1; text-align:right; margin-right:8px; }
+  .e-person-body { padding:16px 20px 20px; overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s,padding 0.3s; max-height:3000px; opacity:1; }
+  .e-person.collapsed .e-person-body { max-height:0; opacity:0; padding-bottom:0; padding-top:0; }
+  .e-person.collapsed .phase-toggle svg { transform:rotate(-90deg); }
+  .e-person-body .e-phase { margin-bottom:8px; }
+  .e-person-body .e-phase:not(.collapsed) { margin-bottom:20px; }
+  .e-person-body .e-phase-header { padding:14px 20px; }
+  .e-person-body .e-phase-title { font-size:16px; }
+
+  /* PENDIENTES SECTION */
+  .p-header { background:linear-gradient(135deg,#78350f,#b45309); border-radius:14px; padding:28px 32px; margin-bottom:24px; box-shadow:0 4px 24px rgba(0,0,0,0.15); }
+  .p-header h2 { font-family:'DM Serif Display',serif; font-size:26px; color:white; margin-bottom:4px; }
+  .p-header p { font-size:14px; color:rgba(255,255,255,0.55); }
+  .pending-card { background:var(--white); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 16px rgba(15,35,64,0.07); margin-bottom:20px; }
+  .pending-card__header { padding:16px 24px; display:flex; align-items:center; gap:12px; background:linear-gradient(135deg,#78350f,#b45309); }
+  .pending-card__num { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); background:rgba(255,255,255,0.12); border-radius:6px; padding:4px 10px; white-space:nowrap; }
+  .pending-card__title { font-family:'DM Serif Display',serif; font-size:18px; color:var(--white); flex:1; }
+  .pending-card__body { padding:20px 24px; }
+  .pending-card__desc { font-size:14px; color:var(--text); line-height:1.6; margin-bottom:14px; }
+  .pending-options { background:var(--pending-bg); border-left:3px solid var(--pending-border); border-radius:0 6px 6px 0; padding:10px 14px; font-size:13px; color:var(--pending); line-height:1.6; }
+  .pending-options strong { color:#78350f; }
+  .pending-who { margin-top:12px; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+
+  @media (max-width:620px) {
+    .cohort-grid { grid-template-columns:1fr; }
+    .cohort-card--wide { grid-column:1; }
+    .container { padding:32px 20px 60px; }
+    .header { padding:32px 20px 28px; }
+    .tabs { padding:16px 20px 0; }
+    .tab-btn { padding:8px 16px; font-size:13px; }
+  }
+  @media print {
+    .phase.collapsed .phase-body,.b-phase.collapsed .b-phase-body,.e-phase.collapsed .e-phase-body { max-height:none!important; opacity:1!important; padding-bottom:24px!important; }
+    .reset-btn { display:none; }
+  }
 </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
-<!-- End Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
+<!-- HEADER -->
 <div class="header">
   <div class="header-inner">
     <div class="header-tag">Strong Standard Coaching</div>
     <h1>21 Day Challenge<br><span>Launch Checklist</span></h1>
     <p class="header-sub">Complete all phases in order. Each step depends on the previous one.</p>
-    <div class="progress-wrap">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
     <div class="progress-label"><span id="doneCount">0</span> of <span id="totalCount">0</span> tasks completed</div>
   </div>
 </div>
 
-<div class="header-tabs" style="background:var(--navy);border-top:1px solid rgba(255,255,255,0.08);">
+<!-- TABS -->
+<div class="tab-bar">
   <div class="tabs">
-    <button class="tab-btn active" id="tab-miguel" onclick="switchTab('miguel')">Miguel</button>
-    <button class="tab-btn" id="tab-bernardo" onclick="switchTab('bernardo')">Bernardo</button>
+    <button class="tab-btn active" id="tab-recurrentes" onclick="switchTab('recurrentes')">Recurring</button>
+    <button class="tab-btn" id="tab-especificos" onclick="switchTab('especificos')">This Challenge</button>
+    <button class="tab-btn" id="tab-pendientes" onclick="switchTab('pendientes')">Pending</button>
   </div>
 </div>
 
 <div class="container">
-  <div class="joey-section" id="joeySection">
-    <div class="b-header" style="margin-bottom:32px;background:linear-gradient(135deg,#0f2340,#1b3a5c);">
-      <h2>Miguel's Checklist</h2>
-      <p>Launch tasks to complete before each 21DC cohort</p>
-      <div class="b-progress-wrap"><div class="b-progress-bar" id="mProgressBar"></div></div>
-      <div class="b-progress-label"><span id="mDoneCount">0</span> of <span id="mTotalCount">0</span> tasks completed</div>
-    </div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- TAB 1 — RECURRENTES                                       -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="section-wrap active" id="recurrentesSection">
 
   <!-- COHORT REFERENCE -->
   <div class="cohort-panel" id="cohortPanel">
@@ -538,59 +281,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Cohort Reference
       </div>
       <span class="cohort-panel__sub">Dates, links, and Zoom info for this launch</span>
-      <div class="phase-toggle" id="cohortToggle">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg>
-      </div>
+      <div class="phase-toggle" id="cohortToggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="cohort-body" id="cohortBody">
       <div class="cohort-grid">
+        <div class="cohort-card cohort-card--wide">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#e74c3c;"></span>Key Dates</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;">
+            <div class="cohort-field"><label>Promo Start</label><input type="date" id="promo_start" oninput="saveField('promo_start')"></div>
+            <div class="cohort-field"><label>Promo End</label><input type="date" id="promo_end" oninput="saveField('promo_end')"></div>
+            <div class="cohort-field"><label>Kickoff Call</label><input type="date" id="kickoff_date_only" oninput="saveField('kickoff_date_only')"></div>
+            <div class="cohort-field"><label>Closing Webinar</label><input type="date" id="closing_date_only" oninput="saveField('closing_date_only')"></div>
+          </div>
+        </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--blue"></span>Kickoff Call</div>
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date')"></div>
           <div class="cohort-field"><label>Zoom Join Link</label><input type="url" id="kickoff_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('kickoff_zoom')"></div>
-          <div class="cohort-field"><button class="zoom-btn" onclick="createZoomMeeting('kickoff')">⚡ Create Zoom Meeting</button></div>
           <div class="cohort-field"><label>Google Calendar Link</label><input type="url" id="kickoff_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('kickoff_gcal')"></div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--gold"></span>Closing Webinar</div>
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="closing_date" oninput="saveField('closing_date')"></div>
           <div class="cohort-field"><label>Zoom Join Link</label><input type="url" id="closing_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('closing_zoom')"></div>
-          <div class="cohort-field"><button class="zoom-btn" onclick="createZoomMeeting('closing')">⚡ Create Zoom Meeting</button></div>
           <div class="cohort-field"><label>Google Calendar Link</label><input type="url" id="closing_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('closing_gcal')"></div>
         </div>
-        <div class="cohort-card cohort-card--wide">
+        <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
           <div class="cohort-field"><label>GHL Booking Link</label><input type="url" id="clarity_zoom" value="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" oninput="saveField('clarity_zoom')"></div>
           <div class="cohort-field"><label>Notes</label><input type="text" id="clarity_notes" placeholder="Any extra notes..." oninput="saveField('clarity_notes')"></div>
         </div>
+        <div class="cohort-card">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Discovery Call</div>
+          <div class="cohort-field"><label>GHL Booking Link</label><input type="url" id="discovery_link" placeholder="https://api.leadconnectorhq.com/widget/bookings/..." oninput="saveField('discovery_link')"></div>
+          <div class="cohort-field"><label>Notes</label><input type="text" id="discovery_notes" placeholder="Any extra notes..." oninput="saveField('discovery_notes')"></div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- MIGUEL header for recurrentes -->
+  <div style="background:linear-gradient(135deg,#0f2340,#1b3a5c);border-radius:14px;padding:20px 28px;margin-bottom:24px;box-shadow:0 4px 24px rgba(15,35,64,0.15);">
+    <div style="font-family:'DM Serif Display',serif;font-size:22px;color:white;margin-bottom:3px;">Miguel's Checklist</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.45);">Tech &amp; operations — runs every challenge</div>
+    <div style="background:rgba(255,255,255,0.08);border-radius:999px;height:5px;overflow:hidden;margin-top:14px;"><div class="b-progress-bar" id="mProgressBar" style="background:linear-gradient(90deg,var(--accent),#7ec8e3);"></div></div>
+    <div class="b-progress-label"><span id="mDoneCount">0</span> of <span id="mTotalCount">0</span> tasks completed</div>
   </div>
 
   <!-- PHASE 1 -->
   <div class="phase collapsed" id="phase1">
     <div class="phase-header" onclick="togglePhase('phase1')">
       <div class="phase-num">Phase 1</div>
-      <div class="phase-title">Confirm Dates &amp; Create Zoom Events</div>
+      <div class="phase-title">Zoom Links, Ads &amp; Overview Document</div>
       <div class="phase-count" id="phase1-count"></div>
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="phase-body">
+      <div class="note-box"><strong>Before touching anything else,</strong> verify the existing Zoom links are correct and select the best-performing ads. Everything downstream depends on these.</div>
       <div class="section">
-        <div class="section-title">1.1 — Confirm All Call Dates</div>
-        <div class="note-box"><strong>Before touching anything else,</strong> lock in all three dates. Everything downstream depends on these.</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Kickoff Call date and time</div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Closing Webinar date and time</div></div>
+        <div class="section-title">1.1 — Verify Zoom Links</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify existing Zoom link for Kickoff Call — copy correct join link</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify existing Zoom links for Live Coaching Calls — copy correct join links</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify existing Zoom link for Closing Webinar — copy correct join link</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Upload all verified links and dates to Bernardo's reference document (Overview)</div></div>
       </div>
       <div class="section">
-        <div class="section-title">1.2 — Create Zoom Events</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create Zoom event for Kickoff Call</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Copy the join link for use in later steps</div></div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create Zoom event for Closing Webinar</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Copy the join link for use in later steps</div></div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create Zoom event for Clarity Call</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Copy the join link for use in later steps</div></div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Upload all links and dates to Bernardo's reference document</div></div>
+        <div class="section-title">1.2 — Ads Analysis</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Analyze previous challenge ads — identify best-performing creatives and copy</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Select top-performing ads to run from day one of the promotion window</div></div>
+        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Promotion window starts the Friday before Kickoff Call — ads must be ready by then</div></div></div>
       </div>
     </div>
   </div>
@@ -606,12 +365,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="phase-body">
       <div class="section">
         <div class="section-title">2.1 — Add Events to 21DC Google Calendar</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Add Kickoff Call event</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Include Zoom join link in the event description</div></div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Add Closing Webinar event</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Include Zoom join link in the event description</div></div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Add Clarity Call event</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Include Zoom join link in the event description</div></div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create / update Kickoff Call event</div></div>
+        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Include verified Zoom join link in the event description</div></div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create / update Live Coaching Call events (one per session)</div></div>
+        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Include verified Zoom join link in each event description</div></div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create / update Closing Webinar event</div></div>
+        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Include verified Zoom join link in the event description</div></div></div>
+      </div>
+      <div class="section">
+        <div class="section-title">2.2 — Clarity Call Calendar (GHL)</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Adjust Clarity Call availability in GHL — open only during week 2 of the challenge</div></div>
+        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Block all dates outside week 2 so participants cannot book outside that window</div></div></div>
       </div>
     </div>
   </div>
@@ -629,11 +393,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="section-title">3.1 — Challenge Home Page</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update all visible dates</div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Set countdown timer to the correct date</div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify spot count is correct</div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm price logic is correct</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify spot count and price are correct</div></div>
         <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Price starts at $97 for the first 30 spots</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Price automatically switches to $147 after 30 spots are filled</div></div>
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">50 spots at $97 flat</div></div>
         </div>
       </div>
       <div class="section">
@@ -656,12 +418,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="phase-body">
-      <div class="note-box" style="margin-top:16px"><strong>Note:</strong> All automations below are inside the "Move Leads Around Pipeline" workflow unless noted otherwise.</div>
+      <div class="note-box"><strong>Note:</strong> All automations below are inside the "Move Leads Around Pipeline" workflow unless noted otherwise.</div>
       <div class="section">
         <div class="section-title">4.1 — Post-Purchase Automation</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update dates inside the post-purchase automation sequence</div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Email</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call date and time</div></div><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call Zoom link</div></div><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Any other relevant dates or links</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call date and time</div></div>
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call Zoom link</div></div>
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome Guide PDF (attach updated version with new dates)</div></div>
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Any other relevant dates or links</div></div>
+        </div>
       </div>
       <div class="section">
         <div class="section-title">4.2 — Kickoff Call Registration Automation</div>
@@ -724,64 +491,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="section-title">Final Step</div>
     <div class="final-label">Final Verification</div>
     <div class="final-note">Run through the full funnel from the buyer's perspective before going live.</div>
+    <div class="owner-badge owner-miguel" style="margin-top:0;margin-bottom:16px;">Miguel</div>
     <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Do a test purchase and confirm the full sequence fires correctly</div></div>
     <div class="subtasks">
       <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">TY Page loads and shows correct info</div></div>
-      <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome email arrives with correct dates and links</div></div>
+      <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome email arrives with correct dates, links, and Welcome Guide PDF</div></div>
       <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call reminder sequence is active</div></div>
     </div>
     <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Bernardo's document has all final links and dates updated</div></div>
     <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Challenge is live and ready to accept registrations</div></div>
-    <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update welcome guide <span style="font-size:12px;opacity:0.5;font-weight:400;">(Bernardo)</span></div></div>
   </div>
 
-  <button class="reset-btn" onclick="confirmReset()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
-    Reset for new challenge
-  </button>
-
-  </div><!-- end joey-section -->
-
-  <!-- BERNARDO SECTION -->
-  <div class="b-section" id="bernardoSection">
+  <!-- BERNARDO RECURRENTES -->
+  <div style="margin-top:48px;">
     <div class="b-header">
       <h2>Bernardo's Checklist</h2>
-      <p>Tasks to complete before each 21DC launch</p>
+      <p>Recurrent tasks to complete before each 21DC launch</p>
       <div class="b-progress-wrap"><div class="b-progress-bar" id="bProgressBar"></div></div>
       <div class="b-progress-label"><span id="bDoneCount">0</span> of <span id="bTotalCount">0</span> tasks completed</div>
     </div>
 
     <div class="b-phase collapsed" id="bphase1">
-      <div class="b-phase-header" onclick="toggleBPhase('bphase1')"><div class="b-phase-title">App &amp; Content Review</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
+      <div class="b-phase-header" onclick="toggleBPhase('bphase1')"><div class="b-phase-title">App &amp; Tech</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
       <div class="b-phase-body"><div class="section" style="margin-top:16px">
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Revisar Autoflow y ver que todo esté bien (tasks, mensajes, anuncios, workouts, etc)</div></div>
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Revisar Workouts y ver que los ejercicios tengan alternate options</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Review Autoflow: update links and adjust dates (tasks, messages, announcements)</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create new Forum and update Zapier with the new forum code</div></div>
       </div></div>
     </div>
 
     <div class="b-phase collapsed" id="bphase2">
-      <div class="b-phase-header" onclick="toggleBPhase('bphase2')"><div class="b-phase-title">Tech &amp; Automations</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
+      <div class="b-phase-header" onclick="toggleBPhase('bphase2')"><div class="b-phase-title">Comms &amp; Posts</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
       <div class="b-phase-body"><div class="section" style="margin-top:16px">
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Crear Nuevo Foro y actualizar Zapier con nuevo código</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update post dates in Asana for each responsible person</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Schedule Bernardo's posts in Everfit for the full challenge window</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Guide with new challenge dates (PDF)</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Offer Doc with current dates</div></div>
       </div></div>
     </div>
 
     <div class="b-phase collapsed" id="bphase3">
-      <div class="b-phase-header" onclick="toggleBPhase('bphase3')"><div class="b-phase-title">Comms &amp; Branding</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
+      <div class="b-phase-header" onclick="toggleBPhase('bphase3')"><div class="b-phase-title">Post-Challenge</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
       <div class="b-phase-body"><div class="section" style="margin-top:16px">
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Revisar Comms Calendar + Copy Tab, mejorar copy, actualizar las fechas de los post en document y actualizar Asana con nuevas fechas</div></div>
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Actualizar welcome guide con nuevo branding</div></div>
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Actualizar offer doc con nuevo branding</div></div>
-      </div></div>
-    </div>
-
-    <div class="b-phase collapsed" id="bphase4">
-      <div class="b-phase-header" onclick="toggleBPhase('bphase4')"><div class="b-phase-title">Deniz &amp; Onboarding</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
-      <div class="b-phase-body"><div class="section" style="margin-top:16px">
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Mejorar SOP de Deniz: ¿Cuándo llamar a alguien? ¿Cuándo enviar offer doc?</div></div>
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Crear Task reminders con fechas del challenge con respecto a Deniz</div></div>
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reunirme con Deniz para clarificar rol y eventos/instancias importantes</div></div>
-        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Crear proceso de onboarding de 21DC a 1-1 (con Miguel)</div></div>
+        <div class="b-task" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">After challenge ends: review all participants who did not schedule a Clarity Call and send them the Offer Doc</div></div>
       </div></div>
     </div>
 
@@ -789,85 +540,248 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
       Reset checklist
     </button>
-  </div><!-- end bernardo -->
+  </div>
 
-</div>
+  <button class="reset-btn" onclick="confirmReset()" style="margin-top:16px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
+    Reset Miguel checklist for new challenge
+  </button>
+
+</div><!-- end recurrentesSection -->
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- TAB 2 — ESTE CHALLENGE                                    -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="section-wrap" id="especificosSection">
+
+  <div class="e-header">
+    <h2>This Challenge</h2>
+    <p>One-time tasks for this launch only — do not carry over to future challenges</p>
+    <div class="e-progress-wrap"><div class="e-progress-bar" id="eProgressBar"></div></div>
+    <div class="e-progress-label"><span id="eDoneCount">0</span> of <span id="eTotalCount">0</span> tasks completed</div>
+  </div>
+
+  <!-- ── MIGUEL (person-level collapsible) ── -->
+  <div class="e-person collapsed" id="eperson-miguel">
+    <div class="e-person-header" onclick="toggleEPerson('eperson-miguel')">
+      <div class="owner-badge owner-miguel" style="margin:0;">Miguel</div>
+      <div class="e-person-count" id="eperson-miguel-count"></div>
+      <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+    </div>
+    <div class="e-person-body">
+
+      <div class="e-phase collapsed" id="ephase1">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase1')">
+          <div class="e-phase-title">Denis's Pipeline</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Simplify Denis's sales pipeline: remove the "one-on-one purchase" and "group coaching" stages — these no longer trigger automations</div></div>
+        </div></div>
+      </div>
+
+      <div class="e-phase collapsed" id="ephase2">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase2')">
+          <div class="e-phase-title">Landing Page</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify landing page, thank you page, and registration pages are all under Strong Standard branding (not Fit4Life)</div></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── BERNARDO (person-level collapsible) ── -->
+  <div class="e-person collapsed" id="eperson-bernardo">
+    <div class="e-person-header" onclick="toggleEPerson('eperson-bernardo')">
+      <div class="owner-badge owner-bernardo" style="margin:0;">Bernardo</div>
+      <div class="e-person-count" id="eperson-bernardo-count"></div>
+      <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+    </div>
+    <div class="e-person-body">
+
+      <div class="e-phase collapsed" id="ephase3">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase3')">
+          <div class="e-phase-title">Branding</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Review landing page design — fonts, visual execution, and overall Strong Standard branding consistency</div></div>
+        </div></div>
+      </div>
+
+      <div class="e-phase collapsed" id="ephase4">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase4')">
+          <div class="e-phase-title">Content for Joey</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Create 3–4 Instagram story sequences with storytelling (include a challenge testimonial if possible) — ready for Joey to post without having to create from scratch</div></div>
+        </div></div>
+      </div>
+
+      <div class="e-phase collapsed" id="ephase5">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase5')">
+          <div class="e-phase-title">Comms — Post assignment</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="note-box">This decision is made once — the outcome sets the standard for all future challenges.</div>
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Review Comms Calendar + Copy Tab and decide which posts Jacki handles (leave in Asana as reminders) vs. which ones Bernardo schedules directly in Everfit</div></div>
+        </div></div>
+      </div>
+
+      <div class="e-phase collapsed" id="ephase6">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase6')">
+          <div class="e-phase-title">Denis &amp; Pipeline</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Denis's SOP: simplified pipeline flow, call retry criteria (3 days, different time slots), "lost lead" criteria, and when to send the Offer Doc</div></div>
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Meet with Denis to walk through the simplified pipeline, set accountability expectations, and make clear that if Bernardo has to step in on a set, that set does not count for Denis</div></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── JOEY (person-level collapsible) ── -->
+  <div class="e-person collapsed" id="eperson-joey">
+    <div class="e-person-header" onclick="toggleEPerson('eperson-joey')">
+      <div class="owner-badge owner-joey" style="margin:0;">Joey</div>
+      <div class="e-person-count" id="eperson-joey-count"></div>
+      <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+    </div>
+    <div class="e-person-body">
+
+      <div class="e-phase collapsed" id="ephase7">
+        <div class="e-phase-header" onclick="toggleEPhase('ephase7')">
+          <div class="e-phase-title">Affiliates</div>
+          <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+        </div>
+        <div class="e-phase-body"><div class="section" style="margin-top:16px">
+          <div class="note-box"><strong>Prerequisite:</strong> Joey must review the candidate list and confirm who he'll reach out to before this process can move forward.</div>
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Review affiliate candidate list (built by Bernardo and Miguel) and confirm who to reach out to</div></div>
+          <div class="subtasks">
+            <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Candidates: Cody McBroom, Michael Lopez, Andrew Coates, Joelle Samantha, Nick (Active Life), Allan Bacon, Mike Doula</div></div>
+          </div>
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reach out to Adrián to offer him the affiliate spot again (it was a good deal for both sides last time)</div></div>
+          <div class="e-task" onclick="etoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reach out to confirmed affiliates from the list</div></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end especificosSection -->
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- TAB 3 — PENDIENTES                                        -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="section-wrap" id="pendientesSection">
+
+  <div class="p-header">
+    <h2>Pending Decisions</h2>
+    <p>Open items from the May 22 call — resolve in the next meeting</p>
+  </div>
+
+  <div class="pending-card">
+    <div class="pending-card__header">
+      <div class="pending-card__num">01</div>
+      <div class="pending-card__title">Email Sequence</div>
+    </div>
+    <div class="pending-card__body">
+      <div class="pending-card__desc">The current email sequence isn't generating results (roughly 7 registrations out of 55 total last round). There's consensus it needs to change, but no final decision was made on what exactly to do.</div>
+      <div class="pending-options">
+        <strong>Options on the table:</strong><br>
+        A) Cut down to 2 emails: one early access email (50 spots, 24h head start for the list) + one reminder 24h before close.<br>
+        B) Use an email copy skill to generate a new sequence live — review together and decide whether to use it.<br><br>
+        <strong>Action before the meeting:</strong> Bernardo and Miguel review the current sequence and evaluate whether it's worth changing.
+      </div>
+      <div class="pending-who">Decision: Bernardo + Miguel — next meeting</div>
+    </div>
+  </div>
+
+  <div class="pending-card">
+    <div class="pending-card__header">
+      <div class="pending-card__num">02</div>
+      <div class="pending-card__title">Affiliate List → Joey's Decision</div>
+    </div>
+    <div class="pending-card__body">
+      <div class="pending-card__desc">The candidate list is already built. The next step is for Joey to review it and confirm who he'll reach out to. Without that decision, the affiliate process cannot move forward.</div>
+      <div class="pending-options">
+        <strong>Identified candidates:</strong> Cody McBroom, Michael Lopez, Andrew Coates, Joelle Samantha, Nick (Active Life), Allan Bacon, Mike Doula.<br><br>
+        <strong>Action:</strong> Bernardo sends Joey the list with context on each person. Joey decides and confirms.
+      </div>
+      <div class="pending-who">Decision: Joey — this week</div>
+    </div>
+  </div>
+
+  <div class="pending-card">
+    <div class="pending-card__header">
+      <div class="pending-card__num">03</div>
+      <div class="pending-card__title">Internal Affiliates — Jacki &amp; Miguel</div>
+    </div>
+    <div class="pending-card__body">
+      <div class="pending-card__desc">Bernardo proposed that Jacki and Miguel could also be affiliates for the challenge, incentivized with the same commission offered to external affiliates ($97 per referral). No decision was made and no process was defined.</div>
+      <div class="pending-options">
+        <strong>Open questions:</strong><br>
+        Do we offer them the $97 per referral commission?<br>
+        Who communicates the offer and how?<br>
+        Is this only for this challenge or does it become a recurring program?
+      </div>
+      <div class="pending-who">Decision: Bernardo + Joey — next meeting</div>
+    </div>
+  </div>
+
+</div><!-- end pendientesSection -->
+
+</div><!-- end container -->
 
 <footer>Strong Standard Coaching &nbsp;&middot;&nbsp; 21DC Launch Checklist</footer>
 
 <script>
-  async function createZoomMeeting(type) {
-    const dateEl = document.getElementById(`${type}_date`);
-    const zoomEl = document.getElementById(`${type}_zoom`);
-    const btn = event.target;
-
-    if (!dateEl.value) { alert('Please set a date and time first.'); return; }
-
-    const topics = { kickoff: 'Kickoff Call - 21 Day Challenge', closing: 'Closing Webinar - 21 Day Challenge' };
-    btn.disabled = true;
-    btn.textContent = 'Creating...';
-
-    try {
-      const res = await fetch(ZOOM_FN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-        body: JSON.stringify({
-          topic: topics[type],
-          start_time: new Date(dateEl.value).toISOString(),
-          duration: 60
-        })
-      });
-      const data = await res.json();
-      if (data.join_url) {
-        zoomEl.value = data.join_url;
-        saveField(`${type}_zoom`);
-        btn.textContent = '✅ Meeting Created!';
-        btn.style.background = '#2e7d5e';
-      } else {
-        throw new Error(data.error || 'Unknown error');
-      }
-    } catch(e) {
-      alert('Error creating meeting: ' + e.message);
-      btn.textContent = '⚡ Create Zoom Meeting';
-      btn.disabled = false;
-    }
-  }
   const SUPABASE_URL = 'https://akrxgohrlpiprqwnhkzc.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_k5qrLybTNeW3F8N3u9uTpg_ZXymerMh';
-  const HEADERS = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': `Bearer ${SUPABASE_KEY}`,
-    'Content-Type': 'application/json',
-    'Prefer': 'resolution=merge-duplicates'
-  };
+  const HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates' };
   const JOEY_API = `${SUPABASE_URL}/rest/v1/checklist`;
   const BERN_API = `${SUPABASE_URL}/rest/v1/checklist_bernardo`;
-  const ZOOM_FN = 'https://akrxgohrlpiprqwnhkzc.supabase.co/functions/v1/smart-service';
+  const ESPE_API = `${SUPABASE_URL}/rest/v1/checklist_especificos`;
   let writeTimers = {};
 
   // ── TABS ──────────────────────────────────────────────────
   function switchTab(tab) {
-    document.getElementById('joeySection').classList.toggle('hidden', tab !== 'miguel');
-    document.getElementById('bernardoSection').classList.toggle('active', tab === 'bernardo');
-    document.getElementById('tab-miguel').classList.toggle('active', tab === 'miguel');
-    document.getElementById('tab-bernardo').classList.toggle('active', tab === 'bernardo');
+    ['recurrentes','especificos','pendientes'].forEach(t => {
+      document.getElementById(t+'Section').classList.toggle('active', t === tab);
+      document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+    });
     sessionStorage.setItem('21dc_tab', tab);
   }
 
-  // ── JOEY DB ───────────────────────────────────────────────
+  // ── DB HELPERS ────────────────────────────────────────────
+  async function writeToDB(api, key, value) {
+    try { await fetch(api, { method:'POST', headers:HEADERS, body:JSON.stringify({ key, value }) }); }
+    catch(e) { console.warn('DB write error:', e); }
+  }
+
+  // ── MIGUEL (recurrentes) ──────────────────────────────────
   async function loadFromDB() {
     try {
       const res = await fetch(`${JOEY_API}?select=key,value`, { headers: HEADERS });
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes'].forEach(id => {
+      ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes','discovery_link','discovery_notes','promo_start','promo_end','kickoff_date_only','closing_date_only'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
       if (map.checks && map.checks.trim()) {
         const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
-        const els = document.querySelectorAll('#joeySection .task, #joeySection .subtask');
+        const els = document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask');
         indices.forEach(i => { if (els[i]) els[i].classList.add('done'); });
       }
       updateProgress();
@@ -882,14 +796,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   function saveChecks() {
     const indices = [];
-    document.querySelectorAll('#joeySection .task, #joeySection .subtask').forEach((el, i) => {
+    document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask').forEach((el,i) => {
       if (el.classList.contains('done')) indices.push(i);
     });
     clearTimeout(writeTimers['checks']);
     writeTimers['checks'] = setTimeout(() => writeToDB(JOEY_API, 'checks', indices.join(',')), 500);
   }
 
-  // ── BERNARDO DB ───────────────────────────────────────────
+  // ── BERNARDO (recurrentes) ────────────────────────────────
   async function loadBernardoFromDB() {
     try {
       const res = await fetch(`${BERN_API}?select=key,value`, { headers: HEADERS });
@@ -898,7 +812,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       rows.forEach(r => { map[r.key] = r.value || ''; });
       if (map.checks && map.checks.trim()) {
         const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
-        const els = document.querySelectorAll('#bernardoSection .b-task');
+        const els = document.querySelectorAll('#recurrentesSection .b-task');
         indices.forEach(i => { if (els[i]) els[i].classList.add('done'); });
       }
       updateBProgress();
@@ -907,28 +821,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   function saveBChecks() {
     const indices = [];
-    document.querySelectorAll('#bernardoSection .b-task').forEach((el, i) => {
+    document.querySelectorAll('#recurrentesSection .b-task').forEach((el,i) => {
       if (el.classList.contains('done')) indices.push(i);
     });
     clearTimeout(writeTimers['bchecks']);
     writeTimers['bchecks'] = setTimeout(() => writeToDB(BERN_API, 'checks', indices.join(',')), 500);
   }
 
-  // ── SHARED WRITE ──────────────────────────────────────────
-  async function writeToDB(api, key, value) {
+  // ── ESPECÍFICOS ───────────────────────────────────────────
+  async function loadEspecificosFromDB() {
     try {
-      await fetch(api, { method: 'POST', headers: HEADERS, body: JSON.stringify({ key, value }) });
-    } catch(e) { console.warn('DB write error:', e); }
+      const res = await fetch(`${ESPE_API}?select=key,value`, { headers: HEADERS });
+      const rows = await res.json();
+      if (!Array.isArray(rows)) return;
+      const map = {};
+      rows.forEach(r => { map[r.key] = r.value || ''; });
+      if (map.checks && map.checks.trim()) {
+        const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
+        const els = document.querySelectorAll('#especificosSection .e-task');
+        indices.forEach(i => { if (els[i]) els[i].classList.add('done'); });
+      }
+      updateEProgress();
+    } catch(e) { console.warn('Especificos DB error:', e); }
   }
 
-  // ── JOEY TOGGLE ───────────────────────────────────────────
+  function saveEChecks() {
+    const indices = [];
+    document.querySelectorAll('#especificosSection .e-task').forEach((el,i) => {
+      if (el.classList.contains('done')) indices.push(i);
+    });
+    clearTimeout(writeTimers['echecks']);
+    writeTimers['echecks'] = setTimeout(() => writeToDB(ESPE_API, 'checks', indices.join(',')), 500);
+  }
+
+  // ── TOGGLES ───────────────────────────────────────────────
   function toggle(el) {
     const isDone = !el.classList.contains('done');
     el.classList.toggle('done');
     let next = el.nextElementSibling;
     while (next && next.classList.contains('subtasks')) {
       next.querySelectorAll('.subtask').forEach(sub => {
-        if (isDone) sub.classList.add('done'); else sub.classList.remove('done');
+        isDone ? sub.classList.add('done') : sub.classList.remove('done');
       });
       next = next.nextElementSibling;
     }
@@ -937,44 +870,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function toggleSub(el) { el.classList.toggle('done'); saveChecks(); updateProgress(); }
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function toggleCohort() { document.getElementById('cohortPanel').classList.toggle('collapsed'); }
-
-  // ── BERNARDO TOGGLE ───────────────────────────────────────
   function btoggle(el) { el.classList.toggle('done'); saveBChecks(); updateBProgress(); }
   function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
+  function etoggle(el) { el.classList.toggle('done'); saveEChecks(); updateEProgress(); }
+  function toggleEPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
+  function toggleEPerson(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('collapsed');
+    // update count badge
+    const tasks = el.querySelectorAll('.e-task');
+    const done = el.querySelectorAll('.e-task.done');
+    const countEl = el.querySelector('.e-person-count');
+    if (countEl) countEl.textContent = done.length + ' / ' + tasks.length;
+  }
 
   // ── PROGRESS ──────────────────────────────────────────────
   function updateProgress() {
-    // Miguel section
-    const mAll  = document.querySelectorAll('#joeySection .task, #joeySection .subtask');
-    const mDone = document.querySelectorAll('#joeySection .task.done, #joeySection .subtask.done');
+    const mAll  = document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask');
+    const mDone = document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done');
     const mTotal = mAll.length, mCount = mDone.length;
-    document.getElementById('mProgressBar').style.width = (mTotal ? mCount/mTotal*100 : 0) + '%';
-    document.getElementById('mDoneCount').textContent = mCount;
-    document.getElementById('mTotalCount').textContent = mTotal;
+    const mBar = document.getElementById('mProgressBar');
+    if (mBar) mBar.style.width = (mTotal ? mCount/mTotal*100 : 0) + '%';
+    const mDC = document.getElementById('mDoneCount'); if (mDC) mDC.textContent = mCount;
+    const mTC = document.getElementById('mTotalCount'); if (mTC) mTC.textContent = mTotal;
     ['phase1','phase2','phase3','phase4','phase5'].forEach(pid => {
-      const phase = document.getElementById(pid);
-      if (!phase) return;
-      const pAll  = phase.querySelectorAll('.task, .subtask');
+      const phase = document.getElementById(pid); if (!phase) return;
+      const pAll = phase.querySelectorAll('.task, .subtask');
       const pDone = phase.querySelectorAll('.task.done, .subtask.done');
-      const el = document.getElementById(pid + '-count');
+      const el = document.getElementById(pid+'-count');
       if (el) el.textContent = pDone.length + ' / ' + pAll.length;
     });
     updateGlobalProgress();
   }
 
   function updateBProgress() {
-    const all  = document.querySelectorAll('#bernardoSection .b-task');
-    const done = document.querySelectorAll('#bernardoSection .b-task.done');
+    const all  = document.querySelectorAll('#recurrentesSection .b-task');
+    const done = document.querySelectorAll('#recurrentesSection .b-task.done');
     const total = all.length, count = done.length;
-    document.getElementById('bProgressBar').style.width = (total ? count/total*100 : 0) + '%';
-    document.getElementById('bDoneCount').textContent = count;
-    document.getElementById('bTotalCount').textContent = total;
+    const bar = document.getElementById('bProgressBar'); if (bar) bar.style.width = (total ? count/total*100 : 0) + '%';
+    const dc = document.getElementById('bDoneCount'); if (dc) dc.textContent = count;
+    const tc = document.getElementById('bTotalCount'); if (tc) tc.textContent = total;
+    updateGlobalProgress();
+  }
+
+  function updateEProgress() {
+    const all  = document.querySelectorAll('#especificosSection .e-task');
+    const done = document.querySelectorAll('#especificosSection .e-task.done');
+    const total = all.length, count = done.length;
+    const bar = document.getElementById('eProgressBar'); if (bar) bar.style.width = (total ? count/total*100 : 0) + '%';
+    const dc = document.getElementById('eDoneCount'); if (dc) dc.textContent = count;
+    const tc = document.getElementById('eTotalCount'); if (tc) tc.textContent = total;
+    // update per-person counts
+    ['eperson-miguel','eperson-bernardo','eperson-joey'].forEach(pid => {
+      const person = document.getElementById(pid); if (!person) return;
+      const pAll = person.querySelectorAll('.e-task');
+      const pDone = person.querySelectorAll('.e-task.done');
+      const cel = person.querySelector('.e-person-count');
+      if (cel) cel.textContent = pDone.length + ' / ' + pAll.length;
+    });
     updateGlobalProgress();
   }
 
   function updateGlobalProgress() {
-    const allTasks = document.querySelectorAll('#joeySection .task, #joeySection .subtask, #bernardoSection .b-task');
-    const doneTasks = document.querySelectorAll('#joeySection .task.done, #joeySection .subtask.done, #bernardoSection .b-task.done');
+    const allTasks = document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask, #recurrentesSection .b-task, #especificosSection .e-task');
+    const doneTasks = document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done, #recurrentesSection .b-task.done, #especificosSection .e-task.done');
     const total = allTasks.length, count = doneTasks.length;
     document.getElementById('progressBar').style.width = (total ? count/total*100 : 0) + '%';
     document.getElementById('doneCount').textContent = count;
@@ -983,9 +942,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── RESET ─────────────────────────────────────────────────
   async function confirmReset() {
-    if (!confirm('Reset everything for a new challenge?')) return;
-    document.querySelectorAll('#joeySection .task.done, #joeySection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes'];
+    if (!confirm('Reset Miguel checklist for a new challenge?')) return;
+    document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
+    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes','discovery_link','discovery_notes','promo_start','promo_end','kickoff_date_only','closing_date_only'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
@@ -1000,16 +959,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   async function confirmBReset() {
     if (!confirm('Reset Bernardo checklist for a new challenge?')) return;
-    document.querySelectorAll('#bernardoSection .b-task.done').forEach(el => el.classList.remove('done'));
+    document.querySelectorAll('#recurrentesSection .b-task.done').forEach(el => el.classList.remove('done'));
     updateBProgress();
     await writeToDB(BERN_API, 'checks', '');
   }
 
   // ── INIT ──────────────────────────────────────────────────
-  updateProgress();
-  updateBProgress();
-  loadFromDB();
-  loadBernardoFromDB();
+  updateProgress(); updateBProgress(); updateEProgress();
+  loadFromDB(); loadBernardoFromDB(); loadEspecificosFromDB();
   const savedTab = sessionStorage.getItem('21dc_tab');
   if (savedTab) switchTab(savedTab);
 </script>
