@@ -1862,7 +1862,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <div class="sticky-banner__spots">
     <span class="spots-dot"></span>
-    <span><strong id="spots-banner-count">59</strong> of 60 Spots Left</span>
+    <span><strong id="spots-banner-count">59</strong> of 50 Spots Left</span>
   </div>
 </div>
 
@@ -1894,7 +1894,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="hero__spots-pill">
         <span class="spots-dot spots-dot--accent"></span>
-        <span id="hero-spots-count">59</span> of 60 Spots Remaining
+        <span id="hero-spots-count">59</span> of 50 Spots Remaining
       </div>
 
       <h1>
@@ -1947,7 +1947,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="trust-bar__item">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-      Only 60 Spots Available
+      Only 50 Spots Available
     </div>
     <!-- duplicates for seamless loop -->
     <div class="trust-bar__item">
@@ -1972,7 +1972,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="trust-bar__item">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-      Only 60 Spots Available
+      Only 50 Spots Available
     </div>
   </div>
 </div>
@@ -2527,7 +2527,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="section section--mid" id="pricing">
   <div class="container">
     <div class="section__header reveal">
-      <span class="label">Limited Enrollment: Only 60 Spots</span>
+      <span class="label">Limited Enrollment: Only 50 Spots</span>
       <h2>Join The Challenge</h2>
     </div>
 
@@ -2541,7 +2541,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="offer__spots-text">
           <span class="spots-dot spots-dot--accent"></span>
-          <strong id="offer-spots-count">59</strong> of 60 spots remaining
+          <strong id="offer-spots-count">59</strong> of 50 spots remaining
         </div>
       </div>
 
@@ -2693,7 +2693,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
       <div class="final-cta__spots">
         <span class="spots-dot spots-dot--white"></span>
-        <strong id="final-spots-count">59</strong> of 60 spots remaining
+        <strong id="final-spots-count">59</strong> of 50 spots remaining
       </div>
     </div>
   </div>
@@ -2768,8 +2768,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ── LIVE SPOTS ─────────────────────────────────────
   const SHEET_ID    = '1OyqosZzgTxOwAs_j2VL7-xtSiIGVPUYKYpGUNnXZnG0';
   const SHEET_GID   = '1013531920';
-  const TOTAL_SPOTS = 60;
-  const TIER_1_LIMIT = 30;
+  const TOTAL_SPOTS = 50;
+  const TIER_1_LIMIT = 50; // Tier 2 disabled this round — price stays at $97
   const LINK_97  = 'https://drjoeymunoz.com/21-day-challenge-checkout';
   const LINK_147 = 'https://drjoeymunoz.com/21-day-challenge-checkout-147';
 
@@ -2828,7 +2828,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const priceNote = document.getElementById('offer-price-note');
     if (priceNote) {
       if (currentSpots <= 0) {
-        priceNote.textContent = 'All spots have been claimed!';
+        priceNote.textContent = 'Enrollment is now closed for this round.';
+        document.querySelectorAll('.checkout-link').forEach(link => {
+          link.removeAttribute('href');
+          link.style.pointerEvents = 'none';
+          link.style.opacity = '0.45';
+          link.style.cursor = 'not-allowed';
+          link.textContent = 'Enrollment Closed';
+        });
       } else if (inTier2) {
         priceNote.textContent = 'Early bird pricing is sold out. Lock in your spot before they\'re gone.';
       } else {
