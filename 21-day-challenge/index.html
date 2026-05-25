@@ -2788,7 +2788,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function updateSpotsUI() {
     const currentSpots = Math.max(0, TOTAL_SPOTS - purchaseCount);
     const inTier2 = purchaseCount >= TIER_1_LIMIT;
-    const price = inTier2 ? 147 : 97;
+    const price = 97; // PRICE FIXED THIS ROUND — tier-2 bump disabled
     const priceStr = '$' + price;
 
     ['spots-banner-count','hero-spots-count','offer-spots-count','final-spots-count','floating-spots-count'].forEach(id => {
