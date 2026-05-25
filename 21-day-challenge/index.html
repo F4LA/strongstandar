@@ -2545,6 +2545,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
+      <!-- TIERS HIDDEN THIS ROUND — re-enable when price bump is back
       <div class="offer__tiers">
         <div class="offer__tier offer__tier--active" id="tier-early">
           <div class="offer__tier-label">Early Bird: First 30 Spots</div>
@@ -2555,6 +2556,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="offer__tier-price">$147</div>
         </div>
       </div>
+      -->
 
       <div class="offer__early-checkout" id="checkout">
         <a href="https://drjoeymunoz.com/21-day-challenge-checkout" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
@@ -2837,10 +2839,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           link.textContent = 'Enrollment Closed';
         });
       } else if (inTier2) {
-        priceNote.textContent = 'Early bird pricing is sold out. Lock in your spot before they\'re gone.';
+        // TIER 2 MESSAGE HIDDEN THIS ROUND
+        // priceNote.textContent = 'Early bird pricing is sold out. Lock in your spot before they\'re gone.';
+        priceNote.textContent = 'One-time payment. Full access to everything above.';
       } else {
-        const earlyLeft = TIER_1_LIMIT - purchaseCount;
-        priceNote.textContent = 'Early bird pricing: only ' + earlyLeft + ' spot' + (earlyLeft === 1 ? '' : 's') + ' left at $97. Price goes to $147 after.';
+        // EARLY BIRD NOTE HIDDEN THIS ROUND — re-enable when price bump is back
+        // const earlyLeft = TIER_1_LIMIT - purchaseCount;
+        // priceNote.textContent = 'Early bird pricing: only ' + earlyLeft + ' spot' + (earlyLeft === 1 ? '' : 's') + ' left at $97. Price goes to $147 after.';
+        priceNote.textContent = 'One-time payment. Full access to everything above.';
       }
     }
   }
