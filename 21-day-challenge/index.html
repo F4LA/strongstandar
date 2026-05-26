@@ -1668,7 +1668,7 @@ h3 {
 
 .final-cta-section__inner {
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .final-cta-section h2 {
@@ -2012,6 +2012,54 @@ footer {
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   Section-to-Section Color Transitions
+   Each section that needs a smooth color transition from the previous one
+   gets a ::before overlay that fades the prior section's color into its own.
+   Implemented as data attributes for clarity:
+     data-fade-from="navy"   → fade FROM navy (#080D1A) downward
+     data-fade-from="navy-2" → fade FROM navy-2 (#0D1526) downward
+     data-fade-from="white"  → fade FROM white (#FFFFFF) downward
+   ========================================================================== */
+
+[data-fade-from] {
+  position: relative;
+}
+
+[data-fade-from] > .section-fade-overlay {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-fade-from="navy"] > .section-fade-overlay {
+  background: linear-gradient(to bottom, var(--navy) 0%, transparent 100%);
+}
+
+[data-fade-from="navy-2"] > .section-fade-overlay {
+  background: linear-gradient(to bottom, var(--navy-2) 0%, transparent 100%);
+  height: 110px;
+}
+
+[data-fade-from="white"] > .section-fade-overlay {
+  background: linear-gradient(to bottom, #FFFFFF 0%, transparent 100%);
+  height: 160px;
+}
+
+/* Ensure the section's actual content sits above the overlay */
+[data-fade-from] > .container,
+[data-fade-from] > .container--narrow,
+[data-fade-from] > .container--wide,
+[data-fade-from] > .final-cta-section__inner {
+  position: relative;
+  z-index: 2;
+}
 </style>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
@@ -2162,7 +2210,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      VSL
 ═══════════════════════════════════════════════ -->
-<section class="vsl-section fade-in" id="vsl">
+<section class="vsl-section fade-in" id="vsl" data-fade-from="navy">
+<div class="section-fade-overlay"></div>
   <div class="container--narrow">
     <div class="section__header reveal">
       <span class="label">Hear From Dr. Joey</span>
@@ -2206,7 +2255,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      WHAT 21 DAYS CAN DO
 ═══════════════════════════════════════════════ -->
-<section class="section section--dark fade-in" id="about">
+<section class="section section--dark fade-in" id="about" data-fade-from="white">
+<div class="section-fade-overlay"></div>
   <div class="container--narrow">
     <div class="section__header reveal">
       <span class="label">The Real Question</span>
@@ -2251,7 +2301,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      TESTIMONIALS
 ═══════════════════════════════════════════════ -->
-<section class="section section--mid fade-in" id="results">
+<section class="section section--mid fade-in" id="results" data-fade-from="navy">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Real People. Real Results.</span>
@@ -2499,7 +2550,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      VIDEO TESTIMONIALS
 ═══════════════════════════════════════════════ -->
-<section class="section section--dark fade-in" id="video-results">
+<section class="section section--dark fade-in" id="video-results" data-fade-from="navy-2">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Hear It From Them</span>
@@ -2527,7 +2579,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      WHAT'S INCLUDED
 ═══════════════════════════════════════════════ -->
-<section class="section section--white fade-in" id="whats-included">
+<section class="section section--white fade-in" id="whats-included" data-fade-from="navy">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Everything You Get</span>
@@ -2594,7 +2647,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      BONUSES
 ═══════════════════════════════════════════════ -->
-<section class="section section--dark fade-in">
+<section class="section section--dark fade-in" data-fade-from="white">
+<div class="section-fade-overlay"></div>
   <div class="container--narrow">
     <div class="section__header reveal">
       <span class="label">But Wait, There's More</span>
@@ -2646,7 +2700,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      PRIZES
 ═══════════════════════════════════════════════ -->
-<section class="section section--mid fade-in">
+<section class="section section--mid fade-in" data-fade-from="navy">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="prizes__showcase reveal">
       <div class="prizes__glow"></div>
@@ -2689,7 +2744,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      AUDIENCE
 ═══════════════════════════════════════════════ -->
-<section class="section section--dark fade-in">
+<section class="section section--dark fade-in" data-fade-from="navy-2">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Is This Right For You?</span>
@@ -2730,7 +2786,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      PRICING
 ═══════════════════════════════════════════════ -->
-<section class="section section--white fade-in" id="pricing">
+<section class="section section--white fade-in" id="pricing" data-fade-from="navy">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Limited Enrollment: Only 50 Spots</span>
@@ -2778,7 +2835,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="offer__early-checkout" id="checkout">
-        <a href="/21-day-challenge/checkout-97/" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
+        <a href="https://drjoeymunoz.com/21-day-challenge-checkout" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
           Join the Challenge
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -2801,7 +2858,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="offer__price-note" id="offer-price-note">One-time payment. Full access to everything above.</p>
 
       <div style="text-align:center;">
-        <a href="/21-day-challenge/checkout-97/" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
+        <a href="https://drjoeymunoz.com/21-day-challenge-checkout" target="_blank" rel="noopener noreferrer" class="btn-primary btn-dynamic-price checkout-link btn-checkout-pulse" style="width:100%;max-width:400px;justify-content:center;">
           Join the Challenge
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -2813,7 +2870,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      GUARANTEE
 ═══════════════════════════════════════════════ -->
-<section class="section section--dark fade-in">
+<section class="section section--dark fade-in" data-fade-from="white">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="guarantee__box reveal">
       <span class="guarantee__icon">🛡️</span>
@@ -2828,7 +2886,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      FAQ
 ═══════════════════════════════════════════════ -->
-<section class="section section--mid fade-in" id="faq">
+<section class="section section--mid fade-in" id="faq" data-fade-from="navy">
+<div class="section-fade-overlay"></div>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Got Questions?</span>
@@ -2902,7 +2961,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      FINAL CTA
 ═══════════════════════════════════════════════ -->
-<section class="final-cta-section">
+<section class="final-cta-section" data-fade-from="navy-2">
+<div class="section-fade-overlay"></div>
   <div class="container final-cta-section__inner">
     <div class="reveal">
       <span class="label">Ready To Start?</span>
@@ -2991,7 +3051,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const SHEET_GID   = '1013531920';
   const TOTAL_SPOTS = 50;
   const TIER_1_LIMIT = 50; // Tier 2 disabled this round - price stays at $97
-  const LINK_97  = '/21-day-challenge/checkout-97/';
+  const LINK_97  = 'https://drjoeymunoz.com/21-day-challenge-checkout';
   const LINK_147 = 'https://drjoeymunoz.com/21-day-challenge-checkout-147';
 
   // Forward all incoming URL params (utm_source, coupon, etc.) to checkout links
@@ -3048,7 +3108,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     const priceNote = document.getElementById('offer-price-note');
     if (priceNote) {
-      if (false && currentSpots <= 0) { // TEMP DISABLED FOR TESTING
+      if (currentSpots <= 0) {
         priceNote.textContent = 'Enrollment is now closed for this round.';
         document.querySelectorAll('.checkout-link').forEach(link => {
           link.removeAttribute('href');
@@ -3289,7 +3349,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           fadeObs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.02 });
+    }, { threshold: 0.08 });
     fadeEls.forEach(el => fadeObs.observe(el));
   }
 
