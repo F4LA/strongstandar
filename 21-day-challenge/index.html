@@ -26,8 +26,8 @@
   --ice:         #A8CDE0;
   --white:       #FFFFFF;
   --off-white:   #EEF3F7;
-  --muted:       #8A9BB0;
-  --faint:       #4A5A6E;
+  --muted:       #C8D6E5;
+  --faint:       #A0B4C8;
   --gold:        #C8A96E;
   --success:     #3DD68C;
   --warning:     #E05555;
@@ -230,7 +230,7 @@ h3 {
   align-items: center;
   background: rgba(0,0,0,0.15);
   border-radius: var(--r-sm);
-  padding: 4px 10px;
+  padding: 10px 12px 8px;
   min-width: 44px;
 }
 
@@ -527,7 +527,7 @@ h3 {
 
 .vsl-section__body {
   font-size: 17px;
-  color: #4A5A6E;
+  color: #2A3A50;
   line-height: 1.75;
   font-weight: 400;
   text-align: center;
@@ -931,7 +931,7 @@ h3 {
 }
 
 .section--white .section__header p {
-  color: #4A5A6E;
+  color: #2A3A50;
 }
 
 .section--white .label {
@@ -975,7 +975,7 @@ h3 {
 }
 
 .section--white .included-card h3 { color: #080D1A; }
-.section--white .included-card p  { color: #4A5A6E; }
+.section--white .included-card p  { color: #2A3A50; }
 
 .section--white .included-card__icon {
   background: rgba(34,120,172,0.08);
@@ -1081,7 +1081,7 @@ h3 {
   text-transform: uppercase;
   white-space: nowrap;
   align-self: flex-start;
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .bonus-item__content { flex: 1; }
@@ -1090,6 +1090,7 @@ h3 {
   font-size: 1.1rem;
   color: var(--white);
   margin-bottom: 8px;
+  margin-top: 0;
 }
 
 .bonus-item__content p {
@@ -1105,8 +1106,9 @@ h3 {
   color: var(--gold);
   line-height: 1;
   white-space: nowrap;
-  align-self: center;
-  opacity: 0.8;
+  align-self: flex-start;
+  margin-top: 2px;
+  opacity: 0.9;
 }
 
 /* ═══════════════════════════════════════════════
@@ -1331,11 +1333,11 @@ h3 {
 }
 
 .section--white .offer__box h2 { color: #080D1A; }
-.section--white .offer__spots-text { color: #4A5A6E; }
-.section--white .offer__total-value { color: #4A5A6E; }
+.section--white .offer__spots-text { color: #2A3A50; }
+.section--white .offer__total-value { color: #2A3A50; }
 .section--white .offer__price { color: #080D1A; }
-.section--white .offer__price-note { color: #8A9BB0; }
-.section--white .offer__early-checkout-note { color: #8A9BB0; }
+.section--white .offer__price-note { color: #4A5A6E; }
+.section--white .offer__early-checkout-note { color: #4A5A6E; }
 
 .section--white .offer__spots-bar-track {
   background: rgba(34,120,172,0.1);
@@ -1357,7 +1359,7 @@ h3 {
 .section--white .offer__value-list li {
   background: #F8FAFC;
   border-bottom-color: rgba(34,120,172,0.08);
-  color: #4A5A6E;
+  color: #2A3A50;
 }
 
 .section--white .offer__value-list li:hover { background: #EEF3F7; }
@@ -1941,9 +1943,8 @@ footer {
   .testimonials__grid { display: none; }
   .tcard-carousel { display: block; }
   /* Bonus items: tag+valor inline, contenido abajo */
-  .bonus-item { flex-direction: column; gap: 0; padding: 22px 20px; }
-  .bonus-item__tag { align-self: flex-start; }
-  .bonus-item__value { font-size: 1.3rem; }
+  .bonus-item { flex-direction: column; align-items: flex-start; gap: 12px; padding: 22px 20px; }
+  .bonus-item__value { align-self: flex-start; font-size: 1.3rem; margin-left: 0; }
   /* Offer box */
   .offer__box { padding: 32px 20px; }
   .offer__tier { padding: 20px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
@@ -2254,7 +2255,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Real People. Real Results.</span>
-      <h2>They Were Exactly Where You Are</h2>
+      <h2>They Were Exactly<br>Where You Are</h2>
       <p>These are real clients: professionals, parents, people with full schedules and real responsibilities. They decided 21 days was worth the commitment.</p>
     </div>
 
@@ -2530,7 +2531,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="section__header reveal">
       <span class="label">Everything You Get</span>
-      <h2>What's Inside the 21-Day Challenge</h2>
+      <h2>What's Inside<br>the 21-Day Challenge</h2>
       <p>This isn't a PDF and a prayer. It's a fully coached experience, designed by a team that actually knows the science and has helped hundreds of people apply it to real life.</p>
     </div>
 
@@ -2597,7 +2598,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container--narrow">
     <div class="section__header reveal">
       <span class="label">But Wait, There's More</span>
-      <h2 style="font-size:clamp(2.2rem,4vw,4.5rem);">Exclusive Bonuses, Included Free</h2>
+      <h2 style="font-size:clamp(2.2rem,4vw,4.5rem);">Exclusive Bonuses,<br>Included Free</h2>
     </div>
 
     <div class="bonuses__list">
