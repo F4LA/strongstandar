@@ -1994,7 +1994,7 @@ footer {
     opacity: 0;
     animation: reveal-fade linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 40%;
+    animation-range: entry 0% entry 80%;
   }
 }
 
@@ -2006,7 +2006,7 @@ footer {
 @supports not (animation-timeline: scroll()) {
   .fade-in {
     opacity: 0;
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .fade-in.in-view {
     opacity: 1;
@@ -3289,7 +3289,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           fadeObs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.02 });
     fadeEls.forEach(el => fadeObs.observe(el));
   }
 
