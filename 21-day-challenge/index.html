@@ -3048,7 +3048,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     const priceNote = document.getElementById('offer-price-note');
     if (priceNote) {
-      if (false && currentSpots <= 0) { // TEMP DISABLED FOR TESTING
+      if (currentSpots <= 0) {
         priceNote.textContent = 'Enrollment is now closed for this round.';
         document.querySelectorAll('.checkout-link').forEach(link => {
           link.removeAttribute('href');
