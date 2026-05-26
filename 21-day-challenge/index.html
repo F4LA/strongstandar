@@ -1994,7 +1994,7 @@ footer {
     opacity: 0;
     animation: reveal-fade linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 40%;
+    animation-range: entry 0% entry 80%;
   }
 }
 
@@ -2006,7 +2006,7 @@ footer {
 @supports not (animation-timeline: scroll()) {
   .fade-in {
     opacity: 0;
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .fade-in.in-view {
     opacity: 1;
@@ -2173,11 +2173,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vsl-player">
         <video
           id="vsl-video"
-          preload="metadata"
+          preload="auto"
           playsinline
           controlsList="nodownload"
         >
-          <source src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/68222a98c2929f86716034c7.mp4" type="video/mp4">
+          <source src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/68222a98c2929f86716034c7.mp4#t=0.1" type="video/mp4">
         </video>
         <button class="vsl-play-btn" id="vsl-play-btn" aria-label="Play video">
           <div class="vsl-play-btn__circle">
@@ -2510,8 +2510,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="video-testimonials__grid" style="display:flex;justify-content:center;">
       <div class="vt-card reveal fade-in" style="width:min(380px,100%);flex-shrink:0;">
         <div class="video-testimonial-player video-testimonial-player--vertical">
-          <video preload="metadata" playsinline controlsList="nodownload">
-            <source src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/681a81656d12af52578ae7c4.mp4" type="video/mp4">
+          <video preload="auto" playsinline controlsList="nodownload">
+            <source src="https://storage.googleapis.com/msgsndr/cZF68TO3vzxTOnAdACdK/media/681a81656d12af52578ae7c4.mp4#t=0.1" type="video/mp4">
           </video>
           <button class="vid-test-play" aria-label="Play testimonial">
             <div class="vid-test-play__circle">
@@ -3289,7 +3289,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           fadeObs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.02 });
     fadeEls.forEach(el => fadeObs.observe(el));
   }
 
