@@ -2989,9 +2989,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ── LIVE SPOTS ─────────────────────────────────────
   const SHEET_ID    = '1OyqosZzgTxOwAs_j2VL7-xtSiIGVPUYKYpGUNnXZnG0';
   const SHEET_GID   = '1013531920';
-  const TOTAL_SPOTS = 50;
-  const TIER_1_LIMIT = 50; // Tier 2 disabled this round - price stays at $97
-  const LINK_97  = '/21-day-challenge/checkout-97/'; // UPDATED: internal checkout
+  const TOTAL_SPOTS = 60;
+  const TIER_1_LIMIT = 30;
+  const LINK_97  = 'https://drjoeymunoz.com/21-day-challenge-checkout';
   const LINK_147 = 'https://drjoeymunoz.com/21-day-challenge-checkout-147';
 
   // Forward all incoming URL params (utm_source, coupon, etc.) to checkout links
@@ -3020,7 +3020,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const offerPrice = document.getElementById('offer-price');
     if (offerPrice) offerPrice.innerHTML = 'Join Today for <span class="dynamic-price">' + priceStr + '</span>';
 
-    const baseUrl = buildCheckoutUrl(LINK_97); // FORCED: always use $97 checkout this round (tier logic bypassed)
+    const baseUrl = buildCheckoutUrl(inTier2 ? LINK_147 : LINK_97);
     document.querySelectorAll('.checkout-link').forEach(link => { link.href = baseUrl; });
 
     const tierEarly   = document.getElementById('tier-early');
