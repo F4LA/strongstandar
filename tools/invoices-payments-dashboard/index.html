@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoices & Payments Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2d3148;
+      --red: #ff4757;
+      --red-dim: rgba(255,71,87,0.12);
+      --orange: #ffa502;
+      --orange-dim: rgba(255,165,2,0.12);
+      --green: #2ed573;
+      --green-dim: rgba(46,213,115,0.1);
+      --accent: #6c63ff;
+      --accent-dim: rgba(108,99,255,0.15);
+      --text: #e8eaf6;
+      --muted: #8892b0;
+    }
+    :root.light {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --border: #dde2f0;
+      --red: #d63031;
+      --red-dim: rgba(214,48,49,0.08);
+      --orange: #e17055;
+      --orange-dim: rgba(225,112,85,0.1);
+      --green: #00b894;
+      --green-dim: rgba(0,184,148,0.1);
+      --accent: #6c63ff;
+      --accent-dim: rgba(108,99,255,0.1);
+      --text: #1e2235;
+      --muted: #6b7280;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      font-size: 14px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-title { font-size: 17px; font-weight: 700; }
+    .header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .82; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-primary { background: var(--accent); color: #fff; }
+
+    /* ── Layout ── */
+    main { max-width: 880px; margin: 0 auto; padding: 28px 20px; }
+
+    /* ── Period bar ── */
+    .period-bar {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 24px;
+    }
+    .period-bar strong { color: var(--text); }
+
+    /* ── Summary cards ── */
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+    .scard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .scard .num { font-size: 38px; font-weight: 800; line-height: 1; }
+    .scard .lbl { font-size: 11px; color: var(--muted); margin-top: 5px; text-transform: uppercase; letter-spacing: .6px; }
+    .scard.red  .num { color: var(--red); }
+    .scard.orange .num { color: var(--orange); }
+    .scard.green  .num { color: var(--green); }
+
+    /* ── Section ── */
+    .section { margin-bottom: 26px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .section-head h2 { font-size: 14px; font-weight: 700; }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+    .badge.red    { background: var(--red-dim);    color: var(--red);    border: 1px solid var(--red); }
+    .badge.orange { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange); }
+
+    /* ── Alert cards ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 9px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .card.red    { border-left: 3px solid var(--red);    background: var(--red-dim); }
+    .card.orange { border-left: 3px solid var(--orange); background: var(--orange-dim); }
+
+    .card-icon { font-size: 18px; flex-shrink: 0; padding-top: 1px; }
+    .card-body { flex: 1; min-width: 0; }
+    .card-name { font-size: 14px; font-weight: 700; }
+    .card-sub  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 5px;
+    }
+    .tag.red    { background: var(--red-dim);    color: var(--red); }
+    .tag.orange { background: var(--orange-dim); color: var(--orange); }
+    .tag.purple { background: var(--accent-dim); color: #a29bfe; }
+    .tag.muted  { background: var(--border);     color: var(--muted); }
+
+    .action-hint {
+      font-size: 11px;
+      color: #a29bfe;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .copy-btn {
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      color: #a29bfe;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { background: rgba(108,99,255,0.28); }
+    .copy-btn.copied { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+
+    /* Message preview modal */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 540px;
+      width: 100%;
+      padding: 24px;
+    }
+    .modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+    .msg-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+      white-space: pre-wrap;
+      font-family: inherit;
+      resize: vertical;
+      width: 100%;
+      min-height: 180px;
+    }
+    .modal-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-ghost:hover { border-color: var(--text); color: var(--text); }
+
+    /* ── All clear ── */
+    .all-clear {
+      background: var(--green-dim);
+      border: 1px solid var(--green);
+      border-radius: 10px;
+      padding: 28px;
+      text-align: center;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    /* ── Loading / Error ── */
+    .center { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin-bottom: 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-box {
+      background: var(--red-dim);
+      border: 1px solid var(--red);
+      border-radius: 10px;
+      padding: 20px;
+      color: var(--red);
+      text-align: center;
+    }
+
+    @media (max-width: 580px) {
+      .summary { grid-template-columns: 1fr 1fr; }
+      .summary .scard:last-child { grid-column: 1 / -1; }
+      header { padding: 14px 16px; }
+      main { padding: 20px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-title">Invoices &amp; Payments Dashboard</div>
+    <div class="header-sub" id="last-updated">Loading…</div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <button class="btn btn-ghost" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
+    <button class="btn btn-primary" id="refresh-btn" onclick="loadData()">↻ Refresh</button>
+  </div>
+</header>
+
+<main>
+  <div id="content">
+    <div class="center">
+      <div class="spinner"></div>
+      <div>Fetching data from Google Sheets…</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
+  const API_KEY  = 'AIzaSyC7WtRVmLS2mo53i_Cge8NAlJ5tB2kaHjE';
+
+  // Client Mastersheet column indices (0-based, columns A–Z)
+  const C = {
+    FIRST_NAME:     0,
+    LAST_NAME:      1,
+    EMAIL:          2,
+    PRODUCT:        3,
+    PACKAGE:        4,   // $ Package  (col E)
+    DATE_PURCHASED: 5,   // col F
+    COACH:          9,   // col J
+    CASH_COLLECTED: 25,  // col Z
+  };
+
+  // Payment Plan column indices
+  const P = {
+    FULL_NAME: 0,
+    EMAIL:     1,
+    DATE:      2,
+    PLAN:      3,
+    AMOUNT:    4,
+    STATUS:    5,
+  };
+
+  // ── Helpers ──────────────────────────────────────────
+  function parseDate(str) {
+    if (!str || !str.trim()) return null;
+    str = str.trim();
+    // M/D/YYYY or MM/DD/YYYY
+    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(str)) {
+      const [m, d, y] = str.split('/').map(Number);
+      return new Date(y, m - 1, d);
+    }
+    // Anything else (e.g. "May 2, 2025" / "June 1, 2026")
+    const parsed = new Date(str);
+    if (isNaN(parsed)) return null;
+    return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
+  }
+
+  function today0() {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
+  function mostRecentThursday(from) {
+    const d = new Date(from);
+    d.setHours(0, 0, 0, 0);
+    const diff = (d.getDay() - 4 + 7) % 7; // days since last Thursday
+    d.setDate(d.getDate() - diff);
+    return d;
+  }
+
+  function fmt(d) {
+    if (!d) return '—';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function esc(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // ── API fetch ────────────────────────────────────────
+  async function fetchRange(range) {
+    const url =
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/` +
+      `${encodeURIComponent(range)}?key=${API_KEY}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body?.error?.message || `HTTP ${res.status}`);
+    }
+    return (await res.json()).values || [];
+  }
+
+  // ── Main load ─────────────────────────────────────────
+  async function loadData() {
+    const btn = document.getElementById('refresh-btn');
+    btn.disabled = true;
+    btn.textContent = '↻ Loading…';
+    document.getElementById('content').innerHTML =
+      `<div class="center"><div class="spinner"></div><div>Fetching data…</div></div>`;
+
+    try {
+      const [clientRows, ppRows] = await Promise.all([
+        fetchRange('Client Mastersheet!A:Z'),
+        fetchRange('Payment Plan!A:F'),
+      ]);
+      renderDashboard(clientRows, ppRows);
+      document.getElementById('last-updated').textContent =
+        'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    } catch (err) {
+      document.getElementById('content').innerHTML =
+        `<div class="error-box">⚠️ Error loading data<br><small>${esc(err.message)}</small></div>`;
+      document.getElementById('last-updated').textContent = 'Failed to load';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '↻ Refresh';
+    }
+  }
+
+  // ── Render ────────────────────────────────────────────
+  function renderDashboard(clientRows, ppAllRows) {
+    const now = today0();
+
+    // Thursday window
+    const thisThursday = mostRecentThursday(now);
+    const lastThursday = new Date(thisThursday);
+    lastThursday.setDate(lastThursday.getDate() - 7);
+
+    // Normalize whitespace helper (collapse tabs/multiple spaces to single space)
+    const norm = str => (str || '').replace(/\s+/g, ' ').trim();
+
+    // Build client name → coach lookup from Mastersheet
+    const coachMap = {};
+    clientRows.slice(1).forEach(r => {
+      const first = norm(r[C.FIRST_NAME]);
+      const last  = norm(r[C.LAST_NAME]);
+      const full  = `${first} ${last}`.trim().toLowerCase();
+      const raw   = norm(r[C.COACH]);
+      const coach = raw.replace(/^coach:\s*/i, '').trim();
+      if (full && coach) coachMap[full] = coach;
+    });
+
+    // Payment Plan — skip header row
+    const ppRows = ppAllRows.slice(1);
+
+    // Build a lowercase set of names already in Payment Plan
+    const ppNameSet = new Set(
+      ppRows.map(r => (r[P.FULL_NAME] || '').trim().toLowerCase())
+    );
+
+    // ── 1. Overdue payments (date <= today, status ≠ paid) ──
+    const overdue = ppRows.filter(r => {
+      const d      = parseDate(r[P.DATE]);
+      const status = (r[P.STATUS] || '').trim().toLowerCase();
+      return d && d <= now && status !== 'paid';
+    });
+
+    // ── 2. New clients this week with missing data ──
+    const clients = clientRows.slice(1); // skip header
+    const newClients = clients.filter(r => {
+      const d = parseDate(r[C.DATE_PURCHASED]);
+      return d && d >= lastThursday && d <= thisThursday;
+    });
+
+    const clientIssues = newClients.reduce((acc, r) => {
+      const first = (r[C.FIRST_NAME] || '').trim();
+      const last  = (r[C.LAST_NAME]  || '').trim();
+      const full  = `${first} ${last}`.trim();
+      const pkg   = (r[C.PACKAGE]        || '').trim();
+      const cash  = (r[C.CASH_COLLECTED] || '').trim();
+      const inPP  = ppNameSet.has(full.toLowerCase());
+
+      const missing = [];
+      if (!pkg)  missing.push('$ Package');
+      if (!cash) missing.push('Cash Collected');
+      if (!inPP) missing.push('Not in Payment Plan');
+
+      if (missing.length) {
+        acc.push({
+          name:  full,
+          email: (r[C.EMAIL] || '').trim(),
+          date:  parseDate(r[C.DATE_PURCHASED]),
+          missing,
+        });
+      }
+      return acc;
+    }, []);
+
+    // ── Build HTML ──
+    let html = '';
+
+    // Period info
+    html += `<div class="period-bar">
+      Review period: <strong>${fmt(lastThursday)}</strong> → <strong>${fmt(thisThursday)}</strong>
+      &nbsp;·&nbsp; <strong>${newClients.length}</strong> new client${newClients.length !== 1 ? 's' : ''} this week
+    </div>`;
+
+    // Summary cards
+    const total = overdue.length + clientIssues.length;
+    html += `<div class="summary">
+      <div class="scard red">
+        <div class="num">${overdue.length}</div>
+        <div class="lbl">Overdue Payments</div>
+      </div>
+      <div class="scard orange">
+        <div class="num">${clientIssues.length}</div>
+        <div class="lbl">Clients Missing Info</div>
+      </div>
+      <div class="scard ${total === 0 ? 'green' : 'red'}">
+        <div class="num">${total}</div>
+        <div class="lbl">Total Action Items</div>
+      </div>
+    </div>`;
+
+    if (total === 0) {
+      html += `<div class="all-clear">✅ All clear — no action items this week!</div>`;
+    } else {
+
+      // Section 1 — Overdue Payments
+      if (overdue.length) {
+        html += `<div class="section">
+          <div class="section-head">
+            <h2>🚨 Overdue Payments</h2>
+            <span class="badge red">${overdue.length}</span>
+          </div>`;
+
+        // Store message data in a global map to avoid quote issues in onclick attrs
+        window._msgData = {};
+
+        overdue.forEach((r, i) => {
+          const name    = norm(r[P.FULL_NAME]) || '—';
+          const email   = (r[P.EMAIL]  || '').trim();
+          const date    = parseDate(r[P.DATE]);
+          const amount  = (r[P.AMOUNT] || '—').trim();
+          const plan    = (r[P.PLAN]   || '').trim();
+          const days    = date ? Math.floor((now - date) / 86400000) : 0;
+          const coach   = coachMap[name.toLowerCase()] || '';
+          const msgId   = `msg-${i}`;
+
+          window._msgData[msgId] = { name, amount, date: fmt(date), coach };
+
+          html += `<div class="card red">
+            <div class="card-icon">💳</div>
+            <div class="card-body">
+              <div class="card-name">${esc(name)}</div>
+              <div class="card-sub">${esc(email)}</div>
+              <div class="card-tags">
+                <span class="tag red">Due ${fmt(date)}</span>
+                <span class="tag red">${days} day${days !== 1 ? 's' : ''} overdue</span>
+                <span class="tag orange">${esc(amount)}</span>
+                ${plan ? `<span class="tag purple">Payment ${esc(plan)}</span>` : ''}
+                ${coach ? `<span class="tag muted">Coach: ${esc(coach)}</span>` : ''}
+              </div>
+              <div class="action-hint">
+                <span>→ Attempt charge in GHL &nbsp;·&nbsp; If it fails: message the coach</span>
+                <button class="copy-btn" id="copybtn-${msgId}" onclick="copyDirect('${msgId}', this)">
+                  📋 Copy Message
+                </button>
+              </div>
+            </div>
+          </div>`;
+        });
+
+        html += `</div>`;
+      }
+
+      // Section 2 — New clients missing info
+      if (clientIssues.length) {
+        html += `<div class="section">
+          <div class="section-head">
+            <h2>⚠️ New Clients — Missing Info</h2>
+            <span class="badge orange">${clientIssues.length}</span>
+          </div>`;
+
+        clientIssues.forEach(issue => {
+          html += `<div class="card orange">
+            <div class="card-icon">📋</div>
+            <div class="card-body">
+              <div class="card-name">${esc(issue.name)}</div>
+              <div class="card-sub">${esc(issue.email)} &nbsp;·&nbsp; Purchased ${fmt(issue.date)}</div>
+              <div class="card-tags">
+                ${issue.missing.map(m => `<span class="tag orange">Missing: ${esc(m)}</span>`).join('')}
+              </div>
+            </div>
+          </div>`;
+        });
+
+        html += `</div>`;
+      }
+    }
+
+    document.getElementById('content').innerHTML = html;
+  }
+
+  // ── Theme toggle ─────────────────────────────────────
+  function applyTheme(isLight) {
+    document.documentElement.classList.toggle('light', isLight);
+    document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+  }
+
+  function toggleTheme() {
+    const isLight = !document.documentElement.classList.contains('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    applyTheme(isLight);
+  }
+
+  // Load saved preference (default: dark)
+  applyTheme(localStorage.getItem('theme') === 'light');
+
+  // Auto-load on open
+  loadData();
+
+  // ── Message modal ─────────────────────────────────────
+  function buildMessage(clientName, amount, date, coachName) {
+    const coach = coachName || '[Coach Name]';
+    return `Hey ${coach} 👋 Quick heads-up — it looks like a payment from one of your clients didn't go through.
+
+Client: ${clientName}
+Amount: ${amount}
+Date: ${date}
+
+Could you reach out to them when you get a chance to let them know and get it sorted? Feel free to send them the payment link or have them contact us directly.
+
+Let me know if you need anything on our end!`;
+  }
+
+  function copyDirect(msgId, btn) {
+    const d = (window._msgData || {})[msgId];
+    if (!d) return;
+    const msg = buildMessage(d.name, d.amount, d.date, d.coach);
+    navigator.clipboard.writeText(msg).then(() => {
+      btn.textContent = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Copy Message';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  function copyMessage() {
+    const textarea = document.getElementById('modal-msg');
+    const copyBtn  = document.getElementById('modal-copy-btn');
+    navigator.clipboard.writeText(textarea.value).then(() => {
+      copyBtn.textContent = '✅ Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = '📋 Copy Message';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      // Fallback for browsers without clipboard API
+      textarea.select();
+      document.execCommand('copy');
+    });
+  }
+
+  // Close modal on overlay click
+  document.addEventListener('click', function(e) {
+    if (e.target.id === 'modal-overlay') closeModal();
+  });
+</script>
+
+<!-- Message Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Coach Message</h3>
+    <textarea class="msg-box" id="modal-msg" spellcheck="false"></textarea>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary copy-btn" id="modal-copy-btn" onclick="copyMessage()">📋 Copy Message</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
