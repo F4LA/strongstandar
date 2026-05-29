@@ -1023,7 +1023,7 @@ reveals.forEach(el => observer.observe(el));
         .catch(function(){ names=shuffle(fallback.slice()); })
         .finally(function(){
           if(!names.length) names=shuffle(fallback.slice());
-          setTimeout(function(){ showNext(); setInterval(showNext,25000); },8000);
+          setTimeout(function(){ showNext(); setInterval(showNext,120000); },20000);
         });
     }
     loadAndStart();
