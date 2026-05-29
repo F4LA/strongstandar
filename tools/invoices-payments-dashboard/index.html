@@ -361,10 +361,11 @@
 
   // ── API fetch ────────────────────────────────────────
   async function fetchRange(range) {
+    const bust = Date.now(); // cache buster — forces fresh data every call
     const url =
       `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/` +
-      `${encodeURIComponent(range)}?key=${API_KEY}`;
-    const res = await fetch(url);
+      `${encodeURIComponent(range)}?key=${API_KEY}&_=${bust}`;
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body?.error?.message || `HTTP ${res.status}`);
@@ -424,9 +425,9 @@
     // Payment Plan — skip header row
     const ppRows = ppAllRows.slice(1);
 
-    // Build a lowercase set of names already in Payment Plan
-    const ppNameSet = new Set(
-      ppRows.map(r => (r[P.FULL_NAME] || '').trim().toLowerCase())
+    // Match by email (more reliable than name — avoids Ben vs Benjamin mismatches)
+    const ppEmailSet = new Set(
+      ppRows.map(r => (r[P.EMAIL] || '').trim().toLowerCase())
     );
 
     // ── 1. Overdue payments (date <= today, status ≠ paid) ──
@@ -449,7 +450,7 @@
       const full  = `${first} ${last}`.trim();
       const pkg   = (r[C.PACKAGE]        || '').trim();
       const cash  = (r[C.CASH_COLLECTED] || '').trim();
-      const inPP  = ppNameSet.has(full.toLowerCase());
+      const inPP  = ppEmailSet.has((r[C.EMAIL] || '').trim().toLowerCase());
 
       const missing = [];
       if (!pkg)  missing.push('$ Package');
