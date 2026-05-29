@@ -829,6 +829,36 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 reveals.forEach(el => observer.observe(el));
+
+  // ── LIVE SPOTS BAR ────────────────────────────────
+  (function() {
+    var SHEET_ID  = '1QWWYn5_SgwCOPaFtq_7CV-WsVnrtmwjUoXPFm7gVM7A';
+    var SHEET_GID = '0';
+    var TOTAL     = 60;
+    function updateSpots(taken) {
+      var left     = Math.max(0, TOTAL - taken);
+      var pct      = Math.min(100, (taken / TOTAL) * 100);
+      var elCount  = document.getElementById('spots-count');
+      var elBar    = document.getElementById('spots-bar-fill');
+      var elTaken  = document.getElementById('spots-taken');
+      if (elCount) elCount.textContent = left;
+      if (elBar)   elBar.style.width   = pct + '%';
+      if (elTaken) elTaken.textContent  = taken;
+    }
+    var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+              '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
+              '&tq=' + encodeURIComponent('SELECT COUNT(A)');
+    fetch(url)
+      .then(function(r){ return r.text(); })
+      .then(function(t){
+        var json = t.replace(/^[^{]+/, '').replace(/\);?$/, '');
+        var data = JSON.parse(json);
+        if (data.table && data.table.rows && data.table.rows[0]) {
+          updateSpots(Math.max(0, Math.floor(data.table.rows[0].c[0].v)));
+        }
+      })
+      .catch(function(){});
+  })();
 </script>
 
 </body>
