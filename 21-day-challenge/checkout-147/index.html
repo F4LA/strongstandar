@@ -699,6 +699,61 @@ footer {
   width: 0%;
 }
 
+
+/* ── SOCIAL PROOF POPUP ── */
+#sp-popup {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  background: #0e1a2b;
+  border: 1px solid rgba(34,120,172,0.3);
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 300px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+  transform: translateX(-120%);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+  pointer-events: none;
+}
+#sp-popup.sp-show {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sp-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a5f8a, #3899cc);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.sp-text { display: flex; flex-direction: column; gap: 2px; }
+.sp-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8eef4;
+  font-family: 'DM Sans', sans-serif;
+}
+.sp-msg {
+  font-size: 12px;
+  color: #7a9bb5;
+  font-family: 'DM Sans', sans-serif;
+}
+.sp-time {
+  font-size: 11px;
+  color: #4a6a85;
+  font-family: 'DM Sans', sans-serif;
+  margin-top: 2px;
+}
+
 </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 <!-- Google Tag Manager -->
@@ -869,7 +924,81 @@ reveals.forEach(el => observer.observe(el));
       })
       .catch(function(){});
   })();
+
+  // ── SOCIAL PROOF POPUP ────────────────────────────
+  (function() {
+    var SHEET_ID  = '1QWWYn5_SgwCOPaFtq_7CV-WsVnrtmwjUoXPFm7gVM7A';
+    var SHEET_GID = '0';
+    var fallback = [
+      'James R.','Maria L.','Daniel K.','Ashley M.','Chris T.',
+      'Jennifer S.','Marcus W.','Stephanie B.','Ryan H.','Nicole P.',
+      'Kevin D.','Amanda F.','Tyler G.','Melissa C.','Brandon J.'
+    ];
+    var names = [], idx = 0, shown = false;
+    function timeAgo() {
+      var m = Math.floor(Math.random()*8)+1;
+      return m===1?'1 minute ago':m+' minutes ago';
+    }
+    function showNext() {
+      if (!names.length) return;
+      var popup=document.getElementById('sp-popup');
+      var elName=document.getElementById('sp-name');
+      var elTime=document.getElementById('sp-time');
+      var elAv=document.getElementById('sp-avatar');
+      var name=names[idx%names.length]; idx++;
+      elName.textContent=name;
+      elTime.textContent=shown?timeAgo():'Just now';
+      elAv.textContent=name.charAt(0).toUpperCase();
+      shown=true;
+      popup.classList.add('sp-show');
+      setTimeout(function(){ popup.classList.remove('sp-show'); },4500);
+    }
+    function shuffle(a){
+      for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+      return a;
+    }
+    function loadAndStart() {
+      var url='https://docs.google.com/spreadsheets/d/'+SHEET_ID+
+              '/gviz/tq?tqx=out:json&gid='+SHEET_GID+
+              '&tq='+encodeURIComponent('SELECT A,B');
+      fetch(url)
+        .then(function(r){return r.text();})
+        .then(function(t){
+          var json=t.replace(/^[^{]+/,'').replace(/\);?$/,'');
+          var data=JSON.parse(json);
+          var sheet=[];
+          if(data.table&&data.table.rows){
+            data.table.rows.forEach(function(row){
+              if(row.c&&row.c[0]&&row.c[0].v){
+                var first=row.c[0].v.trim();
+                var last=(row.c[1]&&row.c[1].v)?row.c[1].v.trim().charAt(0)+'.':'';
+                sheet.push(first+(last?' '+last:''));
+              }
+            });
+          }
+          names=shuffle(sheet.concat(fallback));
+        })
+        .catch(function(){ names=shuffle(fallback.slice()); })
+        .finally(function(){
+          if(!names.length) names=shuffle(fallback.slice());
+          setTimeout(function(){ showNext(); setInterval(showNext,25000); },8000);
+        });
+    }
+    loadAndStart();
+  })();
+
 </script>
+
+
+<!-- SOCIAL PROOF POPUP -->
+<div id="sp-popup">
+  <div class="sp-avatar" id="sp-avatar">J</div>
+  <div class="sp-text">
+    <span class="sp-name" id="sp-name">Someone</span>
+    <span class="sp-msg">just joined the 21-Day Challenge! 🔥</span>
+    <span class="sp-time" id="sp-time">Just now</span>
+  </div>
+</div>
 
 </body>
 </html>
