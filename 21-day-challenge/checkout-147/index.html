@@ -670,6 +670,35 @@ footer {
   .form-card-header, .form-card-body { padding-left: 16px; padding-right: 16px; }
   .form-wrap { padding: 0 12px; }
 }
+
+/* ── SPOTS PROGRESS BAR ── */
+.spots-bar-wrap {
+  margin-top: 16px;
+  width: 100%;
+}
+.spots-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.spots-bar-label strong { color: var(--off-white); }
+.spots-bar-track {
+  width: 100%;
+  height: 7px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.spots-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--steel-mid), var(--steel-light));
+  border-radius: 99px;
+  transition: width 0.6s ease;
+  width: 0%;
+}
+
 </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 <!-- Google Tag Manager -->
@@ -729,7 +758,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </p>
         <div class="spots-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--steel-light)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          <strong>60 spots</strong> &nbsp;· Limited availability
+          <strong id="spots-count">60</strong> spots left &nbsp;· Limited availability
+        </div>
+        <div class="spots-bar-wrap">
+          <div class="spots-bar-label">
+            <span>Spots claimed</span>
+            <span><strong id="spots-taken">—</strong> / 60</span>
+          </div>
+          <div class="spots-bar-track">
+            <div class="spots-bar-fill" id="spots-bar-fill"></div>
+          </div>
         </div>
       </div>
 
