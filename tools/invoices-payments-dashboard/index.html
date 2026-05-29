@@ -136,7 +136,7 @@
     .card-icon { font-size: 18px; flex-shrink: 0; padding-top: 1px; }
     .card-body { flex: 1; min-width: 0; }
     .card-name { font-size: 14px; font-weight: 700; }
-    .card-sub  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card-sub  { font-size: 12px; color: var(--muted); margin-top: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
 
     .tag {
@@ -266,27 +266,121 @@
       header { padding: 14px 16px; }
       main { padding: 20px 14px; }
     }
+
+    /* ── Settings modal ── */
+    .settings-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .settings-overlay.open { display: flex; }
+    .settings-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 520px;
+      width: 100%;
+      padding: 24px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .settings-modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .settings-modal p  { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+    .settings-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .settings-label { font-size: 13px; font-weight: 600; }
+    .settings-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 12px;
+      padding: 7px 10px;
+      width: 100%;
+    }
+    .settings-input:focus { outline: none; border-color: var(--accent); }
+    .settings-input::placeholder { color: var(--muted); }
+    .settings-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      padding: 0 32px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px 18px;
+      margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
   </style>
-<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
 <body>
 
 <header>
   <div>
-    <div class="header-title">Invoices &amp; Payments Dashboard</div>
+    <div class="header-title">Weekly Operations Dashboard</div>
     <div class="header-sub" id="last-updated">Loading…</div>
   </div>
   <div style="display:flex;gap:10px;align-items:center;">
+    <button class="btn btn-ghost" onclick="openSettings()" title="Slack settings">⚙️ Slack IDs</button>
     <button class="btn btn-ghost" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
     <button class="btn btn-primary" id="refresh-btn" onclick="loadData()">↻ Refresh</button>
   </div>
 </header>
 
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('payments')">💳 Invoices &amp; Payments</button>
+  <button class="tab-btn" onclick="switchTab('attribution')">🔍 Sales Attribution</button>
+  <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls</button>
+</nav>
+
 <main>
-  <div id="content">
-    <div class="center">
-      <div class="spinner"></div>
-      <div>Fetching data from Google Sheets…</div>
+  <div id="tab-payments" class="tab-panel active">
+    <div id="content">
+      <div class="center">
+        <div class="spinner"></div>
+        <div>Fetching data from Google Sheets…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-stale-calls" class="tab-panel">
+    <div id="content-stale-calls">
+      <div class="center">
+        <div class="spinner"></div>
+        <div>Fetching data from Google Sheets…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-attribution" class="tab-panel">
+    <div id="content-attribution">
+      <div class="center">
+        <div class="spinner"></div>
+        <div>Fetching data from Google Sheets…</div>
+      </div>
     </div>
   </div>
 
@@ -294,6 +388,21 @@
 
 <script>
   const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
+
+  // Global helpers
+  const norm = str => (str || '').replace(/\s+/g, ' ').trim();
+
+  function copyEmail(email, btn) {
+    navigator.clipboard.writeText(email).then(() => {
+      btn.textContent = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '📋 Copy Email'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  function emailBtn(email) {
+    return email ? `<button class="copy-btn" onclick="copyEmail('${email}', this)">📋 Copy Email</button>` : '';
+  }
   const API_KEY  = 'AIzaSyC7WtRVmLS2mo53i_Cge8NAlJ5tB2kaHjE';
 
   // Client Mastersheet column indices (0-based, columns A–Z)
@@ -305,7 +414,21 @@
     PACKAGE:        4,   // $ Package  (col E)
     DATE_PURCHASED: 5,   // col F
     COACH:          9,   // col J
+    SALES_PERSON:   12,  // col M
+    NEW_OR_RESIGN:  18,  // col S
     CASH_COLLECTED: 25,  // col Z
+  };
+
+  // Leads Applied column indices
+  const L = {
+    FIRST_NAME:      0,
+    LAST_NAME:       1,
+    EMAIL:           2,
+    CALL_DATE:       10, // "Sales call booked date"
+    CALL_STATUS:     11, // "Call status show vs no-show" (Confirmed / Showed / No Show / etc.)
+    SALES_CALL_WITH: 12, // "Sales call with"
+    SALE_YES_NO:     13, // "End in sale yes/no"
+    SALE_DATE:       14, // "End in sale date"
   };
 
   // Payment Plan column indices
@@ -382,11 +505,14 @@
       `<div class="center"><div class="spinner"></div><div>Fetching data…</div></div>`;
 
     try {
-      const [clientRows, ppRows] = await Promise.all([
+      const [clientRows, ppRows, leadsRows] = await Promise.all([
         fetchRange('Client Mastersheet!A:Z'),
         fetchRange('Payment Plan!A:F'),
+        fetchRange('Leads applied!A:P'),
       ]);
       renderDashboard(clientRows, ppRows);
+      renderAttribution(clientRows, leadsRows);
+      renderStaleCalls(leadsRows);
       document.getElementById('last-updated').textContent =
         'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
@@ -407,9 +533,6 @@
     const thisThursday = mostRecentThursday(now);
     const lastThursday = new Date(thisThursday);
     lastThursday.setDate(lastThursday.getDate() - 7);
-
-    // Normalize whitespace helper (collapse tabs/multiple spaces to single space)
-    const norm = str => (str || '').replace(/\s+/g, ' ').trim();
 
     // Build client name → coach lookup from Mastersheet
     const coachMap = {};
@@ -440,8 +563,9 @@
     // ── 2. New clients this week with missing data ──
     const clients = clientRows.slice(1); // skip header
     const newClients = clients.filter(r => {
-      const d = parseDate(r[C.DATE_PURCHASED]);
-      return d && d >= lastThursday && d <= thisThursday;
+      const d       = parseDate(r[C.DATE_PURCHASED]);
+      const isResign = (r[C.NEW_OR_RESIGN] || '').trim().toLowerCase().includes('resign');
+      return d && d >= lastThursday && d <= thisThursday && !isResign;
     });
 
     const clientIssues = newClients.reduce((acc, r) => {
@@ -535,9 +659,10 @@
               </div>
               <div class="action-hint">
                 <span>→ Attempt charge in GHL &nbsp;·&nbsp; If it fails: message the coach</span>
-                <button class="copy-btn" id="copybtn-${msgId}" onclick="copyDirect('${msgId}', this)">
-                  📋 Copy Message
-                </button>
+                <div style="display:flex;gap:6px;">
+                  ${emailBtn(email)}
+                  <button class="copy-btn" id="copybtn-${msgId}" onclick="copyDirect('${msgId}', this)">📋 Copy Message</button>
+                </div>
               </div>
             </div>
           </div>`;
@@ -563,6 +688,10 @@
               <div class="card-tags">
                 ${issue.missing.map(m => `<span class="tag orange">Missing: ${esc(m)}</span>`).join('')}
               </div>
+              <div class="action-hint">
+                <span>&nbsp;</span>
+                ${emailBtn(issue.email)}
+              </div>
             </div>
           </div>`;
         });
@@ -572,6 +701,336 @@
     }
 
     document.getElementById('content').innerHTML = html;
+  }
+
+  // ── Tab switching ─────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      if (b.getAttribute('onclick').includes("'" + name + "'")) b.classList.add('active');
+    });
+  }
+
+  // ── Sales Attribution render ──────────────────────────
+  function normSales(name) {
+    // Strip "Dr." prefix and lowercase for loose comparison
+    return (name || '').replace(/^Dr\.\s*/i, '').trim().toLowerCase();
+  }
+
+  function renderAttribution(clientRows, leadsAllRows) {
+    const now = new Date(); now.setHours(0,0,0,0);
+    const thisThursday = mostRecentThursday(now);
+    const lastThursday = new Date(thisThursday);
+    lastThursday.setDate(lastThursday.getDate() - 7);
+
+    // Build email → lead row map from Leads Applied
+    const leadsRows = leadsAllRows.slice(1);
+    const leadsMap  = {};
+    leadsRows.forEach(r => {
+      const email = (r[L.EMAIL] || '').trim().toLowerCase();
+      if (email) leadsMap[email] = r;
+    });
+
+    // New clients this week (exclude resigns)
+    const newClients = clientRows.slice(1).filter(r => {
+      const d        = parseDate(r[C.DATE_PURCHASED]);
+      const isResign = (r[C.NEW_OR_RESIGN] || '').trim().toLowerCase().includes('resign');
+      return d && d >= lastThursday && d <= thisThursday && !isResign;
+    });
+
+    // Find mismatches
+    const mismatches = [];
+    const noLead     = [];
+
+    newClients.forEach(r => {
+      const first  = norm(r[C.FIRST_NAME]);
+      const last   = norm(r[C.LAST_NAME]);
+      const email  = (r[C.EMAIL] || '').trim().toLowerCase();
+      const name   = `${first} ${last}`.trim();
+      const creditSP = norm(r[C.SALES_PERSON]); // who gets credit in Mastersheet
+
+      const lead = leadsMap[email];
+      if (!lead) {
+        noLead.push({ name, email, creditSP, date: parseDate(r[C.DATE_PURCHASED]) });
+        return;
+      }
+
+      const callSP = norm(lead[L.SALES_CALL_WITH]); // who had the call
+
+      if (normSales(callSP) !== normSales(creditSP)) {
+        mismatches.push({
+          name,
+          email,
+          date:      parseDate(r[C.DATE_PURCHASED]),
+          callWith:  (lead[L.SALES_CALL_WITH] || '').trim(),
+          creditTo:  (r[C.SALES_PERSON]       || '').trim(),
+        });
+      }
+    });
+
+    let html = '';
+
+    // Period info
+    html += `<div class="period-bar">
+      Review period: <strong>${fmt(lastThursday)}</strong> → <strong>${fmt(thisThursday)}</strong>
+      &nbsp;·&nbsp; <strong>${newClients.length}</strong> new client${newClients.length !== 1 ? 's' : ''} reviewed
+    </div>`;
+
+    // Summary
+    const total = mismatches.length + noLead.length;
+    html += `<div class="summary">
+      <div class="scard red">
+        <div class="num">${mismatches.length}</div>
+        <div class="lbl">Attribution Mismatches</div>
+      </div>
+      <div class="scard orange">
+        <div class="num">${noLead.length}</div>
+        <div class="lbl">No Lead Record Found</div>
+      </div>
+      <div class="scard ${total === 0 ? 'green' : 'red'}">
+        <div class="num">${total}</div>
+        <div class="lbl">Total Issues</div>
+      </div>
+    </div>`;
+
+    if (total === 0) {
+      html += `<div class="all-clear">✅ All sales attributions match this week!</div>`;
+    } else {
+
+      // Mismatches section
+      if (mismatches.length) {
+        html += `<div class="section">
+          <div class="section-head">
+            <h2>🔀 Attribution Mismatches</h2>
+            <span class="badge red">${mismatches.length}</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+            The person who had the sales call ≠ the person credited in Client Mastersheet.
+          </p>`;
+
+        mismatches.forEach(m => {
+          html += `<div class="card red">
+            <div class="card-icon">🔀</div>
+            <div class="card-body">
+              <div class="card-name">${esc(m.name)}</div>
+              <div class="card-sub">${esc(m.email)} &nbsp;·&nbsp; Purchased ${fmt(m.date)}</div>
+              <div class="card-tags">
+                <span class="tag purple">Call with: ${esc(m.callWith)}</span>
+                <span class="tag red">Credited to: ${esc(m.creditTo)}</span>
+              </div>
+              <div class="action-hint">
+                <span>→ Review and update Sales person in Client Mastersheet if needed</span>
+                ${emailBtn(m.email)}
+              </div>
+            </div>
+          </div>`;
+        });
+
+        html += `</div>`;
+      }
+
+      // No lead record section
+      if (noLead.length) {
+        html += `<div class="section">
+          <div class="section-head">
+            <h2>⚠️ No Lead Record Found</h2>
+            <span class="badge orange">${noLead.length}</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+            These clients purchased but have no matching entry in Leads Applied (matched by email).
+          </p>`;
+
+        noLead.forEach(m => {
+          html += `<div class="card orange">
+            <div class="card-icon">❓</div>
+            <div class="card-body">
+              <div class="card-name">${esc(m.name)}</div>
+              <div class="card-sub">${esc(m.email)} &nbsp;·&nbsp; Purchased ${fmt(m.date)}</div>
+              <div class="card-tags">
+                <span class="tag orange">Credited to: ${esc(m.creditSP)}</span>
+                <span class="tag muted">No entry in Leads Applied</span>
+              </div>
+              <div class="action-hint">
+                <span>→ Check if lead was logged under a different email</span>
+                ${emailBtn(m.email)}
+              </div>
+            </div>
+          </div>`;
+        });
+
+        html += `</div>`;
+      }
+    }
+
+    document.getElementById('content-attribution').innerHTML = html;
+  }
+
+  function copyTeamMsg(btn) {
+    const msg = window._staleCallsMsg || '';
+    navigator.clipboard.writeText(msg).then(() => {
+      btn.textContent = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = '📋 Copy Team Message'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  // ── Stale Confirmed Calls render ─────────────────────
+  function renderStaleCalls(leadsAllRows) {
+    const now = new Date(); now.setHours(0,0,0,0);
+    const leadsRows = leadsAllRows.slice(1);
+
+    // Confirmed calls whose date has already passed
+    const stale = leadsRows.filter(r => {
+      const status    = (r[L.CALL_STATUS] || '').trim().toLowerCase();
+      const callDate  = parseDate(r[L.CALL_DATE]);
+      return status === 'confirmed' && callDate && callDate < now;
+    });
+
+    // Sort oldest first
+    stale.sort((a, b) => parseDate(a[L.CALL_DATE]) - parseDate(b[L.CALL_DATE]));
+
+    // Build dynamic team message with call details
+    const callLines = stale.map(r => {
+      const first     = norm(r[L.FIRST_NAME]);
+      const last      = norm(r[L.LAST_NAME]);
+      const name      = `${first} ${last}`.trim();
+      const callDate  = parseDate(r[L.CALL_DATE]);
+      const salesWith = (r[L.SALES_CALL_WITH] || 'Unknown').trim();
+      const mention   = slackMention(salesWith);
+      return `- ${name} | Call date: ${fmt(callDate)} | With: ${mention}`;
+    }).join('\n');
+
+    window._staleCallsMsg = `Hey team! Quick heads up -- we have a few sales calls that already took place but are still showing as "Confirmed" in the system. Here are the calls we need an update on:\n\n${callLines}\n\nCould everyone take a moment to update the status for any calls you had? Just mark them as Showed, No Show, or Cancelled. Also, if any of these were rescheduled please let us know so we can update the date in the sheet. We want to make sure our data stays accurate and nothing falls through the cracks. Really appreciate it! Peace. :muscle:`;
+
+    let html = '';
+
+    html += `<div class="period-bar">
+      Showing all confirmed calls whose scheduled date has already passed and status was never updated.
+    </div>`;
+
+    html += `<div class="summary">
+      <div class="scard red" style="grid-column:1/3">
+        <div class="num">${stale.length}</div>
+        <div class="lbl">Calls Stuck on Confirmed</div>
+      </div>
+      <div class="scard ${stale.length === 0 ? 'green' : 'orange'}">
+        <div class="num">${stale.length === 0 ? '✓' : '!'}</div>
+        <div class="lbl">${stale.length === 0 ? 'All Clear' : 'Needs Update'}</div>
+      </div>
+    </div>`;
+
+    if (stale.length === 0) {
+      html += `<div class="all-clear">✅ No stale confirmed calls — all statuses are up to date!</div>`;
+    } else {
+      html += `<div class="section">
+        <div class="section-head">
+          <h2>📞 Calls Stuck on "Confirmed"</h2>
+          <span class="badge red">${stale.length}</span>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">
+          These calls already passed but still show "Confirmed". Update to Showed, No Show, or Cancelled.
+        </p>
+        <div style="margin-bottom:16px;">
+          <button class="copy-btn" id="team-msg-btn" onclick="copyTeamMsg(this)">📋 Copy Team Message</button>
+        </div>`;
+
+      stale.forEach(r => {
+        const first     = norm(r[L.FIRST_NAME]);
+        const last      = norm(r[L.LAST_NAME]);
+        const name      = `${first} ${last}`.trim();
+        const email     = (r[L.EMAIL] || '').trim();
+        const callDate  = parseDate(r[L.CALL_DATE]);
+        const salesWith = (r[L.SALES_CALL_WITH] || '—').trim();
+        const days      = callDate ? Math.floor((now - callDate) / 86400000) : 0;
+
+        html += `<div class="card red">
+          <div class="card-icon">📞</div>
+          <div class="card-body">
+            <div class="card-name">${esc(name)}</div>
+            <div class="card-sub">${esc(email)}</div>
+            <div class="card-tags">
+              <span class="tag red">Call was ${fmt(callDate)}</span>
+              <span class="tag red">${days} day${days !== 1 ? 's' : ''} ago</span>
+              <span class="tag purple">With: ${esc(salesWith)}</span>
+            </div>
+            <div class="action-hint">
+              <span>→ Update status in Leads Applied (Showed / No Show / Cancelled)</span>
+              ${emailBtn(email)}
+            </div>
+          </div>
+        </div>`;
+      });
+
+      html += `</div>`;
+    }
+
+    document.getElementById('content-stale-calls').innerHTML = html;
+  }
+
+  // ── Slack ID Settings ────────────────────────────────
+  // Default salespeople — user can add/remove via the modal
+  const DEFAULT_PEOPLE = ['Dr. Joey', 'Deniz', 'Brent', 'Bernardo', 'Ceci', 'Emery', 'Miguel Mendez'];
+
+  function loadSlackIds() {
+    try { return JSON.parse(localStorage.getItem('slackIds') || '{}'); }
+    catch { return {}; }
+  }
+
+  function saveSettings() {
+    const rows = document.querySelectorAll('.settings-row');
+    const ids  = {};
+    rows.forEach(row => {
+      const name = row.querySelector('.sname').value.trim();
+      const id   = row.querySelector('.sid').value.trim();
+      if (name && id) ids[name.toLowerCase()] = id;
+    });
+    localStorage.setItem('slackIds', JSON.stringify(ids));
+    closeSettings();
+  }
+
+  function addSettingsRow(name = '', id = '') {
+    const container = document.getElementById('settings-rows');
+    const div = document.createElement('div');
+    div.className = 'settings-row';
+    div.innerHTML = `
+      <input class="settings-input sname" placeholder="Salesperson name" value="${esc(name)}">
+      <div style="display:flex;gap:6px;">
+        <input class="settings-input sid" placeholder="@handle" value="${esc(id)}" style="flex:1;">
+        <button onclick="this.closest('.settings-row').remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;">✕</button>
+      </div>`;
+    container.appendChild(div);
+  }
+
+  function openSettings() {
+    const saved = loadSlackIds();
+    const container = document.getElementById('settings-rows');
+    container.innerHTML = '';
+    // Show saved entries first, then fill in any defaults not yet added
+    const savedNames = Object.keys(saved);
+    if (savedNames.length > 0) {
+      savedNames.forEach(name => {
+        const display = DEFAULT_PEOPLE.find(p => p.toLowerCase() === name) || name;
+        addSettingsRow(display, saved[name]);
+      });
+    } else {
+      DEFAULT_PEOPLE.forEach(name => addSettingsRow(name, ''));
+    }
+    document.getElementById('settings-overlay').classList.add('open');
+  }
+
+  function closeSettings() {
+    document.getElementById('settings-overlay').classList.remove('open');
+  }
+
+  // Replace salesperson name with Slack handle if saved
+  function slackMention(name) {
+    const ids    = loadSlackIds();
+    const handle = ids[name.trim().toLowerCase()];
+    if (!handle) return name;
+    // Ensure it starts with @
+    return handle.startsWith('@') ? handle : `@${handle}`;
   }
 
   // ── Theme toggle ─────────────────────────────────────
@@ -646,6 +1105,24 @@ Let me know if you need anything on our end!`;
     if (e.target.id === 'modal-overlay') closeModal();
   });
 </script>
+
+<!-- Settings Modal -->
+<div class="settings-overlay" id="settings-overlay">
+  <div class="settings-modal">
+    <h3>⚙️ Slack User IDs</h3>
+    <p>Enter each salesperson's Slack handle (e.g. @joey or @deniz). Find it in Slack: click their profile and look for the username that starts with @. These are saved locally in your browser.</p>
+    <hr class="settings-divider">
+    <div id="settings-rows"></div>
+    <div style="margin-top:6px;">
+      <button class="btn btn-ghost" id="add-person-btn" onclick="addSettingsRow()" style="width:100%;margin-bottom:10px;">+ Add Person</button>
+    </div>
+    <hr class="settings-divider">
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSettings()">💾 Save</button>
+    </div>
+  </div>
+</div>
 
 <!-- Message Modal -->
 <div class="modal-overlay" id="modal-overlay">
