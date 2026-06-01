@@ -176,6 +176,88 @@
       flex-shrink: 0;
     }
     .copy-btn:hover { background: rgba(108,99,255,0.28); }
+
+    /* ── Follow-up tracker ── */
+    .followup-tracker {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .followup-tracker label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .followup-tracker input[type="date"] {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 12px;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    .followup-tracker input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.6);
+      cursor: pointer;
+    }
+    .attempt-counter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .attempt-num {
+      font-size: 20px;
+      font-weight: 800;
+      min-width: 28px;
+      text-align: center;
+    }
+    .attempt-num.at0 { color: var(--muted); }
+    .attempt-num.at1 { color: var(--orange); }
+    .attempt-num.at2 { color: var(--red); }
+    .btn-attempt {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      transition: background .15s;
+    }
+    .btn-attempt:hover { background: var(--border); }
+    .escalate-flag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--red-dim);
+      color: var(--red);
+      border: 1px solid var(--red);
+      animation: pulse-flag 1.5s infinite;
+    }
+    @keyframes pulse-flag {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .55; }
+    }
+    .status-badge-tracker {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .status-badge-tracker.pending  { background: rgba(136,146,176,0.15); color: var(--muted); }
+    .status-badge-tracker.followup { background: var(--orange-dim); color: var(--orange); }
     .copy-btn.copied { background: var(--green-dim); border-color: var(--green); color: var(--green); }
 
     /* Message preview modal */
@@ -483,7 +565,46 @@
       .replace(/>/g, '&gt;');
   }
 
-  // ── API fetch ────────────────────────────────────────
+  // ── Follow-up tracker (localStorage) ─────────────────
+  const FU_KEY = 'fu_tracker_v1';
+
+  function fuLoad() {
+    try { return JSON.parse(localStorage.getItem(FU_KEY)) || {}; } catch { return {}; }
+  }
+  function fuSave(data) {
+    localStorage.setItem(FU_KEY, JSON.stringify(data));
+  }
+  function fuKey(name) {
+    return name.trim().toLowerCase().replace(/\s+/g, '_');
+  }
+  function fuGet(name) {
+    const all = fuLoad();
+    return all[fuKey(name)] || { attempts: 0, lastContact: '' };
+  }
+  function fuUpdate(name, patch) {
+    const all  = fuLoad();
+    const k    = fuKey(name);
+    all[k]     = { ...fuGet(name), ...patch };
+    fuSave(all);
+    renderPaymentsData(); // re-render to reflect changes
+  }
+  function fuSetDate(name, val) { fuUpdate(name, { lastContact: val }); }
+  function fuAddAttempt(name) {
+    const cur = fuGet(name).attempts;
+    if (cur < 2) fuUpdate(name, { attempts: cur + 1 });
+  }
+  function fuReset(name) { fuUpdate(name, { attempts: 0, lastContact: '' }); }
+
+  // Cache last render data for re-renders
+  window._lastRenderArgs = null;
+
+  function renderPaymentsData() {
+    if (window._lastRenderArgs) {
+      renderDashboard(...window._lastRenderArgs);
+    }
+  }
+
+
   async function fetchRange(range) {
     const bust = Date.now(); // cache buster — forces fresh data every call
     const url =
@@ -511,6 +632,7 @@
         fetchRange('Payment Plan!A:F'),
         fetchRange('Leads applied!A:P'),
       ]);
+      window._lastRenderArgs = [clientRows, ppRows];
       renderDashboard(clientRows, ppRows);
       renderAttribution(clientRows, leadsRows);
       renderStaleCalls(leadsRows);
@@ -643,8 +765,23 @@
           const days    = date ? Math.floor((now - date) / 86400000) : 0;
           const coach   = coachMap[name.toLowerCase()] || '';
           const msgId   = `msg-${i}`;
+          const safeN   = name.replace(/'/g, "\\'");
 
           window._msgData[msgId] = { name, amount, date: fmt(date), coach };
+
+          // Follow-up tracker state
+          const fu       = fuGet(name);
+          const attempts = fu.attempts || 0;
+          const lastC    = fu.lastContact || '';
+
+          let statusHtml = '';
+          if (attempts === 0) {
+            statusHtml = `<span class="status-badge-tracker pending">⬜ Not contacted</span>`;
+          } else if (attempts === 1) {
+            statusHtml = `<span class="status-badge-tracker followup">🟡 2nd attempt pending</span>`;
+          } else {
+            statusHtml = `<span class="escalate-flag">🔴 Escalate → Bernardo</span>`;
+          }
 
           html += `<div class="card red">
             <div class="card-icon">💳</div>
@@ -657,6 +794,25 @@
                 <span class="tag orange">${esc(amount)}</span>
                 ${plan ? `<span class="tag purple">Payment ${esc(plan)}</span>` : ''}
                 ${coach ? `<span class="tag muted">Coach: ${esc(coach)}</span>` : ''}
+              </div>
+              <div class="followup-tracker">
+                <div>
+                  <label>Last Contact</label>
+                  <input type="date" value="${lastC}" onchange="fuSetDate('${safeN}', this.value)" />
+                </div>
+                <div>
+                  <label>Attempts</label>
+                  <div class="attempt-counter">
+                    <span class="attempt-num at${attempts}">${attempts}/2</span>
+                    ${attempts < 2
+                      ? `<button class="btn-attempt" onclick="fuAddAttempt('${safeN}')">+1</button>`
+                      : ''}
+                    ${attempts > 0
+                      ? `<button class="btn-attempt" onclick="fuReset('${safeN}')" title="Reset">↺</button>`
+                      : ''}
+                  </div>
+                </div>
+                <div>${statusHtml}</div>
               </div>
               <div class="action-hint">
                 <span>→ Attempt charge in GHL &nbsp;·&nbsp; If it fails: message the coach</span>
