@@ -13,8 +13,6 @@
     --steel-mid: #2278AC;
     --steel-light: #3899CC;
     --steel-pale: #1a3a52;
-    --accent: #3899CC;
-    --accent-glow: rgba(56,153,204,0.15);
     --gold: #C9A84C;
     --gold-pale: rgba(201,168,76,0.1);
     --green: #2ECC71;
@@ -42,7 +40,6 @@
     overflow-x: hidden;
   }
 
-  /* Background texture */
   body::before {
     content: '';
     position: fixed;
@@ -54,7 +51,6 @@
     z-index: 0;
   }
 
-  /* Grid lines background */
   body::after {
     content: '';
     position: fixed;
@@ -67,15 +63,12 @@
     z-index: 0;
   }
 
-  /* SETUP SCREEN */
+  /* ── SETUP SCREEN ── */
   #setup-screen {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: var(--navy);
     z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
   }
 
   .setup-card {
@@ -83,735 +76,260 @@
     border: 1px solid var(--border-bright);
     border-radius: 16px;
     padding: 48px;
-    width: 480px;
-    max-width: 90vw;
-    position: relative;
-    overflow: hidden;
+    width: 480px; max-width: 90vw;
+    position: relative; overflow: hidden;
   }
 
   .setup-card::before {
     content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
     background: linear-gradient(90deg, transparent, var(--steel-mid), var(--steel-light), transparent);
   }
 
-  .setup-logo {
-    font-family: var(--font-display);
-    font-size: 28px;
-    letter-spacing: 3px;
-    color: var(--steel-light);
-    margin-bottom: 8px;
-  }
-
-  .setup-subtitle {
-    color: var(--text-muted);
-    font-size: 13px;
-    margin-bottom: 36px;
-    letter-spacing: 0.5px;
-  }
-
-  .setup-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    display: block;
-  }
+  .setup-logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 3px; color: var(--steel-light); margin-bottom: 8px; }
+  .setup-subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 36px; letter-spacing: 0.5px; }
+  .setup-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
 
   .setup-input {
     width: 100%;
-    background: var(--navy);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    outline: none;
-    margin-bottom: 20px;
-    transition: border-color 0.2s;
+    background: var(--navy); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px; color: var(--text); font-family: var(--font-mono); font-size: 13px;
+    outline: none; margin-bottom: 20px; transition: border-color 0.2s;
   }
-
   .setup-input:focus { border-color: var(--steel-mid); }
-
   .setup-input::placeholder { color: var(--text-dim); }
 
   .setup-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--steel-mid), var(--steel-light));
-    border: none;
-    border-radius: 8px;
-    padding: 14px;
-    color: white;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
+    border: none; border-radius: 8px; padding: 14px;
+    color: white; font-family: var(--font-body); font-size: 14px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
     transition: opacity 0.2s, transform 0.1s;
   }
-
   .setup-btn:hover { opacity: 0.9; transform: translateY(-1px); }
   .setup-btn:active { transform: translateY(0); }
 
   .setup-error {
-    background: var(--red-pale);
-    border: 1px solid rgba(231,76,60,0.3);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--red);
-    margin-top: 12px;
-    display: none;
+    background: var(--red-pale); border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--red);
+    margin-top: 12px; display: none;
   }
 
-  /* HEADER */
+  /* ── HEADER ── */
   .header {
-    position: relative;
-    z-index: 10;
+    position: relative; z-index: 10;
     padding: 24px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
-    background: rgba(8,13,26,0.9);
-    backdrop-filter: blur(10px);
+    background: rgba(8,13,26,0.9); backdrop-filter: blur(10px);
   }
 
   .header-left { display: flex; align-items: center; gap: 20px; }
-
-  .logo {
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: var(--steel-light);
-  }
-
+  .logo { font-family: var(--font-display); font-size: 22px; letter-spacing: 3px; color: var(--steel-light); }
   .logo span { color: var(--text-muted); font-size: 12px; letter-spacing: 2px; font-family: var(--font-body); font-weight: 400; display: block; }
-
-  .header-divider {
-    width: 1px; height: 32px;
-    background: var(--border);
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .last-updated {
-    font-size: 11px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-  }
+  .header-divider { width: 1px; height: 32px; background: var(--border); }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .last-updated { font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); }
 
   .refresh-btn {
-    background: var(--navy-light);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 7px 14px;
-    color: var(--text-muted);
-    font-size: 12px;
-    font-family: var(--font-body);
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    background: var(--navy-light); border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 14px; color: var(--text-muted); font-size: 12px; font-family: var(--font-body);
+    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
   }
-
   .refresh-btn:hover { border-color: var(--steel-mid); color: var(--steel-light); }
 
-  /* CONTROLS BAR */
+  /* ── CONTROLS ── */
   .controls-bar {
-    position: relative;
-    z-index: 10;
+    position: relative; z-index: 10;
     padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
     border-bottom: 1px solid var(--border);
   }
 
   .control-group { display: flex; align-items: center; gap: 10px; }
-
-  .control-label {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .select-wrapper {
-    position: relative;
-  }
+  .control-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+  .select-wrapper { position: relative; }
 
   select {
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 36px 8px 14px;
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 500;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    transition: border-color 0.2s;
-    min-width: 140px;
+    background: var(--navy-mid); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 36px 8px 14px; color: var(--text); font-family: var(--font-body);
+    font-size: 13px; font-weight: 500; outline: none; cursor: pointer;
+    appearance: none; transition: border-color 0.2s; min-width: 140px;
   }
-
   select:focus { border-color: var(--steel-mid); }
-
   .select-wrapper::after {
-    content: '▾';
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    pointer-events: none;
-    font-size: 12px;
+    content: '▾'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); pointer-events: none; font-size: 12px;
   }
 
   .period-pills {
-    display: flex;
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 3px;
-    gap: 3px;
+    display: flex; background: var(--navy-mid); border: 1px solid var(--border);
+    border-radius: 8px; padding: 3px; gap: 3px;
   }
-
   .period-pill {
-    padding: 5px 14px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    border: none;
-    background: transparent;
+    padding: 5px 14px; border-radius: 5px; font-size: 12px; font-weight: 500;
+    color: var(--text-muted); cursor: pointer; transition: all 0.15s;
+    border: none; background: transparent;
   }
+  .period-pill.active { background: var(--steel-mid); color: white; }
 
-  .period-pill.active {
-    background: var(--steel-mid);
-    color: white;
-  }
-
-  /* MAIN CONTENT */
+  /* ── MAIN ── */
   .main {
-    position: relative;
-    z-index: 5;
-    padding: 32px 40px;
-    max-width: 1400px;
-    margin: 0 auto;
+    position: relative; z-index: 5;
+    padding: 32px 40px; max-width: 1400px; margin: 0 auto;
   }
 
-  /* CLOSER NAME DISPLAY */
+  /* ── HERO ── */
   .closer-hero {
     margin-bottom: 28px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    display: flex; align-items: flex-end; justify-content: space-between;
   }
+  .closer-name { font-family: var(--font-display); font-size: 52px; letter-spacing: 4px; color: var(--text); line-height: 1; }
+  .closer-period { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 6px; }
+  .closer-badge { display: flex; align-items: center; gap: 8px; border-radius: 24px; padding: 8px 18px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
 
-  .closer-name {
-    font-family: var(--font-display);
-    font-size: 52px;
-    letter-spacing: 4px;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  .closer-period {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    letter-spacing: 1px;
-    margin-top: 6px;
-  }
-
-  .closer-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--green-pale);
-    border: 1px solid rgba(46,204,113,0.2);
-    border-radius: 24px;
-    padding: 8px 18px;
-    font-size: 12px;
-    color: var(--green);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  /* STAT CARDS GRID */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-  }
+  /* ── STAT CARDS ── */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 
   .stat-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 22px 24px;
-    position: relative;
-    overflow: hidden;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 22px 24px; position: relative; overflow: hidden;
     transition: border-color 0.2s, transform 0.2s;
   }
-
-  .stat-card:hover {
-    border-color: var(--border-bright);
-    transform: translateY(-2px);
-  }
-
-  .stat-card.accent {
-    border-color: rgba(56,153,204,0.3);
-    background: linear-gradient(135deg, var(--navy-mid), rgba(34,120,172,0.08));
-  }
-
-  .stat-card.gold {
-    border-color: rgba(201,168,76,0.25);
-    background: linear-gradient(135deg, var(--navy-mid), rgba(201,168,76,0.05));
-  }
-
-  .stat-card.green {
-    border-color: rgba(46,204,113,0.2);
-    background: linear-gradient(135deg, var(--navy-mid), rgba(46,204,113,0.05));
-  }
-
+  .stat-card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+  .stat-card.accent { border-color: rgba(56,153,204,0.3); background: linear-gradient(135deg, var(--navy-mid), rgba(34,120,172,0.08)); }
+  .stat-card.gold   { border-color: rgba(201,168,76,0.25); background: linear-gradient(135deg, var(--navy-mid), rgba(201,168,76,0.05)); }
+  .stat-card.green  { border-color: rgba(46,204,113,0.2);  background: linear-gradient(135deg, var(--navy-mid), rgba(46,204,113,0.05)); }
   .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(56,153,204,0.4), transparent);
   }
+  .stat-card.gold::before  { background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); }
+  .stat-card.green::before { background: linear-gradient(90deg, transparent, rgba(46,204,113,0.3), transparent); }
 
-  .stat-card.gold::before {
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
-  }
-
-  .stat-card.green::before {
-    background: linear-gradient(90deg, transparent, rgba(46,204,113,0.3), transparent);
-  }
-
-  .stat-label {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-
-  .stat-value {
-    font-family: var(--font-display);
-    font-size: 38px;
-    letter-spacing: 1px;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .stat-value.money { color: var(--steel-light); }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 10px; }
+  .stat-value { font-family: var(--font-display); font-size: 38px; letter-spacing: 1px; color: var(--text); line-height: 1; margin-bottom: 6px; }
+  .stat-value.money    { color: var(--steel-light); }
   .stat-value.gold-val { color: var(--gold); }
-  .stat-value.green-val { color: var(--green); }
+  .stat-value.green-val{ color: var(--green); }
+  .stat-sub { font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); }
 
-  .stat-sub {
-    font-size: 11px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-  }
+  /* ── LAYOUT ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
 
-  .stat-delta {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 7px;
-    border-radius: 4px;
-    margin-top: 8px;
-  }
-
-  .stat-delta.up { background: var(--green-pale); color: var(--green); }
-  .stat-delta.down { background: var(--red-pale); color: var(--red); }
-  .stat-delta.neutral { background: rgba(107,133,160,0.1); color: var(--text-muted); }
-
-  /* TWO COLUMN LAYOUT */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-
-  .three-col {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-
-  /* PANEL */
-  .panel {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .panel-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .panel-title {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 700;
-  }
-
+  /* ── PANEL ── */
+  .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .panel-header { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .panel-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
   .panel-body { padding: 20px 24px; }
 
-  /* METRIC ROWS */
-  .metric-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(56,153,204,0.06);
-  }
-
+  /* ── METRIC ROWS ── */
+  .metric-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(56,153,204,0.06); }
   .metric-row:last-child { border-bottom: none; }
-
-  .metric-name {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  .metric-val {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
+  .metric-name { font-size: 13px; color: var(--text-muted); }
+  .metric-val { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--text); }
   .metric-val.accent-val { color: var(--steel-light); }
-  .metric-val.gold-val { color: var(--gold); }
-  .metric-val.green-val { color: var(--green); }
-  .metric-val.red-val { color: var(--red); }
+  .metric-val.gold-val   { color: var(--gold); }
+  .metric-val.green-val  { color: var(--green); }
+  .metric-val.red-val    { color: var(--red); }
 
-  /* PROGRESS BARS */
+  /* ── PROGRESS BARS ── */
   .progress-container { margin-bottom: 16px; }
   .progress-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
   .progress-label { font-size: 12px; color: var(--text-muted); }
   .progress-pct { font-size: 12px; font-family: var(--font-mono); color: var(--text); font-weight: 500; }
-  .progress-bar {
-    height: 6px;
-    background: var(--navy-light);
-    border-radius: 3px;
-    overflow: hidden;
-  }
+  .progress-bar { height: 6px; background: var(--navy-light); border-radius: 3px; overflow: hidden; }
   .progress-fill {
-    height: 100%;
-    border-radius: 3px;
+    height: 100%; border-radius: 3px;
     transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
     position: relative;
   }
   .progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 4px; height: 100%;
-    background: rgba(255,255,255,0.5);
-    border-radius: 2px;
-  }
-  .progress-fill.blue { background: linear-gradient(90deg, var(--steel-mid), var(--steel-light)); }
-  .progress-fill.gold { background: linear-gradient(90deg, #9a7a30, var(--gold)); }
-  .progress-fill.green { background: linear-gradient(90deg, #1a8a4a, var(--green)); }
-
-  /* CALLS TABLE */
-  .calls-table-wrap {
-    overflow-x: auto;
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 4px; height: 100%; background: rgba(255,255,255,0.5); border-radius: 2px;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
+  /* ── CALLS TABLE ── */
+  .calls-table-wrap { overflow-x: auto; max-height: 460px; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; }
   thead th {
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    font-weight: 700;
-    padding: 10px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 700; padding: 10px 16px;
+    text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap;
+    position: sticky; top: 0; background: var(--navy-mid); z-index: 2;
   }
-
-  tbody tr {
-    border-bottom: 1px solid rgba(56,153,204,0.05);
-    transition: background 0.15s;
-  }
-
+  tbody tr { border-bottom: 1px solid rgba(56,153,204,0.05); transition: background 0.15s; }
   tbody tr:hover { background: rgba(56,153,204,0.04); }
   tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 11px 16px; font-size: 13px; color: var(--text); white-space: nowrap; }
 
-  tbody td {
-    padding: 11px 16px;
-    font-size: 13px;
-    color: var(--text);
-    white-space: nowrap;
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-  }
-
-  .badge-showed { background: rgba(56,153,204,0.12); color: var(--steel-light); border: 1px solid rgba(56,153,204,0.25); }
-  .badge-closed { background: var(--green-pale); color: var(--green); border: 1px solid rgba(46,204,113,0.25); }
-  .badge-noshow { background: var(--red-pale); color: var(--red); border: 1px solid rgba(231,76,60,0.25); }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; }
+  .badge-showed    { background: rgba(56,153,204,0.12); color: var(--steel-light); border: 1px solid rgba(56,153,204,0.25); }
+  .badge-closed    { background: var(--green-pale); color: var(--green); border: 1px solid rgba(46,204,113,0.25); }
+  .badge-noshow    { background: var(--red-pale); color: var(--red); border: 1px solid rgba(231,76,60,0.25); }
   .badge-cancelled { background: rgba(107,133,160,0.1); color: var(--text-muted); border: 1px solid rgba(107,133,160,0.2); }
-  .badge-followup { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
-  .badge-disq { background: rgba(150,100,200,0.1); color: #b07de0; border: 1px solid rgba(150,100,200,0.2); }
+  .badge-followup  { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+  .badge-disq      { background: rgba(150,100,200,0.1); color: #b07de0; border: 1px solid rgba(150,100,200,0.2); }
 
-  /* COMMISSION BREAKDOWN */
+  /* ── COMMISSION ROWS ── */
   .commission-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 0;
-    border-bottom: 1px solid rgba(56,153,204,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 0; border-bottom: 1px solid rgba(56,153,204,0.06);
   }
-
   .commission-row:last-child { border-bottom: none; }
-
+  .commission-row.is-refund {
+    background: rgba(231,76,60,0.05); border-radius: 6px;
+    padding: 10px 10px; margin: 3px -10px;
+    border-bottom: none;
+  }
   .commission-left { display: flex; flex-direction: column; gap: 2px; }
-
   .commission-name { font-size: 13px; font-weight: 500; color: var(--text); }
-
+  .commission-name.refund-name { color: var(--red); }
   .commission-date { font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); }
-
   .commission-right { text-align: right; }
-
   .commission-amount { font-family: var(--font-mono); font-size: 15px; font-weight: 500; color: var(--gold); }
-
-  .commission-deal { font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); }
+  .commission-amount.refund-amt { color: var(--red); }
+  .commission-sub { font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); }
+  .commission-sub.refund-sub { color: rgba(231,76,60,0.7); }
 
   .refund-tag {
-    font-size: 10px;
-    color: var(--red);
-    background: var(--red-pale);
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin-top: 3px;
-    display: inline-block;
+    font-size: 10px; color: var(--red); background: var(--red-pale);
+    border-radius: 4px; padding: 2px 6px; margin-top: 2px;
+    display: inline-block; letter-spacing: 0.5px;
   }
 
-  /* TREND TABLE */
-  .trend-table { width: 100%; }
-
-  .trend-row {
-    display: grid;
-    grid-template-columns: 110px 1fr 1fr;
-    align-items: center;
-    padding: 9px 0;
-    border-bottom: 1px solid rgba(56,153,204,0.06);
-    gap: 16px;
+  .comm-net-row {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border); margin-top: 14px; padding-top: 14px;
   }
 
-  .trend-row:last-child { border-bottom: none; }
-
-  .trend-month { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
-
-  .trend-bar-wrap { display: flex; align-items: center; gap: 8px; }
-
-  .trend-bar-bg {
-    flex: 1;
-    height: 5px;
-    background: var(--navy-light);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .trend-fill {
-    height: 100%;
-    border-radius: 3px;
-    background: linear-gradient(90deg, var(--steel-mid), var(--steel-light));
-    transition: width 0.6s ease;
-  }
-
-  .trend-fill.company { background: linear-gradient(90deg, rgba(201,168,76,0.5), var(--gold)); }
-
-  .trend-pct { font-size: 11px; font-family: var(--font-mono); color: var(--text); min-width: 40px; text-align: right; }
-
-  /* COMPARISON TABLE */
-  .comparison-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .comp-cell {
-    background: var(--navy-mid);
-    padding: 14px 16px;
-  }
-
-  .comp-header {
-    background: var(--navy-light);
-    padding: 10px 16px;
-  }
-
-  .comp-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
-  .comp-val { font-size: 16px; font-family: var(--font-mono); font-weight: 500; color: var(--text); margin-top: 4px; }
-  .comp-val.highlight { color: var(--steel-light); }
-  .comp-val.up { color: var(--green); }
-  .comp-val.down { color: var(--red); }
-
-  /* LOADING STATE */
+  /* ── LOADING ── */
   .loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: var(--navy);
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 16px;
+    position: fixed; inset: 0; background: var(--navy); z-index: 50;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px;
   }
+  .loading-text { font-family: var(--font-display); font-size: 20px; letter-spacing: 4px; color: var(--steel-light); animation: flicker 1.5s infinite; }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .loading-bar { width: 200px; height: 2px; background: var(--navy-light); border-radius: 1px; overflow: hidden; }
+  .loading-progress { height: 100%; background: linear-gradient(90deg, var(--steel-mid), var(--steel-light)); animation: loadprog 1.5s infinite; }
+  @keyframes loadprog { 0% { width: 0%; } 100% { width: 100%; } }
 
-  .loading-text {
-    font-family: var(--font-display);
-    font-size: 20px;
-    letter-spacing: 4px;
-    color: var(--steel-light);
-    animation: flicker 1.5s infinite;
-  }
+  .empty-state { padding: 40px; text-align: center; color: var(--text-dim); font-size: 13px; }
+  .fade-in { animation: fadeIn 0.4s ease forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .loading-bar {
-    width: 200px;
-    height: 2px;
-    background: var(--navy-light);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .loading-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--steel-mid), var(--steel-light));
-    border-radius: 1px;
-    animation: loadprogress 1.5s infinite;
-  }
-
-  @keyframes loadprogress {
-    0% { width: 0%; transform: translateX(0); }
-    100% { width: 100%; transform: translateX(0); }
-  }
-
-  /* EMPTY/ERROR */
-  .empty-state {
-    padding: 40px;
-    text-align: center;
-    color: var(--text-dim);
-    font-size: 13px;
-  }
-
-  /* ANIMATIONS */
-  .fade-in {
-    animation: fadeIn 0.4s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* SCROLLBAR */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: var(--navy); }
   ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--steel-pale); }
 
-  /* SECTION LABEL */
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    font-weight: 700;
-    margin-bottom: 14px;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* RESPONSIVE */
   @media (max-width: 1100px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .three-col { grid-template-columns: 1fr; }
     .two-col { grid-template-columns: 1fr; }
   }
-
   @media (max-width: 700px) {
     .main { padding: 20px; }
     .header { padding: 16px 20px; }
@@ -824,20 +342,17 @@
 </head>
 <body>
 
-<!-- SETUP SCREEN -->
+<!-- SETUP -->
 <div id="setup-screen">
   <div class="setup-card">
     <div class="setup-logo">STRONG STANDARD</div>
     <div class="setup-subtitle">Closer Performance Dashboard</div>
-
     <label class="setup-label">Google API Key</label>
     <input type="password" class="setup-input" id="api-key-input" placeholder="AIzaSy..." />
-
     <label class="setup-label">Google Sheet ID</label>
     <input type="text" class="setup-input" id="sheet-id-input"
       placeholder="1t19JjlIjliu1I5AEuxmDDM9..."
       value="1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ" />
-
     <button class="setup-btn" onclick="initDashboard()">LOAD DASHBOARD</button>
     <div class="setup-error" id="setup-error"></div>
   </div>
@@ -849,15 +364,14 @@
   <div class="loading-bar"><div class="loading-progress"></div></div>
 </div>
 
-<!-- MAIN APP -->
+<!-- APP -->
 <div id="app" style="display:none">
 
-  <!-- HEADER -->
   <div class="header">
     <div class="header-left">
       <div class="logo">STRONG STANDARD <span>CLOSER DASHBOARD</span></div>
       <div class="header-divider"></div>
-      <div style="font-size:12px; color:var(--text-dim);">v2.0</div>
+      <div style="font-size:12px;color:var(--text-dim)">v3.0</div>
     </div>
     <div class="header-right">
       <div class="last-updated" id="last-updated">—</div>
@@ -866,35 +380,29 @@
     </div>
   </div>
 
-  <!-- CONTROLS -->
   <div class="controls-bar">
     <div class="control-group">
       <span class="control-label">Closer</span>
       <div class="select-wrapper">
-        <select id="closer-select" onchange="onFilterChange()">
-          <option value="">Loading...</option>
-        </select>
+        <select id="closer-select" onchange="onCloserChange()"><option>Loading…</option></select>
       </div>
     </div>
     <div class="control-group">
       <span class="control-label">Period</span>
-      <div class="period-pills" id="period-pills">
-        <button class="period-pill active" data-period="monthly" onclick="setPeriod('monthly',this)">Monthly</button>
-        <button class="period-pill" data-period="quarterly" onclick="setPeriod('quarterly',this)">Quarterly</button>
-        <button class="period-pill" data-period="all" onclick="setPeriod('all',this)">All Time</button>
+      <div class="period-pills">
+        <button class="period-pill active" onclick="setPeriod('monthly',this)">Monthly</button>
+        <button class="period-pill"        onclick="setPeriod('quarterly',this)">Quarterly</button>
+        <button class="period-pill"        onclick="setPeriod('all',this)">All Time</button>
       </div>
     </div>
     <div class="control-group" id="month-control">
       <span class="control-label">Month</span>
       <div class="select-wrapper">
-        <select id="month-select" onchange="onFilterChange()">
-          <option value="">Loading...</option>
-        </select>
+        <select id="month-select" onchange="onMonthChange()"><option>—</option></select>
       </div>
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <div class="main" id="main-content">
     <div class="empty-state">Select a closer to view the dashboard.</div>
   </div>
@@ -902,474 +410,409 @@
 </div>
 
 <script>
-// =========================================================
-// CONFIG & STATE
-// =========================================================
-let API_KEY = '';
-let SHEET_ID = '';
-let allData = {};
-let currentCloser = '';
-let currentPeriod = 'monthly';
-let currentMonth = '';
+// ═══════════════════════════════════════════════════════════════
+// COLUMN MAPS  (0-based indices)
+// ═══════════════════════════════════════════════════════════════
 
-const SHEET_NAMES = {
-  calls: 'Calls Log',           // adjust to real tab names
-  commissions: 'Commission',
-  mastersheet: 'Mastersheet',
+// IMPORT - LEADS APPLIED
+const LA = {
+  firstName : 0,   // A
+  lastName  : 1,   // B
+  callDate  : 10,  // K  Sales call booked date
+  outcome   : 11,  // L  Call status: Showed / No Show / Cancelled / Disqualified on sales call / Follow Up
+  closer    : 12,  // M  Sales call with
+  endInSale : 13,  // N  "yes" / "no"
 };
 
-// Tab names from what we know in the sheet:
-const TAB_CALLS = "'Closer - Deniz  - Dashboard Visual V2'";
-const TAB_MASTERSHEET_1_1 = "'1:1 Coaching'";
-const TAB_MEMBERSHIP = "'Membership'";
+// IMPORT - MASTERSHEET
+const MS = {
+  firstName    : 0,   // A
+  lastName     : 1,   // B
+  dealValue    : 4,   // E
+  saleDate     : 5,   // F
+  startDate    : 6,   // G
+  closer       : 12,  // M  Sales person
+  type         : 18,  // S  "new"
+  refundFlag   : 24,  // Y  TRUE = refunded (exclude from commission calc)
+  cashCollected: 25,  // Z
+  payoutDate   : 26,  // AA
+  refundDate   : 30,  // AE
+};
 
-// =========================================================
-// INIT
-// =========================================================
+// IMPORT - GC MASTERSHEET
+const GC = {
+  firstName    : 0,   // A
+  lastName     : 1,   // B
+  dealValue    : 4,   // E
+  saleDate     : 5,   // F
+  closer       : 10,  // K
+  cashCollected: 16,  // Q
+  payoutDate   : 17,  // R
+  excludeFlag  : 18,  // S  TRUE = exclude
+};
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let API_KEY  = '';
+let SHEET_ID = '';
+
+const raw = { la: [], ms: [], gc: [] };
+
+let currentCloser  = '';
+let currentPeriod  = 'monthly';
+let currentMonth   = '';
+let availableClosers = [];
+
+// ═══════════════════════════════════════════════════════════════
+// SETUP / INIT
+// ═══════════════════════════════════════════════════════════════
 async function initDashboard() {
-  API_KEY = document.getElementById('api-key-input').value.trim();
+  API_KEY  = document.getElementById('api-key-input').value.trim();
   SHEET_ID = document.getElementById('sheet-id-input').value.trim();
+  if (!API_KEY || !SHEET_ID) return showSetupError('Please enter both API Key and Sheet ID.');
 
-  if (!API_KEY || !SHEET_ID) {
-    showSetupError('Please enter both API Key and Sheet ID.');
-    return;
-  }
-
-  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('setup-screen').style.display    = 'none';
   document.getElementById('loading-overlay').style.display = 'flex';
-
   try {
     await loadAllData();
     document.getElementById('loading-overlay').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     buildUI();
-  } catch(e) {
+  } catch (e) {
     document.getElementById('loading-overlay').style.display = 'none';
-    document.getElementById('setup-screen').style.display = 'flex';
-    showSetupError('Error: ' + e.message + '. Check your API key and Sheet ID.');
+    document.getElementById('setup-screen').style.display    = 'flex';
+    showSetupError('Error: ' + e.message);
   }
 }
 
 function showSetupError(msg) {
   const el = document.getElementById('setup-error');
   el.style.display = 'block';
-  el.textContent = msg;
+  el.textContent   = msg;
 }
 
 function resetSetup() {
-  document.getElementById('app').style.display = 'none';
+  document.getElementById('app').style.display          = 'none';
   document.getElementById('setup-screen').style.display = 'flex';
 }
 
 async function refreshData() {
   document.getElementById('loading-overlay').style.display = 'flex';
-  try {
-    await loadAllData();
-    renderDashboard();
-  } catch(e) {}
+  try { await loadAllData(); buildMonthOptions(); renderDashboard(); } catch (e) { console.error(e); }
   document.getElementById('loading-overlay').style.display = 'none';
 }
 
-// =========================================================
+// ═══════════════════════════════════════════════════════════════
 // DATA LOADING
-// =========================================================
-async function fetchSheet(range) {
+// ═══════════════════════════════════════════════════════════════
+async function apiFetch(range) {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(range)}?key=${API_KEY}`;
   const res = await fetch(url);
   if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.error?.message || 'Failed to fetch sheet');
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || `HTTP ${res.status} fetching "${range}"`);
   }
-  const data = await res.json();
-  return data.values || [];
-}
-
-async function fetchSheetMeta() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?key=${API_KEY}&fields=sheets.properties.title`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Cannot access spreadsheet. Check API key and sheet permissions.');
-  return await res.json();
+  return (await res.json()).values || [];
 }
 
 async function loadAllData() {
-  // Get sheet metadata first to find tab names
-  const meta = await fetchSheetMeta();
-  const tabs = meta.sheets.map(s => s.properties.title);
+  // Get tab names
+  const metaRes = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?key=${API_KEY}&fields=sheets.properties.title`
+  );
+  if (!metaRes.ok) throw new Error('Cannot access spreadsheet — check API Key and Sheet ID.');
+  const tabs = (await metaRes.json()).sheets.map(s => s.properties.title);
 
-  // Identify the calls tab(s) — look for tabs with "Dashboard" in name
-  const callsTabs = tabs.filter(t => t.toLowerCase().includes('dashboard'));
-  const coachingTab = tabs.find(t => t.includes('1:1') || t.toLowerCase().includes('coaching'));
-  const membershipTab = tabs.find(t => t.toLowerCase().includes('membership'));
-
-  allData.tabs = tabs;
-  allData.callsTabs = callsTabs;
-  allData.rawCalls = {};
-  allData.coaching = [];
-  allData.membership = [];
-
-  // Load each closer dashboard tab
-  for (const tab of callsTabs) {
-    try {
-      const rows = await fetchSheet(`'${tab}'!A1:Z500`);
-      allData.rawCalls[tab] = rows;
-    } catch(e) {
-      console.warn('Could not load tab:', tab, e);
+  const findTab = (...names) => {
+    for (const n of names) {
+      const t = tabs.find(t => t.toLowerCase() === n.toLowerCase()); if (t) return t;
     }
-  }
+    for (const n of names) {
+      const t = tabs.find(t => t.toLowerCase().includes(n.toLowerCase())); if (t) return t;
+    }
+    return null;
+  };
 
-  // Load coaching data
-  if (coachingTab) {
-    try {
-      allData.coaching = await fetchSheet(`'${coachingTab}'!A1:AE500`);
-    } catch(e) { console.warn('No coaching tab', e); }
-  }
+  const laTab = findTab('IMPORT - LEADS APPLIED', 'LEADS APPLIED');
+  const msTab = findTab('IMPORT - MASTERSHEET',   'MASTERSHEET');
+  const gcTab = findTab('IMPORT - GC MASTERSHEET','GC MASTERSHEET');
 
-  // Load membership data
-  if (membershipTab) {
-    try {
-      allData.membership = await fetchSheet(`'${membershipTab}'!A1:T300`);
-    } catch(e) { console.warn('No membership tab', e); }
-  }
+  if (!laTab) throw new Error(`Tab "IMPORT - LEADS APPLIED" not found.\nAvailable: ${tabs.join(', ')}`);
+  if (!msTab) throw new Error(`Tab "IMPORT - MASTERSHEET" not found.\nAvailable: ${tabs.join(', ')}`);
 
-  // Parse all data
-  parseAllData();
+  const [laRows, msRows, gcRows] = await Promise.all([
+    apiFetch(`'${laTab}'!A1:N3000`),
+    apiFetch(`'${msTab}'!A1:AE3000`),
+    gcTab ? apiFetch(`'${gcTab}'!A1:S3000`) : Promise.resolve([]),
+  ]);
+
+  // Row 0 = header → skip
+  raw.la = laRows.slice(1).filter(r => r && r.length);
+  raw.ms = msRows.slice(1).filter(r => r && r.length);
+  raw.gc = gcRows.slice(1).filter(r => r && r.length);
+
+  // Unique closer names from LEADS APPLIED col M
+  const seen = new Set();
+  raw.la.forEach(r => { const c = (r[LA.closer] || '').trim(); if (c) seen.add(c); });
+  availableClosers = [...seen].sort();
+
   document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
 
-// =========================================================
-// DATA PARSING
-// =========================================================
-function parseAllData() {
-  allData.closers = {};
-
-  for (const [tab, rows] of Object.entries(allData.rawCalls)) {
-    // Extract closer name from tab name e.g. "Closer - Deniz - Dashboard..."
-    const nameMatch = tab.match(/Closer\s*-\s*(\w+)/i);
-    const closerName = nameMatch ? nameMatch[1] : tab.split('-')[1]?.trim() || tab;
-
-    const parsed = parseCloserTab(rows, closerName);
-    allData.closers[closerName] = parsed;
-  }
+// ═══════════════════════════════════════════════════════════════
+// DATE / VALUE HELPERS
+// ═══════════════════════════════════════════════════════════════
+function parseDate(v) {
+  if (!v) return null;
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? null : d;
 }
 
-function parseCloserTab(rows, closerName) {
-  if (!rows || rows.length === 0) return { calls: [], commissions: [], monthlyStats: [] };
-
-  // Find the main calls table: look for "Date Assigned" header
-  let callsHeaderRow = -1;
-  let commHeaderRow = -1;
-  let trendHeaderRow = -1;
-
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    const rowStr = row.join('|').toLowerCase();
-    if (rowStr.includes('date assigned') && rowStr.includes('outcome') && callsHeaderRow === -1) {
-      callsHeaderRow = i;
-    }
-    if (rowStr.includes('sale date') && rowStr.includes('payout date') && commHeaderRow === -1) {
-      commHeaderRow = i;
-    }
-    if (rowStr.includes('close rate') && rowStr.includes('biss close rate') && trendHeaderRow === -1) {
-      trendHeaderRow = i;
-    }
-  }
-
-  let calls = [];
-  if (callsHeaderRow !== -1) {
-    const headers = rows[callsHeaderRow].map(h => h.trim().toLowerCase());
-    for (let i = callsHeaderRow + 1; i < rows.length; i++) {
-      const row = rows[i];
-      if (!row || row.length === 0) continue;
-      const firstName = row[headers.indexOf('first name')] || '';
-      const lastName = row[headers.indexOf('last name')] || '';
-      if (!firstName && !lastName) continue;
-
-      const dateAssigned = row[headers.indexOf('date assigned')] || '';
-      const callDate = row[headers.indexOf('call date')] || '';
-      const outcome = row[headers.indexOf('outcome')] || '';
-      const endInSale = row[headers.indexOf('end in sale?')] || row[headers.indexOf('end ind sale?')] || '';
-      const dealValue = parseAmount(row[headers.indexOf('deal value')] || '');
-      const cashCollected = parseAmount(row[headers.indexOf('cash collected')] || '');
-      const startDate = row[headers.indexOf('start date')] || '';
-      const payoutDate = row[headers.indexOf('payout date')] || '';
-
-      calls.push({
-        name: `${firstName} ${lastName}`.trim(),
-        dateAssigned: parseDate(dateAssigned),
-        callDate: parseDate(callDate),
-        outcome: outcome.trim(),
-        closed: endInSale.toLowerCase() === 'yes',
-        dealValue,
-        cashCollected,
-        startDate: parseDate(startDate),
-        payoutDate: parseDate(payoutDate),
-      });
-    }
-  }
-
-  let commissions = [];
-  if (commHeaderRow !== -1) {
-    const headers = rows[commHeaderRow].map(h => (h || '').replace('Commissions Breakdown/', '').trim().toLowerCase());
-    for (let i = commHeaderRow + 1; i < rows.length; i++) {
-      const row = rows[i];
-      if (!row || row.length === 0) continue;
-      const fn = row[0] || ''; const ln = row[1] || '';
-      if (!fn && !ln) continue;
-
-      commissions.push({
-        name: `${fn} ${ln}`.trim(),
-        saleDate: parseDate(row[2]),
-        startDate: parseDate(row[3]),
-        payoutDate: parseDate(row[4]),
-        cashCollected: parseAmount(row[5]),
-        dealValue: parseAmount(row[6]),
-        refundName: row[7] || '',
-        refundDate: parseDate(row[8]),
-        refundAmount: parseAmount(row[9]),
-      });
-    }
-  }
-
-  // Monthly trend data
-  let monthlyStats = [];
-  if (trendHeaderRow !== -1) {
-    for (let i = trendHeaderRow + 1; i < rows.length; i++) {
-      const row = rows[i];
-      if (!row || !row[0]) break;
-      monthlyStats.push({
-        month: row[0],
-        closerRate: parseFloat((row[1] || '0').replace('%','')) / 100,
-        companyRate: parseFloat((row[2] || '0').replace('%','')) / 100,
-      });
-    }
-  }
-
-  return { calls, commissions, monthlyStats };
+function parseAmt(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  const n = parseFloat(String(v).replace(/[$,\s]/g, ''));
+  return isNaN(n) ? 0 : n;
 }
 
-function parseDate(str) {
-  if (!str) return null;
-  const d = new Date(str);
-  return isNaN(d) ? null : d;
+function isTRUE(v) {
+  if (v === true) return true;
+  return ['true','1','yes'].includes(String(v || '').trim().toLowerCase());
 }
 
-function parseAmount(str) {
-  if (!str) return 0;
-  return parseFloat(str.toString().replace(/[$,]/g, '')) || 0;
+function getDateRange() {
+  if (currentPeriod === 'all') return { start: null, end: null };
+  if (currentPeriod === 'monthly' && currentMonth) {
+    const [y, m] = currentMonth.split('-').map(Number);
+    return { start: new Date(y, m - 1, 1), end: new Date(y, m, 0, 23, 59, 59) };
+  }
+  if (currentPeriod === 'quarterly') {
+    const now = new Date();
+    return { start: new Date(now.getFullYear(), now.getMonth() - 2, 1), end: now };
+  }
+  return { start: null, end: null };
 }
 
-// =========================================================
-// UI BUILDING
-// =========================================================
+function inRange(d, s, e) {
+  if (!d) return false;
+  if (s && d < s) return false;
+  if (e && d > e) return false;
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI WIRING
+// ═══════════════════════════════════════════════════════════════
 function buildUI() {
-  const closers = Object.keys(allData.closers);
-
-  // Populate closer select
-  const closerSelect = document.getElementById('closer-select');
-  closerSelect.innerHTML = closers.map(c => `<option value="${c}">${c}</option>`).join('');
-  currentCloser = closers[0] || '';
-
-  // Build month options
+  const sel = document.getElementById('closer-select');
+  sel.innerHTML = availableClosers.map(c => `<option value="${c}">${c}</option>`).join('');
+  currentCloser = availableClosers[0] || '';
   buildMonthOptions();
-
   renderDashboard();
 }
 
 function buildMonthOptions() {
-  const select = document.getElementById('month-select');
-  const months = getAvailableMonths();
-  select.innerHTML = months.map(m => `<option value="${m.value}">${m.label}</option>`).join('');
-  if (months.length > 0) currentMonth = months[0].value;
-}
+  const cLow = currentCloser.toLowerCase();
+  const map  = new Map();
 
-function getAvailableMonths() {
-  const closer = allData.closers[currentCloser];
-  if (!closer) return [];
-
-  const seen = new Set();
-  const months = [];
-
-  const allDates = [
-    ...closer.calls.map(c => c.callDate),
-    ...closer.commissions.map(c => c.payoutDate),
-  ].filter(Boolean);
-
-  allDates.sort((a,b) => b - a);
-
-  for (const d of allDates) {
+  raw.la.forEach(r => {
+    if (!(r[LA.closer] || '').toLowerCase().includes(cLow)) return;
+    const d = parseDate(r[LA.callDate]);
+    if (!d) return;
     const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      months.push({
-        value: key,
-        label: d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
-      });
-    }
-  }
+    if (!map.has(key)) map.set(key, d.toLocaleDateString('en-US', { month:'long', year:'numeric' }));
+  });
 
-  return months.slice(0, 12);
+  const months = [...map.entries()].sort((a, b) => b[0].localeCompare(a[0]));
+  const sel = document.getElementById('month-select');
+  sel.innerHTML = months.map(([v,l]) => `<option value="${v}">${l}</option>`).join('');
+
+  if (!currentMonth || !map.has(currentMonth)) currentMonth = months[0]?.[0] || '';
+  sel.value = currentMonth;
 }
 
-function onFilterChange() {
+function onCloserChange() {
   currentCloser = document.getElementById('closer-select').value;
-  currentMonth = document.getElementById('month-select').value;
   buildMonthOptions();
   renderDashboard();
 }
 
-function setPeriod(period, btn) {
-  currentPeriod = period;
-  document.querySelectorAll('.period-pill').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('month-control').style.display = period === 'monthly' ? 'flex' : 'none';
+function onMonthChange() {
+  currentMonth = document.getElementById('month-select').value;
   renderDashboard();
 }
 
-// =========================================================
-// RENDER
-// =========================================================
-function renderDashboard() {
-  const container = document.getElementById('main-content');
-  const closer = allData.closers[currentCloser];
-
-  if (!closer) {
-    container.innerHTML = '<div class="empty-state">No data found for this closer.</div>';
-    return;
-  }
-
-  const filtered = filterCalls(closer.calls);
-  const commFiltered = filterCommissions(closer.commissions);
-  const stats = computeStats(filtered, commFiltered);
-
-  container.innerHTML = '';
-  container.classList.add('fade-in');
-
-  // Hero
-  container.appendChild(renderHero(stats));
-
-  // KPI cards
-  container.appendChild(renderStatsGrid(stats));
-
-  // Progress + comparison
-  container.appendChild(renderMiddleRow(stats, closer));
-
-  // Calls table + commissions
-  container.appendChild(renderBottomRow(filtered, commFiltered));
-
-  // Trend chart
-  if (closer.monthlyStats.length > 0) {
-    container.appendChild(renderTrendSection(closer.monthlyStats));
-  }
+function setPeriod(p, btn) {
+  currentPeriod = p;
+  document.querySelectorAll('.period-pill').forEach(x => x.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('month-control').style.display = p === 'monthly' ? 'flex' : 'none';
+  renderDashboard();
 }
 
-function filterCalls(calls) {
-  if (currentPeriod === 'all') return calls;
+// ═══════════════════════════════════════════════════════════════
+// COMPUTATION
+// ═══════════════════════════════════════════════════════════════
+function computeStats() {
+  const { start, end } = getDateRange();
+  const cLow = currentCloser.toLowerCase();
 
-  return calls.filter(c => {
-    const d = c.callDate || c.dateAssigned;
-    if (!d) return false;
-
-    if (currentPeriod === 'monthly') {
-      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      return key === currentMonth;
-    }
-
-    if (currentPeriod === 'quarterly') {
-      const now = new Date();
-      const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
-      return d >= threeMonthsAgo;
-    }
-
-    return true;
+  // ── LEADS APPLIED: filter by call date (K) + closer contains ─
+  const laRows = raw.la.filter(r => {
+    const d = parseDate(r[LA.callDate]);
+    return (r[LA.closer]||'').toLowerCase().includes(cLow) && inRange(d, start, end);
   });
-}
 
-function filterCommissions(comms) {
-  if (currentPeriod === 'all') return comms;
+  const showedRe   = /^(showed|follow\s*up|disqualified on sales call)$/i;
+  const pureShowRe = /^showed$/i;
+  const followRe   = /^follow\s*up$/i;
+  const disqRe     = /^disqualified on sales call$/i;
+  const noShowRe   = /^no show$/i;
+  const cancelRe   = /^cancelled$/i;
 
-  return comms.filter(c => {
-    const d = c.payoutDate || c.startDate;
-    if (!d) return false;
+  const totalScheduled = laRows.length;
+  const showed       = laRows.filter(r => showedRe.test((r[LA.outcome]||'').trim())).length;
+  const cancelled    = laRows.filter(r => cancelRe.test((r[LA.outcome]||'').trim())).length;
+  const noShow       = laRows.filter(r => noShowRe.test((r[LA.outcome]||'').trim())).length;
+  const disqualified = laRows.filter(r => disqRe.test((r[LA.outcome]||'').trim())).length;
+  const followUp     = laRows.filter(r => followRe.test((r[LA.outcome]||'').trim())).length;
+  const closed       = laRows.filter(r => /^yes$/i.test((r[LA.endInSale]||'').trim())).length;
 
-    if (currentPeriod === 'monthly') {
-      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      return key === currentMonth;
-    }
+  // Showed — No Sale = outcome "Showed" AND did NOT close
+  const showedNoSale = laRows.filter(r =>
+    pureShowRe.test((r[LA.outcome]||'').trim()) &&
+    !/^yes$/i.test((r[LA.endInSale]||'').trim())
+  ).length;
 
-    if (currentPeriod === 'quarterly') {
-      const now = new Date();
-      const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, 1);
-      return d >= threeMonthsAgo;
-    }
+  const grossShowRate = totalScheduled > 0 ? showed / totalScheduled : 0;
+  const netShowRate   = (totalScheduled - cancelled) > 0 ? showed / (totalScheduled - cancelled) : 0;
+  const closeRate     = (showed - disqualified) > 0 ? closed / (showed - disqualified) : 0;
+  const disqRate      = showed > 0 ? disqualified / showed : 0;
 
-    return true;
+  // ── MASTERSHEET: paid-out commission rows (Y ≠ TRUE, payout date in range) ─
+  const msComm = raw.ms.filter(r => {
+    const pd = parseDate(r[MS.payoutDate]);
+    return (r[MS.closer]||'').toLowerCase().includes(cLow)
+      && !isTRUE(r[MS.refundFlag])
+      && inRange(pd, start, end);
   });
-}
 
-function computeStats(calls, comms) {
-  const total = calls.length;
-  const showed = calls.filter(c => c.outcome.toLowerCase().includes('show') && !c.outcome.toLowerCase().includes('no')).length;
-  const cancelled = calls.filter(c => c.outcome.toLowerCase() === 'cancelled').length;
-  const noshow = calls.filter(c => c.outcome.toLowerCase() === 'no show').length;
-  const disq = calls.filter(c => c.outcome.toLowerCase().includes('disqualif')).length;
-  const closed = calls.filter(c => c.closed).length;
-  const followup = calls.filter(c => c.outcome.toLowerCase().includes('follow')).length;
+  // ── GC MASTERSHEET: commission rows (S ≠ TRUE, payout date in range) ─────
+  const gcComm = raw.gc.filter(r => {
+    const pd = parseDate(r[GC.payoutDate]);
+    return (r[GC.closer]||'').toLowerCase().includes(cLow)
+      && !isTRUE(r[GC.excludeFlag])
+      && inRange(pd, start, end);
+  });
 
-  const grossShowRate = total > 0 ? showed / total : 0;
-  const netShowRate = (total - cancelled) > 0 ? showed / (total - cancelled) : 0;
-  const closeRate = (showed - disq) > 0 ? closed / (showed - disq) : 0;
+  // ── MASTERSHEET: refund rows (Y = TRUE, refund date in range, exact closer) ─
+  const msRef = raw.ms.filter(r => {
+    const rd = parseDate(r[MS.refundDate]);
+    return (r[MS.closer]||'').toLowerCase() === cLow
+      && isTRUE(r[MS.refundFlag])
+      && inRange(rd, start, end);
+  });
 
-  const closedCalls = calls.filter(c => c.closed);
-  const avgDealValue = closedCalls.length > 0 ? closedCalls.reduce((a,b) => a + b.dealValue, 0) / closedCalls.length : 0;
-  const avgCashCollected = closedCalls.length > 0 ? closedCalls.reduce((a,b) => a + b.cashCollected, 0) / closedCalls.length : 0;
+  // Totals
+  const totalCash = msComm.reduce((s,r) => s + parseAmt(r[MS.cashCollected]), 0)
+                  + gcComm.reduce((s,r) => s + parseAmt(r[GC.cashCollected]), 0);
+  const totalDeal = msComm.reduce((s,r) => s + parseAmt(r[MS.dealValue]), 0)
+                  + gcComm.reduce((s,r) => s + parseAmt(r[GC.dealValue]), 0);
+  const totalRefundCash = msRef.reduce((s,r) => s + parseAmt(r[MS.cashCollected]), 0);
+  const commission = totalCash * 0.10;
+  const commCount  = msComm.length + gcComm.length;
+  const avgCC      = commCount > 0 ? totalCash / commCount : 0;
+  const avgDeal    = commCount > 0 ? totalDeal / commCount : 0;
 
-  const totalCash = comms.reduce((a,b) => a + b.cashCollected, 0);
-  const totalRefunds = comms.reduce((a,b) => a + b.refundAmount, 0);
-  const totalDeal = comms.reduce((a,b) => a + b.dealValue, 0);
-  const commRate = 0.10; // 10% cash collected
-  const totalCommission = (totalCash - totalRefunds) * commRate;
+  // Commission breakdown items (sorted by payout date asc)
+  const commItems = [
+    ...msComm.map(r => ({
+      name:         `${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),
+      payoutDate:   parseDate(r[MS.payoutDate]),
+      cashCollected:parseAmt(r[MS.cashCollected]),
+      dealValue:    parseAmt(r[MS.dealValue]),
+      isRefund:     false,
+    })),
+    ...gcComm.map(r => ({
+      name:         `${r[GC.firstName]||''} ${r[GC.lastName]||''}`.trim(),
+      payoutDate:   parseDate(r[GC.payoutDate]),
+      cashCollected:parseAmt(r[GC.cashCollected]),
+      dealValue:    parseAmt(r[GC.dealValue]),
+      isRefund:     false,
+    })),
+    ...msRef.map(r => ({
+      name:         `${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),
+      payoutDate:   parseDate(r[MS.refundDate]),
+      cashCollected:parseAmt(r[MS.cashCollected]),
+      dealValue:    0,
+      isRefund:     true,
+    })),
+  ].sort((a,b) => (a.payoutDate?.getTime()||0) - (b.payoutDate?.getTime()||0));
 
   return {
-    total, showed, cancelled, noshow, disq, closed, followup,
-    grossShowRate, netShowRate, closeRate,
-    avgDealValue, avgCashCollected,
-    totalCash, totalRefunds, totalDeal, totalCommission,
+    totalScheduled, showed, showedNoSale,
+    cancelled, noShow, disqualified, followUp, closed,
+    grossShowRate, netShowRate, closeRate, disqRate,
+    totalCash, totalDeal, totalRefundCash, commission,
+    avgCC, avgDeal,
+    commItems, laRows,
   };
 }
 
-// =========================================================
-// RENDER SECTIONS
-// =========================================================
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+function renderDashboard() {
+  const el = document.getElementById('main-content');
+  if (!currentCloser) { el.innerHTML = '<div class="empty-state">Select a closer to view the dashboard.</div>'; return; }
+
+  const stats = computeStats();
+  el.innerHTML = '';
+  el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
+
+  el.appendChild(renderHero(stats));
+  el.appendChild(renderStatsGrid(stats));
+  el.appendChild(renderMiddleRow(stats));
+  el.appendChild(renderBottomRow(stats));
+}
+
+// ── Hero ──
 function renderHero(stats) {
   const div = document.createElement('div');
   div.className = 'closer-hero';
 
-  const label = currentPeriod === 'monthly'
-    ? document.querySelector('#month-select option:checked')?.textContent || ''
+  const periodLabel = currentPeriod === 'monthly'
+    ? (document.querySelector('#month-select option:checked')?.textContent || '')
     : currentPeriod === 'quarterly' ? 'Last 3 Months' : 'All Time';
+
+  const [label, color] = stats.closeRate >= 0.40
+    ? ['Strong Performance', 'var(--green)']
+    : stats.closeRate >= 0.25
+    ? ['On Track', 'var(--gold)']
+    : ['Needs Attention', 'var(--red)'];
 
   div.innerHTML = `
     <div>
       <div class="closer-name">${currentCloser.toUpperCase()}</div>
-      <div class="closer-period">${label} &nbsp;·&nbsp; ${stats.closed} closures</div>
+      <div class="closer-period">${periodLabel} &nbsp;·&nbsp; ${stats.closed} closure${stats.closed !== 1 ? 's' : ''}</div>
     </div>
-    <div class="closer-badge">
-      <span class="dot"></span>
-      ${stats.closeRate > 0.4 ? 'Strong Performance' : stats.closeRate > 0.25 ? 'On Track' : 'Needs Attention'}
+    <div class="closer-badge" style="background:rgba(0,0,0,0.25);border:1px solid ${color};color:${color}">
+      <span class="dot" style="background:${color}"></span>${label}
     </div>
   `;
   return div;
 }
 
+// ── KPI Grid ──
 function renderStatsGrid(stats) {
-  const grid = document.createElement('div');
-  grid.className = 'stats-grid';
-
-  grid.innerHTML = `
+  const g = document.createElement('div');
+  g.className = 'stats-grid';
+  const refCount = stats.commItems.filter(c => c.isRefund).length;
+  g.innerHTML = `
     <div class="stat-card accent">
       <div class="stat-label">Close Rate</div>
       <div class="stat-value">${pct(stats.closeRate)}</div>
-      <div class="stat-sub">${stats.closed} of ${stats.showed - stats.disq} qualified shows</div>
+      <div class="stat-sub">${stats.closed} of ${stats.showed - stats.disqualified} qualified shows</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Gross Show Rate</div>
@@ -1378,8 +821,8 @@ function renderStatsGrid(stats) {
     </div>
     <div class="stat-card gold">
       <div class="stat-label">Commission Earned</div>
-      <div class="stat-value gold-val">${money(stats.totalCommission)}</div>
-      <div class="stat-sub">10% cash collected</div>
+      <div class="stat-value gold-val">${money(stats.commission)}</div>
+      <div class="stat-sub">10% of ${money(stats.totalCash)} collected</div>
     </div>
     <div class="stat-card green">
       <div class="stat-label">Cash Collected</div>
@@ -1388,264 +831,218 @@ function renderStatsGrid(stats) {
     </div>
     <div class="stat-card">
       <div class="stat-label">Calls Scheduled</div>
-      <div class="stat-value">${stats.total}</div>
-      <div class="stat-sub">${stats.showed} showed · ${stats.cancelled} cancelled · ${stats.noshow} no-show</div>
+      <div class="stat-value">${stats.totalScheduled}</div>
+      <div class="stat-sub">${stats.showed} showed · ${stats.cancelled} cancelled · ${stats.noShow} no-show</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Avg Deal Value</div>
-      <div class="stat-value money">${money(stats.avgDealValue)}</div>
-      <div class="stat-sub">Avg CC: ${money(stats.avgCashCollected)}</div>
+      <div class="stat-label">Avg CC per Close</div>
+      <div class="stat-value money">${money(stats.avgCC)}</div>
+      <div class="stat-sub">Avg deal: ${money(stats.avgDeal)}</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Refunds</div>
-      <div class="stat-value" style="color:var(--red)">${money(stats.totalRefunds)}</div>
-      <div class="stat-sub">Net commission after refunds</div>
+      <div class="stat-value" style="color:${stats.totalRefundCash > 0 ? 'var(--red)' : 'var(--text-dim)'}">${money(stats.totalRefundCash)}</div>
+      <div class="stat-sub">${refCount} refund${refCount !== 1 ? 's' : ''} this period</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Follow Ups</div>
-      <div class="stat-value">${stats.followup}</div>
+      <div class="stat-value">${stats.followUp}</div>
       <div class="stat-sub">Pending conversion</div>
     </div>
   `;
-
-  return grid;
+  return g;
 }
 
-function renderMiddleRow(stats, closer) {
+// ── Middle: Funnel + Outcomes ──
+function renderMiddleRow(stats) {
   const div = document.createElement('div');
   div.className = 'two-col';
 
-  // Progress panel
-  const progressPanel = document.createElement('div');
-  progressPanel.className = 'panel';
-  progressPanel.innerHTML = `
-    <div class="panel-header">
-      <span class="panel-title">Call Funnel</span>
-    </div>
+  const funnel = document.createElement('div');
+  funnel.className = 'panel';
+  funnel.innerHTML = `
+    <div class="panel-header"><span class="panel-title">Call Funnel</span></div>
     <div class="panel-body">
-      <div class="progress-container">
-        <div class="progress-header">
-          <span class="progress-label">Gross Show Rate</span>
-          <span class="progress-pct">${pct(stats.grossShowRate)}</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill blue" style="width:${stats.grossShowRate*100}%"></div></div>
-      </div>
-      <div class="progress-container">
-        <div class="progress-header">
-          <span class="progress-label">Net Show Rate</span>
-          <span class="progress-pct">${pct(stats.netShowRate)}</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill blue" style="width:${stats.netShowRate*100}%"></div></div>
-      </div>
-      <div class="progress-container">
-        <div class="progress-header">
-          <span class="progress-label">Close Rate</span>
-          <span class="progress-pct">${pct(stats.closeRate)}</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill gold" style="width:${stats.closeRate*100}%"></div></div>
-      </div>
-      <div class="progress-container">
-        <div class="progress-header">
-          <span class="progress-label">Disqualification Rate</span>
-          <span class="progress-pct">${stats.showed > 0 ? pct(stats.disq/stats.showed) : '0%'}</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${stats.showed > 0 ? (stats.disq/stats.showed)*100 : 0}%; background:linear-gradient(90deg,#7a1a1a,var(--red))"></div></div>
-      </div>
+      ${progBar('Gross Show Rate',       stats.grossShowRate,'linear-gradient(90deg,var(--steel-mid),var(--steel-light))')}
+      ${progBar('Net Show Rate',         stats.netShowRate,  'linear-gradient(90deg,var(--steel-mid),var(--steel-light))')}
+      ${progBar('Close Rate',            stats.closeRate,    'linear-gradient(90deg,#9a7a30,var(--gold))')}
+      ${progBar('Disqualification Rate', stats.disqRate,     'linear-gradient(90deg,#7a1a1a,var(--red))')}
     </div>
   `;
 
-  // Outcomes panel
-  const outcomesPanel = document.createElement('div');
-  outcomesPanel.className = 'panel';
-  outcomesPanel.innerHTML = `
-    <div class="panel-header">
-      <span class="panel-title">Outcomes Breakdown</span>
-    </div>
+  const outcomes = document.createElement('div');
+  outcomes.className = 'panel';
+  outcomes.innerHTML = `
+    <div class="panel-header"><span class="panel-title">Outcomes Breakdown</span></div>
     <div class="panel-body">
-      <div class="metric-row">
-        <span class="metric-name">Closed (Won)</span>
-        <span class="metric-val green-val">${stats.closed}</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-name">Showed — No Sale</span>
-        <span class="metric-val accent-val">${stats.showed - stats.closed - stats.disq}</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-name">Follow Ups</span>
-        <span class="metric-val gold-val">${stats.followup}</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-name">No Shows</span>
-        <span class="metric-val red-val">${stats.noshow}</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-name">Cancelled</span>
-        <span class="metric-val" style="color:var(--text-muted)">${stats.cancelled}</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-name">Disqualified</span>
-        <span class="metric-val" style="color:#b07de0">${stats.disq}</span>
-      </div>
+      ${mRow('Closed (Won)',         stats.closed,       'green-val')}
+      ${mRow('Showed — No Sale',     stats.showedNoSale, 'accent-val')}
+      ${mRow('Follow Ups',           stats.followUp,     'gold-val')}
+      ${mRow('No Shows',             stats.noShow,       'red-val')}
+      ${mRow('Cancelled',            stats.cancelled,    '')}
+      ${mRow('Disqualified on Call', stats.disqualified, '')}
     </div>
   `;
 
-  div.appendChild(progressPanel);
-  div.appendChild(outcomesPanel);
+  div.appendChild(funnel);
+  div.appendChild(outcomes);
   return div;
 }
 
-function renderBottomRow(calls, comms) {
+function progBar(label, val, grad) {
+  const w = Math.min((val||0)*100,100).toFixed(1);
+  return `
+    <div class="progress-container">
+      <div class="progress-header">
+        <span class="progress-label">${label}</span>
+        <span class="progress-pct">${pct(val)}</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${w}%;background:${grad}"></div>
+      </div>
+    </div>`;
+}
+
+function mRow(label, val, cls) {
+  return `<div class="metric-row"><span class="metric-name">${label}</span><span class="metric-val ${cls}">${val}</span></div>`;
+}
+
+// ── Bottom: Calls + Commissions ──
+function renderBottomRow(stats) {
   const div = document.createElement('div');
   div.className = 'two-col';
+  div.appendChild(renderCallsTable(stats.laRows));
+  div.appendChild(renderCommissionPanel(stats));
+  return div;
+}
 
-  // Calls table
-  const callsPanel = document.createElement('div');
-  callsPanel.className = 'panel';
+function renderCallsTable(rows) {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
 
-  const closedCalls = calls.filter(c => c.closed);
-  const nonClosedCalls = calls.filter(c => !c.closed).slice(0, 10);
-  const displayCalls = [...closedCalls, ...nonClosedCalls].slice(0, 20);
+  // Sort: closed first, then by call date desc
+  const sorted = [...rows].sort((a,b) => {
+    const ac = /^yes$/i.test((a[LA.endInSale]||'').trim()) ? 1 : 0;
+    const bc = /^yes$/i.test((b[LA.endInSale]||'').trim()) ? 1 : 0;
+    if (bc !== ac) return bc - ac;
+    return (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0);
+  });
 
-  callsPanel.innerHTML = `
+  const tbody = sorted.map(r => {
+    const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
+    const cd      = parseDate(r[LA.callDate]);
+    const outcome = (r[LA.outcome]||'').trim();
+    const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
+    return `<tr>
+      <td style="font-weight:500">${name}</td>
+      <td style="color:var(--text-dim);font-family:var(--font-mono)">${cd ? fmtDate(cd) : '—'}</td>
+      <td>${badge(outcome, closed)}</td>
+    </tr>`;
+  }).join('');
+
+  panel.innerHTML = `
     <div class="panel-header">
       <span class="panel-title">Calls This Period</span>
-      <span style="font-size:12px; color:var(--text-dim); font-family:var(--font-mono)">${calls.length} total</span>
+      <span style="font-size:12px;color:var(--text-dim);font-family:var(--font-mono)">${rows.length} total</span>
     </div>
     <div class="calls-table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Client</th>
-            <th>Call Date</th>
-            <th>Outcome</th>
-            <th>Cash CC</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${displayCalls.map(c => `
-            <tr>
-              <td style="font-weight:500">${c.name}</td>
-              <td style="color:var(--text-dim); font-family:var(--font-mono)">${c.callDate ? formatDate(c.callDate) : '—'}</td>
-              <td>${outcomesBadge(c)}</td>
-              <td style="font-family:var(--font-mono); color:${c.cashCollected > 0 ? 'var(--green)' : 'var(--text-dim)'}">${c.cashCollected > 0 ? money(c.cashCollected) : '—'}</td>
-            </tr>
-          `).join('')}
-          ${calls.length === 0 ? '<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:24px">No calls in this period</td></tr>' : ''}
-        </tbody>
+        <thead><tr><th>Client</th><th>Call Date</th><th>Outcome</th></tr></thead>
+        <tbody>${tbody || '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:24px">No calls this period</td></tr>'}</tbody>
       </table>
-    </div>
-  `;
+    </div>`;
+  return panel;
+}
 
-  // Commissions panel
-  const commPanel = document.createElement('div');
-  commPanel.className = 'panel';
+function renderCommissionPanel(stats) {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
 
-  commPanel.innerHTML = `
+  const hasRef = stats.commItems.some(c => c.isRefund);
+
+  const rows = stats.commItems.map(item => {
+    const commAmt = item.cashCollected * 0.10;
+    if (item.isRefund) {
+      return `
+        <div class="commission-row is-refund">
+          <div class="commission-left">
+            <div class="commission-name refund-name">${item.name || '—'}</div>
+            <div class="commission-date">Refund: ${item.payoutDate ? fmtDate(item.payoutDate) : '—'}</div>
+            <span class="refund-tag">↩ REFUND</span>
+          </div>
+          <div class="commission-right">
+            <div class="commission-amount refund-amt">-${money(item.cashCollected)}</div>
+            <div class="commission-sub refund-sub">${money(commAmt)} commission</div>
+          </div>
+        </div>`;
+    }
+    return `
+      <div class="commission-row">
+        <div class="commission-left">
+          <div class="commission-name">${item.name || '—'}</div>
+          <div class="commission-date">Payout: ${item.payoutDate ? fmtDate(item.payoutDate) : '—'}</div>
+        </div>
+        <div class="commission-right">
+          <div class="commission-amount">${money(commAmt)}</div>
+          <div class="commission-sub">CC: ${money(item.cashCollected)} · Deal: ${money(item.dealValue)}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const netRow = stats.commItems.length > 0 ? `
+    <div class="comm-net-row">
+      <span style="font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">
+        ${hasRef ? 'Commission (excl. refunds)' : 'Total Commission'}
+      </span>
+      <span style="font-family:var(--font-mono);font-size:16px;font-weight:500;color:var(--gold)">${money(stats.commission)}</span>
+    </div>` : '';
+
+  panel.innerHTML = `
     <div class="panel-header">
       <span class="panel-title">Commission Breakdown</span>
-      <span style="font-size:13px; font-family:var(--font-mono); color:var(--gold)">${money(comms.reduce((a,b) => a + b.cashCollected - b.refundAmount, 0) * 0.10)}</span>
+      <span style="font-size:13px;font-family:var(--font-mono);color:var(--gold)">${money(stats.commission)}</span>
     </div>
     <div class="panel-body">
-      ${comms.length === 0
-        ? '<div class="empty-state" style="padding:16px">No commissions in this period</div>'
-        : comms.map(c => `
-          <div class="commission-row">
-            <div class="commission-left">
-              <div class="commission-name">${c.name}</div>
-              <div class="commission-date">Payout: ${c.payoutDate ? formatDate(c.payoutDate) : '—'}</div>
-              ${c.refundName ? `<span class="refund-tag">Refund — ${c.refundName}</span>` : ''}
-            </div>
-            <div class="commission-right">
-              <div class="commission-amount">${money((c.cashCollected - c.refundAmount) * 0.10)}</div>
-              <div class="commission-deal">CC: ${money(c.cashCollected)} · Deal: ${money(c.dealValue)}</div>
-            </div>
-          </div>
-        `).join('')
-      }
-    </div>
-  `;
-
-  div.appendChild(callsPanel);
-  div.appendChild(commPanel);
-  return div;
+      ${stats.commItems.length === 0
+        ? '<div class="empty-state" style="padding:16px 0">No commissions this period</div>'
+        : rows + netRow}
+    </div>`;
+  return panel;
 }
 
-function renderTrendSection(monthlyStats) {
-  const div = document.createElement('div');
-  div.style.marginTop = '24px';
-
-  div.innerHTML = `
-    <div class="section-label">Historical Close Rate Trend</div>
-    <div class="panel">
-      <div class="panel-header">
-        <span class="panel-title">Month-by-Month Performance</span>
-        <div style="display:flex; gap:16px; align-items:center">
-          <span style="font-size:11px; color:var(--steel-light); display:flex; align-items:center; gap:6px">
-            <span style="width:12px; height:3px; background:var(--steel-light); border-radius:2px; display:inline-block"></span> Closer
-          </span>
-          <span style="font-size:11px; color:var(--gold); display:flex; align-items:center; gap:6px">
-            <span style="width:12px; height:3px; background:var(--gold); border-radius:2px; display:inline-block"></span> Company
-          </span>
-        </div>
-      </div>
-      <div class="panel-body">
-        ${monthlyStats.slice(0,8).map(m => `
-          <div class="trend-row">
-            <span class="trend-month">${m.month}</span>
-            <div class="trend-bar-wrap">
-              <div class="trend-bar-bg" style="position:relative">
-                <div class="trend-fill" style="width:${Math.min(m.closerRate*100,100)}%"></div>
-              </div>
-              <span class="trend-pct">${pct(m.closerRate)}</span>
-            </div>
-            <div class="trend-bar-wrap">
-              <div class="trend-bar-bg">
-                <div class="trend-fill company" style="width:${Math.min(m.companyRate*100,100)}%"></div>
-              </div>
-              <span class="trend-pct" style="color:var(--gold)">${pct(m.companyRate)}</span>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  `;
-
-  return div;
+// ═══════════════════════════════════════════════════════════════
+// FORMAT HELPERS
+// ═══════════════════════════════════════════════════════════════
+function pct(v) {
+  if (!v || isNaN(v)) return '0%';
+  return (v * 100).toFixed(1) + '%';
 }
 
-// =========================================================
-// HELPERS
-// =========================================================
-function pct(val) {
-  return isNaN(val) || val === 0 ? '0%' : (val * 100).toFixed(1) + '%';
+function money(v) {
+  if (!v || isNaN(v)) return '$0';
+  const fmt = '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits:0, maximumFractionDigits:0 });
+  return v < 0 ? '-' + fmt : fmt;
 }
 
-function money(val) {
-  if (!val || isNaN(val)) return '$0';
-  return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-}
-
-function formatDate(d) {
+function fmtDate(d) {
   if (!d) return '—';
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
 }
 
-function outcomesBadge(c) {
-  const o = c.outcome.toLowerCase();
-  if (c.closed) return '<span class="badge badge-closed">Closed</span>';
-  if (o.includes('follow')) return '<span class="badge badge-followup">Follow Up</span>';
-  if (o.includes('no show')) return '<span class="badge badge-noshow">No Show</span>';
-  if (o.includes('cancel')) return '<span class="badge badge-cancelled">Cancelled</span>';
+function badge(outcome, isClosed) {
+  if (isClosed) return '<span class="badge badge-closed">Closed</span>';
+  const o = (outcome||'').toLowerCase().trim();
+  if (o === 'showed')          return '<span class="badge badge-showed">Showed</span>';
+  if (/follow\s*up/.test(o))   return '<span class="badge badge-followup">Follow Up</span>';
+  if (o === 'no show')         return '<span class="badge badge-noshow">No Show</span>';
+  if (o === 'cancelled')       return '<span class="badge badge-cancelled">Cancelled</span>';
   if (o.includes('disqualif')) return '<span class="badge badge-disq">Disqualified</span>';
-  if (o.includes('show')) return '<span class="badge badge-showed">Showed</span>';
-  return `<span class="badge badge-cancelled">${c.outcome || '—'}</span>`;
+  return `<span class="badge badge-cancelled">${outcome || '—'}</span>`;
 }
 
-// Allow Enter key in setup
+// Enter key on setup
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('setup-screen').style.display !== 'none') {
-    initDashboard();
-  }
+  if (e.key === 'Enter' && document.getElementById('setup-screen').style.display !== 'none') initDashboard();
 });
 </script>
 </body>
