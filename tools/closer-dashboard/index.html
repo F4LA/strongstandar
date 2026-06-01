@@ -454,8 +454,8 @@ const GC = {
 // ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
-let API_KEY  = '';
-let SHEET_ID = '';
+let API_KEY  = 'AIzaSyC7WtRVmLS2mo53i_Cge8NAlJ5tB2kaHjE';
+let SHEET_ID = '1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ';
 
 const raw = { la: [], ms: [], gc: [] };
 
@@ -468,9 +468,7 @@ let availableClosers = [];
 // SETUP / INIT
 // ═══════════════════════════════════════════════════════════════
 async function initDashboard() {
-  API_KEY  = document.getElementById('api-key-input').value.trim();
-  SHEET_ID = document.getElementById('sheet-id-input').value.trim();
-  if (!API_KEY || !SHEET_ID) return showSetupError('Please enter both API Key and Sheet ID.');
+  // API_KEY and SHEET_ID are pre-configured
 
   document.getElementById('setup-screen').style.display    = 'none';
   document.getElementById('loading-overlay').style.display = 'flex';
@@ -1040,9 +1038,10 @@ function badge(outcome, isClosed) {
   return `<span class="badge badge-cancelled">${outcome || '—'}</span>`;
 }
 
-// Enter key on setup
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('setup-screen').style.display !== 'none') initDashboard();
+// Auto-load dashboard on page load
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('setup-screen').style.display = 'none';
+  initDashboard();
 });
 </script>
 </body>
