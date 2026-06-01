@@ -186,56 +186,28 @@
       border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
     }
-    .followup-tracker label {
+    .fu-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; }
+    .fu-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+    .fu-btn {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      cursor: pointer;
       font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      display: block;
-      margin-bottom: 4px;
-    }
-    .followup-tracker input[type="date"] {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-size: 12px;
-      padding: 4px 8px;
-      cursor: pointer;
-    }
-    .followup-tracker input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(0.6);
-      cursor: pointer;
-    }
-    .attempt-counter {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .attempt-num {
-      font-size: 20px;
-      font-weight: 800;
-      min-width: 28px;
-      text-align: center;
-    }
-    .attempt-num.at0 { color: var(--muted); }
-    .attempt-num.at1 { color: var(--orange); }
-    .attempt-num.at2 { color: var(--red); }
-    .btn-attempt {
+      font-weight: 600;
+      padding: 4px 12px;
+      transition: all .15s;
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 9px;
-      transition: background .15s;
+      color: var(--muted);
     }
-    .btn-attempt:hover { background: var(--border); }
+    .fu-btn:hover { border-color: var(--muted); color: var(--text); }
+    .fu-btn.active-none   { background: rgba(136,146,176,0.18); border-color: var(--muted); color: var(--text); }
+    .fu-btn.active-first  { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+    .fu-btn.active-second { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+    .fu-timestamp { font-size: 11px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+    .fu-timestamp span { color: var(--text); font-weight: 600; }
     .escalate-flag {
       font-size: 11px;
       font-weight: 700;
@@ -245,19 +217,12 @@
       color: var(--red);
       border: 1px solid var(--red);
       animation: pulse-flag 1.5s infinite;
+      white-space: nowrap;
     }
     @keyframes pulse-flag {
       0%,100% { opacity: 1; }
       50%      { opacity: .55; }
     }
-    .status-badge-tracker {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-    .status-badge-tracker.pending  { background: rgba(136,146,176,0.15); color: var(--muted); }
-    .status-badge-tracker.followup { background: var(--orange-dim); color: var(--orange); }
     .copy-btn.copied { background: var(--green-dim); border-color: var(--green); color: var(--green); }
 
     /* Message preview modal */
@@ -588,10 +553,12 @@
     fuSave(all);
     renderPaymentsData(); // re-render to reflect changes
   }
-  function fuSetDate(name, val) { fuUpdate(name, { lastContact: val }); }
-  function fuAddAttempt(name) {
-    const cur = fuGet(name).attempts;
-    if (cur < 2) fuUpdate(name, { attempts: cur + 1 });
+  function fuSet(name, level) {
+    // level: 0 = not contacted, 1 = 1st reach out, 2 = 2nd reach out
+    const now = new Date();
+    const ts  = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+              + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    fuUpdate(name, { attempts: level, lastContact: level > 0 ? ts : '' });
   }
   function fuReset(name) { fuUpdate(name, { attempts: 0, lastContact: '' }); }
 
@@ -774,14 +741,12 @@
           const attempts = fu.attempts || 0;
           const lastC    = fu.lastContact || '';
 
-          let statusHtml = '';
-          if (attempts === 0) {
-            statusHtml = `<span class="status-badge-tracker pending">⬜ Not contacted</span>`;
-          } else if (attempts === 1) {
-            statusHtml = `<span class="status-badge-tracker followup">🟡 2nd attempt pending</span>`;
-          } else {
-            statusHtml = `<span class="escalate-flag">🔴 Escalate → Bernardo</span>`;
-          }
+          const tsHtml = lastC
+            ? `<div class="fu-timestamp">Last contact: <span>${lastC}</span></div>`
+            : '';
+          const escalateHtml = attempts === 2
+            ? `<span class="escalate-flag">🔴 Escalate → Bernardo</span>`
+            : '';
 
           html += `<div class="card red">
             <div class="card-icon">💳</div>
@@ -796,23 +761,14 @@
                 ${coach ? `<span class="tag muted">Coach: ${esc(coach)}</span>` : ''}
               </div>
               <div class="followup-tracker">
-                <div>
-                  <label>Last Contact</label>
-                  <input type="date" value="${lastC}" onchange="fuSetDate('${safeN}', this.value)" />
+                <span class="fu-label">Outreach:</span>
+                <div class="fu-buttons">
+                  <button class="fu-btn ${attempts === 0 ? 'active-none' : ''}" onclick="fuSet('${safeN}', 0)">⬜ Not contacted</button>
+                  <button class="fu-btn ${attempts === 1 ? 'active-first' : ''}" onclick="fuSet('${safeN}', 1)">🟡 1st reach out</button>
+                  <button class="fu-btn ${attempts === 2 ? 'active-second' : ''}" onclick="fuSet('${safeN}', 2)">🔴 2nd reach out</button>
                 </div>
-                <div>
-                  <label>Attempts</label>
-                  <div class="attempt-counter">
-                    <span class="attempt-num at${attempts}">${attempts}/2</span>
-                    ${attempts < 2
-                      ? `<button class="btn-attempt" onclick="fuAddAttempt('${safeN}')">+1</button>`
-                      : ''}
-                    ${attempts > 0
-                      ? `<button class="btn-attempt" onclick="fuReset('${safeN}')" title="Reset">↺</button>`
-                      : ''}
-                  </div>
-                </div>
-                <div>${statusHtml}</div>
+                ${escalateHtml}
+                ${tsHtml}
               </div>
               <div class="action-hint">
                 <span>→ Attempt charge in GHL &nbsp;·&nbsp; If it fails: message the coach</span>
