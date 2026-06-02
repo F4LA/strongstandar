@@ -324,8 +324,9 @@
   .modal-overlay {
     position: fixed; inset: 0; z-index: 200;
     background: rgba(4,8,18,0.85); backdrop-filter: blur(6px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 32px;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 32px;
+    overflow-y: auto;
     opacity: 0; pointer-events: none;
     transition: opacity 0.25s ease;
   }
@@ -674,6 +675,7 @@ function saveState() {
     localStorage.setItem('ss_closer',  currentCloser);
     localStorage.setItem('ss_period',  currentPeriod);
     localStorage.setItem('ss_month',   currentMonth);
+    localStorage.setItem('ss_filter',  currentCallFilter);
     localStorage.setItem('ss_apikey',  API_KEY);
     localStorage.setItem('ss_sheetid', SHEET_ID);
     if (customStart) localStorage.setItem('ss_cstart', customStart.toISOString());
@@ -686,17 +688,19 @@ function loadState() {
     const closer  = localStorage.getItem('ss_closer');
     const period  = localStorage.getItem('ss_period');
     const month   = localStorage.getItem('ss_month');
+    const filter  = localStorage.getItem('ss_filter');
     const apikey  = localStorage.getItem('ss_apikey');
     const sheetid = localStorage.getItem('ss_sheetid');
     const cstart  = localStorage.getItem('ss_cstart');
     const cend    = localStorage.getItem('ss_cend');
     if (apikey)  API_KEY  = apikey;
     if (sheetid) SHEET_ID = sheetid;
-    if (closer)  currentCloser = closer;
-    if (period)  currentPeriod = period;
-    if (month)   currentMonth  = month;
-    if (cstart)  customStart   = new Date(cstart);
-    if (cend)    customEnd     = new Date(cend);
+    if (closer)  currentCloser      = closer;
+    if (period)  currentPeriod      = period;
+    if (month)   currentMonth       = month;
+    if (filter)  currentCallFilter  = filter;
+    if (cstart)  customStart        = new Date(cstart);
+    if (cend)    customEnd          = new Date(cend);
   } catch(e) {}
 }
 
@@ -874,6 +878,7 @@ function buildUI() {
 
   buildMonthOptions();
   renderDashboard();
+  saveState(); // persist state after first full load
 }
 
 function buildMonthOptions() {
@@ -900,12 +905,64 @@ function setCallFilter(f, isModal) {
   currentCallFilter = f;
   saveState();
   if (isModal) {
-    // Refresh modal content only
-    openCallsModal();
+    // Update modal body in-place — no re-open, no position jump
+    refreshCallsModalContent();
   } else {
     // Refresh only the calls panel, not the whole dashboard
     refreshCallsPanel();
   }
+}
+
+function refreshCallsModalContent() {
+  if (!_lastStats) return;
+  const rows = _lastStats.laRows;
+
+  const sorted = [...rows].sort((a,b) => {
+    const pa = rowPriority(a), pb = rowPriority(b);
+    if (pa !== pb) return pa - pb;
+    return (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0);
+  });
+
+  const counts = { all:rows.length, closed:0, followup:0, stale:0, showed:0, noshow:0, cancelled:0, disq:0 };
+  sorted.forEach(r => { const c = classifyRow(r); if (counts[c] !== undefined) counts[c]++; });
+
+  const FILTERS = [
+    { key:'all',       label:'All',           cls:'' },
+    { key:'stale',     label:'Update Needed', cls:'f-stale' },
+    { key:'closed',    label:'Closed',        cls:'f-closed' },
+    { key:'followup',  label:'Follow Up',     cls:'f-followup' },
+    { key:'showed',    label:'Showed',        cls:'f-showed' },
+    { key:'noshow',    label:'No Show',       cls:'f-noshow' },
+    { key:'cancelled', label:'Cancelled',     cls:'f-cancelled' },
+    { key:'disq',      label:'Disqualified',  cls:'f-disq' },
+  ];
+
+  const filterPills = FILTERS.map(f => {
+    if (f.key !== 'all' && !counts[f.key]) return '';
+    const active = currentCallFilter === f.key ? 'active' : '';
+    return `<button class="call-filter-pill ${f.cls} ${active}" onclick="setCallFilter('${f.key}', true)">
+      ${f.label}<span class="filter-count">${counts[f.key]||0}</span>
+    </button>`;
+  }).join('');
+
+  const filteredRows = currentCallFilter === 'all' ? sorted : sorted.filter(r => classifyRow(r) === currentCallFilter);
+  const emptyMsg = '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:32px">No calls match this filter</td></tr>';
+  const thStyle = 'font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2';
+
+  // Update meta line
+  document.getElementById('modal-meta').textContent = `${filteredRows.length} of ${rows.length} · ${currentCloser}`;
+
+  // Update body in place — no open/close animation triggered
+  document.getElementById('modal-body').innerHTML =
+    `<div class="call-filters" style="border-bottom:1px solid var(--border)">${filterPills}</div>
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr>
+        <th style="${thStyle}">Client</th>
+        <th style="${thStyle}">Call Date</th>
+        <th style="${thStyle}">Outcome</th>
+      </tr></thead>
+      <tbody>${filteredRows.map(r => buildCallRow(r)).join('') || emptyMsg}</tbody>
+    </table>`;
 }
 
 function onCloserChange() {
