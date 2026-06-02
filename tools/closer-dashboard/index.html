@@ -840,7 +840,20 @@ function computeStats() {
   const totalDeal = msComm.reduce((s,r) => s + parseAmt(r[MS.dealValue]), 0)
                   + gcComm.reduce((s,r) => s + parseAmt(r[GC.dealValue]), 0);
   const totalRefundCash = msRef.reduce((s,r) => s + parseAmt(r[MS.cashCollected]), 0);
-  const commission = totalCash * 0.10;
+  // ── TIERED COMMISSION on total cash collected ──
+  // Tier 1: $0–$12,500 → 10%
+  // Tier 2: $12,500–$25,000 → 12.5%
+  // Tier 3: $25,000+ → 15%
+  const T1_CAP = 12500, T2_CAP = 25000;
+  const tier1  = Math.min(totalCash, T1_CAP);
+  const tier2  = totalCash > T1_CAP ? Math.min(totalCash - T1_CAP, T2_CAP - T1_CAP) : 0;
+  const tier3  = totalCash > T2_CAP ? totalCash - T2_CAP : 0;
+  const commission = (tier1 * 0.10) + (tier2 * 0.125) + (tier3 * 0.15);
+  const tierBreakdown = [
+    { label: 'Tier 1  ($0 – $12,500)',      amount: tier1, rate: 0.10,  comm: tier1 * 0.10  },
+    { label: 'Tier 2  ($12,500 – $25,000)', amount: tier2, rate: 0.125, comm: tier2 * 0.125 },
+    { label: 'Tier 3  ($25,000+)',          amount: tier3, rate: 0.15,  comm: tier3 * 0.15  },
+  ];
   const commCount  = msComm.length + gcComm.length;
   const avgCC      = commCount > 0 ? totalCash / commCount : 0;
   const avgDeal    = commCount > 0 ? totalDeal / commCount : 0;
@@ -876,7 +889,7 @@ function computeStats() {
     grossShowRate, netShowRate, closeRate, disqRate,
     totalCash, totalDeal, totalRefundCash, commission,
     avgCC, avgDeal,
-    commItems, laRows,
+    commItems, laRows, tierBreakdown,
   };
 }
 
@@ -1024,55 +1037,37 @@ function renderStatsGrid(stats) {
   return g;
 }
 
-// ── Middle: Funnel + Outcomes ──
+// ── Middle: Outcomes full-width ──
 function renderMiddleRow(stats) {
-  const div = document.createElement('div');
-  div.className = 'two-col';
-
-  const funnel = document.createElement('div');
-  funnel.className = 'panel';
-  funnel.innerHTML = `
-    <div class="panel-header"><span class="panel-title">Call Funnel</span></div>
-    <div class="panel-body">
-      ${progBar('Gross Show Rate',       stats.grossShowRate,'linear-gradient(90deg,var(--steel-mid),var(--steel-light))')}
-      ${progBar('Net Show Rate',         stats.netShowRate,  'linear-gradient(90deg,var(--steel-mid),var(--steel-light))')}
-      ${progBar('Close Rate',            stats.closeRate,    'linear-gradient(90deg,#9a7a30,var(--gold))')}
-      ${progBar('Disqualification Rate', stats.disqRate,     'linear-gradient(90deg,#7a1a1a,var(--red))')}
-    </div>
-  `;
+  const wrap = document.createElement('div');
+  wrap.style.marginBottom = '24px';
 
   const outcomes = document.createElement('div');
   outcomes.className = 'panel';
   outcomes.innerHTML = `
     <div class="panel-header"><span class="panel-title">Outcomes Breakdown</span></div>
-    <div class="panel-body">
-      ${mRow('Closed (Won)',         stats.closed,       'green-val')}
-      ${mRow('Showed — No Sale',     stats.showedNoSale, 'accent-val')}
-      ${mRow('Follow Ups',           stats.followUp,     'gold-val')}
-      ${mRow('No Shows',             stats.noShow,       'red-val')}
-      ${mRow('Cancelled',            stats.cancelled,    '')}
-      ${mRow('Disqualified on Call', stats.disqualified, '')}
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0">
+      ${outCell('Closed (Won)',         stats.closed,       'green-val')}
+      ${outCell('Showed — No Sale',     stats.showedNoSale, 'accent-val')}
+      ${outCell('Follow Ups',           stats.followUp,     'gold-val')}
+      ${outCell('No Shows',             stats.noShow,       'red-val')}
+      ${outCell('Cancelled',            stats.cancelled,    '')}
+      ${outCell('Disqualified on Call', stats.disqualified, '')}
     </div>
   `;
 
-  div.appendChild(funnel);
-  div.appendChild(outcomes);
-  return div;
+  wrap.appendChild(outcomes);
+  return wrap;
 }
 
-function progBar(label, val, grad) {
-  const w = Math.min((val||0)*100,100).toFixed(1);
+function outCell(label, val, cls) {
   return `
-    <div class="progress-container">
-      <div class="progress-header">
-        <span class="progress-label">${label}</span>
-        <span class="progress-pct">${pct(val)}</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width:${w}%;background:${grad}"></div>
-      </div>
+    <div style="padding:18px 22px;border-right:1px solid var(--border);text-align:center;last-child{border:none}">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);font-weight:600;margin-bottom:8px">${label}</div>
+      <div style="font-family:var(--font-display);font-size:30px;line-height:1" class="metric-val ${cls}">${val}</div>
     </div>`;
 }
+
 
 function mRow(label, val, cls) {
   return `<div class="metric-row"><span class="metric-name">${label}</span><span class="metric-val ${cls}">${val}</span></div>`;
@@ -1128,10 +1123,37 @@ function renderCommissionPanel(stats) {
   const panel = document.createElement('div');
   panel.className = 'panel';
 
-  const hasRef = stats.commItems.some(c => c.isRefund);
+  const refCount = stats.commItems.filter(c => c.isRefund).length;
 
-  const rows = stats.commItems.map(item => {
-    const commAmt = item.cashCollected * 0.10;
+  // ── Summary rows ──
+  const summary = `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--border)">
+      ${commSummCell('Cash Collected', money(stats.totalCash), 'accent-val')}
+      ${commSummCell('Refunds', refCount, refCount > 0 ? 'red-val' : '')}
+      ${commSummCell('Commission', money(stats.commission), 'gold-val')}
+    </div>`;
+
+  // ── Tier breakdown ──
+  const tierRows = stats.tierBreakdown.filter(t => t.amount > 0).map(t => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 24px;border-bottom:1px solid rgba(56,153,204,0.05)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;color:var(--text-muted)">${t.label}</span>
+        <span style="font-size:10px;font-family:var(--font-mono);color:var(--text-dim);background:var(--navy-light);padding:2px 7px;border-radius:4px">${(t.rate*100)}%</span>
+      </div>
+      <div style="text-align:right">
+        <span style="font-family:var(--font-mono);font-size:13px;color:var(--gold)">${money(t.comm)}</span>
+        <span style="font-size:11px;color:var(--text-dim);font-family:var(--font-mono);margin-left:8px">on ${money(t.amount)}</span>
+      </div>
+    </div>`).join('');
+
+  const tierSection = `
+    <div style="border-bottom:1px solid var(--border)">
+      <div style="padding:8px 24px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:600">Commission Tiers</div>
+      ${tierRows}
+    </div>`;
+
+  // ── Per-client rows ──
+  const clientRows = stats.commItems.map(item => {
     if (item.isRefund) {
       return `
         <div class="commission-row is-refund">
@@ -1142,7 +1164,7 @@ function renderCommissionPanel(stats) {
           </div>
           <div class="commission-right">
             <div class="commission-amount refund-amt">-${money(item.cashCollected)}</div>
-            <div class="commission-sub refund-sub">${money(commAmt)} commission</div>
+            <div class="commission-sub refund-sub">CC deducted</div>
           </div>
         </div>`;
     }
@@ -1153,31 +1175,36 @@ function renderCommissionPanel(stats) {
           <div class="commission-date">Payout: ${item.payoutDate ? fmtDate(item.payoutDate) : '—'}</div>
         </div>
         <div class="commission-right">
-          <div class="commission-amount">${money(commAmt)}</div>
-          <div class="commission-sub">CC: ${money(item.cashCollected)} · Deal: ${money(item.dealValue)}</div>
+          <div class="commission-amount">${money(item.cashCollected)}</div>
+          <div class="commission-sub">Deal: ${money(item.dealValue)}</div>
         </div>
       </div>`;
   }).join('');
 
-  const netRow = stats.commItems.length > 0 ? `
-    <div class="comm-net-row">
-      <span style="font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase">
-        ${hasRef ? 'Commission (excl. refunds)' : 'Total Commission'}
-      </span>
-      <span style="font-family:var(--font-mono);font-size:16px;font-weight:500;color:var(--gold)">${money(stats.commission)}</span>
-    </div>` : '';
+  const clientSection = stats.commItems.length > 0 ? `
+    <div class="panel-body">
+      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:600;margin-bottom:4px">Client Breakdown</div>
+      ${clientRows}
+    </div>` : `<div class="empty-state" style="padding:24px">No commissions this period</div>`;
 
   panel.innerHTML = `
     <div class="panel-header">
-      <span class="panel-title">Commission Breakdown</span>
-      <span style="font-size:13px;font-family:var(--font-mono);color:var(--gold)">${money(stats.commission)}</span>
+      <span class="panel-title">Commissions Dashboard</span>
+      <span style="font-size:15px;font-family:var(--font-mono);font-weight:500;color:var(--gold)">${money(stats.commission)}</span>
     </div>
-    <div class="panel-body">
-      ${stats.commItems.length === 0
-        ? '<div class="empty-state" style="padding:16px 0">No commissions this period</div>'
-        : rows + netRow}
-    </div>`;
+    ${summary}
+    ${stats.commItems.length > 0 ? tierSection : ''}
+    ${clientSection}`;
+
   return panel;
+}
+
+function commSummCell(label, val, cls) {
+  return `
+    <div style="padding:16px 22px;border-right:1px solid var(--border);text-align:center">
+      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);font-weight:600;margin-bottom:6px">${label}</div>
+      <div style="font-family:var(--font-mono);font-size:16px;font-weight:500" class="metric-val ${cls}">${val}</div>
+    </div>`;
 }
 
 // ═══════════════════════════════════════════════════════════════
