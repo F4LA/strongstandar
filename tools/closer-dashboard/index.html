@@ -861,6 +861,8 @@ function computeStats() {
   const commItems = [
     ...msComm.map(r => ({
       name:         `${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),
+      saleDate:     parseDate(r[MS.saleDate]),
+      startDate:    parseDate(r[MS.startDate]),
       payoutDate:   parseDate(r[MS.payoutDate]),
       cashCollected:parseAmt(r[MS.cashCollected]),
       dealValue:    parseAmt(r[MS.dealValue]),
@@ -868,6 +870,8 @@ function computeStats() {
     })),
     ...gcComm.map(r => ({
       name:         `${r[GC.firstName]||''} ${r[GC.lastName]||''}`.trim(),
+      saleDate:     parseDate(r[GC.saleDate]),
+      startDate:    null,
       payoutDate:   parseDate(r[GC.payoutDate]),
       cashCollected:parseAmt(r[GC.cashCollected]),
       dealValue:    parseAmt(r[GC.dealValue]),
@@ -875,6 +879,8 @@ function computeStats() {
     })),
     ...msRef.map(r => ({
       name:         `${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),
+      saleDate:     parseDate(r[MS.saleDate]),
+      startDate:    parseDate(r[MS.startDate]),
       payoutDate:   parseDate(r[MS.refundDate]),
       cashCollected:parseAmt(r[MS.cashCollected]),
       dealValue:    0,
@@ -1102,15 +1108,30 @@ function renderCallsTable(rows) {
     return (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0);
   });
 
+  const today = new Date(); today.setHours(0,0,0,0);
+  const staleOutcomes = /^(showed|confirmed|scheduled|booked)$/i;
+  const noFinalOutcome = (outcome) => {
+    const o = (outcome||'').trim().toLowerCase();
+    return o === '' || staleOutcomes.test(o);
+  };
+
   const tbody = sorted.map(r => {
     const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
     const cd      = parseDate(r[LA.callDate]);
     const outcome = (r[LA.outcome]||'').trim();
     const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
-    return `<tr>
+    const isFollowUp = /^follow\s*up$/i.test(outcome);
+    const isStale    = cd && cd < today && noFinalOutcome(outcome) && !closed;
+
+    let rowBg = '';
+    if      (closed)     rowBg = 'background:rgba(46,204,113,0.08);border-left:3px solid rgba(46,204,113,0.5)';
+    else if (isFollowUp) rowBg = 'background:rgba(201,168,76,0.08);border-left:3px solid rgba(201,168,76,0.5)';
+    else if (isStale)    rowBg = 'background:rgba(231,76,60,0.08);border-left:3px solid rgba(231,76,60,0.5)';
+
+    return `<tr style="${rowBg}">
       <td style="font-weight:500">${name}</td>
       <td style="color:var(--text-dim);font-family:var(--font-mono)">${cd ? fmtDate(cd) : '—'}</td>
-      <td>${badge(outcome, closed)}</td>
+      <td>${badge(outcome, closed)}${isStale ? ' <span style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-left:4px">· update needed</span>' : ''}</td>
     </tr>`;
   }).join('');
 
@@ -1161,39 +1182,42 @@ function renderCommissionPanel(stats) {
       ${tierRows}
     </div>`;
 
-  // ── Per-client rows ──
-  const clientRows = stats.commItems.map(item => {
-    if (item.isRefund) {
-      return `
-        <div class="commission-row is-refund">
-          <div class="commission-left">
-            <div class="commission-name refund-name">${item.name || '—'}</div>
-            <div class="commission-date">Refund: ${item.payoutDate ? fmtDate(item.payoutDate) : '—'}</div>
-            <span class="refund-tag">↩ REFUND</span>
-          </div>
-          <div class="commission-right">
-            <div class="commission-amount refund-amt">-${money(item.cashCollected)}</div>
-            <div class="commission-sub refund-sub">CC deducted</div>
-          </div>
-        </div>`;
-    }
-    return `
-      <div class="commission-row">
-        <div class="commission-left">
-          <div class="commission-name">${item.name || '—'}</div>
-          <div class="commission-date">Payout: ${item.payoutDate ? fmtDate(item.payoutDate) : '—'}</div>
-        </div>
-        <div class="commission-right">
-          <div class="commission-amount">${money(item.cashCollected)}</div>
-          <div class="commission-sub">Deal: ${money(item.dealValue)}</div>
-        </div>
-      </div>`;
+  // ── Per-client table (scrollable, max 5 rows) ──
+  const clientTbody = stats.commItems.map(item => {
+    const rowStyle = item.isRefund
+      ? `style="background:rgba(231,76,60,0.05)"`
+      : '';
+    const nameCell = item.isRefund
+      ? `<td style="font-weight:500"><span style="color:var(--red)">${item.name || '—'}</span> <span class="refund-tag" style="font-size:9px;vertical-align:middle">↩ REFUND</span></td>`
+      : `<td style="font-weight:500">${item.name || '—'}</td>`;
+    return `<tr ${rowStyle}>
+      ${nameCell}
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">${item.saleDate   ? fmtDate(item.saleDate)   : '—'}</td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">${item.startDate  ? fmtDate(item.startDate)  : '—'}</td>
+      <td style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim)">${item.payoutDate ? fmtDate(item.payoutDate) : '—'}</td>
+      <td style="font-family:var(--font-mono);font-size:13px;font-weight:500;color:${item.isRefund ? 'var(--red)' : 'var(--steel-light)'}">${item.isRefund ? '-' : ''}${money(item.cashCollected)}</td>
+      <td style="font-family:var(--font-mono);font-size:13px;color:var(--text-muted)">${money(item.dealValue)}</td>
+    </tr>`;
   }).join('');
 
   const clientSection = stats.commItems.length > 0 ? `
-    <div class="panel-body">
-      <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:600;margin-bottom:4px">Client Breakdown</div>
-      ${clientRows}
+    <div>
+      <div style="padding:10px 24px 6px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:600;border-top:1px solid var(--border)">Client Breakdown</div>
+      <div style="overflow-y:auto;max-height:248px">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr>
+              <th style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:8px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Client</th>
+              <th style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:8px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Sale Date</th>
+              <th style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:8px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Start Date</th>
+              <th style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:8px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Payout Date</th>
+              <th style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:8px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Cash Collected</th>
+              <th style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:8px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Deal Value</th>
+            </tr>
+          </thead>
+          <tbody>${clientTbody}</tbody>
+        </table>
+      </div>
     </div>` : `<div class="empty-state" style="padding:24px">No commissions this period</div>`;
 
   panel.innerHTML = `
