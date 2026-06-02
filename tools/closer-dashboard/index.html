@@ -87,6 +87,62 @@
     pointer-events: none; z-index: 0;
   }
 
+  /* ── PASSWORD SCREEN ── */
+  #password-screen {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pw-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border-bright);
+    border-radius: 16px;
+    padding: 48px;
+    width: 400px; max-width: 90vw;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .pw-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--steel-mid), var(--steel-light), transparent);
+  }
+  .pw-logo { font-family: var(--font-display); font-size: 32px; letter-spacing: 4px; color: var(--steel-light); margin-bottom: 4px; }
+  .pw-sub  { color: var(--text-dim); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px; }
+  .pw-lock { font-size: 36px; margin-bottom: 20px; opacity: 0.6; }
+  .pw-input {
+    width: 100%;
+    background: var(--navy); border: 1px solid var(--border); border-radius: 8px;
+    padding: 13px 16px; color: var(--text); font-family: var(--font-mono); font-size: 15px;
+    outline: none; margin-bottom: 14px; transition: border-color 0.2s;
+    text-align: center; letter-spacing: 3px;
+  }
+  .pw-input:focus { border-color: var(--steel-mid); }
+  .pw-input::placeholder { letter-spacing: 1px; color: var(--text-dim); font-size: 13px; }
+  .pw-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--steel-mid), var(--steel-light));
+    border: none; border-radius: 8px; padding: 13px;
+    color: white; font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .pw-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .pw-btn:active { transform: translateY(0); }
+  .pw-error {
+    background: var(--red-pale); border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 8px; padding: 9px 14px; font-size: 12px; color: var(--red);
+    margin-top: 12px; display: none;
+  }
+  .pw-shake { animation: shake 0.35s ease; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-8px); }
+    40%      { transform: translateX(8px); }
+    60%      { transform: translateX(-5px); }
+    80%      { transform: translateX(5px); }
+  }
+
   /* ── SETUP SCREEN ── */
   #setup-screen {
     position: fixed; inset: 0;
@@ -144,6 +200,7 @@
   .header {
     position: sticky; top: 0; z-index: 50;
     padding: 24px 40px;
+    min-height: 73px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
     background: var(--header-bg); backdrop-filter: blur(10px);
@@ -175,8 +232,9 @@
   /* ── CONTROLS ── */
   .controls-bar {
     position: sticky; top: 73px; z-index: 49;
-    padding: 20px 40px;
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 16px 40px;
+    min-height: 64px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: nowrap;
     border-bottom: 1px solid var(--border);
     background: var(--header-bg);
   }
@@ -510,6 +568,18 @@
 </head>
 <body>
 
+<!-- PASSWORD -->
+<div id="password-screen">
+  <div class="pw-card" id="pw-card">
+    <div class="pw-lock">🔒</div>
+    <div class="pw-logo">STRONG STANDARD</div>
+    <div class="pw-sub">Closer Dashboard</div>
+    <input type="password" class="pw-input" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter') checkPassword()" />
+    <button class="pw-btn" onclick="checkPassword()">Access Dashboard</button>
+    <div class="pw-error" id="pw-error">Incorrect password. Try again.</div>
+  </div>
+</div>
+
 <!-- SETUP -->
 <div id="setup-screen">
   <div class="setup-card">
@@ -650,6 +720,33 @@ const GC = {
 };
 
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+// PASSWORD GATE  ← change this to update the password
+// ═══════════════════════════════════════════════════════════════
+const DASHBOARD_PASSWORD = 'Strong2026';
+
+function checkPassword() {
+  const val = document.getElementById('pw-input').value;
+  if (val === DASHBOARD_PASSWORD) {
+    localStorage.setItem('ss_auth', btoa(DASHBOARD_PASSWORD));
+    document.getElementById('password-screen').style.display = 'none';
+    initDashboard();
+  } else {
+    const card = document.getElementById('pw-card');
+    const err  = document.getElementById('pw-error');
+    err.style.display = 'block';
+    card.classList.remove('pw-shake');
+    void card.offsetWidth; // restart animation
+    card.classList.add('pw-shake');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function isAuthenticated() {
+  try { return localStorage.getItem('ss_auth') === btoa(DASHBOARD_PASSWORD); } catch(e) { return false; }
+}
+
 // CALL STATUS HELPERS  (global so modal + table can share them)
 // ═══════════════════════════════════════════════════════════════
 const staleOutcomes = /^(confirmed|scheduled|booked)$/i;
@@ -2136,7 +2233,14 @@ function openCommModal() {
 // Auto-load on page open
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('setup-screen').style.display = 'none';
-  initDashboard();
+  if (isAuthenticated()) {
+    // Already authenticated — skip password screen
+    document.getElementById('password-screen').style.display = 'none';
+    initDashboard();
+  } else {
+    // Show password screen, focus input
+    document.getElementById('pw-input').focus();
+  }
 });
 </script>
 </body>
