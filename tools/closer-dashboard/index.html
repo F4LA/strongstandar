@@ -1412,6 +1412,7 @@ function renderMiddleRow(stats) {
 function renderTrendSection() {
   const trend = computeTrend();
   const wrap  = document.createElement('div');
+  wrap.style.marginTop    = '24px';
   wrap.style.marginBottom = '24px';
 
   const isDark  = document.documentElement.getAttribute('data-theme') !== 'light';
