@@ -374,6 +374,32 @@
   .modal-body tbody tr:hover { background: rgba(56,153,204,0.04); }
   .modal-body tbody td { padding: 12px 20px; font-size: 13px; color: var(--text); white-space: nowrap; }
 
+  /* ── CALL FILTER PILLS ── */
+  .call-filters {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.05);
+  }
+  .call-filter-pill {
+    padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s; border: 1px solid transparent;
+    background: var(--navy-light); color: var(--text-muted); letter-spacing: 0.3px;
+  }
+  .call-filter-pill:hover { color: var(--text); border-color: var(--border-bright); }
+  .call-filter-pill.active { background: var(--steel-mid); color: white; border-color: transparent; }
+  .call-filter-pill.f-closed   { }
+  .call-filter-pill.f-closed.active   { background: rgba(46,204,113,0.25); color: var(--green); border-color: rgba(46,204,113,0.4); }
+  .call-filter-pill.f-followup.active { background: rgba(201,168,76,0.2); color: var(--gold); border-color: rgba(201,168,76,0.4); }
+  .call-filter-pill.f-stale.active    { background: rgba(231,76,60,0.15); color: var(--red); border-color: rgba(231,76,60,0.4); }
+  .call-filter-pill.f-showed.active   { background: rgba(56,153,204,0.15); color: var(--steel-light); border-color: rgba(56,153,204,0.35); }
+  .call-filter-pill.f-noshow.active   { background: rgba(231,76,60,0.1); color: var(--red); border-color: rgba(231,76,60,0.3); }
+  .call-filter-pill.f-cancelled.active{ background: rgba(107,133,160,0.15); color: var(--text-muted); border-color: rgba(107,133,160,0.3); }
+  .call-filter-pill.f-disq.active     { background: rgba(150,100,200,0.15); color: #b07de0; border-color: rgba(150,100,200,0.3); }
+  .filter-count {
+    font-size: 10px; background: rgba(255,255,255,0.15); border-radius: 8px;
+    padding: 1px 5px; margin-left: 3px; font-weight: 700;
+  }
+
   /* ── CALLS TABLE ── */
   .calls-table-wrap { overflow-x: auto; max-height: 460px; overflow-y: auto; }
   table { width: 100%; border-collapse: collapse; }
@@ -640,6 +666,39 @@ let currentMonth     = '';
 let customStart      = null;
 let customEnd        = null;
 let availableClosers = [];
+let currentCallFilter = 'all'; // filter for Calls This Period
+
+// ── LocalStorage helpers ──
+function saveState() {
+  try {
+    localStorage.setItem('ss_closer',  currentCloser);
+    localStorage.setItem('ss_period',  currentPeriod);
+    localStorage.setItem('ss_month',   currentMonth);
+    localStorage.setItem('ss_apikey',  API_KEY);
+    localStorage.setItem('ss_sheetid', SHEET_ID);
+    if (customStart) localStorage.setItem('ss_cstart', customStart.toISOString());
+    if (customEnd)   localStorage.setItem('ss_cend',   customEnd.toISOString());
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const closer  = localStorage.getItem('ss_closer');
+    const period  = localStorage.getItem('ss_period');
+    const month   = localStorage.getItem('ss_month');
+    const apikey  = localStorage.getItem('ss_apikey');
+    const sheetid = localStorage.getItem('ss_sheetid');
+    const cstart  = localStorage.getItem('ss_cstart');
+    const cend    = localStorage.getItem('ss_cend');
+    if (apikey)  API_KEY  = apikey;
+    if (sheetid) SHEET_ID = sheetid;
+    if (closer)  currentCloser = closer;
+    if (period)  currentPeriod = period;
+    if (month)   currentMonth  = month;
+    if (cstart)  customStart   = new Date(cstart);
+    if (cend)    customEnd     = new Date(cend);
+  } catch(e) {}
+}
 
 // ═══════════════════════════════════════════════════════════════
 // THEME TOGGLE
@@ -656,6 +715,7 @@ function toggleTheme() {
 // SETUP / INIT
 // ═══════════════════════════════════════════════════════════════
 async function initDashboard() {
+  loadState(); // restore saved API key, closer, period, etc.
   document.getElementById('setup-screen').style.display    = 'none';
   document.getElementById('loading-overlay').style.display = 'flex';
   try {
@@ -791,7 +851,27 @@ function inRange(d, s, e) {
 function buildUI() {
   const sel = document.getElementById('closer-select');
   sel.innerHTML = availableClosers.map(c => `<option value="${c}">${c}</option>`).join('');
-  currentCloser = availableClosers[0] || '';
+
+  // Restore saved closer or default to first
+  if (currentCloser && availableClosers.includes(currentCloser)) {
+    sel.value = currentCloser;
+  } else {
+    currentCloser = availableClosers[0] || '';
+    sel.value = currentCloser;
+  }
+
+  // Restore saved period pill
+  document.querySelectorAll('.period-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase().startsWith(currentPeriod === 'monthly' ? 'month' : currentPeriod === 'quarterly' ? 'quart' : currentPeriod === 'all' ? 'all' : 'custom'));
+  });
+  document.getElementById('month-control').style.display = currentPeriod === 'monthly' ? 'flex' : 'none';
+  const customCtrl = document.getElementById('custom-date-control');
+  if (currentPeriod === 'custom') {
+    customCtrl.classList.add('visible');
+    if (customStart) document.getElementById('custom-start').value = customStart.toISOString().slice(0,10);
+    if (customEnd)   document.getElementById('custom-end').value   = customEnd.toISOString().slice(0,10);
+  }
+
   buildMonthOptions();
   renderDashboard();
 }
@@ -816,14 +896,28 @@ function buildMonthOptions() {
   sel.value = currentMonth;
 }
 
+function setCallFilter(f, isModal) {
+  currentCallFilter = f;
+  saveState();
+  if (isModal) {
+    // Refresh modal content only
+    openCallsModal();
+  } else {
+    // Refresh only the calls panel, not the whole dashboard
+    refreshCallsPanel();
+  }
+}
+
 function onCloserChange() {
   currentCloser = document.getElementById('closer-select').value;
   buildMonthOptions();
+  saveState();
   renderDashboard();
 }
 
 function onMonthChange() {
   currentMonth = document.getElementById('month-select').value;
+  saveState();
   renderDashboard();
 }
 
@@ -845,6 +939,7 @@ function setPeriod(p, btn) {
     }
   } else {
     customCtrl.classList.remove('visible');
+    saveState();
     renderDashboard();
   }
 }
@@ -855,6 +950,7 @@ function applyCustomDates() {
   if (!s || !e) return;
   customStart = new Date(s + 'T00:00:00');
   customEnd   = new Date(e + 'T23:59:59');
+  saveState();
   renderDashboard();
 }
 
@@ -1184,6 +1280,42 @@ function renderBottomRow(stats) {
   return wrap;
 }
 
+function buildCallRow(r) {
+  const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
+  const cd      = parseDate(r[LA.callDate]);
+  const outcome = (r[LA.outcome]||'').trim();
+  const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
+  const isFollowUp = /^follow\s*up$/i.test(outcome);
+  const today2  = new Date(); today2.setHours(0,0,0,0);
+  const isStale = cd && cd < today2 && noFinalOutcome(outcome) && !closed;
+
+  let rowBg = '';
+  if      (closed)     rowBg = 'background:rgba(46,204,113,0.08);border-left:3px solid rgba(46,204,113,0.5)';
+  else if (isFollowUp) rowBg = 'background:rgba(201,168,76,0.08);border-left:3px solid rgba(201,168,76,0.5)';
+  else if (isStale)    rowBg = 'background:rgba(231,76,60,0.08);border-left:3px solid rgba(231,76,60,0.5)';
+
+  return `<tr style="${rowBg}">
+    <td style="font-weight:500">${name}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-mono)">${cd ? fmtDate(cd) : '—'}</td>
+    <td>${badge(outcome, closed)}${isStale ? ' <span style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-left:4px">· update needed</span>' : ''}</td>
+  </tr>`;
+}
+
+function classifyRow(r) {
+  const cd      = parseDate(r[LA.callDate]);
+  const outcome = (r[LA.outcome]||'').trim();
+  const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
+  const today2  = new Date(); today2.setHours(0,0,0,0);
+  if (closed) return 'closed';
+  if (/^follow\s*up$/i.test(outcome)) return 'followup';
+  if (cd && cd < today2 && noFinalOutcome(outcome)) return 'stale';
+  if (/^showed$/i.test(outcome)) return 'showed';
+  if (/^no show$/i.test(outcome)) return 'noshow';
+  if (/^cancelled$/i.test(outcome)) return 'cancelled';
+  if (/disqualif/i.test(outcome)) return 'disq';
+  return 'other';
+}
+
 function renderCallsTable(rows) {
   const panel = document.createElement('div');
   panel.className = 'panel';
@@ -1191,54 +1323,102 @@ function renderCallsTable(rows) {
   const sorted = [...rows].sort((a,b) => {
     const pa = rowPriority(a), pb = rowPriority(b);
     if (pa !== pb) return pa - pb;
-    // within same group → sort by call date desc
     return (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0);
   });
 
-  const today = new Date(); today.setHours(0,0,0,0);
+  // Count per category for pill badges
+  const counts = { all:rows.length, closed:0, followup:0, stale:0, showed:0, noshow:0, cancelled:0, disq:0 };
+  sorted.forEach(r => { const c = classifyRow(r); if (counts[c] !== undefined) counts[c]++; });
 
-  const tbody = sorted.map(r => {
-    const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
-    const cd      = parseDate(r[LA.callDate]);
-    const outcome = (r[LA.outcome]||'').trim();
-    const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
-    const isFollowUp = /^follow\s*up$/i.test(outcome);
-    const isStale    = cd && cd < today && noFinalOutcome(outcome) && !closed;
+  const FILTERS = [
+    { key:'all',       label:'All',            cls:'' },
+    { key:'stale',     label:'Update Needed',  cls:'f-stale' },
+    { key:'closed',    label:'Closed',         cls:'f-closed' },
+    { key:'followup',  label:'Follow Up',      cls:'f-followup' },
+    { key:'showed',    label:'Showed',         cls:'f-showed' },
+    { key:'noshow',    label:'No Show',        cls:'f-noshow' },
+    { key:'cancelled', label:'Cancelled',      cls:'f-cancelled' },
+    { key:'disq',      label:'Disqualified',   cls:'f-disq' },
+  ];
 
-    let rowBg = '';
-    if      (closed)     rowBg = 'background:rgba(46,204,113,0.08);border-left:3px solid rgba(46,204,113,0.5)';
-    else if (isFollowUp) rowBg = 'background:rgba(201,168,76,0.08);border-left:3px solid rgba(201,168,76,0.5)';
-    else if (isStale)    rowBg = 'background:rgba(231,76,60,0.08);border-left:3px solid rgba(231,76,60,0.5)';
-
-    return `<tr style="${rowBg}">
-      <td style="font-weight:500">${name}</td>
-      <td style="color:var(--text-dim);font-family:var(--font-mono)">${cd ? fmtDate(cd) : '—'}</td>
-      <td>${badge(outcome, closed)}${isStale ? ' <span style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-left:4px">· update needed</span>' : ''}</td>
-    </tr>`;
+  const filterPills = FILTERS.map(f => {
+    const cnt = counts[f.key] || 0;
+    if (f.key !== 'all' && cnt === 0) return ''; // hide empty categories
+    const active = currentCallFilter === f.key ? 'active' : '';
+    return `<button class="call-filter-pill ${f.cls} ${active}" onclick="setCallFilter('${f.key}')">
+      ${f.label}<span class="filter-count">${cnt}</span>
+    </button>`;
   }).join('');
 
-  // Store for modal use
-  panel._callsTableHTML = `<table style="width:100%;border-collapse:collapse">
-    <thead><tr><th>Client</th><th>Call Date</th><th>Outcome</th></tr></thead>
-    <tbody>${tbody || '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:24px">No calls this period</td></tr>'}</tbody>
-  </table>`;
-  panel._callsCount = rows.length;
+  const filteredRows = currentCallFilter === 'all'
+    ? sorted
+    : sorted.filter(r => classifyRow(r) === currentCallFilter);
 
-  panel.innerHTML = `
+  const tbody = filteredRows.map(r => buildCallRow(r)).join('');
+  const emptyMsg = '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:24px">No calls match this filter</td></tr>';
+
+  panel.id = 'calls-panel';
+  panel.innerHTML = buildCallsPanelHTML(filterPills, filteredRows.length, rows.length, tbody, emptyMsg);
+  return panel;
+}
+
+function buildCallsPanelHTML(filterPills, filteredCount, totalCount, tbody, emptyMsg) {
+  return `
     <div class="panel-header">
       <span class="panel-title">Calls This Period</span>
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;color:var(--text-dim);font-family:var(--font-mono)">${rows.length} total</span>
+        <span style="font-size:12px;color:var(--text-dim);font-family:var(--font-mono)">${filteredCount} of ${totalCount}</span>
         <button class="expand-btn" onclick="openCallsModal()" title="Expand full screen">⛶</button>
       </div>
     </div>
+    <div class="call-filters">${filterPills}</div>
     <div class="calls-table-wrap">
       <table>
         <thead><tr><th>Client</th><th>Call Date</th><th>Outcome</th></tr></thead>
-        <tbody>${tbody || '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:24px">No calls this period</td></tr>'}</tbody>
+        <tbody>${tbody || emptyMsg}</tbody>
       </table>
     </div>`;
-  return panel;
+}
+
+function refreshCallsPanel() {
+  if (!_lastStats) return;
+  const panel = document.getElementById('calls-panel');
+  if (!panel) return;
+
+  const rows = _lastStats.laRows;
+  const sorted = [...rows].sort((a,b) => {
+    const pa = rowPriority(a), pb = rowPriority(b);
+    if (pa !== pb) return pa - pb;
+    return (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0);
+  });
+
+  const counts = { all:rows.length, closed:0, followup:0, stale:0, showed:0, noshow:0, cancelled:0, disq:0 };
+  sorted.forEach(r => { const c = classifyRow(r); if (counts[c] !== undefined) counts[c]++; });
+
+  const FILTERS = [
+    { key:'all',       label:'All',           cls:'' },
+    { key:'stale',     label:'Update Needed', cls:'f-stale' },
+    { key:'closed',    label:'Closed',        cls:'f-closed' },
+    { key:'followup',  label:'Follow Up',     cls:'f-followup' },
+    { key:'showed',    label:'Showed',        cls:'f-showed' },
+    { key:'noshow',    label:'No Show',       cls:'f-noshow' },
+    { key:'cancelled', label:'Cancelled',     cls:'f-cancelled' },
+    { key:'disq',      label:'Disqualified',  cls:'f-disq' },
+  ];
+
+  const filterPills = FILTERS.map(f => {
+    if (f.key !== 'all' && !counts[f.key]) return '';
+    const active = currentCallFilter === f.key ? 'active' : '';
+    return `<button class="call-filter-pill ${f.cls} ${active}" onclick="setCallFilter('${f.key}')">
+      ${f.label}<span class="filter-count">${counts[f.key]||0}</span>
+    </button>`;
+  }).join('');
+
+  const filteredRows = currentCallFilter === 'all' ? sorted : sorted.filter(r => classifyRow(r) === currentCallFilter);
+  const tbody = filteredRows.map(r => buildCallRow(r)).join('');
+  const emptyMsg = '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:24px">No calls match this filter</td></tr>';
+
+  panel.innerHTML = buildCallsPanelHTML(filterPills, filteredRows.length, rows.length, tbody, emptyMsg);
 }
 
 function renderCommissionPanel(stats) {
@@ -1407,40 +1587,53 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 function openCallsModal() {
   if (!_lastStats) return;
   const rows = _lastStats.laRows;
-  const sortToday2 = new Date(); sortToday2.setHours(0,0,0,0);
 
-  const tbody = [...rows].sort((a,b) => {
+  const sorted = [...rows].sort((a,b) => {
     const pa = rowPriority(a), pb = rowPriority(b);
     if (pa !== pb) return pa - pb;
     return (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0);
-  }).map(r => {
-    const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
-    const cd      = parseDate(r[LA.callDate]);
-    const outcome = (r[LA.outcome]||'').trim();
-    const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
-    const isFollowUp = /^follow\s*up$/i.test(outcome);
-    const isStale    = cd && cd < sortToday2 && noFinalOutcome(outcome) && !closed;
-    let rowBg = '';
-    if      (closed)     rowBg = 'background:rgba(46,204,113,0.08);border-left:3px solid rgba(46,204,113,0.5)';
-    else if (isFollowUp) rowBg = 'background:rgba(201,168,76,0.08);border-left:3px solid rgba(201,168,76,0.5)';
-    else if (isStale)    rowBg = 'background:rgba(231,76,60,0.08);border-left:3px solid rgba(231,76,60,0.5)';
-    return `<tr style="${rowBg}">
-      <td style="font-weight:500;padding:12px 20px">${name}</td>
-      <td style="color:var(--text-dim);font-family:var(--font-mono);padding:12px 20px">${cd ? fmtDate(cd) : '—'}</td>
-      <td style="padding:12px 20px">${badge(outcome, closed)}${isStale ? ' <span style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-left:4px">· update needed</span>' : ''}</td>
-    </tr>`;
+  });
+
+  // Build counts
+  const counts = { all:rows.length, closed:0, followup:0, stale:0, showed:0, noshow:0, cancelled:0, disq:0 };
+  sorted.forEach(r => { const c = classifyRow(r); if (counts[c] !== undefined) counts[c]++; });
+
+  const FILTERS = [
+    { key:'all',       label:'All',           cls:'' },
+    { key:'stale',     label:'Update Needed', cls:'f-stale' },
+    { key:'closed',    label:'Closed',        cls:'f-closed' },
+    { key:'followup',  label:'Follow Up',     cls:'f-followup' },
+    { key:'showed',    label:'Showed',        cls:'f-showed' },
+    { key:'noshow',    label:'No Show',       cls:'f-noshow' },
+    { key:'cancelled', label:'Cancelled',     cls:'f-cancelled' },
+    { key:'disq',      label:'Disqualified',  cls:'f-disq' },
+  ];
+
+  const filterPills = FILTERS.map(f => {
+    if (f.key !== 'all' && !counts[f.key]) return '';
+    const active = currentCallFilter === f.key ? 'active' : '';
+    // isModal=true so it refreshes the modal, not the main panel
+    return `<button class="call-filter-pill ${f.cls} ${active}" onclick="setCallFilter('${f.key}', true)">
+      ${f.label}<span class="filter-count">${counts[f.key]||0}</span>
+    </button>`;
   }).join('');
+
+  const filteredRows = currentCallFilter === 'all' ? sorted : sorted.filter(r => classifyRow(r) === currentCallFilter);
+  const emptyMsg = '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:32px">No calls match this filter</td></tr>';
+
+  const thStyle = 'font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2';
 
   openModal(
     'Calls This Period',
-    `${rows.length} total · ${currentCloser}`,
-    `<table style="width:100%;border-collapse:collapse">
+    `${filteredRows.length} of ${rows.length} · ${currentCloser}`,
+    `<div class="call-filters" style="border-bottom:1px solid var(--border)">${filterPills}</div>
+    <table style="width:100%;border-collapse:collapse">
       <thead><tr>
-        <th style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Client</th>
-        <th style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Call Date</th>
-        <th style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2">Outcome</th>
+        <th style="${thStyle}">Client</th>
+        <th style="${thStyle}">Call Date</th>
+        <th style="${thStyle}">Outcome</th>
       </tr></thead>
-      <tbody>${tbody}</tbody>
+      <tbody>${filteredRows.map(r => buildCallRow(r)).join('') || emptyMsg}</tbody>
     </table>`
   );
 }
