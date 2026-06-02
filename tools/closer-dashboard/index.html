@@ -142,7 +142,7 @@
 
   /* ── HEADER ── */
   .header {
-    position: relative; z-index: 10;
+    position: sticky; top: 0; z-index: 50;
     padding: 24px 40px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
@@ -174,7 +174,7 @@
 
   /* ── CONTROLS ── */
   .controls-bar {
-    position: relative; z-index: 10;
+    position: sticky; top: 73px; z-index: 49;
     padding: 20px 40px;
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
     border-bottom: 1px solid var(--border);
@@ -1906,7 +1906,7 @@ function renderCommissionPanel(stats) {
 
   const clientSection = stats.commItems.length > 0 ? `
     <div>
-      <div style="padding:10px 24px 6px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:600;border-top:1px solid var(--border)">Client Breakdown</div>
+      <div style="padding:6px 0;border-top:1px solid var(--border)"></div>
       <div style="overflow-y:auto;max-height:248px">
         <table style="width:100%;border-collapse:collapse">
           <thead>
