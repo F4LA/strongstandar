@@ -1992,9 +1992,9 @@ function renderDashboard() {
   el.appendChild(renderHero(_lastStats));
   el.appendChild(renderStatsGrid(_lastStats));
   el.appendChild(renderMiddleRow(_lastStats));
+  el.appendChild(renderBottomRow(_lastStats));
   el.appendChild(renderTrendSection());
   el.appendChild(renderCloseRateTrendSection());
-  el.appendChild(renderBottomRow(_lastStats));
 }
 
 function openModal(title, meta, bodyHTML) {
