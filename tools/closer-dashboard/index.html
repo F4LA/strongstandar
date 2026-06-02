@@ -604,6 +604,29 @@ const GC = {
 };
 
 // ═══════════════════════════════════════════════════════════════
+// CALL STATUS HELPERS  (global so modal + table can share them)
+// ═══════════════════════════════════════════════════════════════
+const staleOutcomes = /^(confirmed|scheduled|booked)$/i;
+
+function noFinalOutcome(outcome) {
+  const o = (outcome||'').trim().toLowerCase();
+  return o === '' || staleOutcomes.test(o);
+}
+
+function rowPriority(r) {
+  const cd      = parseDate(r[LA.callDate]);
+  const outcome = (r[LA.outcome]||'').trim();
+  const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
+  const today   = new Date(); today.setHours(0,0,0,0);
+  const isStale    = cd && cd < today && noFinalOutcome(outcome) && !closed;
+  const isFollowUp = /^follow\s*up$/i.test(outcome);
+  if (isStale)    return 0;
+  if (closed)     return 1;
+  if (isFollowUp) return 2;
+  return 3;
+}
+
+// ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
 let API_KEY  = 'AIzaSyC7WtRVmLS2mo53i_Cge8NAlJ5tB2kaHjE';
@@ -1165,19 +1188,6 @@ function renderCallsTable(rows) {
   const panel = document.createElement('div');
   panel.className = 'panel';
 
-  const sortToday = new Date(); sortToday.setHours(0,0,0,0);
-  const rowPriority = (r) => {
-    const cd      = parseDate(r[LA.callDate]);
-    const outcome = (r[LA.outcome]||'').trim();
-    const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
-    const isStale    = cd && cd < sortToday && noFinalOutcome(outcome) && !closed;
-    const isFollowUp = /^follow\s*up$/i.test(outcome);
-    if (isStale)    return 0; // 🔴 first
-    if (closed)     return 1; // 🟢 second
-    if (isFollowUp) return 2; // 🟡 third
-    return 3;                 // everything else last
-  };
-
   const sorted = [...rows].sort((a,b) => {
     const pa = rowPriority(a), pb = rowPriority(b);
     if (pa !== pb) return pa - pb;
@@ -1186,11 +1196,6 @@ function renderCallsTable(rows) {
   });
 
   const today = new Date(); today.setHours(0,0,0,0);
-  const staleOutcomes = /^(confirmed|scheduled|booked)$/i;
-  const noFinalOutcome = (outcome) => {
-    const o = (outcome||'').trim().toLowerCase();
-    return o === '' || staleOutcomes.test(o);
-  };
 
   const tbody = sorted.map(r => {
     const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
