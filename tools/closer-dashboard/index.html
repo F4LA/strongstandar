@@ -1045,20 +1045,11 @@ function applyCustomDates() {
 function computeStats() {
   const { start, end } = getDateRange();
   const cLow = currentCloser.toLowerCase();
-  const today = new Date();
+  const today = new Date(); today.setHours(0, 0, 0, 0);
 
-  // All rows for this closer (no date filter) — used for upcoming
-  const allCloserRows = raw.la.filter(r =>
-    (r[LA.closer]||'').toLowerCase().includes(cLow)
-  );
-
-  // Upcoming calls: future call dates, no outcome yet (or blank outcome)
-  const upcoming = allCloserRows.filter(r => {
-    const d = parseDate(r[LA.callDate]);
-    if (!d) return false;
-    const outcome = (r[LA.outcome]||'').trim().toLowerCase();
-    return d > today && (outcome === '' || outcome === 'scheduled');
-  }).length;
+  // Upcoming = calls within the selected period with call date > today (no outcome filter)
+  // Computed after laRows is built below — placeholder for now
+  let upcoming = 0;
 
   // Period-filtered rows
   const laRows = raw.la.filter(r => {
@@ -1074,6 +1065,8 @@ function computeStats() {
   const cancelRe   = /^cancelled$/i;
 
   const totalScheduled = laRows.length;
+  // Upcoming: within selected period + call date > today (matches COUNTIFS formula)
+  upcoming = laRows.filter(r => { const d = parseDate(r[LA.callDate]); return d && d > today; }).length;
   const showed       = laRows.filter(r => showedRe.test((r[LA.outcome]||'').trim())).length;
   const cancelled    = laRows.filter(r => cancelRe.test((r[LA.outcome]||'').trim())).length;
   const noShow       = laRows.filter(r => noShowRe.test((r[LA.outcome]||'').trim())).length;
@@ -1217,7 +1210,48 @@ function computeTrend() {
   });
 }
 
-let _trendChart = null; // keep chart instance to destroy on re-render
+let _trendChart  = null; // GSR chart instance
+let _crTrendChart = null; // Close Rate chart instance
+
+// ═══════════════════════════════════════════════════════════════
+// CLOSE RATE TREND COMPUTATION — 6 months
+// ═══════════════════════════════════════════════════════════════
+function computeCloseRateTrend() {
+  const today  = new Date(); today.setHours(0,0,0,0);
+  const cLow   = currentCloser.toLowerCase();
+  const excludeRe = /cancel|no[\s-]?show|disqual/i;
+
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const ref   = new Date(today.getFullYear(), today.getMonth() - 1 - i, 1);
+    const start = new Date(ref.getFullYear(), ref.getMonth(), 1);
+    const end   = new Date(ref.getFullYear(), ref.getMonth() + 1, 0, 23, 59, 59);
+    const label = ref.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    months.push({ start, end, label });
+  }
+
+  return months.map(({ start, end, label }) => {
+    const inMonth = (r) => {
+      const d = parseDate(r[LA.callDate]);
+      return d && d >= start && d <= end && d < today && (r[LA.callDate]||'') !== '';
+    };
+    const isQualified = (r) => !excludeRe.test((r[LA.outcome]||'').trim());
+
+    // ── Closer ──
+    const closerBase  = raw.la.filter(r => (r[LA.closer]||'').toLowerCase().includes(cLow) && inMonth(r));
+    const closerWon   = closerBase.filter(r => /^yes$/i.test((r[LA.endInSale]||'').trim())).length;
+    const closerDenom = closerBase.filter(r => isQualified(r)).length;
+    const closerCR    = closerDenom > 0 ? closerWon / closerDenom : null;
+
+    // ── Business ──
+    const bizBase  = raw.la.filter(r => inMonth(r));
+    const bizWon   = bizBase.filter(r => /^yes$/i.test((r[LA.endInSale]||'').trim())).length;
+    const bizDenom = bizBase.filter(r => isQualified(r)).length;
+    const bizCR    = bizDenom > 0 ? bizWon / bizDenom : null;
+
+    return { label, closerCR, bizCR, closerWon, closerDenom, bizWon, bizDenom };
+  });
+}
 
 // ═══════════════════════════════════════════════════════════════
 // RENDER  (actual impl lives in the FULLSCREEN MODAL section below,
@@ -1501,6 +1535,140 @@ function renderTrendSection() {
               color: textMuted, font: { size: 11 },
               callback: v => v + '%',
             },
+            min: 0,
+            max: 100,
+          },
+        },
+      },
+    });
+  });
+
+  return wrap;
+}
+
+// ── 6 Month Close Rate Trend ──
+function renderCloseRateTrendSection() {
+  const trend = computeCloseRateTrend();
+  const wrap  = document.createElement('div');
+  wrap.style.marginBottom = '24px';
+
+  const isDark    = document.documentElement.getAttribute('data-theme') !== 'light';
+  const textMuted = isDark ? 'rgba(107,133,160,0.8)' : 'rgba(60,90,120,0.8)';
+  const gridColor = isDark ? 'rgba(56,153,204,0.08)' : 'rgba(34,120,172,0.1)';
+
+  // Table — most recent first
+  const tableRows = [...trend].reverse().map(m => {
+    const cVal  = m.closerCR !== null ? (m.closerCR * 100).toFixed(2) + '%' : '—';
+    const bVal  = m.bizCR    !== null ? (m.bizCR    * 100).toFixed(2) + '%' : '—';
+    const diff  = (m.closerCR !== null && m.bizCR !== null) ? m.closerCR - m.bizCR : null;
+    const diffCls = diff === null ? '' : diff >= 0 ? 'trend-above' : 'trend-below';
+    const diffTxt = diff === null ? '' : (diff >= 0 ? '▲' : '▼') + ' ' + Math.abs(diff * 100).toFixed(1) + '%';
+    return `<tr>
+      <td style="color:var(--text);font-weight:500">${m.label}</td>
+      <td class="trend-closer">${cVal} <span style="font-size:10px;color:var(--text-dim)">(${m.closerWon}/${m.closerDenom})</span></td>
+      <td class="trend-biz">${bVal}</td>
+      <td style="font-family:var(--font-mono);font-size:11px" class="${diffCls}">${diffTxt}</td>
+    </tr>`;
+  }).join('');
+
+  const canvasId = 'cr-trend-chart';
+
+  wrap.innerHTML = `
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">6 Month Close Rate Trend</span>
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--steel-light)">
+            <span style="width:20px;height:2px;background:var(--steel-light);display:inline-block;border-radius:1px"></span>${currentCloser.split(' ')[0]}
+          </span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-dim)">
+            <span style="width:20px;height:2px;background:var(--text-dim);display:inline-block;border-radius:1px;opacity:0.6"></span>Business
+          </span>
+        </div>
+      </div>
+      <div style="padding:20px 24px">
+        <div class="trend-wrap">
+          <div class="trend-chart-box"><canvas id="${canvasId}"></canvas></div>
+          <div class="trend-table panel" style="border:1px solid var(--border)">
+            <table>
+              <thead><tr>
+                <th>Month</th>
+                <th>Closer CR</th>
+                <th>Biz CR</th>
+                <th>Diff</th>
+              </tr></thead>
+              <tbody>${tableRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  requestAnimationFrame(() => {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    if (_crTrendChart) { _crTrendChart.destroy(); _crTrendChart = null; }
+
+    _crTrendChart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: trend.map(m => m.label),
+        datasets: [
+          {
+            label: currentCloser.split(' ')[0] + ' Close Rate',
+            data: trend.map(m => m.closerCR !== null ? +(m.closerCR * 100).toFixed(2) : null),
+            borderColor: '#3899CC',
+            backgroundColor: 'rgba(56,153,204,0.1)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#3899CC',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.3,
+            fill: true,
+            spanGaps: true,
+          },
+          {
+            label: 'Business Close Rate',
+            data: trend.map(m => m.bizCR !== null ? +(m.bizCR * 100).toFixed(2) : null),
+            borderColor: isDark ? 'rgba(107,133,160,0.6)' : 'rgba(80,110,140,0.5)',
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            borderDash: [5, 4],
+            pointBackgroundColor: isDark ? 'rgba(107,133,160,0.8)' : 'rgba(80,110,140,0.7)',
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            tension: 0.3,
+            fill: false,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: isDark ? '#0f1729' : '#fff',
+            borderColor: isDark ? 'rgba(56,153,204,0.3)' : 'rgba(34,120,172,0.25)',
+            borderWidth: 1,
+            titleColor: isDark ? '#E8EEF4' : '#0D1B2A',
+            bodyColor: textMuted,
+            padding: 10,
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) + '%' : '—'}`
+            }
+          },
+        },
+        scales: {
+          x: {
+            grid: { color: gridColor },
+            ticks: { color: textMuted, font: { size: 11 } },
+          },
+          y: {
+            grid: { color: gridColor },
+            ticks: { color: textMuted, font: { size: 11 }, callback: v => v + '%' },
             min: 0,
             max: 100,
           },
@@ -1825,6 +1993,7 @@ function renderDashboard() {
   el.appendChild(renderStatsGrid(_lastStats));
   el.appendChild(renderMiddleRow(_lastStats));
   el.appendChild(renderTrendSection());
+  el.appendChild(renderCloseRateTrendSection());
   el.appendChild(renderBottomRow(_lastStats));
 }
 
