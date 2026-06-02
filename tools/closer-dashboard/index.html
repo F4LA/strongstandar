@@ -466,6 +466,24 @@
   .loading-progress { height: 100%; background: linear-gradient(90deg, var(--steel-mid), var(--steel-light)); animation: loadprog 1.5s infinite; }
   @keyframes loadprog { 0% { width: 0%; } 100% { width: 100%; } }
 
+  /* ── TREND CHART ── */
+  .trend-wrap { display: grid; grid-template-columns: 1fr auto; gap: 20px; margin-bottom: 24px; align-items: start; }
+  .trend-chart-box { position: relative; height: 260px; }
+  .trend-table { min-width: 320px; }
+  .trend-table table { width: 100%; border-collapse: collapse; }
+  .trend-table thead th {
+    font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 700; padding: 10px 16px;
+    text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  .trend-table tbody tr { border-bottom: 1px solid rgba(56,153,204,0.05); transition: background 0.15s; }
+  .trend-table tbody tr:hover { background: rgba(56,153,204,0.04); }
+  .trend-table tbody td { padding: 10px 16px; font-size: 13px; white-space: nowrap; }
+  .trend-closer { color: var(--steel-light); font-family: var(--font-mono); font-weight: 500; }
+  .trend-biz    { color: var(--text-muted);  font-family: var(--font-mono); }
+  .trend-above  { color: var(--green); }
+  .trend-below  { color: var(--red); }
+
   .empty-state { padding: 40px; text-align: center; color: var(--text-dim); font-size: 13px; }
   .fade-in { animation: fadeIn 0.4s ease forwards; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -487,6 +505,7 @@
     .closer-name { font-size: 36px; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
 <body>
@@ -678,6 +697,7 @@ function saveState() {
     localStorage.setItem('ss_filter',  currentCallFilter);
     localStorage.setItem('ss_apikey',  API_KEY);
     localStorage.setItem('ss_sheetid', SHEET_ID);
+    localStorage.setItem('ss_theme',   document.documentElement.getAttribute('data-theme') || 'dark');
     if (customStart) localStorage.setItem('ss_cstart', customStart.toISOString());
     if (customEnd)   localStorage.setItem('ss_cend',   customEnd.toISOString());
   } catch(e) {}
@@ -691,6 +711,7 @@ function loadState() {
     const filter  = localStorage.getItem('ss_filter');
     const apikey  = localStorage.getItem('ss_apikey');
     const sheetid = localStorage.getItem('ss_sheetid');
+    const theme   = localStorage.getItem('ss_theme');
     const cstart  = localStorage.getItem('ss_cstart');
     const cend    = localStorage.getItem('ss_cend');
     if (apikey)  API_KEY  = apikey;
@@ -701,6 +722,11 @@ function loadState() {
     if (filter)  currentCallFilter  = filter;
     if (cstart)  customStart        = new Date(cstart);
     if (cend)    customEnd          = new Date(cend);
+    if (theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('theme-icon').textContent  = theme === 'light' ? '🌙' : '☀️';
+      document.getElementById('theme-label').textContent = theme === 'light' ? 'Dark'  : 'Light';
+    }
   } catch(e) {}
 }
 
@@ -708,11 +734,13 @@ function loadState() {
 // THEME TOGGLE
 // ═══════════════════════════════════════════════════════════════
 function toggleTheme() {
-  const html  = document.documentElement;
+  const html   = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  const next   = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
   document.getElementById('theme-icon').textContent  = isDark ? '🌙' : '☀️';
   document.getElementById('theme-label').textContent = isDark ? 'Dark'  : 'Light';
+  localStorage.setItem('ss_theme', next);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1152,6 +1180,46 @@ function computeStats() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// TREND COMPUTATION — 6 Month Gross Show Rate
+// ═══════════════════════════════════════════════════════════════
+function computeTrend() {
+  const today  = new Date(); today.setHours(0,0,0,0);
+  const cLow   = currentCloser.toLowerCase();
+  const showedRe = /^(showed|follow\s*up|disqualified on sales call)$/i;
+
+  // Build last 6 complete months (most recent first → reverse for chart)
+  const months = [];
+  for (let i = 5; i >= 0; i--) {
+    const ref   = new Date(today.getFullYear(), today.getMonth() - 1 - i, 1);
+    const start = new Date(ref.getFullYear(), ref.getMonth(), 1);
+    const end   = new Date(ref.getFullYear(), ref.getMonth() + 1, 0, 23, 59, 59);
+    const label = ref.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    months.push({ start, end, label });
+  }
+
+  return months.map(({ start, end, label }) => {
+    const inMonth = (r) => {
+      const d = parseDate(r[LA.callDate]);
+      return d && d >= start && d <= end && d < today;
+    };
+
+    // Closer rows for this month
+    const closerRows  = raw.la.filter(r => (r[LA.closer]||'').toLowerCase().includes(cLow) && inMonth(r));
+    const closerShown = closerRows.filter(r => showedRe.test((r[LA.outcome]||'').trim())).length;
+    const closerGSR   = closerRows.length > 0 ? closerShown / closerRows.length : null;
+
+    // All business rows for this month
+    const bizRows  = raw.la.filter(r => inMonth(r));
+    const bizShown = bizRows.filter(r => showedRe.test((r[LA.outcome]||'').trim())).length;
+    const bizGSR   = bizRows.length > 0 ? bizShown / bizRows.length : null;
+
+    return { label, closerGSR, bizGSR, closerTotal: closerRows.length, bizTotal: bizRows.length };
+  });
+}
+
+let _trendChart = null; // keep chart instance to destroy on re-render
+
+// ═══════════════════════════════════════════════════════════════
 // RENDER  (actual impl lives in the FULLSCREEN MODAL section below,
 //          which caches _lastStats and calls these same helpers)
 // ═══════════════════════════════════════════════════════════════
@@ -1303,6 +1371,144 @@ function renderMiddleRow(stats) {
   `;
 
   wrap.appendChild(outcomes);
+  return wrap;
+}
+
+// ── 6 Month GSR Trend ──
+function renderTrendSection() {
+  const trend = computeTrend();
+  const wrap  = document.createElement('div');
+  wrap.style.marginBottom = '24px';
+
+  const isDark  = document.documentElement.getAttribute('data-theme') !== 'light';
+  const textMuted = isDark ? 'rgba(107,133,160,0.8)' : 'rgba(60,90,120,0.8)';
+  const gridColor = isDark ? 'rgba(56,153,204,0.08)' : 'rgba(34,120,172,0.1)';
+
+  // Table rows — reversed (most recent first)
+  const tableRows = [...trend].reverse().map(m => {
+    const cVal  = m.closerGSR !== null ? (m.closerGSR * 100).toFixed(2) + '%' : '—';
+    const bVal  = m.bizGSR    !== null ? (m.bizGSR    * 100).toFixed(2) + '%' : '—';
+    const diff  = (m.closerGSR !== null && m.bizGSR !== null) ? m.closerGSR - m.bizGSR : null;
+    const diffCls = diff === null ? '' : diff >= 0 ? 'trend-above' : 'trend-below';
+    const diffTxt = diff === null ? '' : (diff >= 0 ? '▲' : '▼') + ' ' + Math.abs(diff * 100).toFixed(1) + '%';
+    return `<tr>
+      <td style="color:var(--text);font-weight:500">${m.label}</td>
+      <td class="trend-closer">${cVal}</td>
+      <td class="trend-biz">${bVal}</td>
+      <td style="font-family:var(--font-mono);font-size:11px" class="${diffCls}">${diffTxt}</td>
+    </tr>`;
+  }).join('');
+
+  const canvasId = 'gsr-trend-chart';
+
+  wrap.innerHTML = `
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">6 Month Gross Show Rate Trend</span>
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--steel-light)">
+            <span style="width:20px;height:2px;background:var(--steel-light);display:inline-block;border-radius:1px"></span>${currentCloser.split(' ')[0]}
+          </span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-dim)">
+            <span style="width:20px;height:2px;background:var(--text-dim);display:inline-block;border-radius:1px;opacity:0.6"></span>Business
+          </span>
+        </div>
+      </div>
+      <div style="padding:20px 24px">
+        <div class="trend-wrap">
+          <div class="trend-chart-box"><canvas id="${canvasId}"></canvas></div>
+          <div class="trend-table panel" style="border:1px solid var(--border)">
+            <table>
+              <thead><tr>
+                <th>Month</th>
+                <th>Closer GSR</th>
+                <th>Biz GSR</th>
+                <th>Diff</th>
+              </tr></thead>
+              <tbody>${tableRows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // Draw chart after DOM insertion
+  requestAnimationFrame(() => {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    if (_trendChart) { _trendChart.destroy(); _trendChart = null; }
+
+    _trendChart = new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: trend.map(m => m.label),
+        datasets: [
+          {
+            label: currentCloser.split(' ')[0] + ' GSR',
+            data: trend.map(m => m.closerGSR !== null ? +(m.closerGSR * 100).toFixed(2) : null),
+            borderColor: '#3899CC',
+            backgroundColor: 'rgba(56,153,204,0.1)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#3899CC',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.3,
+            fill: true,
+            spanGaps: true,
+          },
+          {
+            label: 'Business GSR',
+            data: trend.map(m => m.bizGSR !== null ? +(m.bizGSR * 100).toFixed(2) : null),
+            borderColor: isDark ? 'rgba(107,133,160,0.6)' : 'rgba(80,110,140,0.5)',
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            borderDash: [5, 4],
+            pointBackgroundColor: isDark ? 'rgba(107,133,160,0.8)' : 'rgba(80,110,140,0.7)',
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            tension: 0.3,
+            fill: false,
+            spanGaps: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: isDark ? '#0f1729' : '#fff',
+            borderColor: isDark ? 'rgba(56,153,204,0.3)' : 'rgba(34,120,172,0.25)',
+            borderWidth: 1,
+            titleColor: isDark ? '#E8EEF4' : '#0D1B2A',
+            bodyColor: textMuted,
+            padding: 10,
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) + '%' : '—'}`
+            }
+          },
+        },
+        scales: {
+          x: {
+            grid: { color: gridColor },
+            ticks: { color: textMuted, font: { size: 11 } },
+          },
+          y: {
+            grid: { color: gridColor },
+            ticks: {
+              color: textMuted, font: { size: 11 },
+              callback: v => v + '%',
+            },
+            min: 0,
+            max: 100,
+          },
+        },
+      },
+    });
+  });
+
   return wrap;
 }
 
@@ -1618,6 +1824,7 @@ function renderDashboard() {
   el.appendChild(renderHero(_lastStats));
   el.appendChild(renderStatsGrid(_lastStats));
   el.appendChild(renderMiddleRow(_lastStats));
+  el.appendChild(renderTrendSection());
   el.appendChild(renderBottomRow(_lastStats));
 }
 
