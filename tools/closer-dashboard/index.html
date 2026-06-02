@@ -1073,13 +1073,22 @@ function mRow(label, val, cls) {
   return `<div class="metric-row"><span class="metric-name">${label}</span><span class="metric-val ${cls}">${val}</span></div>`;
 }
 
-// ── Bottom: Calls + Commissions ──
+// ── Bottom: Commissions (top) + Calls (below) ──
 function renderBottomRow(stats) {
-  const div = document.createElement('div');
-  div.className = 'two-col';
-  div.appendChild(renderCallsTable(stats.laRows));
-  div.appendChild(renderCommissionPanel(stats));
-  return div;
+  const wrap = document.createElement('div');
+  wrap.style.display = 'flex';
+  wrap.style.flexDirection = 'column';
+  wrap.style.gap = '20px';
+
+  const commWrap = document.createElement('div');
+  commWrap.appendChild(renderCommissionPanel(stats));
+
+  const callsWrap = document.createElement('div');
+  callsWrap.appendChild(renderCallsTable(stats.laRows));
+
+  wrap.appendChild(commWrap);
+  wrap.appendChild(callsWrap);
+  return wrap;
 }
 
 function renderCallsTable(rows) {
