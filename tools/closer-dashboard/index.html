@@ -1559,7 +1559,7 @@ function renderStatsGrid(stats) {
     </div>
 
     <!-- 10. Closed -->
-    <div class="stat-card green" onclick="openClosedModal()" style="cursor:pointer" title="Click to view closed clients">
+    <div class="stat-card green" onclick="openCardModal('closed')" style="cursor:pointer" title="View closed deals">
       <div class="stat-label">Closed</div>
       <div class="stat-value green-val">${stats.closed}</div>
       <div class="stat-sub">Won deals &nbsp;·&nbsp; <span style="font-size:10px;color:var(--green);opacity:0.8">view list ↗</span></div>
@@ -2326,46 +2326,6 @@ function openCommModal() {
         <th style="${thStyle}">Deal Value</th>
       </tr></thead>
       <tbody>${clientTbody}</tbody>
-    </table>`
-  );
-}
-
-// deprecated: see openCardModal
-function openClosedModal() {
-  if (!_lastStats) return;
-  const rows = _lastStats.laRows;
-
-  const closedRows = rows.filter(r => /^yes$/i.test((r[LA.endInSale]||'').trim()));
-  closedRows.sort((a, b) => (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0));
-
-  const thStyle = 'font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2';
-
-  const tbody = closedRows.length === 0
-    ? '<tr><td colspan="3" style="text-align:center;color:var(--text-dim);padding:32px">No closed deals this period</td></tr>'
-    : closedRows.map(r => {
-        const name   = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
-        const email  = r[LA.email]  || '—';
-        const source = r[LA.source] || '—';
-        const cd     = parseDate(r[LA.callDate]);
-        return `<tr>
-          <td style="font-weight:500;padding:12px 20px">${name}</td>
-          <td style="font-family:var(--font-mono);font-size:12px;padding:12px 20px;color:var(--text-dim)">${cd ? fmtDate(cd) : '—'}</td>
-          <td style="font-family:var(--font-mono);font-size:12px;padding:12px 20px;color:var(--steel-light)">${email}</td>
-          <td style="font-size:12px;padding:12px 20px;color:var(--text-muted)">${source}</td>
-        </tr>`;
-      }).join('');
-
-  openModal(
-    'Closed Deals',
-    `${closedRows.length} client${closedRows.length !== 1 ? 's' : ''} · ${currentCloser}`,
-    `<table style="width:100%;border-collapse:collapse">
-      <thead><tr>
-        <th style="${thStyle}">Full Name</th>
-        <th style="${thStyle}">Call Date</th>
-        <th style="${thStyle}">Email</th>
-        <th style="${thStyle}">Source</th>
-      </tr></thead>
-      <tbody>${tbody}</tbody>
     </table>`
   );
 }
