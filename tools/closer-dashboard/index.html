@@ -1496,63 +1496,63 @@ function renderStatsGrid(stats) {
 
   g.innerHTML = `
     <!-- 1. Calls Scheduled -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('scheduled')" style="cursor:pointer" title="View all scheduled calls">
       <div class="stat-label">Calls Scheduled</div>
       <div class="stat-value">${stats.totalScheduled}</div>
       <div class="stat-sub">Total in period</div>
     </div>
 
     <!-- 2. Upcoming Calls -->
-    <div class="stat-card accent">
+    <div class="stat-card accent" onclick="openCardModal('upcoming')" style="cursor:pointer" title="View upcoming calls">
       <div class="stat-label">Upcoming Calls</div>
       <div class="stat-value">${stats.upcoming}</div>
       <div class="stat-sub">Future scheduled</div>
     </div>
 
     <!-- 3. Calls Showed -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('showed')" style="cursor:pointer" title="View showed calls">
       <div class="stat-label">Calls Showed</div>
       <div class="stat-value">${stats.showed}</div>
       <div class="stat-sub">${stats.showedNoSale} showed · no sale</div>
     </div>
 
     <!-- 4. Gross Show Rate -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('showed')" style="cursor:pointer" title="View showed calls">
       <div class="stat-label">Gross Show Rate</div>
       <div class="stat-value money">${pct(stats.grossShowRate)}</div>
       <div class="stat-sub">${stats.showed} of ${stats.totalScheduled} scheduled</div>
     </div>
 
     <!-- 5. Net Show Rate -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('showed')" style="cursor:pointer" title="View showed calls">
       <div class="stat-label">Net Show Rate</div>
       <div class="stat-value money">${pct(stats.netShowRate)}</div>
       <div class="stat-sub">Excl. ${stats.cancelled} cancelled</div>
     </div>
 
     <!-- 6. Cancelled -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('cancelled')" style="cursor:pointer" title="View cancelled calls">
       <div class="stat-label">Cancelled</div>
       <div class="stat-value dim-val">${stats.cancelled}</div>
       <div class="stat-sub">Calls cancelled</div>
     </div>
 
     <!-- 7. No Show -->
-    <div class="stat-card red-card">
+    <div class="stat-card red-card" onclick="openCardModal('noshow')" style="cursor:pointer" title="View no-shows">
       <div class="stat-label">No Show</div>
       <div class="stat-value red-val">${stats.noShow}</div>
       <div class="stat-sub">Did not attend</div>
     </div>
 
     <!-- 8. Disqualified -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('disq')" style="cursor:pointer" title="View disqualified calls">
       <div class="stat-label">Disqualified</div>
       <div class="stat-value dim-val">${stats.disqualified}</div>
       <div class="stat-sub">On sales call</div>
     </div>
 
     <!-- 9. Disqualified Rate -->
-    <div class="stat-card">
+    <div class="stat-card" onclick="openCardModal('disq')" style="cursor:pointer" title="View disqualified calls">
       <div class="stat-label">Disqualified Rate</div>
       <div class="stat-value" style="color:${stats.disqRate > 0.2 ? 'var(--red)' : 'var(--text-dim)'}">${pct(stats.disqRate)}</div>
       <div class="stat-sub">${stats.disqualified} of ${stats.showed} shows</div>
@@ -1566,14 +1566,14 @@ function renderStatsGrid(stats) {
     </div>
 
     <!-- 11. Close Rate % -->
-    <div class="stat-card accent">
+    <div class="stat-card accent" onclick="openCardModal('closed')" style="cursor:pointer" title="View closed deals">
       <div class="stat-label">Close Rate %</div>
       <div class="stat-value">${pct(stats.closeRate)}</div>
       <div class="stat-sub">${stats.closed} of ${stats.showed - stats.disqualified} qualified</div>
     </div>
 
     <!-- 12. Avg CC $ -->
-    <div class="stat-card gold">
+    <div class="stat-card gold" onclick="openCardModal('closed')" style="cursor:pointer" title="View closed deals">
       <div class="stat-label">Avg. CC $</div>
       <div class="stat-value gold-val">${money(stats.avgCC)}</div>
       <div class="stat-sub">Avg deal: ${money(stats.avgDeal)}</div>
@@ -2330,6 +2330,7 @@ function openCommModal() {
   );
 }
 
+// deprecated: see openCardModal
 function openClosedModal() {
   if (!_lastStats) return;
   const rows = _lastStats.laRows;
@@ -2363,6 +2364,70 @@ function openClosedModal() {
         <th style="${thStyle}">Call Date</th>
         <th style="${thStyle}">Email</th>
         <th style="${thStyle}">Source</th>
+      </tr></thead>
+      <tbody>${tbody}</tbody>
+    </table>`
+  );
+}
+
+function openCardModal(type) {
+  if (!_lastStats) return;
+  const rows = _lastStats.laRows;
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const filters = {
+    scheduled: r => true,
+    upcoming:  r => { const d = parseDate(r[LA.callDate]); return d && d > today; },
+    showed:    r => /^(showed|follow\s*up|disqualified on sales call)$/i.test((r[LA.outcome]||'').trim()),
+    cancelled: r => /^cancelled$/i.test((r[LA.outcome]||'').trim()),
+    noshow:    r => /^no show$/i.test((r[LA.outcome]||'').trim()),
+    disq:      r => /disqualif/i.test((r[LA.outcome]||'').trim()),
+    closed:    r => /^yes$/i.test((r[LA.endInSale]||'').trim()),
+  };
+
+  const titles = {
+    scheduled: 'All Scheduled Calls',
+    upcoming:  'Upcoming Calls',
+    showed:    'Calls Showed',
+    cancelled: 'Cancelled Calls',
+    noshow:    'No Shows',
+    disq:      'Disqualified on Call',
+    closed:    'Closed Deals',
+  };
+
+  const filtered = rows.filter(filters[type] || (() => true));
+  filtered.sort((a,b) => (parseDate(b[LA.callDate])?.getTime()||0) - (parseDate(a[LA.callDate])?.getTime()||0));
+
+  const thStyle = 'font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:10px 20px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;background:var(--navy-mid);z-index:2';
+
+  const tbody = filtered.length === 0
+    ? '<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:32px">No records found</td></tr>'
+    : filtered.map(r => {
+        const name   = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
+        const email  = r[LA.email]  || '—';
+        const source = r[LA.source] || '—';
+        const cd     = parseDate(r[LA.callDate]);
+        const outcome = (r[LA.outcome]||'').trim();
+        const closed  = /^yes$/i.test((r[LA.endInSale]||'').trim());
+        return `<tr>
+          <td style="font-weight:500;padding:12px 20px">${name}</td>
+          <td style="font-family:var(--font-mono);font-size:12px;padding:12px 20px;color:var(--text-dim)">${cd ? fmtDate(cd) : '—'}</td>
+          <td style="font-family:var(--font-mono);font-size:12px;padding:12px 20px;color:var(--steel-light)">${email}</td>
+          <td style="font-size:12px;padding:12px 20px;color:var(--text-muted)">${source}</td>
+          <td style="padding:12px 20px">${badge(outcome, closed)}</td>
+        </tr>`;
+      }).join('');
+
+  openModal(
+    titles[type] || 'Calls',
+    `${filtered.length} record${filtered.length !== 1 ? 's' : ''} · ${currentCloser}`,
+    `<table style="width:100%;border-collapse:collapse">
+      <thead><tr>
+        <th style="${thStyle}">Full Name</th>
+        <th style="${thStyle}">Call Date</th>
+        <th style="${thStyle}">Email</th>
+        <th style="${thStyle}">Source</th>
+        <th style="${thStyle}">Outcome</th>
       </tr></thead>
       <tbody>${tbody}</tbody>
     </table>`
