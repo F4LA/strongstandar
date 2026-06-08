@@ -491,6 +491,26 @@
     </div>
   </div>
 
+  <!-- PHASE 6 -->
+  <div class="phase collapsed" id="phase6">
+    <div class="phase-header" onclick="togglePhase('phase6')">
+      <div class="phase-num">Phase 6</div>
+      <div class="phase-title">Prepare Promotional Content</div>
+      <div class="phase-count" id="phase6-count"></div>
+      <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
+    </div>
+    <div class="phase-body">
+      <div class="section">
+        <div class="section-title">6.1 — Promotional Emails</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Write and prepare all promotional emails for the cohort launch</div></div>
+      </div>
+      <div class="section">
+        <div class="section-title">6.2 — Promotional SMS</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Write and prepare all promotional SMS messages for the cohort launch</div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- FINAL VERIFICATION -->
   <div class="final-section">
     <div class="section-title">Final Step</div>
@@ -898,7 +918,7 @@
     if (mBar) mBar.style.width = (mTotal ? mCount/mTotal*100 : 0) + '%';
     const mDC = document.getElementById('mDoneCount'); if (mDC) mDC.textContent = mCount;
     const mTC = document.getElementById('mTotalCount'); if (mTC) mTC.textContent = mTotal;
-    ['phase1','phase2','phase3','phase4','phase5'].forEach(pid => {
+    ['phase1','phase2','phase3','phase4','phase5','phase6'].forEach(pid => {
       const phase = document.getElementById(pid); if (!phase) return;
       const pAll = phase.querySelectorAll('.task, .subtask');
       const pDone = phase.querySelectorAll('.task.done, .subtask.done');
