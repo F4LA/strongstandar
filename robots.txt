@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Disallow internal tools
+Disallow: /tools/
+Disallow: /payments/
+
+# Disallow funnel/transactional pages
+Disallow: /21-day-challenge/checkout-97/
+Disallow: /21-day-challenge/checkout-147/
+Disallow: /21-day-challenge/thank-you/
+Disallow: /21-day-challenge/launch-checklist/
+Disallow: /freebies/21dc-offer/
+Disallow: /freebies/blueprint/thank-you/
+Disallow: /freebies/ty-freebies/
+Disallow: /membership/thank-you/
+Disallow: /membership/cancellation/
+Disallow: /schedule-call/application-review/
+Disallow: /schedule-call/confirmation/
+Disallow: /webinars/the-3-keys/thank-you/
+
+Sitemap: https://strongstandard.com/sitemap.xml
