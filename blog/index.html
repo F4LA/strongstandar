@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D1A">
+<title>Blog | Strong Standard Coaching — Dr. Joey Munoz, PhD</title>
+<meta name="description" content="Science-backed articles on nutrition, fat loss, muscle building, and sustainable fitness for busy professionals over 40. By Dr. Joey Munoz, PhD.">
+<link rel="canonical" href="https://strongstandard.com/blog/">
+<meta name="robots" content="index, follow">
+<script src="/scripts/utm-persist.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --navy-2:      #0D1526;
+  --navy-3:      #111C30;
+  --navy-4:      #17243B;
+  --steel:       #1A5F8A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --steel-glow:  rgba(34,120,172,0.18);
+  --ice:         #A8CDE0;
+  --white:       #FFFFFF;
+  --off-white:   #EEF3F7;
+  --muted:       #8A9BB0;
+  --faint:       #4A5A6E;
+  --gold:        #C8A96E;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-serif:  'DM Serif Display', serif;
+  --font-body:   'DM Sans', sans-serif;
+  --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; color-scheme: dark; }
+body { background: var(--navy); color: var(--off-white); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 5%;
+  transition: background 0.3s, padding 0.3s, border-bottom 0.3s;
+}
+nav.scrolled {
+  background: rgba(8,13,26,0.95);
+  backdrop-filter: blur(12px);
+  padding: 14px 5%;
+  border-bottom: 1px solid rgba(34,120,172,0.15);
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-weight: 600; cursor: pointer;
+  border-radius: var(--r-full); transition: all 0.2s; border: none;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--steel-mid); color: var(--white);
+  padding: 12px 28px; font-size: 13px;
+}
+.btn-primary:hover { background: var(--steel-light); }
+
+/* ── HERO ── */
+.blog-hero {
+  padding: 140px 5% 80px;
+  border-bottom: 1px solid rgba(34,120,172,0.12);
+  position: relative;
+  overflow: hidden;
+}
+.blog-hero::before {
+  content: '';
+  position: absolute; top: -100px; right: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(34,120,172,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.blog-hero__inner { max-width: 760px; }
+.blog-hero__label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--steel-light); margin-bottom: 20px;
+}
+.blog-hero__label::before {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--steel-light);
+}
+.blog-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 1; letter-spacing: 0.02em;
+  color: var(--white); margin-bottom: 20px;
+}
+.blog-hero h1 span { color: var(--steel-light); }
+.blog-hero__sub {
+  font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 560px;
+}
+
+/* ── MAIN LAYOUT ── */
+.blog-main { max-width: 1200px; margin: 0 auto; padding: 72px 5% 100px; }
+
+/* ── FILTERS ── */
+.blog-filters {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px;
+}
+.filter-btn {
+  padding: 8px 18px; border-radius: var(--r-full);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: 1px solid rgba(34,120,172,0.25);
+  background: transparent; color: var(--muted);
+  transition: all 0.2s; font-family: var(--font-body);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--steel-mid); color: var(--white); border-color: var(--steel-mid);
+}
+
+/* ── FEATURED POST ── */
+.post-featured {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  align-items: center;
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg); padding: 40px;
+  margin-bottom: 64px;
+  transition: border-color 0.2s;
+}
+.post-featured:hover { border-color: rgba(34,120,172,0.35); }
+.post-featured__img {
+  border-radius: var(--r-md); overflow: hidden;
+  aspect-ratio: 16/9; background: var(--navy-3);
+  display: flex; align-items: center; justify-content: center;
+}
+.post-featured__img img { width: 100%; height: 100%; object-fit: cover; }
+.post-featured__img .img-placeholder {
+  font-family: var(--font-display); font-size: 64px;
+  color: var(--steel-mid); opacity: 0.4; letter-spacing: 0.05em;
+}
+.post-featured__tag {
+  display: inline-block; padding: 4px 12px; border-radius: var(--r-full);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(34,120,172,0.15); color: var(--steel-light);
+  margin-bottom: 16px;
+}
+.post-featured__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.05; color: var(--white); margin-bottom: 16px;
+  letter-spacing: 0.02em;
+}
+.post-featured__excerpt { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+.post-featured__meta { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--faint); margin-bottom: 24px; }
+.post-featured__meta span { display: flex; align-items: center; gap: 5px; }
+.read-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600; color: var(--steel-light);
+  transition: gap 0.2s;
+}
+.read-link:hover { gap: 12px; }
+.read-link svg { transition: transform 0.2s; }
+.read-link:hover svg { transform: translateX(3px); }
+
+/* ── POST GRID ── */
+.post-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+.post-card {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.12);
+  border-radius: var(--r-lg); overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex; flex-direction: column;
+}
+.post-card:hover { border-color: rgba(34,120,172,0.3); transform: translateY(-3px); }
+.post-card__img {
+  aspect-ratio: 16/9; background: var(--navy-3);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.post-card__img img { width: 100%; height: 100%; object-fit: cover; }
+.post-card__img .img-placeholder {
+  font-family: var(--font-display); font-size: 48px;
+  color: var(--steel-mid); opacity: 0.35;
+}
+.post-card__body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.post-card__tag {
+  display: inline-block; padding: 3px 10px; border-radius: var(--r-full);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(34,120,172,0.12); color: var(--steel-light);
+  margin-bottom: 12px; align-self: flex-start;
+}
+.post-card__title {
+  font-family: var(--font-serif); font-size: 1.2rem;
+  line-height: 1.3; color: var(--white); margin-bottom: 10px;
+}
+.post-card__excerpt { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; flex: 1; }
+.post-card__footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.post-card__date { font-size: 12px; color: var(--faint); }
+
+/* ── EMPTY STATE ── */
+.blog-empty {
+  text-align: center; padding: 80px 20px; color: var(--muted);
+}
+.blog-empty h3 { font-family: var(--font-display); font-size: 2rem; color: var(--white); margin-bottom: 12px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(34,120,172,0.12);
+  padding: 40px 5% 32px;
+}
+.footer__inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px; margin-bottom: 28px;
+}
+.footer-brand__tagline { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
+.footer-links a:hover { color: var(--steel-light); }
+.footer-socials { display: flex; gap: 12px; }
+.social-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(34,120,172,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); transition: all 0.2s;
+}
+.social-icon:hover { border-color: var(--steel-light); color: var(--steel-light); }
+.footer__bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+.footer__copy { font-size: 12px; color: var(--faint); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .post-featured { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+  .post-featured__img { order: -1; }
+  .blog-hero { padding: 120px 5% 60px; }
+}
+@media (max-width: 480px) {
+  .post-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Strong Standard Blog",
+  "description": "Science-backed articles on nutrition, fat loss, muscle building, and sustainable fitness for busy professionals over 40.",
+  "url": "https://strongstandard.com/blog/",
+  "publisher": {
+    "@id": "https://strongstandard.com/#organization",
+    "@type": "Organization",
+    "name": "Strong Standard Coaching"
+  },
+  "author": {
+    "@id": "https://strongstandard.com/#joey-munoz"
+  }
+}
+</script>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" aria-label="Main navigation">
+  <a href="/">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="120" height="24" style="height:24px;width:auto;display:block;">
+  </a>
+  <a href="/schedule-call/" class="btn btn-primary">
+    Apply Now
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="blog-hero">
+  <div class="blog-hero__inner">
+    <div class="blog-hero__label">Strong Standard Coaching</div>
+    <h1>The <span>Blog</span></h1>
+    <p class="blog-hero__sub">Science-backed insights on nutrition, fat loss, muscle building, and building a body that lasts — for busy professionals over 40.</p>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="blog-main">
+
+  <!-- FILTERS -->
+  <div class="blog-filters" role="group" aria-label="Filter posts by category">
+    <button class="filter-btn active" data-filter="all">All Posts</button>
+    <button class="filter-btn" data-filter="nutrition">Nutrition</button>
+    <button class="filter-btn" data-filter="training">Training</button>
+    <button class="filter-btn" data-filter="mindset">Mindset</button>
+    <button class="filter-btn" data-filter="podcast">Podcast</button>
+  </div>
+
+  <!-- POSTS CONTAINER — populated by JS from posts array -->
+  <div id="blog-content"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="110" height="22" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+      <a href="mailto:drjoey@strongstandard.com">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/dr.joeymunoz/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+// ── Posts data — add new posts here ──────────────────────────────────────────
+// To add a new post: copy one object, fill in the fields, save the file.
+// slug: folder name inside /blog/ (e.g. "how-to-lose-fat-over-40")
+// category: one of nutrition | training | mindset | podcast
+// image: URL to cover image, or leave "" for placeholder
+const POSTS = [
+  // Example post — replace with real ones as you publish
+  // {
+  //   slug: "how-to-lose-fat-over-40",
+  //   title: "How to Actually Lose Fat After 40 (Without Starving Yourself)",
+  //   excerpt: "Most programs built for 25-year-olds don't work for busy professionals in their 40s. Here's what the science actually says.",
+  //   category: "nutrition",
+  //   date: "June 10, 2026",
+  //   readTime: "7 min read",
+  //   image: "",
+  //   featured: true
+  // },
+];
+
+// ── Render ────────────────────────────────────────────────────────────────────
+const container = document.getElementById('blog-content');
+let activeFilter = 'all';
+
+function categoryLabel(cat) {
+  return { nutrition: 'Nutrition', training: 'Training', mindset: 'Mindset', podcast: 'Podcast' }[cat] || cat;
+}
+
+function renderArrow() {
+  return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+}
+
+function renderImage(post, size) {
+  if (post.image) {
+    return `<img src="${post.image}" alt="${post.title}" loading="lazy">`;
+  }
+  const initials = size === 'featured' ? 'SS' : 'SS';
+  return `<div class="img-placeholder" aria-hidden="true">${initials}</div>`;
+}
+
+function renderFeatured(post) {
+  return `
+  <a href="/blog/${post.slug}/" class="post-featured">
+    <div class="post-featured__img">${renderImage(post, 'featured')}</div>
+    <div class="post-featured__content">
+      <span class="post-featured__tag">${categoryLabel(post.category)}</span>
+      <h2 class="post-featured__title">${post.title}</h2>
+      <p class="post-featured__excerpt">${post.excerpt}</p>
+      <div class="post-featured__meta">
+        <span>${post.date}</span>
+        <span>·</span>
+        <span>${post.readTime}</span>
+      </div>
+      <span class="read-link">Read Article ${renderArrow()}</span>
+    </div>
+  </a>`;
+}
+
+function renderCard(post) {
+  return `
+  <a href="/blog/${post.slug}/" class="post-card">
+    <div class="post-card__img">${renderImage(post, 'card')}</div>
+    <div class="post-card__body">
+      <span class="post-card__tag">${categoryLabel(post.category)}</span>
+      <h2 class="post-card__title">${post.title}</h2>
+      <p class="post-card__excerpt">${post.excerpt}</p>
+      <div class="post-card__footer">
+        <span class="post-card__date">${post.date} · ${post.readTime}</span>
+        <span class="read-link" style="font-size:13px;">Read ${renderArrow()}</span>
+      </div>
+    </div>
+  </a>`;
+}
+
+function render() {
+  const filtered = activeFilter === 'all' ? POSTS : POSTS.filter(p => p.category === activeFilter);
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="blog-empty">
+        <h3>Coming Soon</h3>
+        <p>The first articles are on their way. Check back soon.</p>
+      </div>`;
+    return;
+  }
+
+  const featured = filtered.find(p => p.featured);
+  const rest = filtered.filter(p => !p.featured || filtered.indexOf(p) > 0);
+
+  let html = '';
+  if (featured) html += renderFeatured(featured);
+  if (rest.length > 0) {
+    html += `<div class="post-grid">${rest.map(renderCard).join('')}</div>`;
+  }
+  container.innerHTML = html;
+}
+
+// ── Filter buttons ─────────────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+// ── Nav scroll ─────────────────────────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+render();
+</script>
+
+</body>
+</html>

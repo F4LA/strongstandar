@@ -104,6 +104,13 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Blog -->
+  <url>
+    <loc>https://strongstandard.com/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
