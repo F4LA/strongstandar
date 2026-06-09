@@ -333,17 +333,30 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
 <!-- ARTICLE -->
 <main class="post-wrap">
 
-  <!-- PODCAST EMBED -->
-  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin-bottom:40px;">
-    <iframe
-      src="https://www.youtube.com/embed/Vx9Vc8ogxP8"
-      title="Calorie Tracking Is Keeping You Fat - Dr. Joey Munoz"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;">
-    </iframe>
+  <!-- PODCAST EMBED (lazy) -->
+  <div id="yt-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin-bottom:40px;cursor:pointer;background:#000;" onclick="loadYT()">
+    <img
+      src="https://i.ytimg.com/vi/Vx9Vc8ogxP8/maxresdefault.jpg"
+      alt="Watch: Calorie Tracking Is Keeping You Fat - Dr. Joey Munoz"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:12px;opacity:0.85;">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+    </div>
   </div>
+  <script>
+  function loadYT() {
+    var d = document.getElementById('yt-embed');
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/Vx9Vc8ogxP8?autoplay=1';
+    iframe.title = 'Calorie Tracking Is Keeping You Fat - Dr. Joey Munoz';
+    iframe.frameBorder = '0';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;';
+    d.innerHTML = '';
+    d.appendChild(iframe);
+  }
+  </script>
   <article class="post-body">
 
     <p>I know that's a provocative statement - especially coming from someone who actually recommends calorie tracking. But bear with me, because if you've been tracking your calories for months or years, understand that energy balance matters, and still struggle to lose weight and keep it off, this article is written specifically for you.</p>
