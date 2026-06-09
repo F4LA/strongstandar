@@ -17,191 +17,246 @@
 :root {
   --navy:        #080D1A;
   --navy-2:      #0D1526;
-  --navy-3:      #111C30;
-  --navy-4:      #17243B;
-  --steel:       #1A5F8A;
   --steel-mid:   #2278AC;
   --steel-light: #3899CC;
   --ice:         #A8CDE0;
-  --white:       #FFFFFF;
-  --off-white:   #EEF3F7;
-  --muted:       #8A9BB0;
-  --faint:       #4A5A6E;
-  --gold:        #C8A96E;
+
+  /* Article palette — light reading surface */
+  --page-bg:     #F7F5F0;
+  --surface:     #FFFFFF;
+  --ink:         #1A1A1A;
+  --ink-2:       #3A3A3A;
+  --ink-muted:   #6B6B6B;
+  --ink-faint:   #9B9B9B;
+  --rule:        #E4E0D8;
+  --accent:      #2278AC;
+  --accent-soft: #EBF4FB;
+
   --font-display:'Bebas Neue', sans-serif;
   --font-serif:  'DM Serif Display', serif;
   --font-body:   'DM Sans', sans-serif;
   --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+
+  --content-width: 760px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; color-scheme: dark; }
-body { background: var(--navy); color: var(--off-white); font-family: var(--font-body); font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 
-/* ── NAV ── */
+/* ── NAV — dark strip at top ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 5%;
-  transition: background 0.3s, padding 0.3s;
+  padding: 18px 5%;
+  background: var(--navy);
 }
 nav.scrolled {
-  background: rgba(8,13,26,0.95);
-  backdrop-filter: blur(12px);
-  padding: 14px 5%;
-  border-bottom: 1px solid rgba(34,120,172,0.15);
+  border-bottom: 1px solid rgba(34,120,172,0.2);
 }
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-body); font-weight: 600; cursor: pointer;
   border-radius: var(--r-full); transition: all 0.2s; border: none;
 }
-.btn-primary { background: var(--steel-mid); color: var(--white); padding: 12px 28px; font-size: 13px; }
+.btn-primary { background: var(--steel-mid); color: #fff; padding: 11px 26px; font-size: 13px; }
 .btn-primary:hover { background: var(--steel-light); }
+.btn-dark { background: var(--navy); color: #fff; padding: 11px 26px; font-size: 13px; border: 1px solid rgba(255,255,255,0.15); }
+.btn-dark:hover { background: #1a2540; }
 
-/* ── POST HEADER ── */
-.post-header {
-  padding: 136px 5% 64px;
-  border-bottom: 1px solid rgba(34,120,172,0.12);
-  max-width: 860px; margin: 0 auto;
+/* ── HERO BANNER — dark, full bleed ── */
+.post-banner {
+  background: var(--navy);
+  padding: 112px 5% 72px;
+  border-bottom: 3px solid var(--accent);
 }
-.post-header__back {
+.post-banner__inner { max-width: var(--content-width); margin: 0 auto; }
+.post-banner__back {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 13px; color: var(--muted); margin-bottom: 32px;
-  transition: color 0.2s;
+  font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 36px;
+  transition: color 0.2s; font-family: var(--font-body);
 }
-.post-header__back:hover { color: var(--steel-light); }
-.post-header__tag {
+.post-banner__back:hover { color: var(--ice); }
+.post-banner__tag {
   display: inline-block; padding: 4px 12px; border-radius: var(--r-full);
-  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  background: rgba(34,120,172,0.15); color: var(--steel-light);
-  margin-bottom: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(34,120,172,0.2); color: var(--ice);
+  margin-bottom: 24px;
 }
-.post-header h1 {
+.post-banner h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  line-height: 1.05; letter-spacing: 0.02em;
-  color: var(--white); margin-bottom: 24px;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1; letter-spacing: 0.02em;
+  color: #fff; margin-bottom: 28px;
 }
-.post-header__excerpt {
-  font-size: 19px; color: var(--muted); line-height: 1.65; margin-bottom: 32px;
+.post-banner h1 em { color: var(--ice); font-style: normal; }
+.post-banner__excerpt {
+  font-size: 20px; color: rgba(255,255,255,0.65);
+  line-height: 1.6; margin-bottom: 36px; max-width: 620px;
+  font-weight: 300;
 }
-.post-meta {
-  display: flex; align-items: center; gap: 16px;
-  font-size: 13px; color: var(--faint); flex-wrap: wrap;
+.post-banner__meta {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 13px; color: rgba(255,255,255,0.4); flex-wrap: wrap;
 }
-.post-meta__author { display: flex; align-items: center; gap: 10px; }
-.post-meta__avatar {
-  width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
-  border: 1px solid rgba(34,120,172,0.3);
+.post-banner__author { display: flex; align-items: center; gap: 10px; }
+.post-banner__avatar {
+  width: 38px; height: 38px; border-radius: 50%; overflow: hidden;
+  border: 2px solid rgba(56,153,204,0.4);
 }
-.post-meta__avatar img { width: 100%; height: 100%; object-fit: cover; }
-.post-meta__name { color: var(--off-white); font-weight: 500; }
-.post-meta__dot { color: var(--faint); }
+.post-banner__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.post-banner__name { color: rgba(255,255,255,0.8); font-weight: 500; }
+.dot { color: rgba(255,255,255,0.2); }
 
-/* ── ARTICLE BODY ── */
-.post-body {
-  max-width: 680px; margin: 0 auto;
-  padding: 56px 5% 80px;
+/* ── ARTICLE LAYOUT ── */
+.post-wrap {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 64px 5% 100px;
 }
+
+/* ── PROSE ── */
+.post-body { font-size: 18px; line-height: 1.8; color: var(--ink-2); }
+.post-body p { margin-bottom: 24px; }
 .post-body h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  line-height: 1.1; letter-spacing: 0.02em;
-  color: var(--white); margin: 48px 0 16px;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  line-height: 1.05; letter-spacing: 0.02em;
+  color: var(--ink); margin: 56px 0 18px;
+  padding-top: 8px;
+  border-top: 2px solid var(--accent);
+  display: inline-block;
 }
 .post-body h3 {
   font-family: var(--font-serif);
-  font-size: 1.25rem; color: var(--off-white);
-  margin: 36px 0 12px;
+  font-size: 1.3rem; color: var(--ink);
+  margin: 40px 0 12px; font-weight: 400;
 }
-.post-body p { margin-bottom: 20px; color: var(--off-white); }
-.post-body ul, .post-body ol { margin: 0 0 20px 24px; color: var(--off-white); }
-.post-body li { margin-bottom: 8px; }
-.post-body strong { color: var(--white); font-weight: 600; }
-.post-body em { color: var(--ice); font-style: italic; }
-.post-body a { color: var(--steel-light); text-decoration: underline; text-decoration-color: rgba(56,153,204,0.4); }
-.post-body a:hover { text-decoration-color: var(--steel-light); }
+.post-body ul, .post-body ol {
+  margin: 0 0 24px 0; padding-left: 0;
+  list-style: none;
+}
+.post-body li {
+  padding: 8px 0 8px 28px;
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+}
+.post-body li:last-child { border-bottom: none; }
+.post-body li::before {
+  content: '';
+  position: absolute; left: 0; top: 18px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+}
+.post-body strong { color: var(--ink); font-weight: 600; }
+.post-body em { color: var(--ink-muted); font-style: italic; }
+.post-body a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(34,120,172,0.3); }
+.post-body a:hover { text-decoration-color: var(--accent); }
+
 .post-body blockquote {
-  border-left: 3px solid var(--steel-mid);
-  padding: 16px 24px; margin: 32px 0;
-  background: var(--navy-2); border-radius: 0 var(--r-md) var(--r-md) 0;
-  font-family: var(--font-serif); font-size: 1.15rem;
-  color: var(--ice); line-height: 1.6;
+  border-left: 4px solid var(--accent);
+  padding: 20px 28px; margin: 40px 0;
+  background: var(--accent-soft);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  font-family: var(--font-serif); font-size: 1.2rem;
+  color: var(--ink); line-height: 1.6;
 }
+
 .post-body hr {
-  border: none; border-top: 1px solid rgba(34,120,172,0.15);
-  margin: 48px 0;
-}
-.post-cta {
-  background: var(--navy-2); border: 1px solid rgba(34,120,172,0.2);
-  border-radius: var(--r-lg); padding: 40px; text-align: center;
+  border: none; border-top: 1px solid var(--rule);
   margin: 56px 0;
 }
-.post-cta h3 {
-  font-family: var(--font-display); font-size: 2rem;
-  color: var(--white); margin-bottom: 12px; letter-spacing: 0.02em;
-}
-.post-cta p { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
-
-/* ── KEY TAKEAWAY BOX ── */
-.takeaway-box {
-  background: var(--navy-3);
-  border: 1px solid rgba(34,120,172,0.2);
-  border-left: 3px solid var(--steel-mid);
-  border-radius: 0 var(--r-md) var(--r-md) 0;
-  padding: 24px 28px; margin: 32px 0;
-}
-.takeaway-box__label {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--steel-light); margin-bottom: 12px;
-}
-.takeaway-box ul { margin: 0 0 0 20px; }
-.takeaway-box li { color: var(--off-white); margin-bottom: 6px; font-size: 15px; }
 
 /* ── PHASE STEPS ── */
-.phase-steps { margin: 24px 0 32px; display: flex; flex-direction: column; gap: 12px; }
+.phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step {
-  display: flex; gap: 16px; align-items: flex-start;
-  background: var(--navy-2); border: 1px solid rgba(34,120,172,0.12);
-  border-radius: var(--r-md); padding: 16px 20px;
+  display: flex; gap: 20px; align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 20px 24px;
 }
+.phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+.phase-step:last-child { border-radius: 0 0 var(--r-md) var(--r-md); }
 .phase-step__num {
-  flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
-  background: rgba(34,120,172,0.2); border: 1px solid rgba(34,120,172,0.3);
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--navy); color: #fff;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: var(--steel-light);
+  font-size: 13px; font-weight: 700; margin-top: 2px;
 }
-.phase-step__title { font-weight: 600; color: var(--white); margin-bottom: 4px; font-size: 15px; }
-.phase-step__desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.phase-step__title { font-weight: 600; color: var(--ink); margin-bottom: 4px; font-size: 15px; }
+.phase-step__desc { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
+
+/* ── TAKEAWAY BOX ── */
+.takeaway-box {
+  background: var(--navy);
+  border-radius: var(--r-lg);
+  padding: 32px 36px; margin: 48px 0;
+}
+.takeaway-box__label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ice); margin-bottom: 16px;
+}
+.takeaway-box ul { margin: 0; padding: 0; list-style: none; }
+.takeaway-box li {
+  padding: 10px 0 10px 24px; position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.5;
+}
+.takeaway-box li:last-child { border-bottom: none; }
+.takeaway-box li::before {
+  content: ''; position: absolute; left: 0; top: 19px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--steel-light);
+}
+
+/* ── CTA ── */
+.post-cta {
+  background: var(--navy);
+  border-radius: var(--r-lg); padding: 48px 40px; text-align: center;
+  margin: 56px 0 0;
+}
+.post-cta h3 {
+  font-family: var(--font-display); font-size: 2.4rem;
+  color: #fff; margin-bottom: 12px; letter-spacing: 0.02em; line-height: 1;
+}
+.post-cta p { color: rgba(255,255,255,0.55); margin-bottom: 28px; font-size: 16px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
 
 /* ── FOOTER ── */
-footer { border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
+footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
 .footer__inner {
   max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 24px; margin-bottom: 28px;
 }
-.footer-brand__tagline { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.footer-brand__tagline { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px; }
 .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-.footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
-.footer-links a:hover { color: var(--steel-light); }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: var(--ice); }
 .footer-socials { display: flex; gap: 12px; }
 .social-icon {
   width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid rgba(34,120,172,0.2);
+  border: 1px solid rgba(34,120,172,0.25);
   display: flex; align-items: center; justify-content: center;
-  color: var(--muted); transition: all 0.2s;
+  color: rgba(255,255,255,0.4); transition: all 0.2s;
 }
-.social-icon:hover { border-color: var(--steel-light); color: var(--steel-light); }
+.social-icon:hover { border-color: var(--ice); color: var(--ice); }
 .footer__bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
-.footer__copy { font-size: 12px; color: var(--faint); }
+.footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
 @media (max-width: 640px) {
-  .post-header { padding: 120px 5% 48px; }
-  .post-header__excerpt { font-size: 17px; }
-  .post-cta { padding: 28px 20px; }
+  .post-banner { padding: 100px 5% 56px; }
+  .post-banner__excerpt { font-size: 17px; }
+  .post-cta { padding: 36px 24px; }
+  .takeaway-box { padding: 24px; }
 }
 </style>
 
@@ -230,8 +285,6 @@ footer { border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
   "keywords": "calorie tracking, weight loss, fat loss, calorie deficit, intuitive eating, busy professionals, sustainable weight loss, habit formation"
 }
 </script>
-
-<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
 </head>
 <body>
 
@@ -246,132 +299,133 @@ footer { border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
   </a>
 </nav>
 
-<!-- POST HEADER -->
-<header class="post-header">
-  <a href="/blog/" class="post-header__back">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    Back to Blog
-  </a>
-
-  <span class="post-header__tag">Nutrition</span>
-
-  <h1>Calorie Tracking Is Keeping You Fat</h1>
-  <p class="post-header__excerpt">You understand energy balance. You track consistently. And yet you keep losing and regaining the same weight. Here's the real reason why — and what to do instead.</p>
-
-  <div class="post-meta">
-    <div class="post-meta__author">
-      <div class="post-meta__avatar">
-        <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz">
+<!-- BANNER -->
+<header class="post-banner">
+  <div class="post-banner__inner">
+    <a href="/blog/" class="post-banner__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+    <div><span class="post-banner__tag">Nutrition</span></div>
+    <h1>Calorie Tracking<br>Is Keeping <em>You</em> Fat</h1>
+    <p class="post-banner__excerpt">You understand energy balance. You track consistently. And yet you keep losing and regaining the same weight. Here's the real reason why — and what to do instead.</p>
+    <div class="post-banner__meta">
+      <div class="post-banner__author">
+        <div class="post-banner__avatar">
+          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz">
+        </div>
+        <span class="post-banner__name">Dr. Joey Munoz, PhD</span>
       </div>
-      <span class="post-meta__name">Dr. Joey Munoz, PhD</span>
+      <span class="dot">·</span>
+      <span>June 9, 2026</span>
+      <span class="dot">·</span>
+      <span>7 min read</span>
     </div>
-    <span class="post-meta__dot">·</span>
-    <span>June 9, 2026</span>
-    <span class="post-meta__dot">·</span>
-    <span>7 min read</span>
   </div>
 </header>
 
-<!-- ARTICLE BODY -->
-<article class="post-body">
+<!-- ARTICLE -->
+<main class="post-wrap">
+  <article class="post-body">
 
-  <p>I know that's a provocative statement — especially coming from someone who actually recommends calorie tracking. But bear with me, because if you've been tracking your calories for months or years, understand that energy balance matters, and still struggle to lose weight and keep it off, this article is written specifically for you.</p>
+    <p>I know that's a provocative statement — especially coming from someone who actually recommends calorie tracking. But bear with me, because if you've been tracking your calories for months or years, understand that energy balance matters, and still struggle to lose weight and keep it off, this article is written specifically for you.</p>
 
-  <p>I want to cover two things: why calorie tracking, used the wrong way, keeps you stuck in a cycle of losing and regaining weight — and what skills you should be building instead so you don't have to rely on tracking for the rest of your life.</p>
+    <p>I want to cover two things: why calorie tracking, used the wrong way, keeps you stuck in a cycle of losing and regaining weight — and what skills you should be building instead so you don't have to rely on tracking for the rest of your life.</p>
 
-  <h2>The Cycle Nobody Talks About</h2>
+    <h2>The Cycle Nobody Talks About</h2>
 
-  <p>Here's a pattern I see constantly with clients who come to us with a history of tracking. They track their food, lose weight, get burned out on tracking, stop — and then, without any habits or guardrails in place, they regain the weight. When that happens, they go back to tracking. And the cycle repeats, sometimes for years.</p>
+    <p>Here's a pattern I see constantly with clients who come to us with a history of tracking. They track their food, lose weight, get burned out on tracking, stop — and then, without any habits or guardrails in place, they regain the weight. When that happens, they go back to tracking. And the cycle repeats, sometimes for years.</p>
 
-  <p>The root cause isn't a lack of discipline. It's an <strong>over-reliance on tracking</strong>. When tracking becomes your primary strategy, it quietly replaces the habits and behaviors that would actually support your goals long-term. You get results while you track, but you never learn how to manage your body composition without it.</p>
+    <p>The root cause isn't a lack of discipline. It's an <strong>over-reliance on tracking</strong>. When tracking becomes your primary strategy, it quietly replaces the habits and behaviors that would actually support your goals long-term. You get results while you track, but you never learn how to manage your body composition without it.</p>
 
-  <blockquote>Tracking often replaces the habits we should be developing — and it replaces them because it works in the short term.</blockquote>
+    <blockquote>Tracking often replaces the habits we should be developing — and it replaces them because it works in the short term.</blockquote>
 
-  <p>The flexibility tracking offers is both its strength and its trap. Yes, if you're in a calorie deficit, you will lose weight. But if the only tool you have is a food logging app, what happens when you're at a restaurant and can't weigh your chicken? What happens on vacation? What happens when life gets chaotic and you fall off for two weeks?</p>
+    <p>The flexibility tracking offers is both its strength and its trap. Yes, if you're in a calorie deficit, you will lose weight. But if the only tool you have is a food logging app, what happens when you're at a restaurant and can't weigh your chicken? What happens on vacation? What happens when life gets chaotic and you fall off for two weeks?</p>
 
-  <h2>Why Type A People Are Most at Risk</h2>
+    <h2>Why Type A People Are Most at Risk</h2>
 
-  <p>In my experience, the people who build the strongest over-reliance on tracking tend to have type A personalities — naturally more anxious, detail-oriented, control-focused. Tracking feels good to them because it's precise and measurable. But over time, it can generate real anxiety around eating. Restaurants become stressful. Social meals feel like a threat. Food starts to feel like a math problem instead of fuel.</p>
+    <p>In my experience, the people who build the strongest over-reliance on tracking tend to have type A personalities — naturally more anxious, detail-oriented, control-focused. Tracking feels good to them because it's precise and measurable. But over time, it can generate real anxiety around eating. Restaurants become stressful. Social meals feel like a threat. Food starts to feel like a math problem instead of fuel.</p>
 
-  <p>Research backs this up. Regular calorie tracking has been linked in some studies to rigid dietary practices, all-or-nothing thinking, and dichotomous food labeling — seeing everything as either "clean" or "a cheat." And here's the counterintuitive finding: <strong>people with more rigid, stressful relationships with food are actually less likely to achieve long-term success with body composition</strong>. The mental friction causes inconsistency, which causes failure, which causes shame, which causes more restriction — and the cycle continues.</p>
+    <p>Research backs this up. Regular calorie tracking has been linked in some studies to rigid dietary practices, all-or-nothing thinking, and dichotomous food labeling — seeing everything as either "clean" or "a cheat." And here's the counterintuitive finding: <strong>people with more rigid, stressful relationships with food are actually less likely to achieve long-term success with body composition</strong>. The mental friction causes inconsistency, which causes failure, which causes shame, which causes more restriction — and the cycle continues.</p>
 
-  <h2>Tracking Is a Tool, Not a Lifestyle</h2>
+    <h2>Tracking Is a Tool, Not a Lifestyle</h2>
 
-  <p>Let me be clear: I'm not anti-tracking. I encourage it with nearly every client. But I treat it as a <em>temporary learning tool</em>, not a permanent strategy.</p>
+    <p>Let me be clear: I'm not anti-tracking. I encourage it with nearly every client. But I treat it as a <em>temporary learning tool</em>, not a permanent strategy.</p>
 
-  <p>Think of it like budgeting your money. When you first want to get control of your finances, you track every dollar — where it goes, what you spend, where you're leaking money. That awareness is invaluable. But you don't want to be manually logging every coffee and gas fill-up for the rest of your life. The tracking creates awareness so you can change your behaviors. Then the behaviors take over.</p>
+    <p>Think of it like budgeting your money. When you first want to get control of your finances, you track every dollar — where it goes, what you spend, where you're leaking money. That awareness is invaluable. But you don't want to be manually logging every coffee and gas fill-up for the rest of your life. The tracking creates awareness so you can change your behaviors. Then the behaviors take over.</p>
 
-  <p>Calorie tracking does the same thing for food. Done for a focused period — say, 4 to 6 months — it teaches you more about your eating habits than almost anything else. You learn portion sizes. You learn what 500 calories actually looks like on a plate. You learn how to make smart substitutions, how to navigate eating out, how to prioritize protein and fiber. <strong>That knowledge is what you're really after.</strong> The app is just the vehicle.</p>
+    <p>Calorie tracking does the same thing for food. Done for a focused period — say, 4 to 6 months — it teaches you more about your eating habits than almost anything else. You learn portion sizes. You learn what 500 calories actually looks like on a plate. You learn how to make smart substitutions, how to navigate eating out, how to prioritize protein and fiber. <strong>That knowledge is what you're really after.</strong> The app is just the vehicle.</p>
 
-  <h2>What You Should Be Building Instead</h2>
+    <h2>What You Should Be Building Instead</h2>
 
-  <p>The habits and behaviors that support a lean, healthy body exist independently of whether you're tracking or not. These are the things that actually matter long-term:</p>
+    <p>The habits and behaviors that support a lean, healthy body exist independently of whether you're tracking or not. These are the things that actually matter long-term:</p>
 
-  <ul>
-    <li><strong>A daily step goal</strong> — non-negotiable movement built into your routine</li>
-    <li><strong>Protein and fiber at every meal</strong> — the two nutrients that drive satiety and body composition</li>
-    <li><strong>A regular meal schedule</strong> — eating at consistent times reduces decision fatigue and impulsive eating</li>
-    <li><strong>Fueling properly earlier in the day</strong> — front-loading nutrition reduces overeating at night</li>
-    <li><strong>The 80/20 rule</strong> — being consistent 80 to 85% of the time and intentionally flexible 15 to 20%</li>
-    <li><strong>Stress management and sleep</strong> — two of the most underrated drivers of body composition</li>
-  </ul>
-
-  <p>At Strong Standard, the first 8 weeks with every client is what we call the <strong>Foundational Phase</strong>. We don't track calories at all during this period. We focus entirely on building these habits. And what consistently surprises clients is that they lose substantial weight during this phase — without ever opening a food logging app. Because the habits, when built correctly, naturally create a calorie deficit.</p>
-
-  <h2>How to Transition Away From Tracking Without Losing Your Results</h2>
-
-  <p>The biggest mistake people make when trying to stop tracking is going cold turkey — removing all guardrails at once and hoping the habits hold. They don't. Here's the roadmap that actually works:</p>
-
-  <div class="phase-steps">
-    <div class="phase-step">
-      <div class="phase-step__num">1</div>
-      <div>
-        <div class="phase-step__title">Foundational Phase (weeks 1–8)</div>
-        <div class="phase-step__desc">No tracking. Focus entirely on building the core habits: steps, protein, meal timing, flexibility, sleep.</div>
-      </div>
-    </div>
-    <div class="phase-step">
-      <div class="phase-step__num">2</div>
-      <div>
-        <div class="phase-step__title">Fat Loss Phase</div>
-        <div class="phase-step__desc">Introduce tracking alongside your existing habits. Use it as a precision tool to accelerate progress toward your goal weight.</div>
-      </div>
-    </div>
-    <div class="phase-step">
-      <div class="phase-step__num">3</div>
-      <div>
-        <div class="phase-step__title">Lifestyle Phase — gradual offboarding</div>
-        <div class="phase-step__desc">Drop tracking frequency gradually: 5 days/week → 3–4 days → 2–3 days → 1–2 days → none. Spend 3–4 weeks at each level before stepping down.</div>
-      </div>
-    </div>
-  </div>
-
-  <p>The key during the offboarding phase is to <strong>double down on habits</strong> as you reduce tracking frequency. The days you don't track become the proving ground — you're learning what it feels like to eat in a way that supports your goals without needing external feedback. That's the skill. That's intuitive eating in the real sense of the word.</p>
-
-  <div class="takeaway-box">
-    <div class="takeaway-box__label">The bottom line</div>
     <ul>
-      <li>Calorie tracking works — but only as a tool, not as a lifestyle.</li>
-      <li>Over-reliance on tracking prevents you from building the habits that sustain results long-term.</li>
-      <li>The real goal is an intuitive way of eating that supports your body without mental friction.</li>
-      <li>Build habits first, use tracking as a precision layer, then wean off gradually.</li>
+      <li><strong>A daily step goal</strong> — non-negotiable movement built into your routine</li>
+      <li><strong>Protein and fiber at every meal</strong> — the two nutrients that drive satiety and body composition</li>
+      <li><strong>A regular meal schedule</strong> — eating at consistent times reduces decision fatigue and impulsive eating</li>
+      <li><strong>Fueling properly earlier in the day</strong> — front-loading nutrition reduces overeating at night</li>
+      <li><strong>The 80/20 rule</strong> — being consistent 80 to 85% of the time and intentionally flexible 15 to 20%</li>
+      <li><strong>Stress management and sleep</strong> — two of the most underrated drivers of body composition</li>
     </ul>
-  </div>
 
-  <hr>
+    <p>At Strong Standard, the first 8 weeks with every client is what we call the <strong>Foundational Phase</strong>. We don't track calories at all during this period. We focus entirely on building these habits. And what consistently surprises clients is that they lose substantial weight during this phase — without ever opening a food logging app. Because the habits, when built correctly, naturally create a calorie deficit.</p>
 
-  <p>Nobody wants to log every meal for the rest of their life. And the good news is you don't have to. But you do have to build something more durable than an app dependency. The habits are what last. The tracking is just how you learn.</p>
+    <h2>How to Transition Away From Tracking Without Losing Your Results</h2>
 
-  <div class="post-cta">
-    <h3>Ready to Build Habits That Actually Last?</h3>
-    <p>Science-backed coaching for busy professionals over 40. We'll build the system around your real life — no tracking obsession required.</p>
-    <a href="/schedule-call/" class="btn btn-primary" style="font-size:15px;padding:16px 36px;">
-      Apply Now
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
+    <p>The biggest mistake people make when trying to stop tracking is going cold turkey — removing all guardrails at once and hoping the habits hold. They don't. Here's the roadmap that actually works:</p>
 
-</article>
+    <div class="phase-steps">
+      <div class="phase-step">
+        <div class="phase-step__num">1</div>
+        <div>
+          <div class="phase-step__title">Foundational Phase (weeks 1–8)</div>
+          <div class="phase-step__desc">No tracking. Focus entirely on building the core habits: steps, protein, meal timing, flexibility, sleep.</div>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="phase-step__num">2</div>
+        <div>
+          <div class="phase-step__title">Fat Loss Phase</div>
+          <div class="phase-step__desc">Introduce tracking alongside your existing habits. Use it as a precision tool to accelerate progress toward your goal weight.</div>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="phase-step__num">3</div>
+        <div>
+          <div class="phase-step__title">Lifestyle Phase — gradual offboarding</div>
+          <div class="phase-step__desc">Drop tracking frequency gradually: 5 days/week → 3–4 days → 2–3 days → 1–2 days → none. Spend 3–4 weeks at each level before stepping down.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>The key during the offboarding phase is to <strong>double down on habits</strong> as you reduce tracking frequency. The days you don't track become the proving ground — you're learning what it feels like to eat in a way that supports your goals without needing external feedback. That's the skill. That's intuitive eating in the real sense of the word.</p>
+
+    <div class="takeaway-box">
+      <div class="takeaway-box__label">The bottom line</div>
+      <ul>
+        <li>Calorie tracking works — but only as a tool, not as a lifestyle.</li>
+        <li>Over-reliance on tracking prevents you from building the habits that sustain results long-term.</li>
+        <li>The real goal is an intuitive way of eating that supports your body without mental friction.</li>
+        <li>Build habits first, use tracking as a precision layer, then wean off gradually.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <p>Nobody wants to log every meal for the rest of their life. And the good news is you don't have to. But you do have to build something more durable than an app dependency. The habits are what last. The tracking is just how you learn.</p>
+
+    <div class="post-cta">
+      <h3>Ready to Build Habits That Actually Last?</h3>
+      <p>Science-backed coaching for busy professionals over 40. We'll build the system around your real life — no tracking obsession required.</p>
+      <a href="/schedule-call/" class="btn btn-primary" style="font-size:15px;padding:16px 36px;">
+        Apply Now
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </article>
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -402,6 +456,5 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 </script>
-
 </body>
 </html>
