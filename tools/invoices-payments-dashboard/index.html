@@ -1463,9 +1463,6 @@ Let me know if you need anything on our end!`;
 
     // Current month metrics
     const cur = calcFinancials(clientRows, prRows, ppRows, y, m);
-    const collRate = cur.contracted > 0
-      ? Math.min(100, Math.round((cur.collected / cur.contracted) * 100))
-      : 0;
 
     // Build annual table (Jan–Dec for selected year)
     const annualRows = Array.from({ length: 12 }, (_, mi) => {
@@ -1509,17 +1506,6 @@ Let me know if you need anything on our end!`;
         <div class="fc-amount">${fmtMoney(cur.pending)}</div>
         <div class="fc-label">Pending</div>
         <div class="fc-sub">Unpaid installments due this month</div>
-      </div>
-    </div>`;
-
-    // Collection rate bar
-    html += `<div class="collection-rate">
-      <div class="cr-header">
-        <span class="cr-title">Collection Rate — ${monthName(m)} ${y}</span>
-        <span class="cr-pct">${collRate}%</span>
-      </div>
-      <div class="cr-bar-bg">
-        <div class="cr-bar-fill" style="width:${collRate}%"></div>
       </div>
     </div>`;
 
