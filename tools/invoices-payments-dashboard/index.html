@@ -381,6 +381,163 @@
     .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+    /* ── Financials Tab ── */
+    .fin-month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .fin-month-nav .month-label {
+      font-size: 18px;
+      font-weight: 700;
+      min-width: 160px;
+      text-align: center;
+    }
+    .nav-arrow {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 6px 14px;
+      transition: border-color .15s;
+    }
+    .nav-arrow:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-arrow:disabled { opacity: .35; cursor: not-allowed; }
+
+    .fin-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .fin-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fin-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .fin-card.contracted::before { background: var(--accent); }
+    .fin-card.collected::before  { background: var(--green); }
+    .fin-card.pending::before    { background: var(--orange); }
+
+    .fin-card .fc-icon { font-size: 22px; margin-bottom: 10px; }
+    .fin-card .fc-amount {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .fin-card.contracted .fc-amount { color: var(--accent); }
+    .fin-card.collected  .fc-amount { color: var(--green); }
+    .fin-card.pending    .fc-amount { color: var(--orange); }
+
+    .fin-card .fc-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-top: 6px;
+    }
+    .fin-card .fc-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Progress bar */
+    .collection-rate {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 32px;
+    }
+    .cr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .cr-title { font-size: 13px; font-weight: 700; }
+    .cr-pct { font-size: 20px; font-weight: 800; color: var(--green); }
+    .cr-bar-bg {
+      background: var(--border);
+      border-radius: 20px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .cr-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      transition: width .5s ease;
+    }
+
+    /* Annual table */
+    .annual-section { margin-top: 8px; }
+    .annual-section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+    .annual-table-wrap { overflow-x: auto; }
+    .annual-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .annual-table th {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      padding: 10px 14px;
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .annual-table td {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      white-space: nowrap;
+    }
+    .annual-table tr:hover td { background: rgba(108,99,255,0.05); }
+    .annual-table td.contracted { color: var(--accent); font-weight: 700; }
+    .annual-table td.collected  { color: var(--green);  font-weight: 700; }
+    .annual-table td.pending    { color: var(--orange);  font-weight: 700; }
+    .annual-table td.rate       { color: var(--muted); font-size: 12px; }
+    .annual-table tr.current-month td {
+      background: rgba(108,99,255,0.08);
+    }
+    .annual-table tr.current-month td:first-child {
+      border-left: 3px solid var(--accent);
+    }
+    .annual-table tr.totals-row td {
+      background: var(--bg);
+      font-weight: 700;
+      border-top: 2px solid var(--border);
+    }
+    .annual-table tr.future-month td { opacity: .45; }
+
+    @media (max-width: 580px) {
+      .fin-cards { grid-template-columns: 1fr; }
+      .fin-card .fc-amount { font-size: 26px; }
+    }
   </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84"></script>
   <meta name="robots" content="noindex, nofollow">
@@ -403,6 +560,7 @@
   <button class="tab-btn active" onclick="switchTab('payments')">💳 Invoices &amp; Payments</button>
   <button class="tab-btn" onclick="switchTab('attribution')">🔍 Sales Attribution</button>
   <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls</button>
+  <button class="tab-btn" onclick="switchTab('financials')">📊 Financials</button>
 </nav>
 
 <main>
@@ -426,6 +584,15 @@
 
   <div id="tab-attribution" class="tab-panel">
     <div id="content-attribution">
+      <div class="center">
+        <div class="spinner"></div>
+        <div>Fetching data from Google Sheets…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-financials" class="tab-panel">
+    <div id="content-financials">
       <div class="center">
         <div class="spinner"></div>
         <div>Fetching data from Google Sheets…</div>
@@ -595,15 +762,17 @@
       `<div class="center"><div class="spinner"></div><div>Fetching data…</div></div>`;
 
     try {
-      const [clientRows, ppRows, leadsRows] = await Promise.all([
+      const [clientRows, ppRows, leadsRows, prRows] = await Promise.all([
         fetchRange('Client Mastersheet!A:Z'),
         fetchRange('Payment Plan!A:F'),
         fetchRange('Leads applied!A:P'),
+        fetchRange('Payment Records!A:F'),
       ]);
       window._lastRenderArgs = [clientRows, ppRows];
       renderDashboard(clientRows, ppRows);
       renderAttribution(clientRows, leadsRows);
       renderStaleCalls(leadsRows);
+      renderFinancials(clientRows, prRows, ppRows);
       document.getElementById('last-updated').textContent =
         'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
@@ -1212,6 +1381,207 @@ Let me know if you need anything on our end!`;
       textarea.select();
       document.execCommand('copy');
     });
+  }
+
+  // ── Financials Tab ────────────────────────────────────
+
+  // Tracks which month is selected (0=Jan..11=Dec) and year
+  window._finYear  = new Date().getFullYear();
+  window._finMonth = new Date().getMonth();
+
+  // Cache raw data for re-renders when navigating months
+  window._finData = null;
+
+  function parseMoney(val) {
+    if (!val) return 0;
+    const n = parseFloat(String(val).replace(/[$,\s]/g, ''));
+    return isNaN(n) ? 0 : n;
+  }
+
+  function fmtMoney(n) {
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function monthName(m) {
+    return ['January','February','March','April','May','June',
+            'July','August','September','October','November','December'][m];
+  }
+
+  function calcFinancials(clientRows, prRows, ppRows, year, month) {
+    const startOfMonth = new Date(year, month, 1);
+    const endOfMonth   = new Date(year, month + 1, 0); // last day
+
+    // ── Contracted: $ Package from Client Mastersheet, by Date Purchased ──
+    let contracted = 0;
+    clientRows.slice(1).forEach(r => {
+      const d = parseDate(r[C.DATE_PURCHASED]);
+      if (d && d >= startOfMonth && d <= endOfMonth) {
+        contracted += parseMoney(r[C.PACKAGE]);
+      }
+    });
+
+    // ── Collected: Amount from Payment Records, by Date ──
+    // PR cols: Full Name(0) Email(1) Date(2) Amount(3) Invoice(4) New or Resign(5)
+    let collected = 0;
+    prRows.slice(1).forEach(r => {
+      const d = parseDate(r[2]);
+      if (d && d >= startOfMonth && d <= endOfMonth) {
+        collected += parseMoney(r[3]);
+      }
+    });
+
+    // ── Pending: Payment amount from Payment Plan, Status ≠ paid, by Date ──
+    let pending = 0;
+    ppRows.slice(1).forEach(r => {
+      const d      = parseDate(r[P.DATE]);
+      const status = (r[P.STATUS] || '').trim().toLowerCase();
+      if (d && d >= startOfMonth && d <= endOfMonth && status !== 'paid') {
+        pending += parseMoney(r[P.AMOUNT]);
+      }
+    });
+
+    return { contracted, collected, pending };
+  }
+
+  function renderFinancials(clientRows, prRows, ppRows, year, month) {
+    // Store data for navigation re-renders
+    if (clientRows) {
+      window._finData = { clientRows, prRows, ppRows };
+    } else {
+      ({ clientRows, prRows, ppRows } = window._finData);
+    }
+
+    const y = year  !== undefined ? year  : window._finYear;
+    const m = month !== undefined ? month : window._finMonth;
+    window._finYear  = y;
+    window._finMonth = m;
+
+    const now       = new Date();
+    const curYear   = now.getFullYear();
+    const curMonth  = now.getMonth();
+    const isFuture  = y > curYear || (y === curYear && m > curMonth);
+
+    // Current month metrics
+    const cur = calcFinancials(clientRows, prRows, ppRows, y, m);
+    const collRate = cur.contracted > 0
+      ? Math.min(100, Math.round((cur.collected / cur.contracted) * 100))
+      : 0;
+
+    // Build annual table (Jan–Dec for selected year)
+    const annualRows = Array.from({ length: 12 }, (_, mi) => {
+      const d = calcFinancials(clientRows, prRows, ppRows, y, mi);
+      return { month: mi, ...d };
+    });
+
+    const totals = annualRows.reduce((acc, r) => {
+      acc.contracted += r.contracted;
+      acc.collected  += r.collected;
+      acc.pending    += r.pending;
+      return acc;
+    }, { contracted: 0, collected: 0, pending: 0 });
+
+    // ── Build HTML ──
+    let html = '';
+
+    // Month navigator
+    html += `<div class="fin-month-nav">
+      <button class="nav-arrow" onclick="finNav(-1)">&#8592;</button>
+      <div class="month-label">${monthName(m)} ${y}</div>
+      <button class="nav-arrow" onclick="finNav(1)" ${isFuture ? 'disabled' : ''}>&#8594;</button>
+    </div>`;
+
+    // KPI cards
+    html += `<div class="fin-cards">
+      <div class="fin-card contracted">
+        <div class="fc-icon">📋</div>
+        <div class="fc-amount">${fmtMoney(cur.contracted)}</div>
+        <div class="fc-label">Contracted</div>
+        <div class="fc-sub">Total value promised this month</div>
+      </div>
+      <div class="fin-card collected">
+        <div class="fc-icon">✅</div>
+        <div class="fc-amount">${fmtMoney(cur.collected)}</div>
+        <div class="fc-label">Collected</div>
+        <div class="fc-sub">Payments received this month</div>
+      </div>
+      <div class="fin-card pending">
+        <div class="fc-icon">⏳</div>
+        <div class="fc-amount">${fmtMoney(cur.pending)}</div>
+        <div class="fc-label">Pending</div>
+        <div class="fc-sub">Unpaid installments due this month</div>
+      </div>
+    </div>`;
+
+    // Collection rate bar
+    html += `<div class="collection-rate">
+      <div class="cr-header">
+        <span class="cr-title">Collection Rate — ${monthName(m)} ${y}</span>
+        <span class="cr-pct">${collRate}%</span>
+      </div>
+      <div class="cr-bar-bg">
+        <div class="cr-bar-fill" style="width:${collRate}%"></div>
+      </div>
+    </div>`;
+
+    // Annual table
+    html += `<div class="annual-section">
+      <h3>📅 Full Year Overview — ${y}</h3>
+      <div class="annual-table-wrap">
+        <table class="annual-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Contracted</th>
+              <th>Collected</th>
+              <th>Pending</th>
+              <th>Collection Rate</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+    annualRows.forEach(r => {
+      const isCur    = r.month === curMonth && y === curYear;
+      const isFutRow = y > curYear || (y === curYear && r.month > curMonth);
+      const rate     = r.contracted > 0
+        ? Math.round((r.collected / r.contracted) * 100) + '%'
+        : '—';
+      const rowClass = isCur ? 'current-month' : isFutRow ? 'future-month' : '';
+
+      html += `<tr class="${rowClass}">
+        <td>${monthName(r.month)}${isCur ? ' <span style="font-size:10px;color:var(--accent);">▶ now</span>' : ''}</td>
+        <td class="contracted">${r.contracted > 0 ? fmtMoney(r.contracted) : '—'}</td>
+        <td class="collected">${r.collected  > 0 ? fmtMoney(r.collected)  : '—'}</td>
+        <td class="pending">${r.pending    > 0 ? fmtMoney(r.pending)    : '—'}</td>
+        <td class="rate">${rate}</td>
+      </tr>`;
+    });
+
+    // Totals row
+    const totalRate = totals.contracted > 0
+      ? Math.round((totals.collected / totals.contracted) * 100) + '%'
+      : '—';
+    html += `<tr class="totals-row">
+      <td>Total ${y}</td>
+      <td class="contracted">${fmtMoney(totals.contracted)}</td>
+      <td class="collected">${fmtMoney(totals.collected)}</td>
+      <td class="pending">${fmtMoney(totals.pending)}</td>
+      <td class="rate">${totalRate}</td>
+    </tr>`;
+
+    html += `</tbody></table></div></div>`;
+
+    document.getElementById('content-financials').innerHTML = html;
+  }
+
+  function finNav(dir) {
+    let m = window._finMonth + dir;
+    let y = window._finYear;
+    if (m < 0)  { m = 11; y--; }
+    if (m > 11) { m = 0;  y++; }
+    // Don't navigate past current month
+    const now = new Date();
+    if (y > now.getFullYear() || (y === now.getFullYear() && m > now.getMonth())) return;
+    renderFinancials(null, null, null, y, m);
   }
 
   // Close modal on overlay click
