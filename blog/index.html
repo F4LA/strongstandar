@@ -459,8 +459,8 @@ function render() {
     return;
   }
 
-  const featured = filtered.find(p => p.featured);
-  const rest = filtered.filter(p => !p.featured || filtered.indexOf(p) > 0);
+  const featured = filtered[0];
+  const rest = filtered.slice(1);
 
   let html = '';
   if (featured) html += renderFeatured(featured);
