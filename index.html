@@ -2091,20 +2091,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vsl-label reveal" style="margin-bottom:12px;">
         <span class="label" style="color:var(--steel-light);">Watch Before You Apply</span>
       </div>
-      <div class="vsl-player reveal" style="margin-bottom:32px;position:relative;">
-        <video
-          id="heroVsl"
-          src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fa2056d38dd6188702e45a.mp4"
-          poster="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69fe627f114de79afe13da80.png"
-          playsinline
-          preload="none"
-          style="width:100%;height:100%;object-fit:cover;display:block;"
-        ></video>
-        <button class="video-frame__overlay" id="vslOverlay" aria-label="Play video">
-          <div class="video-frame__play-btn">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-          </div>
-        </button>
+      <div class="vsl-player reveal" style="margin-bottom:32px;">
+        <script src="https://fast.wistia.com/player.js" async></script>
+        <script src="https://fast.wistia.com/embed/pb2o5u00s7.js" async type="module"></script>
+        <style>wistia-player[media-id='pb2o5u00s7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/pb2o5u00s7/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
+        <wistia-player media-id="pb2o5u00s7" aspect="1.7777777777777777"></wistia-player>
       </div>
 
       <div class="hero__cta-group">
@@ -3469,21 +3460,6 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.05 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ── VSL Play ────────────────────────────────────────────
-const vslOverlay = document.getElementById('vslOverlay');
-const heroVsl = document.getElementById('heroVsl');
-if (vslOverlay && heroVsl) {
-  function playVsl() {
-    vslOverlay.classList.add('hidden');
-    heroVsl.controls = true;
-    heroVsl.play();
-  }
-  vslOverlay.addEventListener('click', playVsl);
-  vslOverlay.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playVsl(); }
-  });
-}
 
 // ── Proof Cards Carousel (mobile) ───────────────────────
 const proofTrack = document.querySelector('.hero-proof-carousel__track');
