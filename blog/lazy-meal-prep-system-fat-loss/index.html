@@ -201,6 +201,29 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   <div style="margin-bottom:40px;border-radius:16px;overflow:hidden;line-height:0;">
     <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2c3638c53e51acc0bf301d.png" alt="Meal prep containers with chicken, rice, and vegetables on a dark kitchen counter" style="width:100%;height:auto;display:block;">
   </div>
+  <div style="margin-bottom:40px;">
+    <div id="yt-facade" onclick="loadYT()" style="position:relative;width:100%;padding-bottom:56.25%;border-radius:16px;overflow:hidden;cursor:pointer;background:#000;">
+      <img src="https://i.ytimg.com/vi/g11idq18H9E/maxresdefault.jpg" alt="Play episode: The Lazy Meal Prep System" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.85;">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <div style="width:72px;height:72px;background:rgba(8,13,26,0.75);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid rgba(168,205,224,0.4);transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style="margin-left:3px;"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+      </div>
+    </div>
+    <script>
+    function loadYT() {
+      var d = document.getElementById('yt-facade');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/g11idq18H9E?autoplay=1';
+      iframe.allow = 'autoplay; encrypted-media';
+      iframe.allowFullscreen = true;
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:16px;';
+      d.innerHTML = '';
+      d.appendChild(iframe);
+    }
+    </script>
+  </div>
+
   <article class="post-body">
 
     <p>You've tried meal prep before. You picked a Sunday, cleared your schedule, cooked six different recipes, portioned everything into containers, and felt great about it. By Wednesday, you were ordering takeout. Not because your willpower failed. Because the system was broken from the start.</p>
