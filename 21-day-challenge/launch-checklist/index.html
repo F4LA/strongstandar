@@ -280,9 +280,9 @@
     <div class="cohort-panel__header" onclick="toggleCohort()">
       <div class="cohort-panel__title">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Cohort Reference
+        Launch Setup
       </div>
-      <span class="cohort-panel__sub">Dates, links, and Zoom info for this launch</span>
+      <span class="cohort-panel__sub">Set dates once — update Calendar &amp; landing pages automatically</span>
       <div class="phase-toggle" id="cohortToggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="cohort-body" id="cohortBody">
@@ -322,14 +322,24 @@
             </a>
           </div>
           <div id="liveCallPreview" style="display:none;background:var(--off-white);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.8;"></div>
-          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-            <button onclick="handleCalendarBtn()" id="gcalBtn" style="display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a73e8,#1557b0);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              <span id="gcalBtnText">Connect Google Calendar</span>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
+            <button onclick="handleLaunchBtn()" id="launchBtn" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#0f2340,#1b3a5c);color:white;border:none;border-radius:10px;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity 0.2s;box-shadow:0 4px 16px rgba(15,35,64,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span id="launchBtnText">Create Events &amp; Update Pages</span>
             </button>
-            <span id="gcalStatus" style="font-size:12px;color:var(--muted);"></span>
+            <span id="launchStatus" style="font-size:12px;color:var(--muted);"></span>
           </div>
-          <div id="gcalResult" style="margin-top:12px;display:none;background:#eaf4ef;border-radius:8px;padding:12px 16px;font-size:12px;color:#1a5c3a;line-height:1.8;"></div>
+          <div id="launchResult" style="margin-top:14px;display:none;background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:12px;line-height:2;"></div>
+        </div>
+        <div class="cohort-card cohort-card--wide">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="cohort-field" style="flex:1;margin-bottom:0;">
+              <input type="password" id="gh_token" placeholder="ghp_..." oninput="saveField('gh_token')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+            <button onclick="const f=document.getElementById('gh_token');f.type=f.type==='password'?'text':'password'" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:6px 10px;cursor:pointer;white-space:nowrap;">Show/Hide</button>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:6px;">Required to push date changes to landing pages. Stored securely.</div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
@@ -370,7 +380,7 @@
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="phase-body">
-      <div class="note-box">Use the <strong>Cohort Reference panel above</strong> to fill in dates, then click "Create All Google Calendar Events" to auto-create all sessions.</div>
+      <div class="note-box">Use the <strong>Launch Setup panel above</strong> to fill in dates, then click "Create All Google Calendar Events" to auto-create all sessions.</div>
       <div class="section">
         <div class="section-title">1.1 — Zoom Permalinks</div>
       <div style="margin:4px 0 8px;">
@@ -880,7 +890,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','live_wed_time','live_sat_time'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -1028,6 +1038,254 @@
     preview.style.display = 'block';
   }
 
+  // ── GITHUB CONFIG ─────────────────────────────────────────
+  // GH_TOKEN is read dynamically from #gh_token input (stored in Supabase)
+  const GH_REPO  = 'F4LA/strongstandar';
+  const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/';
+
+  async function githubUpdateFile(path, newContent, sha, message) {
+    const encoded = btoa(unescape(encodeURIComponent(newContent)));
+    const res = await fetch(GH_API + path, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token ' + (document.getElementById('gh_token')?.value || ''),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message, content: encoded, sha }),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'GitHub error');
+    }
+    return res.json();
+  }
+
+  async function githubGetSha(path) {
+    const res = await fetch(GH_API + path, {
+      headers: { 'Authorization': 'token ' + GH_TOKEN },
+    });
+    if (!res.ok) throw new Error('Could not fetch ' + path);
+    const data = await res.json();
+    return { sha: data.sha, content: decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))) };
+  }
+
+  function formatKickoffDate(dt) {
+    // e.g. "Saturday, July 12, 2026"
+    const d = new Date(dt);
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  }
+
+  function formatKickoffTime(dt) {
+    // e.g. "10:00 AM EST"
+    const d = new Date(dt);
+    const h = d.getHours();
+    const m = String(d.getMinutes()).padStart(2,'0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+    return `${h12}:${m} ${ampm} EST`;
+  }
+
+  function formatHomePageDate(dt) {
+    // e.g. "Starts Jul 12, 2026"
+    const d = new Date(dt);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `Starts ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  }
+
+  function formatCountdownDeadline(dt) {
+    // e.g. "2026-07-12T14:00:00Z" (kickoff in UTC, treat local as ET = UTC-4 summer)
+    const d = new Date(dt);
+    // Convert to UTC assuming input is ET (UTC-4 in summer, UTC-5 in winter)
+    const offset = 4; // EDT
+    const utc = new Date(d.getTime() + offset * 3600000);
+    const pad = n => String(n).padStart(2,'0');
+    return `${utc.getFullYear()}-${pad(utc.getMonth()+1)}-${pad(utc.getDate())}T${pad(utc.getHours())}:${pad(utc.getMinutes())}:00Z`;
+  }
+
+  async function updateLandingPages(kickoffVal, closingVal) {
+    const results = [];
+
+    // ── 1. 21-day-challenge/index.html ──────────────────────
+    try {
+      const { sha, content } = await githubGetSha('21-day-challenge/index.html');
+      let updated = content;
+
+      // Update hero start date text e.g. "Starts Jun 6, 2026"
+      updated = updated.replace(
+        /(<p class="hero__start-date">)Starts [^<]+(<\/p>)/,
+        `$1${formatHomePageDate(kickoffVal)}$2`
+      );
+
+      // Update countdown deadline
+      updated = updated.replace(
+        /const deadline = new Date\('[^']+'\);/,
+        `const deadline = new Date('${formatCountdownDeadline(kickoffVal)}');`
+      );
+
+      await githubUpdateFile(
+        '21-day-challenge/index.html',
+        updated, sha,
+        `Update 21DC home page dates for new cohort (${formatHomePageDate(kickoffVal)})`
+      );
+      results.push({ file: 'Home Page', status: '✅' });
+    } catch(e) {
+      results.push({ file: 'Home Page', status: '❌ ' + e.message });
+    }
+
+    // ── 2. kickoff-call-registration/index.html ─────────────
+    try {
+      const { sha, content } = await githubGetSha('21-day-challenge/kickoff-call-registration/index.html');
+      let updated = content;
+
+      const kickoffDateStr = formatKickoffDate(kickoffVal);
+      const kickoffTimeStr = formatKickoffTime(kickoffVal);
+
+      // Update date-badge text: "Saturday, June 6, 2026" and "10:00 AM EST"
+      updated = updated.replace(
+        /(<span class="date-line1">)[^<]+(<\/span>)/,
+        `$1${kickoffDateStr}$2`
+      );
+      updated = updated.replace(
+        /(<span class="date-line2">)[^<]+(<\/span>)/,
+        `$1${kickoffTimeStr}$2`
+      );
+
+      await githubUpdateFile(
+        '21-day-challenge/kickoff-call-registration/index.html',
+        updated, sha,
+        `Update Kickoff Call registration page date to ${kickoffDateStr}`
+      );
+      results.push({ file: 'Kickoff Registration', status: '✅' });
+    } catch(e) {
+      results.push({ file: 'Kickoff Registration', status: '❌ ' + e.message });
+    }
+
+    // ── 3. closing-call-registration/index.html ─────────────
+    try {
+      const { sha, content } = await githubGetSha('21-day-challenge/closing-call-registration/index.html');
+      let updated = content;
+
+      const closingDateStr = formatKickoffDate(closingVal); // same format
+      const closingTimeStr = formatKickoffTime(closingVal);
+      const closingShort   = `${closingDateStr} · ${closingTimeStr}`;
+
+      // Update date-badge text (single span, no date-line1/2)
+      updated = updated.replace(
+        /(<span class="date-badge__text">)[^<]+(<\/span>)/,
+        `$1${closingDateStr} &nbsp;&middot;&nbsp; ${closingTimeStr}$2`
+      );
+
+      // Update meta description
+      updated = updated.replace(
+        /(<meta name="description" content="[^"]*—)[^"]+(")/,
+        `$1 ${closingDateStr} at ${closingTimeStr}.$2`
+      );
+
+      await githubUpdateFile(
+        '21-day-challenge/closing-call-registration/index.html',
+        updated, sha,
+        `Update Closing Webinar registration page date to ${closingDateStr}`
+      );
+      results.push({ file: 'Closing Registration', status: '✅' });
+    } catch(e) {
+      results.push({ file: 'Closing Registration', status: '❌ ' + e.message });
+    }
+
+    return results;
+  }
+
+  async function handleLaunchBtn() {
+    const kickoffVal = document.getElementById('kickoff_date').value;
+    const closingVal = document.getElementById('closing_date').value;
+    const errors = [];
+    if (!kickoffVal) errors.push('Kickoff Call date & time');
+    if (!closingVal) errors.push('Closing Webinar date & time');
+    if (errors.length) { alert('Please fill in:\n• ' + errors.join('\n• ')); return; }
+
+    const btn = document.getElementById('launchBtn');
+    const statusEl = document.getElementById('launchStatus');
+    const resultEl = document.getElementById('launchResult');
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    document.getElementById('launchBtnText').textContent = 'Working...';
+    resultEl.style.display = 'none';
+
+    // Step 1: Google Calendar
+    statusEl.textContent = '📅 Creating calendar events...';
+    statusEl.style.color = 'var(--muted)';
+
+    let calendarResults = [];
+    const doCalendar = async (token) => {
+      try {
+        calendarResults = await createAllCalendarEvents(token);
+      } catch(e) {
+        calendarResults = [{ title: 'Calendar', error: e.message }];
+      }
+    };
+
+    // Step 2: Landing Pages
+    const doPages = async () => {
+      statusEl.textContent = '🌐 Updating landing pages...';
+      return await updateLandingPages(kickoffVal, closingVal);
+    };
+
+    // Orchestrate: auth → calendar → pages → show results
+    const run = async (token) => {
+      await doCalendar(token);
+      const pageResults = await doPages();
+
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      document.getElementById('launchBtnText').textContent = 'Create Events &amp; Update Pages';
+      statusEl.textContent = '✅ Done!';
+      statusEl.style.color = '#2e7d5e';
+
+      let html = '';
+
+      // Calendar results
+      html += '<div style="font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Google Calendar</div>';
+      if (Array.isArray(calendarResults)) {
+        calendarResults.forEach(e => {
+          if (e.link) html += `<div>✅ <a href="${e.link}" target="_blank" style="color:var(--accent);font-weight:600;">${e.title} ↗</a></div>`;
+          else html += `<div>❌ ${e.title}: ${e.error}</div>`;
+        });
+      }
+
+      // Page results
+      html += '<div style="font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:12px 0 6px;">Landing Pages</div>';
+      pageResults.forEach(r => {
+        html += `<div>${r.status} ${r.file} — deploying via GitHub Pages (~30s)</div>`;
+      });
+
+      resultEl.innerHTML = html;
+      resultEl.style.display = 'block';
+    };
+
+    if (gcalToken) {
+      await run(gcalToken);
+    } else {
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: GCAL_CLIENT_ID,
+        scope: GCAL_SCOPE,
+        callback: async (resp) => {
+          if (resp.error) {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            document.getElementById('launchBtnText').textContent = 'Create Events &amp; Update Pages';
+            statusEl.textContent = '❌ Auth error: ' + resp.error;
+            statusEl.style.color = 'red';
+            return;
+          }
+          gcalToken = resp.access_token;
+          await run(gcalToken);
+        },
+      });
+      client.requestAccessToken();
+    }
+  }
+
   // ── GOOGLE CALENDAR API (OAuth) ─────────────────────────────
   const GCAL_CLIENT_ID = '660874076659-1m8i45cuo3merll0f9ssfv627sagpmmh.apps.googleusercontent.com';
   const GCAL_SCOPE = 'https://www.googleapis.com/auth/calendar.events';
@@ -1101,12 +1359,7 @@
     const wedTime = document.getElementById('live_wed_time').value || '18:30';
     const satTime = document.getElementById('live_sat_time').value || '10:00';
 
-    const btn = document.getElementById('gcalBtn');
-    const resultEl = document.getElementById('gcalResult');
-    btn.disabled = true;
-    btn.style.opacity = '0.6';
-    setGcalStatus('Creating events...', 'var(--muted)');
-    resultEl.style.display = 'none';
+    // (orchestrated by handleLaunchBtn)
 
     const eventsToCreate = [];
 
@@ -1158,18 +1411,11 @@
     btn.disabled = false;
     btn.style.opacity = '1';
 
-    if (created.length > 0) {
-      let html = `<strong>✅ ${created.length} event${created.length>1?'s':''} created in Google Calendar:</strong><br><br>`;
-      created.forEach(e => {
-        html += `<a href="${e.link}" target="_blank" style="color:#1a5c3a;font-weight:600;">${e.title} ↗</a><br>`;
-      });
-      if (failed.length) html += `<br><span style="color:#b45309;">⚠️ Failed: ${failed.join(', ')}</span>`;
-      resultEl.innerHTML = html;
-      resultEl.style.display = 'block';
-      setGcalStatus(`✅ ${created.length} events created`, '#2e7d5e');
-    } else {
-      setGcalStatus('❌ All events failed', 'red');
-    }
+    // Return results for orchestration
+    return [
+      ...created.map(e => ({ title: e.title, link: e.link })),
+      ...failed.map(f => ({ title: f.split(':')[0], error: f })),
+    ];
   }
   function btoggle(el) { el.classList.toggle('done'); saveBChecks(); updateBProgress(); }
   function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
@@ -1245,7 +1491,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time'];
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
