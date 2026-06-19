@@ -365,17 +365,31 @@
   <div class="phase collapsed" id="phase1">
     <div class="phase-header" onclick="togglePhase('phase1')">
       <div class="phase-num">Phase 1</div>
-      <div class="phase-title">Ads Analysis</div>
+      <div class="phase-title">Create Google Calendar Events</div>
       <div class="phase-count" id="phase1-count"></div>
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="phase-body">
-      <div class="note-box"><strong>Before touching anything else,</strong> analyze previous ads and select the best-performing creatives to run from day one.</div>
+      <div class="note-box">Use the <strong>Cohort Reference panel above</strong> to fill in dates, then click "Create All Google Calendar Events" to auto-create all sessions.</div>
       <div class="section">
-        <div class="section-title">1.1 — Ads Analysis</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Analyze previous challenge ads — identify best-performing creatives and copy</div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Select top-performing ads to run from day one of the promotion window</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Promotion window starts the Friday before Kickoff Call — ads must be ready by then</div></div></div>
+        <div class="section-title">1.1 — Zoom Permalinks</div>
+      <div style="margin:4px 0 8px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Kickoff Call</div>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:8px;">
+            <a href="https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ us06web.zoom.us/j/83025588253</a>
+            <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+          </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:12px 0 8px;">Live Coaching Calls</div>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:8px;">
+            <a href="https://us06web.zoom.us/j/87846474270" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ us06web.zoom.us/j/87846474270</a>
+            <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/87846474270');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+          </div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:12px 0 8px;">Closing Webinar</div>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:8px;">
+            <a href="https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ us06web.zoom.us/j/88450858871</a>
+            <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1');this.textContent='✓ Copied!';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+          </div>
+      </div>
       </div>
     </div>
   </div>
@@ -384,7 +398,7 @@
   <div class="phase collapsed" id="phase2">
     <div class="phase-header" onclick="togglePhase('phase2')">
       <div class="phase-num">Phase 2</div>
-      <div class="phase-title">Update Google Calendar</div>
+      <div class="phase-title">Verify Google Calendar Events</div>
       <div class="phase-count" id="phase2-count"></div>
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
@@ -401,7 +415,9 @@
       <div class="section">
         <div class="section-title">2.2 — Clarity Call Calendar (GHL)</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Adjust Clarity Call availability in GHL — open only during week 2 of the challenge</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Block all dates outside week 2 so participants cannot book outside that window</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Block all dates outside week 2 so participants cannot book outside that window</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -464,23 +480,33 @@
       <div class="section">
         <div class="section-title">4.2 — Kickoff Call Registration Automation</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Email for Kickoff Call registrants</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm date, time, and Zoom link are current</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm date, time, and Zoom link are current</div></div>
+        </div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Set event delay to match Kickoff Call date</div></div>
       </div>
       <div class="section">
         <div class="section-title">4.3 — Closing Webinar Registration Automation</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Email for Closing Webinar registrants</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm date, time, and Zoom link are current</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm date, time, and Zoom link are current</div></div>
+        </div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Set event delay to match Closing Webinar date</div></div>
       </div>
       <div class="section">
         <div class="section-title">4.4 — Reminders</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update HR4KC — Has Not Registered for Kickoff Call</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div>
+        </div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update HR4CW — Has Not Registered for Closing Webinar</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div>
+        </div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update "Did Not Schedule Clarity Call" automation</div></div>
-        <div class="subtasks"><div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div>
+        </div>
       </div>
       <div class="section">
         <div class="section-title">4.5 — Sale Made Automation</div>
@@ -511,7 +537,7 @@
         <div class="section-title">5.1 — 21 Day Challenge Flow Zap</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Open the "21 Day Challenge Flow" Zap</div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update the date when full challenge access expires</div></div>
-        <div class="note-box">This is the date Zapier uses to cut off access to challenge materials after the cohort ends.</div>
+      <div class="note-box">This is the date Zapier uses to cut off access to challenge materials after the cohort ends.</div>
       </div>
       <div class="section">
         <div class="section-title">5.2 — Custom Access Zap</div>
@@ -535,18 +561,32 @@
   <div class="phase collapsed" id="phase6">
     <div class="phase-header" onclick="togglePhase('phase6')">
       <div class="phase-num">Phase 6</div>
-      <div class="phase-title">Prepare Promotional Content</div>
+      <div class="phase-title">Promotional Phase</div>
       <div class="phase-count" id="phase6-count"></div>
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="phase-body">
       <div class="section">
-        <div class="section-title">6.1 — Promotional Emails</div>
+        <div class="section-title">6.1 — Ads</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Analyze previous challenge ads — identify best-performing creatives and copy</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Select top-performing ads to run from day one of the promotion window</div></div>
+        <div class="subtasks">
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Promotion window starts the Friday before Kickoff Call — ads must be ready by then</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">6.2 — Emails</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Write and prepare all promotional emails for the cohort launch</div></div>
       </div>
       <div class="section">
-        <div class="section-title">6.2 — Promotional SMS</div>
+        <div class="section-title">6.3 — SMS</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Write and prepare all promotional SMS messages for the cohort launch</div></div>
+      </div>
+      <div class="section">
+        <div class="section-title">6.4 — Affiliates</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Review affiliate candidate list (built by Bernardo and Miguel) and confirm who to reach out to</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reach out to Adrián to offer him the affiliate spot again</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reach out to confirmed affiliates from the list</div></div>
       </div>
     </div>
   </div>
