@@ -288,7 +288,7 @@
       <div class="cohort-grid">
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--blue"></span>Kickoff Call</div>
-          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date')"></div>
+          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date');updateLiveCallPreview()"></div>
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
             <a href="https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
@@ -299,7 +299,7 @@
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--gold"></span>Closing Webinar</div>
-          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="closing_date" oninput="saveField('closing_date')"></div>
+          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="closing_date" oninput="saveField('closing_date');updateLiveCallPreview()"></div>
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
             <a href="https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
@@ -310,11 +310,9 @@
         </div>
         <div class="cohort-card cohort-card--wide" id="liveCallsCard">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#e67e22;"></span>Live Coaching Calls</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div class="cohort-field"><label>First Call Date</label><input type="date" id="live_start_date" oninput="saveField('live_start_date');updateLiveCallPreview()"></div>
-            <div class="cohort-field"><label>Total Sessions</label><input type="number" id="live_sessions" value="7" min="1" max="20" oninput="saveField('live_sessions');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
-            <div class="cohort-field"><label>Wed Time (default 6:30 PM)</label><input type="time" id="live_wed_time" value="18:30" oninput="saveField('live_wed_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
-            <div class="cohort-field"><label>Sat Time (default 10:00 AM)</label><input type="time" id="live_sat_time" value="10:00" oninput="saveField('live_sat_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;max-width:420px;">
+            <div class="cohort-field"><label>Wed Time</label><input type="time" id="live_wed_time" value="18:30" oninput="saveField('live_wed_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
+            <div class="cohort-field"><label>Sat Time</label><input type="time" id="live_sat_time" value="10:00" oninput="saveField('live_sat_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
           </div>
           <div style="margin-bottom:10px;font-size:12px;color:var(--muted);">
             <span style="font-weight:600;color:var(--text);">Zoom link:</span>
@@ -836,7 +834,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','clarity_zoom','clarity_notes','discovery_link','discovery_notes','live_start_date','live_sessions','live_wed_time','live_sat_time'].forEach(id => {
+      ['kickoff_date','closing_date','clarity_zoom','clarity_notes','discovery_link','discovery_notes','live_wed_time','live_sat_time'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -934,13 +932,18 @@
 
   // ── LIVE COACHING CALLS PREVIEW ─────────────────────────────
   function getLiveCallDates() {
-    const startVal = document.getElementById('live_start_date').value;
-    const sessions = parseInt(document.getElementById('live_sessions').value) || 7;
-    if (!startVal) return [];
+    const kickoffVal = document.getElementById('kickoff_date').value;
+    const closingVal = document.getElementById('closing_date').value;
+    if (!kickoffVal || !closingVal) return [];
+    const start = new Date(kickoffVal);
+    start.setDate(start.getDate() + 1); // day after kickoff
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(closingVal);
+    end.setHours(0, 0, 0, 0);
     const dates = [];
-    let current = new Date(startVal + 'T12:00:00');
-    while (dates.length < sessions) {
-      const dow = current.getDay(); // 0=Sun,3=Wed,6=Sat
+    let current = new Date(start);
+    while (current <= end) {
+      const dow = current.getDay();
       if (dow === 3 || dow === 6) dates.push(new Date(current));
       current.setDate(current.getDate() + 1);
     }
@@ -955,7 +958,7 @@
     const satTime = document.getElementById('live_sat_time').value || '10:00';
     const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    let html = '<strong style="color:var(--text);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Scheduled Sessions:</strong><br>';
+    let html = `<strong style='color:var(--text);font-size:11px;letter-spacing:1px;text-transform:uppercase;'>Scheduled Sessions (${dates.length}):</strong><br>`;
     dates.forEach((d, i) => {
       const isWed = d.getDay() === 3;
       const time = isWed ? wedTime : satTime;
@@ -991,8 +994,6 @@
     const closingVal = document.getElementById('closing_date').value;
     const wedTime = document.getElementById('live_wed_time').value || '18:30';
     const satTime = document.getElementById('live_sat_time').value || '10:00';
-    const liveStartDate = document.getElementById('live_start_date').value;
-
     const KICKOFF_ZOOM = 'https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1';
     const CLOSING_ZOOM = 'https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1';
     const COACHING_ZOOM = 'https://us06web.zoom.us/j/87846474270';
@@ -1000,7 +1001,6 @@
     const errors = [];
     if (!kickoffVal) errors.push('Kickoff Call date & time');
     if (!closingVal) errors.push('Closing Webinar date & time');
-    if (!liveStartDate) errors.push('Live Coaching Calls start date');
     if (errors.length) { alert('Please fill in:\n• ' + errors.join('\n• ')); return; }
 
     const urls = [];
@@ -1116,7 +1116,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','clarity_zoom','clarity_notes','discovery_link','discovery_notes','live_start_date','live_sessions','live_wed_time','live_sat_time'];
+    const fields = ['kickoff_date','closing_date','clarity_zoom','clarity_notes','discovery_link','discovery_notes','live_wed_time','live_sat_time'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
