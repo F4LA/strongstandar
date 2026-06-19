@@ -292,10 +292,10 @@
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date');updateLiveCallPreview()"></div>
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
-            <a href="https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
-              Open Zoom link
-            </a>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a href="https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ us06web.zoom.us/j/83025588253</a>
+              <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+            </div>
           </div>
         </div>
         <div class="cohort-card">
@@ -303,10 +303,10 @@
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="closing_date" oninput="saveField('closing_date');updateLiveCallPreview()"></div>
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
-            <a href="https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
-              Open Zoom link
-            </a>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a href="https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ us06web.zoom.us/j/88450858871</a>
+              <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+            </div>
           </div>
         </div>
         <div class="cohort-card cohort-card--wide" id="liveCallsCard">
@@ -315,11 +315,12 @@
             <div class="cohort-field"><label>Wed Time</label><input type="time" id="live_wed_time" value="18:30" oninput="saveField('live_wed_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
             <div class="cohort-field"><label>Sat Time</label><input type="time" id="live_sat_time" value="10:00" oninput="saveField('live_sat_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
           </div>
-          <div style="margin-bottom:10px;font-size:12px;color:var(--muted);">
-            <span style="font-weight:600;color:var(--text);">Zoom link:</span>
-            <a href="https://us06web.zoom.us/j/87846474270" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;margin-left:6px;">
-              us06web.zoom.us/j/87846474270 ↗
-            </a>
+          <div style="margin-bottom:12px;">
+            <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;letter-spacing:0.5px;">ZOOM LINK</div>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a href="https://us06web.zoom.us/j/87846474270" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ us06web.zoom.us/j/87846474270</a>
+              <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/87846474270');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+            </div>
           </div>
           <div id="liveCallPreview" style="display:none;background:var(--off-white);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.8;"></div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
@@ -344,19 +345,19 @@
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
           <div class="cohort-field" style="margin-top:4px;">
-            <a href="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
-              Open booking link
-            </a>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a href="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ clarity-call-21dc</a>
+              <button onclick="navigator.clipboard.writeText('https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+            </div>
           </div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Discovery Call</div>
           <div class="cohort-field" style="margin-top:4px;">
-            <a href="https://api.leadconnectorhq.com/widget/bookings/21-day-challenge-to-101-coaching" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
-              Open booking link
-            </a>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a href="https://api.leadconnectorhq.com/widget/bookings/21-day-challenge-to-101-coaching" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ 21-day-challenge-to-101-coaching</a>
+              <button onclick="navigator.clipboard.writeText('https://api.leadconnectorhq.com/widget/bookings/21-day-challenge-to-101-coaching');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1062,7 +1063,7 @@
 
   async function githubGetSha(path) {
     const res = await fetch(GH_API + path, {
-      headers: { 'Authorization': 'token ' + GH_TOKEN },
+      headers: { 'Authorization': 'token ' + (document.getElementById('gh_token')?.value || '') },
     });
     if (!res.ok) throw new Error('Could not fetch ' + path);
     const data = await res.json();
@@ -1407,9 +1408,6 @@
         failed.push(event.summary + ': ' + e.message);
       }
     }
-
-    btn.disabled = false;
-    btn.style.opacity = '1';
 
     // Return results for orchestration
     return [
