@@ -844,6 +844,7 @@
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
+      updateLiveCallPreview();
       if (map.checks && map.checks.trim()) {
         const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
         const els = document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask');
@@ -856,7 +857,14 @@
   function saveField(id) {
     const val = document.getElementById(id).value;
     clearTimeout(writeTimers[id]);
-    writeTimers[id] = setTimeout(() => writeToDB(JOEY_API, id, val), 800);
+    writeTimers[id] = setTimeout(async () => {
+      await writeToDB(JOEY_API, id, val);
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.borderColor = '#2e7d5e';
+        setTimeout(() => { el.style.borderColor = ''; }, 1200);
+      }
+    }, 800);
   }
 
   function saveChecks() {
