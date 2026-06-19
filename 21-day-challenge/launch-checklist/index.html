@@ -1031,7 +1031,7 @@
   }
 
   async function createGCalEvent(token, event) {
-    const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+    const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/c_b4f540fc127fafb53156448e7a9f08bd5fff8fbf7c435d62fa1e16e75c839d60%40group.calendar.google.com/events', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -1063,10 +1063,10 @@
 
     // Kickoff Call
     eventsToCreate.push({
-      summary: '21DC — Kickoff Call',
-      description: `Join Zoom: ${KICKOFF_ZOOM}`,
-      start: { dateTime: toGCalDateTime(kickoffVal), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-      end:   { dateTime: addMinutes(kickoffVal, 90), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+      summary: 'Kickoff Call - 21 Day Challenge',
+      location: KICKOFF_ZOOM,
+      start: { dateTime: toGCalDateTime(kickoffVal), timeZone: 'America/New_York' },
+      end:   { dateTime: addMinutes(kickoffVal, 90), timeZone: 'America/New_York' },
     });
 
     // Live Coaching Calls
@@ -1079,19 +1079,19 @@
       const pad = n => String(n).padStart(2,'0');
       const iso = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
       eventsToCreate.push({
-        summary: `21DC — Live Coaching Call ${i+1}`,
-        description: `Join Zoom: ${COACHING_ZOOM}`,
-        start: { dateTime: toGCalDateTime(iso), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-        end:   { dateTime: addMinutes(iso, 60), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+        summary: '21 Day Challenge - Live Coaching Call',
+        location: COACHING_ZOOM,
+        start: { dateTime: toGCalDateTime(iso), timeZone: 'America/New_York' },
+        end:   { dateTime: addMinutes(iso, 60), timeZone: 'America/New_York' },
       });
     });
 
     // Closing Webinar
     eventsToCreate.push({
-      summary: '21DC — Closing Webinar',
-      description: `Join Zoom: ${CLOSING_ZOOM}`,
-      start: { dateTime: toGCalDateTime(closingVal), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-      end:   { dateTime: addMinutes(closingVal, 90), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+      summary: 'Closing Webinar - 21 Day Challenge',
+      location: CLOSING_ZOOM,
+      start: { dateTime: toGCalDateTime(closingVal), timeZone: 'America/New_York' },
+      end:   { dateTime: addMinutes(closingVal, 90), timeZone: 'America/New_York' },
     });
 
     // Create all events sequentially
