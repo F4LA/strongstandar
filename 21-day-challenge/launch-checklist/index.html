@@ -307,6 +307,20 @@
           <div class="cohort-field"><label>Zoom Join Link</label><input type="url" id="closing_zoom" placeholder="https://zoom.us/j/..." oninput="saveField('closing_zoom')"></div>
           <div class="cohort-field"><label>Google Calendar Link</label><input type="url" id="closing_gcal" placeholder="https://calendar.google.com/..." oninput="saveField('closing_gcal')"></div>
         </div>
+        <div class="cohort-card cohort-card--wide" id="liveCallsCard">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#e67e22;"></span>Live Coaching Calls</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div class="cohort-field"><label>First Call Date</label><input type="date" id="live_start_date" oninput="saveField('live_start_date');updateLiveCallPreview()"></div>
+            <div class="cohort-field"><label>Total Sessions</label><input type="number" id="live_sessions" value="7" min="1" max="20" oninput="saveField('live_sessions');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
+            <div class="cohort-field"><label>Wed Time (default 6:30 PM)</label><input type="time" id="live_wed_time" value="18:30" oninput="saveField('live_wed_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
+            <div class="cohort-field"><label>Sat Time (default 10:00 AM)</label><input type="time" id="live_sat_time" value="10:00" oninput="saveField('live_sat_time');updateLiveCallPreview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;"></div>
+          </div>
+          <div id="liveCallPreview" style="display:none;background:var(--off-white);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.8;"></div>
+          <button onclick="createAllCalendarEvents()" id="gcalBtn" style="display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a73e8,#1557b0);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Create All Google Calendar Events
+          </button>
+        </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
           <div class="cohort-field"><label>GHL Booking Link</label><input type="url" id="clarity_zoom" value="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" oninput="saveField('clarity_zoom')"></div>
@@ -815,7 +829,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes','discovery_link','discovery_notes','promo_start','promo_end','kickoff_date_only','closing_date_only'].forEach(id => {
+      ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes','discovery_link','discovery_notes','promo_start','promo_end','kickoff_date_only','closing_date_only','live_start_date','live_sessions','live_wed_time','live_sat_time'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -910,6 +924,115 @@
   function toggleSub(el) { el.classList.toggle('done'); saveChecks(); updateProgress(); }
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function toggleCohort() { document.getElementById('cohortPanel').classList.toggle('collapsed'); }
+
+  // ── LIVE COACHING CALLS PREVIEW ─────────────────────────────
+  function getLiveCallDates() {
+    const startVal = document.getElementById('live_start_date').value;
+    const sessions = parseInt(document.getElementById('live_sessions').value) || 7;
+    if (!startVal) return [];
+    const dates = [];
+    let current = new Date(startVal + 'T12:00:00');
+    while (dates.length < sessions) {
+      const dow = current.getDay(); // 0=Sun,3=Wed,6=Sat
+      if (dow === 3 || dow === 6) dates.push(new Date(current));
+      current.setDate(current.getDate() + 1);
+    }
+    return dates;
+  }
+
+  function updateLiveCallPreview() {
+    const preview = document.getElementById('liveCallPreview');
+    const dates = getLiveCallDates();
+    if (!dates.length) { preview.style.display = 'none'; return; }
+    const wedTime = document.getElementById('live_wed_time').value || '18:30';
+    const satTime = document.getElementById('live_sat_time').value || '10:00';
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let html = '<strong style="color:var(--text);font-size:11px;letter-spacing:1px;text-transform:uppercase;">Scheduled Sessions:</strong><br>';
+    dates.forEach((d, i) => {
+      const isWed = d.getDay() === 3;
+      const time = isWed ? wedTime : satTime;
+      const [h, m] = time.split(':');
+      const hour = parseInt(h);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const h12 = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+      const timeStr = `${h12}:${m} ${ampm}`;
+      html += `<span style="margin-right:20px;">${i+1}. ${days[d.getDay()]} ${months[d.getMonth()]} ${d.getDate()} — ${timeStr}</span>`;
+      if ((i + 1) % 3 === 0) html += '<br>';
+    });
+    preview.innerHTML = html;
+    preview.style.display = 'block';
+  }
+
+  // ── CREATE GOOGLE CALENDAR EVENTS ──────────────────────────
+  function buildGCalUrl(title, dateTimeLocal, durationMins, description) {
+    const dt = new Date(dateTimeLocal);
+    const pad = n => String(n).padStart(2,'0');
+    const fmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    const end = new Date(dt.getTime() + durationMins * 60000);
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: title,
+      dates: `${fmt(dt)}/${fmt(end)}`,
+      details: description || '',
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }
+
+  function createAllCalendarEvents() {
+    const kickoffVal = document.getElementById('kickoff_date').value;
+    const closingVal = document.getElementById('closing_date').value;
+    const kickoffZoom = document.getElementById('kickoff_zoom').value;
+    const closingZoom = document.getElementById('closing_zoom').value;
+    const wedTime = document.getElementById('live_wed_time').value || '18:30';
+    const satTime = document.getElementById('live_sat_time').value || '10:00';
+    const liveStartDate = document.getElementById('live_start_date').value;
+
+    const errors = [];
+    if (!kickoffVal) errors.push('Kickoff Call date & time');
+    if (!closingVal) errors.push('Closing Webinar date & time');
+    if (!liveStartDate) errors.push('Live Coaching Calls start date');
+    if (errors.length) { alert('Please fill in:\n• ' + errors.join('\n• ')); return; }
+
+    const urls = [];
+
+    // Kickoff
+    urls.push(buildGCalUrl(
+      '21DC — Kickoff Call',
+      kickoffVal,
+      90,
+      kickoffZoom ? `Join Zoom: ${kickoffZoom}` : '21-Day Challenge Kickoff Call'
+    ));
+
+    // Live Coaching Calls
+    const liveDates = getLiveCallDates();
+    liveDates.forEach((d, i) => {
+      const isWed = d.getDay() === 3;
+      const time = isWed ? wedTime : satTime;
+      const [h, m] = time.split(':');
+      d.setHours(parseInt(h), parseInt(m), 0, 0);
+      const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+      urls.push(buildGCalUrl(
+        `21DC — Live Coaching Call ${i+1}`,
+        iso,
+        60,
+        kickoffZoom ? `Join Zoom: ${kickoffZoom}` : '21-Day Challenge Live Coaching Call'
+      ));
+    });
+
+    // Closing Webinar
+    urls.push(buildGCalUrl(
+      '21DC — Closing Webinar',
+      closingVal,
+      90,
+      closingZoom ? `Join Zoom: ${closingZoom}` : '21-Day Challenge Closing Webinar'
+    ));
+
+    // Open all in new tabs with small delay
+    urls.forEach((url, i) => {
+      setTimeout(() => window.open(url, '_blank'), i * 300);
+    });
+  }
   function btoggle(el) { el.classList.toggle('done'); saveBChecks(); updateBProgress(); }
   function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function etoggle(el) { el.classList.toggle('done'); saveEChecks(); updateEProgress(); }
@@ -984,7 +1107,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes','discovery_link','discovery_notes','promo_start','promo_end','kickoff_date_only','closing_date_only'];
+    const fields = ['kickoff_date','kickoff_zoom','kickoff_gcal','closing_date','closing_zoom','closing_gcal','clarity_zoom','clarity_notes','discovery_link','discovery_notes','promo_start','promo_end','kickoff_date_only','closing_date_only','live_start_date','live_sessions','live_wed_time','live_sat_time'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
