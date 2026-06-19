@@ -333,13 +333,21 @@
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
-          <div class="cohort-field"><label>GHL Booking Link</label><input type="url" id="clarity_zoom" value="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" oninput="saveField('clarity_zoom')"></div>
-          <div class="cohort-field"><label>Notes</label><input type="text" id="clarity_notes" placeholder="Any extra notes..." oninput="saveField('clarity_notes')"></div>
+          <div class="cohort-field" style="margin-top:4px;">
+            <a href="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
+              Open booking link
+            </a>
+          </div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Discovery Call</div>
-          <div class="cohort-field"><label>GHL Booking Link</label><input type="url" id="discovery_link" placeholder="https://api.leadconnectorhq.com/widget/bookings/..." oninput="saveField('discovery_link')"></div>
-          <div class="cohort-field"><label>Notes</label><input type="text" id="discovery_notes" placeholder="Any extra notes..." oninput="saveField('discovery_notes')"></div>
+          <div class="cohort-field" style="margin-top:4px;">
+            <a href="https://api.leadconnectorhq.com/widget/bookings/21-day-challenge-to-101-coaching" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
+              Open booking link
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -839,7 +847,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','clarity_zoom','clarity_notes','discovery_link','discovery_notes','live_wed_time','live_sat_time'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -1196,7 +1204,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','clarity_zoom','clarity_notes','discovery_link','discovery_notes','live_wed_time','live_sat_time'];
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
