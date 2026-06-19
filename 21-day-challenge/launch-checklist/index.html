@@ -414,67 +414,32 @@
       <div class="phase-count" id="phase2-count"></div>
       <div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
-    <div class="phase-body">
-      <div class="note-box"><strong>Note:</strong> All automations below are inside the "Move Leads Around Pipeline" workflow unless noted otherwise.</div>
+        <div class="phase-body">
+      <div class="note-box">Click each automation name to open it directly in GHL.</div>
       <div class="section">
-        <div class="section-title">4.1 — Post-Purchase Automation</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update dates inside the post-purchase automation sequence</div></div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update the <span style="font-weight:600;color:var(--text)">Last Challenge Date</span> custom field to the current cohort start date</div></div>
+        <div class="section-title">2.1 — <a href="https://app.gohighlevel.com/v2/location/cZF68TO3vzxTOnAdACdK/automation/workflow/f935ec88-9712-4c11-88fa-868b677ff8fb" target="_blank" style="color:#38bdf8;font-weight:600;text-decoration:underline;">Pay Challenge Fee ↗</a></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Custom Field — Challenge Month</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Set Event Start Date step</div></div>
+      </div>
+      <div class="section">
+        <div class="section-title">2.2 — Move Leads Around Pipeline</div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update registration email for Kickoff Call — date &amp; time inside the email</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update registration email for Closing Webinar — date &amp; time inside the email</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Event Start Date step for Kickoff Call</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Event Start Date step for Closing Webinar</div></div>
         <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Find the "Update Contact Field" step inside the post-purchase automation</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Set "Last Challenge Date" to the new cohort start date</div></div>
-        </div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Email</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call date and time</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call Zoom link</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome Guide PDF (attach updated version with new dates)</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Any other relevant dates or links</div></div>
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Also update reminders inside this workflow for both events</div></div>
         </div>
       </div>
       <div class="section">
-        <div class="section-title">4.2 — Kickoff Call Registration Automation</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Email for Kickoff Call registrants</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm date, time, and Zoom link are current</div></div>
-        </div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Set event delay to match Kickoff Call date</div></div>
+        <div class="section-title">2.3 — <a href="https://app.gohighlevel.com/v2/location/cZF68TO3vzxTOnAdACdK/automation/workflow/f413772d-b361-45c1-ae2c-12f2dbcfb98f" target="_blank" style="color:#38bdf8;font-weight:600;text-decoration:underline;">Reminder: Kickoff Call — Not Registered ↗</a></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update If Condition — change date to new Kickoff Call date</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Event Start Date step</div></div>
       </div>
       <div class="section">
-        <div class="section-title">4.3 — Closing Webinar Registration Automation</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Email for Closing Webinar registrants</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm date, time, and Zoom link are current</div></div>
-        </div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Set event delay to match Closing Webinar date</div></div>
-      </div>
-      <div class="section">
-        <div class="section-title">4.4 — Reminders</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update HR4KC — Has Not Registered for Kickoff Call</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div>
-        </div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update HR4CW — Has Not Registered for Closing Webinar</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div>
-        </div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update "Did Not Schedule Clarity Call" automation</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Update all dates and messaging</div></div>
-        </div>
-      </div>
-      <div class="section">
-        <div class="section-title">4.5 — Sale Made Automation</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">In the <span style="font-weight:600;color:var(--text)">Sale Made</span> automation, update the <span style="font-weight:600;color:var(--text)">Last Challenge Date</span> custom field to the current cohort start date</div></div>
-        <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Locate the "Update Contact Field" step inside the Sale Made automation</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Set "Last Challenge Date" to the new cohort start date</div></div>
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Confirm buyers are entering the correct post-purchase flow after the field is set</div></div>
-        </div>
-      </div>
-      <div class="section">
-        <div class="section-title">4.6 — Final Check</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm GHL Mastersheet automation is routing new leads correctly</div></div>
+        <div class="section-title">2.4 — <a href="https://app.gohighlevel.com/v2/location/cZF68TO3vzxTOnAdACdK/automation/workflow/8e7a3e87-0d07-473b-8316-0ca403b0f453" target="_blank" style="color:#38bdf8;font-weight:600;text-decoration:underline;">Reminder: Closing Webinar — Not Registered ↗</a></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update If Condition — change date to new Closing Webinar date</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Event Start Date step</div></div>
       </div>
     </div>
   </div>
