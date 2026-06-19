@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>21DC Launch Checklist — Strong Standard Coaching</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
   :root {
     --navy: #0f2340;
@@ -321,10 +322,14 @@
             </a>
           </div>
           <div id="liveCallPreview" style="display:none;background:var(--off-white);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.8;"></div>
-          <button onclick="createAllCalendarEvents()" id="gcalBtn" style="display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a73e8,#1557b0);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Create All Google Calendar Events
-          </button>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <button onclick="handleCalendarBtn()" id="gcalBtn" style="display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a73e8,#1557b0);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span id="gcalBtnText">Connect Google Calendar</span>
+            </button>
+            <span id="gcalStatus" style="font-size:12px;color:var(--muted);"></span>
+          </div>
+          <div id="gcalResult" style="margin-top:12px;display:none;background:#eaf4ef;border-radius:8px;padding:12px 16px;font-size:12px;color:#1a5c3a;line-height:1.8;"></div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
@@ -974,44 +979,95 @@
     preview.style.display = 'block';
   }
 
-  // ── CREATE GOOGLE CALENDAR EVENTS ──────────────────────────
-  function buildGCalUrl(title, dateTimeLocal, durationMins, description) {
-    const dt = new Date(dateTimeLocal);
-    const pad = n => String(n).padStart(2,'0');
-    const fmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
-    const end = new Date(dt.getTime() + durationMins * 60000);
-    const params = new URLSearchParams({
-      action: 'TEMPLATE',
-      text: title,
-      dates: `${fmt(dt)}/${fmt(end)}`,
-      details: description || '',
-    });
-    return `https://calendar.google.com/calendar/render?${params.toString()}`;
-  }
+  // ── GOOGLE CALENDAR API (OAuth) ─────────────────────────────
+  const GCAL_CLIENT_ID = '660874076659-1m8i45cuo3merll0f9ssfv627sagpmmh.apps.googleusercontent.com';
+  const GCAL_SCOPE = 'https://www.googleapis.com/auth/calendar.events';
+  const KICKOFF_ZOOM = 'https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1';
+  const CLOSING_ZOOM = 'https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1';
+  const COACHING_ZOOM = 'https://us06web.zoom.us/j/87846474270';
+  let gcalToken = null;
 
-  function createAllCalendarEvents() {
+  function handleCalendarBtn() {
     const kickoffVal = document.getElementById('kickoff_date').value;
     const closingVal = document.getElementById('closing_date').value;
-    const wedTime = document.getElementById('live_wed_time').value || '18:30';
-    const satTime = document.getElementById('live_sat_time').value || '10:00';
-    const KICKOFF_ZOOM = 'https://us06web.zoom.us/j/83025588253?pwd=0wObkiocleBsSH5Lajosr3DN6bCYm1.1';
-    const CLOSING_ZOOM = 'https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1';
-    const COACHING_ZOOM = 'https://us06web.zoom.us/j/87846474270';
-
     const errors = [];
     if (!kickoffVal) errors.push('Kickoff Call date & time');
     if (!closingVal) errors.push('Closing Webinar date & time');
     if (errors.length) { alert('Please fill in:\n• ' + errors.join('\n• ')); return; }
 
-    const urls = [];
+    if (gcalToken) {
+      createAllCalendarEvents(gcalToken);
+    } else {
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: GCAL_CLIENT_ID,
+        scope: GCAL_SCOPE,
+        callback: (resp) => {
+          if (resp.error) { setGcalStatus('❌ Auth error: ' + resp.error, 'red'); return; }
+          gcalToken = resp.access_token;
+          document.getElementById('gcalBtnText').textContent = 'Create All Google Calendar Events';
+          createAllCalendarEvents(gcalToken);
+        },
+      });
+      client.requestAccessToken();
+    }
+  }
 
-    // Kickoff
-    urls.push(buildGCalUrl(
-      '21DC — Kickoff Call',
-      kickoffVal,
-      90,
-      `Join Zoom: ${KICKOFF_ZOOM}`
-    ));
+  function setGcalStatus(msg, color) {
+    const el = document.getElementById('gcalStatus');
+    el.textContent = msg;
+    el.style.color = color || 'var(--muted)';
+  }
+
+  function toGCalDateTime(localDateTimeStr) {
+    // Convert datetime-local value to RFC3339 without timezone (treat as local)
+    return localDateTimeStr + ':00';
+  }
+
+  function addMinutes(localDateTimeStr, mins) {
+    const d = new Date(localDateTimeStr);
+    d.setMinutes(d.getMinutes() + mins);
+    const pad = n => String(n).padStart(2,'0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
+  }
+
+  async function createGCalEvent(token, event) {
+    const res = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(event),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || 'Unknown error');
+    }
+    return res.json();
+  }
+
+  async function createAllCalendarEvents(token) {
+    const kickoffVal = document.getElementById('kickoff_date').value;
+    const closingVal = document.getElementById('closing_date').value;
+    const wedTime = document.getElementById('live_wed_time').value || '18:30';
+    const satTime = document.getElementById('live_sat_time').value || '10:00';
+
+    const btn = document.getElementById('gcalBtn');
+    const resultEl = document.getElementById('gcalResult');
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    setGcalStatus('Creating events...', 'var(--muted)');
+    resultEl.style.display = 'none';
+
+    const eventsToCreate = [];
+
+    // Kickoff Call
+    eventsToCreate.push({
+      summary: '21DC — Kickoff Call',
+      description: `Join Zoom: ${KICKOFF_ZOOM}`,
+      start: { dateTime: toGCalDateTime(kickoffVal), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+      end:   { dateTime: addMinutes(kickoffVal, 90), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+    });
 
     // Live Coaching Calls
     const liveDates = getLiveCallDates();
@@ -1020,27 +1076,51 @@
       const time = isWed ? wedTime : satTime;
       const [h, m] = time.split(':');
       d.setHours(parseInt(h), parseInt(m), 0, 0);
-      const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-      urls.push(buildGCalUrl(
-        `21DC — Live Coaching Call ${i+1}`,
-        iso,
-        60,
-        `Join Zoom: ${COACHING_ZOOM}`
-      ));
+      const pad = n => String(n).padStart(2,'0');
+      const iso = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      eventsToCreate.push({
+        summary: `21DC — Live Coaching Call ${i+1}`,
+        description: `Join Zoom: ${COACHING_ZOOM}`,
+        start: { dateTime: toGCalDateTime(iso), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+        end:   { dateTime: addMinutes(iso, 60), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+      });
     });
 
     // Closing Webinar
-    urls.push(buildGCalUrl(
-      '21DC — Closing Webinar',
-      closingVal,
-      90,
-      `Join Zoom: ${CLOSING_ZOOM}`
-    ));
-
-    // Open all in new tabs with small delay
-    urls.forEach((url, i) => {
-      setTimeout(() => window.open(url, '_blank'), i * 300);
+    eventsToCreate.push({
+      summary: '21DC — Closing Webinar',
+      description: `Join Zoom: ${CLOSING_ZOOM}`,
+      start: { dateTime: toGCalDateTime(closingVal), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+      end:   { dateTime: addMinutes(closingVal, 90), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
     });
+
+    // Create all events sequentially
+    const created = [];
+    const failed = [];
+    for (const event of eventsToCreate) {
+      try {
+        const result = await createGCalEvent(token, event);
+        created.push({ title: event.summary, link: result.htmlLink });
+      } catch(e) {
+        failed.push(event.summary + ': ' + e.message);
+      }
+    }
+
+    btn.disabled = false;
+    btn.style.opacity = '1';
+
+    if (created.length > 0) {
+      let html = `<strong>✅ ${created.length} event${created.length>1?'s':''} created in Google Calendar:</strong><br><br>`;
+      created.forEach(e => {
+        html += `<a href="${e.link}" target="_blank" style="color:#1a5c3a;font-weight:600;">${e.title} ↗</a><br>`;
+      });
+      if (failed.length) html += `<br><span style="color:#b45309;">⚠️ Failed: ${failed.join(', ')}</span>`;
+      resultEl.innerHTML = html;
+      resultEl.style.display = 'block';
+      setGcalStatus(`✅ ${created.length} events created`, '#2e7d5e');
+    } else {
+      setGcalStatus('❌ All events failed', 'red');
+    }
   }
   function btoggle(el) { el.classList.toggle('done'); saveBChecks(); updateBProgress(); }
   function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
