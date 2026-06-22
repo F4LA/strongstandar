@@ -2092,27 +2092,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="label" style="color:var(--steel-light);">Watch Before You Apply</span>
       </div>
       <div class="vsl-player reveal" style="margin-bottom:32px;">
-        <!-- Wistia facade — scripts load only on click (saves ~900ms TBT) -->
-        <div class="wistia-facade" id="wistia-facade-pb2o5u00s7" style="position:relative;padding-top:56.25%;background:#111;border-radius:8px;overflow:hidden;cursor:pointer;" role="button" aria-label="Play video" tabindex="0">
+        <!-- Wistia facade — scripts + player injected dynamically on click -->
+        <div id="wistia-facade-pb2o5u00s7" style="position:relative;padding-top:56.25%;background:#111;border-radius:8px;overflow:hidden;cursor:pointer;" role="button" aria-label="Play video" tabindex="0">
           <img src="https://fast.wistia.com/embed/medias/pb2o5u00s7/swatch" alt="" aria-hidden="true" width="640" height="360" loading="eager" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(5px);transform:scale(1.05);">
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-            <div style="width:72px;height:72px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:transform .15s;">
+            <div style="width:72px;height:72px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,0.4);">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><polygon points="6,4 20,12 6,20" fill="#111"/></svg>
             </div>
           </div>
         </div>
-        <div id="wistia-player-pb2o5u00s7" style="display:none;position:relative;padding-top:56.25%;">
-          <wistia-player media-id="pb2o5u00s7" aspect="1.7777777777777777" style="position:absolute;inset:0;width:100%;height:100%;"></wistia-player>
-        </div>
         <script>
         (function(){
           var facade = document.getElementById('wistia-facade-pb2o5u00s7');
-          var player = document.getElementById('wistia-player-pb2o5u00s7');
           function loadWistia(){
-            facade.style.display = 'none';
-            player.style.display = 'block';
-            var s1 = document.createElement('script'); s1.src = 'https://fast.wistia.com/player.js'; s1.async = true; document.head.appendChild(s1);
-            var s2 = document.createElement('script'); s2.src = 'https://fast.wistia.com/embed/pb2o5u00s7.js'; s2.async = true; s2.type = 'module'; document.head.appendChild(s2);
+            // Replace facade with a fresh wistia-player element AFTER scripts are loaded
+            var container = document.createElement('div');
+            container.style.cssText = 'position:relative;padding-top:56.25%;border-radius:8px;overflow:hidden;';
+            facade.parentNode.replaceChild(container, facade);
+            var s1 = document.createElement('script');
+            s1.src = 'https://fast.wistia.com/player.js';
+            s1.async = true;
+            var s2 = document.createElement('script');
+            s2.src = 'https://fast.wistia.com/embed/pb2o5u00s7.js';
+            s2.async = true;
+            s2.type = 'module';
+            s1.onload = function(){
+              var wp = document.createElement('wistia-player');
+              wp.setAttribute('media-id', 'pb2o5u00s7');
+              wp.setAttribute('aspect', '1.7777777777777777');
+              wp.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+              container.appendChild(wp);
+            };
+            document.head.appendChild(s1);
+            document.head.appendChild(s2);
           }
           facade.addEventListener('click', loadWistia);
           facade.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') loadWistia(); });
