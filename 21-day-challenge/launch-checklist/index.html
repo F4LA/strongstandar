@@ -308,6 +308,13 @@
               <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
           </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button onclick="updateClosingPage()" id="closingPageBtn" style="display:flex;align-items:center;gap:7px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;transition:opacity 0.2s;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Update Closing Page
+            </button>
+            <span id="closingPageStatus" style="font-size:11px;color:var(--muted);">Not updated yet</span>
+          </div>
         </div>
         <div class="cohort-card cohort-card--wide" id="liveCallsCard">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#e67e22;"></span>Live Coaching Calls</div>
@@ -804,11 +811,15 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
       updateLiveCallPreview();
+      if (map.closing_page_status) {
+        const el = document.getElementById('closingPageStatus');
+        if (el) { el.textContent = map.closing_page_status; el.style.color = map.closing_page_status.startsWith('✅') ? '#2e7d5e' : 'var(--muted)'; }
+      }
       if (map.checks && map.checks.trim()) {
         const indices = map.checks.split(',').map(Number).filter(n => !isNaN(n));
         const els = document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask');
@@ -1076,22 +1087,30 @@
       results.push({ file: 'Kickoff Registration', status: '❌ ' + e.message });
     }
 
-    // ── 3. closing-call-registration/index.html ─────────────
+    return results;
+  }
+
+  async function updateClosingPage() {
+    const closingVal = document.getElementById('closing_date').value;
+    if (!closingVal) { alert('Please fill in the Closing Webinar date & time first.'); return; }
+
+    const btn = document.getElementById('closingPageBtn');
+    const statusEl = document.getElementById('closingPageStatus');
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    statusEl.textContent = 'Updating...';
+    statusEl.style.color = 'var(--muted)';
+
     try {
       const { sha, content } = await githubGetSha('21-day-challenge/closing-call-registration/index.html');
       let updated = content;
-
-      const closingDateStr = formatKickoffDate(closingVal); // same format
+      const closingDateStr = formatKickoffDate(closingVal);
       const closingTimeStr = formatKickoffTime(closingVal);
-      const closingShort   = `${closingDateStr} · ${closingTimeStr}`;
 
-      // Update date-badge text (single span, no date-line1/2)
       updated = updated.replace(
         /(<span class="date-badge__text">)[^<]+(<\/span>)/,
         `$1${closingDateStr} &nbsp;&middot;&nbsp; ${closingTimeStr}$2`
       );
-
-      // Update meta description
       updated = updated.replace(
         /(<meta name="description" content="[^"]*—)[^"]+(")/,
         `$1 ${closingDateStr} at ${closingTimeStr}.$2`
@@ -1102,12 +1121,20 @@
         updated, sha,
         `Update Closing Webinar registration page date to ${closingDateStr}`
       );
-      results.push({ file: 'Closing Registration', status: '✅' });
+
+      // Save status to Supabase
+      const statusText = `✅ Updated to ${closingDateStr} · ${closingTimeStr}`;
+      await writeToDB(JOEY_API, 'closing_page_status', statusText + ' | ' + new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}));
+
+      statusEl.textContent = statusText;
+      statusEl.style.color = '#2e7d5e';
     } catch(e) {
-      results.push({ file: 'Closing Registration', status: '❌ ' + e.message });
+      statusEl.textContent = '❌ ' + e.message;
+      statusEl.style.color = 'red';
     }
 
-    return results;
+    btn.disabled = false;
+    btn.style.opacity = '1';
   }
 
   async function handleLaunchBtn() {
@@ -1402,7 +1429,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token'];
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
