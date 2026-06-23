@@ -816,6 +816,10 @@
     const container = document.getElementById('pendientesSection');
     container.innerHTML = '';
 
+    // First, stamp every original task with a data-idx
+    const allOrigTasks = document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask');
+    allOrigTasks.forEach((t, i) => t.setAttribute('data-idx', i));
+
     const phases = document.querySelectorAll('#recurrentesSection .phase');
     let totalPending = 0;
 
@@ -826,38 +830,36 @@
       // Clone the entire phase card
       const phaseClone = origPhase.cloneNode(true);
 
-      // Remove all tasks/subtasks that are done
+      // Remove done tasks from clone
       phaseClone.querySelectorAll('.task.done, .subtask.done').forEach(el => el.remove());
 
-      // Expand it by default
+      // Remove empty subtask containers
+      phaseClone.querySelectorAll('.subtasks').forEach(s => {
+        if (!s.querySelector('.subtask')) s.remove();
+      });
+
+      // Expand by default
       phaseClone.classList.remove('collapsed');
 
-      // Wire up clicks on cloned tasks to toggle the originals
-      const clonedTasks = phaseClone.querySelectorAll('.task, .subtask');
-      const origTasks   = origPhase.querySelectorAll('.task, .subtask');
-
-      clonedTasks.forEach((cloneTask, i) => {
-        // Find matching original by task text
-        const cloneText = cloneTask.querySelector('.task-text, .subtask-text')?.textContent?.trim();
+      // Wire each cloned task to its original via data-idx
+      phaseClone.querySelectorAll('.task, .subtask').forEach(cloneTask => {
+        const idx = cloneTask.getAttribute('data-idx');
+        cloneTask.setAttribute('onclick', ''); // clear inline handler
         cloneTask.onclick = (e) => {
           e.stopPropagation();
-          // Find the original task with matching text
-          let matched = null;
-          origTasks.forEach(orig => {
-            const origText = orig.querySelector('.task-text, .subtask-text')?.textContent?.trim();
-            if (origText === cloneText && !orig.classList.contains('done')) matched = orig;
-          });
-          if (matched) {
-            matched.click();
+          const orig = document.querySelector('#recurrentesSection [data-idx="' + idx + '"]');
+          if (orig) {
+            orig.click(); // fires the real toggle + save
             setTimeout(() => renderPendingTab(), 80);
           }
         };
         totalPending++;
       });
 
-      // Fix phase toggle to work on the clone
+      // Phase header toggle on clone
       const cloneHeader = phaseClone.querySelector('.phase-header');
       if (cloneHeader) {
+        cloneHeader.setAttribute('onclick', '');
         cloneHeader.onclick = () => phaseClone.classList.toggle('collapsed');
       }
 
