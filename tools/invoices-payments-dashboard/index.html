@@ -1411,9 +1411,21 @@ Let me know if you need anything on our end!`;
     const startOfMonth = new Date(year, month, 1);
     const endOfMonth   = new Date(year, month + 1, 0); // last day
 
+    // Build set of refunded emails (col Y = index 24, value "TRUE")
+    const refundedEmails = new Set();
+    clientRows.slice(1).forEach(r => {
+      if ((r[24] || '').trim().toUpperCase() === 'TRUE') {
+        const email = (r[C.EMAIL] || '').trim().toLowerCase();
+        if (email) refundedEmails.add(email);
+      }
+    });
+
     // ── Contracted: $ Package from Client Mastersheet, by Date Purchased ──
+    // Skip clients with refund (col Y = TRUE)
     let contracted = 0;
     clientRows.slice(1).forEach(r => {
+      const email = (r[C.EMAIL] || '').trim().toLowerCase();
+      if (refundedEmails.has(email)) return; // skip refunded
       const d = parseDate(r[C.DATE_PURCHASED]);
       if (d && d >= startOfMonth && d <= endOfMonth) {
         contracted += parseMoney(r[C.PACKAGE]);
@@ -1422,8 +1434,11 @@ Let me know if you need anything on our end!`;
 
     // ── Collected: Amount from Payment Records, by Date ──
     // PR cols: Full Name(0) Email(1) Date(2) Amount(3) Invoice(4) New or Resign(5)
+    // Skip payments from refunded clients (matched by email)
     let collected = 0;
     prRows.slice(1).forEach(r => {
+      const email = (r[1] || '').trim().toLowerCase();
+      if (refundedEmails.has(email)) return; // skip refunded
       const d = parseDate(r[2]);
       if (d && d >= startOfMonth && d <= endOfMonth) {
         collected += parseMoney(r[3]);
@@ -1431,8 +1446,11 @@ Let me know if you need anything on our end!`;
     });
 
     // ── Pending: Payment amount from Payment Plan, Status ≠ paid, by Date ──
+    // Skip installments from refunded clients (matched by email)
     let pending = 0;
     ppRows.slice(1).forEach(r => {
+      const email = (r[P.EMAIL] || '').trim().toLowerCase();
+      if (refundedEmails.has(email)) return; // skip refunded
       const d      = parseDate(r[P.DATE]);
       const status = (r[P.STATUS] || '').trim().toLowerCase();
       if (d && d >= startOfMonth && d <= endOfMonth && status !== 'paid') {
