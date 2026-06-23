@@ -816,40 +816,56 @@
     const container = document.getElementById('pendientesSection');
     container.innerHTML = '';
 
-    // Collect all incomplete tasks from all phases
-    const phases = document.querySelectorAll('.phase');
+    const phases = document.querySelectorAll('#recurrentesSection .phase');
     let totalPending = 0;
 
-    phases.forEach(phase => {
-      const phaseTitle = phase.querySelector('.phase-title')?.textContent?.trim();
-      const tasks = phase.querySelectorAll('.task:not(.done), .b-task:not(.done), .e-task:not(.done)');
-      if (!tasks.length) return;
+    phases.forEach(origPhase => {
+      const pendingTasks = origPhase.querySelectorAll('.task:not(.done), .subtask:not(.done)');
+      if (!pendingTasks.length) return;
 
-      const section = document.createElement('div');
-      section.style.cssText = 'margin-bottom:20px;';
+      // Clone the entire phase card
+      const phaseClone = origPhase.cloneNode(true);
 
-      const header = document.createElement('div');
-      header.style.cssText = 'font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);';
-      header.textContent = phaseTitle;
-      section.appendChild(header);
+      // Remove all tasks/subtasks that are done
+      phaseClone.querySelectorAll('.task.done, .subtask.done').forEach(el => el.remove());
 
-      tasks.forEach(task => {
-        const clone = task.cloneNode(true);
-        // Make cloned tasks toggle the original
-        clone.style.cssText = 'cursor:pointer;';
-        clone.onclick = () => {
-          task.click();
-          setTimeout(() => renderPendingTab(), 50);
+      // Expand it by default
+      phaseClone.classList.remove('collapsed');
+
+      // Wire up clicks on cloned tasks to toggle the originals
+      const clonedTasks = phaseClone.querySelectorAll('.task, .subtask');
+      const origTasks   = origPhase.querySelectorAll('.task, .subtask');
+
+      clonedTasks.forEach((cloneTask, i) => {
+        // Find matching original by task text
+        const cloneText = cloneTask.querySelector('.task-text, .subtask-text')?.textContent?.trim();
+        cloneTask.onclick = (e) => {
+          e.stopPropagation();
+          // Find the original task with matching text
+          let matched = null;
+          origTasks.forEach(orig => {
+            const origText = orig.querySelector('.task-text, .subtask-text')?.textContent?.trim();
+            if (origText === cloneText && !orig.classList.contains('done')) matched = orig;
+          });
+          if (matched) {
+            matched.click();
+            setTimeout(() => renderPendingTab(), 80);
+          }
         };
-        section.appendChild(clone);
         totalPending++;
       });
 
-      container.appendChild(section);
+      // Fix phase toggle to work on the clone
+      const cloneHeader = phaseClone.querySelector('.phase-header');
+      if (cloneHeader) {
+        cloneHeader.onclick = () => phaseClone.classList.toggle('collapsed');
+      }
+
+      container.appendChild(phaseClone);
     });
 
     if (totalPending === 0) {
-      container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--muted);"><div style="font-size:32px;margin-bottom:12px;">🎉</div><div style="font-weight:600;font-size:15px;color:var(--text);">All tasks complete!</div><div style="font-size:13px;margin-top:6px;">Nothing pending — this cohort is ready to go.</div></div>';
+      container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--muted);"><div style="font-size:32px;margin-bottom:12px;">🎉</div><div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">All tasks complete!</div><div style="font-size:13px;">Nothing pending — this cohort is ready to go.</div></div>';
     }
   }
 
