@@ -3070,6 +3070,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   let purchaseCount = 0;
+  window._ss_purchaseCount = 0; // shared with social proof popup
 
   function updateSpotsUI() {
     const currentSpots = Math.max(0, TOTAL_SPOTS - purchaseCount);
@@ -3144,6 +3145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const data = JSON.parse(json);
         if (data.table && data.table.rows && data.table.rows[0]) {
           purchaseCount = Math.max(0, Math.floor(data.table.rows[0].c[0].v));
+          window._ss_purchaseCount = purchaseCount;
         }
         updateSpotsUI();
       })
@@ -3396,6 +3398,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
     function showNext() {
       if (!names.length) return;
+      // Rule 1: hide when early bird is at or near limit (would cause price confusion)
+      // Rule 2: hide when all spots are sold out
+      var pc = window._ss_purchaseCount || 0;
+      var TIER1 = 30; var TOTAL = 60;
+      if (pc >= TIER1 - 1 || pc >= TOTAL) return;
       var popup=document.getElementById('sp-popup');
       var elName=document.getElementById('sp-name');
       var elTime=document.getElementById('sp-time');
