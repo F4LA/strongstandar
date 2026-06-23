@@ -308,13 +308,6 @@
               <button onclick="navigator.clipboard.writeText('https://us06web.zoom.us/j/88450858871?pwd=sNPfUmZGHiaeJ0ggwvr7seG22MVOjV.1');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
           </div>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <button onclick="updateClosingPage()" id="closingPageBtn" style="display:flex;align-items:center;gap:7px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;transition:opacity 0.2s;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              Update Closing Page
-            </button>
-            <span id="closingPageStatus" style="font-size:11px;color:var(--muted);">Not updated yet</span>
-          </div>
         </div>
         <div class="cohort-card cohort-card--wide" id="liveCallsCard">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#e67e22;"></span>Live Coaching Calls</div>
@@ -338,6 +331,13 @@
             <span id="launchStatus" style="font-size:12px;color:var(--muted);"></span>
           </div>
           <div id="launchResult" style="margin-top:14px;display:none;background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:12px;line-height:2;"></div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--border);">
+            <button onclick="updateClosingPage()" id="closingPageBtn" style="display:flex;align-items:center;gap:7px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;transition:opacity 0.2s;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Update Closing Page
+            </button>
+            <span id="closingPageStatus" style="font-size:11px;color:var(--muted);">Not updated yet</span>
+          </div>
         </div>
         <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
