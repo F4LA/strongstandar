@@ -263,6 +263,7 @@
 <div class="tab-bar">
   <div class="tabs">
     <button class="tab-btn active" id="tab-recurrentes" onclick="switchTab('recurrentes')">Recurring</button>
+    <button class="tab-btn" id="tab-pendientes" onclick="switchTab('pendientes')">Pending</button>
   </div>
 </div>
 
@@ -801,11 +802,55 @@
 
   // ── TABS ──────────────────────────────────────────────────
   function switchTab(tab) {
-    ['recurrentes','especificos','pendientes'].forEach(t => {
-      document.getElementById(t+'Section').classList.toggle('active', t === tab);
-      document.getElementById('tab-'+t).classList.toggle('active', t === tab);
+    ['recurrentes','pendientes'].forEach(t => {
+      const sec = document.getElementById(t+'Section');
+      if (sec) sec.classList.toggle('active', t === tab);
+      const btn = document.getElementById('tab-'+t);
+      if (btn) btn.classList.toggle('active', t === tab);
     });
+    if (tab === 'pendientes') renderPendingTab();
     sessionStorage.setItem('21dc_tab', tab);
+  }
+
+  function renderPendingTab() {
+    const container = document.getElementById('pendientesSection');
+    container.innerHTML = '';
+
+    // Collect all incomplete tasks from all phases
+    const phases = document.querySelectorAll('.phase');
+    let totalPending = 0;
+
+    phases.forEach(phase => {
+      const phaseTitle = phase.querySelector('.phase-title')?.textContent?.trim();
+      const tasks = phase.querySelectorAll('.task:not(.done), .b-task:not(.done), .e-task:not(.done)');
+      if (!tasks.length) return;
+
+      const section = document.createElement('div');
+      section.style.cssText = 'margin-bottom:20px;';
+
+      const header = document.createElement('div');
+      header.style.cssText = 'font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);';
+      header.textContent = phaseTitle;
+      section.appendChild(header);
+
+      tasks.forEach(task => {
+        const clone = task.cloneNode(true);
+        // Make cloned tasks toggle the original
+        clone.style.cssText = 'cursor:pointer;';
+        clone.onclick = () => {
+          task.click();
+          setTimeout(() => renderPendingTab(), 50);
+        };
+        section.appendChild(clone);
+        totalPending++;
+      });
+
+      container.appendChild(section);
+    });
+
+    if (totalPending === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:48px 24px;color:var(--muted);"><div style="font-size:32px;margin-bottom:12px;">🎉</div><div style="font-weight:600;font-size:15px;color:var(--text);">All tasks complete!</div><div style="font-size:13px;margin-top:6px;">Nothing pending — this cohort is ready to go.</div></div>';
+    }
   }
 
   // ── DB HELPERS ────────────────────────────────────────────
