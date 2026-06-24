@@ -352,6 +352,15 @@
           </div>
         </div>
         <div class="cohort-card cohort-card--wide">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Affiliates</div>
+          <div id="affiliatesList" style="margin-bottom:10px;"></div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button onclick="addAffiliateRow()" style="font-size:12px;font-weight:600;color:var(--accent);background:white;border:1.5px solid var(--accent);border-radius:6px;padding:6px 12px;cursor:pointer;">+ Add Affiliate</button>
+            <button onclick="saveAffiliates()" style="font-size:12px;font-weight:600;color:white;background:var(--accent);border:none;border-radius:6px;padding:6px 12px;cursor:pointer;">Save</button>
+            <span id="affiliatesSaveStatus" style="font-size:11px;color:var(--muted);"></span>
+          </div>
+        </div>
+        <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div class="cohort-field" style="flex:1;margin-bottom:0;">
@@ -885,11 +894,12 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_data'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
       updateLiveCallPreview();
+      if (map.affiliates_data) loadAffiliates(map.affiliates_data);
       if (map.closing_page_status) {
         const el = document.getElementById('closingPageStatus');
         if (el) { el.textContent = map.closing_page_status; el.style.color = map.closing_page_status.startsWith('✅') ? '#2e7d5e' : 'var(--muted)'; }
@@ -992,6 +1002,53 @@
   function toggleSub(el) { el.classList.toggle('done'); saveChecks(); updateProgress(); }
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function toggleCohort() { document.getElementById('cohortPanel').classList.toggle('collapsed'); }
+
+  // ── AFFILIATES ───────────────────────────────────────────
+  let affiliates = [];
+
+  function renderAffiliates() {
+    const container = document.getElementById('affiliatesList');
+    if (!affiliates.length) { container.innerHTML = ''; return; }
+    let html = '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px;">';
+    affiliates.forEach((a, i) => {
+      html += `<div style="display:flex;align-items:center;gap:8px;">
+        <input type="text" value="${a.name}" placeholder="Name" oninput="affiliates[${i}].name=this.value"
+          style="flex:1;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:var(--white);outline:none;">
+        <input type="url" value="${a.link}" placeholder="https://strongstandard.com/21-day-challenge/?utm_source=..." oninput="affiliates[${i}].link=this.value"
+          style="flex:2;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:var(--white);outline:none;">
+        <button onclick="removeAffiliate(${i})" style="font-size:13px;color:var(--muted);background:none;border:none;cursor:pointer;padding:4px 6px;line-height:1;">✕</button>
+      </div>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function addAffiliateRow() {
+    affiliates.push({ name: '', link: '' });
+    renderAffiliates();
+  }
+
+  function removeAffiliate(i) {
+    affiliates.splice(i, 1);
+    renderAffiliates();
+  }
+
+  async function saveAffiliates() {
+    const statusEl = document.getElementById('affiliatesSaveStatus');
+    statusEl.textContent = 'Saving...';
+    await writeToDB(JOEY_API, 'affiliates_data', JSON.stringify(affiliates));
+    statusEl.textContent = '✅ Saved';
+    setTimeout(() => statusEl.textContent = '', 2000);
+  }
+
+  function loadAffiliates(data) {
+    try {
+      affiliates = JSON.parse(data) || [];
+    } catch(e) {
+      affiliates = [];
+    }
+    renderAffiliates();
+  }
 
   // ── LIVE COACHING CALLS PREVIEW ─────────────────────────────
   function getLiveCallDates() {
@@ -1503,7 +1560,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide'];
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_data'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
