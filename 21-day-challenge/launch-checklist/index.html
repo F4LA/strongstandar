@@ -352,6 +352,10 @@
           </div>
         </div>
         <div class="cohort-card cohort-card--wide">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Affiliates Notes</div>
+          <textarea id="affiliates_notes" placeholder="Paste affiliate names, links, tracking URLs..." oninput="saveField('affiliates_notes')" style="width:100%;min-height:90px;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;resize:vertical;box-sizing:border-box;line-height:1.6;"></textarea>
+        </div>
+        <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div class="cohort-field" style="flex:1;margin-bottom:0;">
@@ -885,7 +889,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_notes'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -1503,7 +1507,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide'];
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_notes'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
