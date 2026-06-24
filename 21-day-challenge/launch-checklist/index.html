@@ -52,8 +52,8 @@
   .cohort-panel__title { display:flex; align-items:center; gap:8px; font-family:'DM Serif Display',serif; font-size:18px; color:var(--white); flex:1; }
   .cohort-panel__title svg { stroke:var(--accent); flex-shrink:0; }
   .cohort-panel__sub { font-size:12px; color:rgba(255,255,255,0.4); margin-right:8px; }
-  .cohort-body { overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s; max-height:420px; opacity:1; }
-  .cohort-panel.collapsed .cohort-body { max-height:0 !important; opacity:0; }
+  .cohort-body { overflow:hidden; transition:max-height 0.35s ease,opacity 0.3s; max-height:1000px; opacity:1; }
+  .cohort-panel.collapsed .cohort-body { max-height:0; opacity:0; }
   .cohort-panel.collapsed #cohortToggle svg { transform:rotate(-90deg); }
   #cohortToggle svg { transition:transform 0.3s; }
   .cohort-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
@@ -285,7 +285,7 @@
       <div class="phase-toggle" id="cohortToggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div>
     </div>
     <div class="cohort-body" id="cohortBody">
-      <div style="overflow-y:auto;max-height:400px;"><div class="cohort-grid">
+      <div class="cohort-grid">
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--blue"></span>Kickoff Call</div>
           <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date');updateLiveCallPreview()"></div>
@@ -322,6 +322,21 @@
             </div>
           </div>
           <div id="liveCallPreview" style="display:none;background:var(--off-white);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.8;"></div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;">
+            <button onclick="handleLaunchBtn()" id="launchBtn" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#0f2340,#1b3a5c);color:white;border:none;border-radius:10px;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity 0.2s;box-shadow:0 4px 16px rgba(15,35,64,0.25);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span id="launchBtnText">Create Events &amp; Update Pages</span>
+            </button>
+            <span id="launchStatus" style="font-size:12px;color:var(--muted);"></span>
+          </div>
+          <div id="launchResult" style="margin-top:14px;display:none;background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:12px;line-height:2;"></div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--border);">
+            <button onclick="updateClosingPage()" id="closingPageBtn" style="display:flex;align-items:center;gap:7px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;transition:opacity 0.2s;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Update Closing Page
+            </button>
+            <span id="closingPageStatus" style="font-size:11px;color:var(--muted);">Not updated yet</span>
+          </div>
         </div>
         <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#2e7d5e;"></span>Miguel — Resources</div>
@@ -335,10 +350,6 @@
               <input type="url" id="welcome_guide" placeholder="https://..." oninput="saveField('welcome_guide')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
             </div>
           </div>
-        </div>
-        <div class="cohort-card cohort-card--wide">
-          <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Affiliates Notes</div>
-          <textarea id="affiliates_notes" placeholder="Paste affiliate names, links, tracking URLs..." oninput="saveField('affiliates_notes')" style="width:100%;min-height:90px;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;resize:vertical;box-sizing:border-box;line-height:1.6;"></textarea>
         </div>
         <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
@@ -369,19 +380,6 @@
           </div>
         </div>
       </div>
-      <div style="padding:16px 20px;border-top:1px solid var(--border);background:var(--white);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <button onclick="handleLaunchBtn()" id="launchBtn" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#0f2340,#1b3a5c);color:white;border:none;border-radius:10px;padding:13px 24px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity 0.2s;box-shadow:0 4px 16px rgba(15,35,64,0.25);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span id="launchBtnText">Create Events &amp; Update Pages</span>
-        </button>
-        <span id="launchStatus" style="font-size:12px;color:var(--muted);"></span>
-        <button onclick="updateClosingPage()" id="closingPageBtn" style="display:flex;align-items:center;gap:7px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;transition:opacity 0.2s;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          Update Closing Page
-        </button>
-        <span id="closingPageStatus" style="font-size:11px;color:var(--muted);">Not updated yet</span>
-      </div>
-      <div id="launchResult" style="display:none;background:var(--off-white);border-top:1px solid var(--border);padding:16px 20px;font-size:12px;line-height:2;"></div>
     </div>
   </div>
 
@@ -531,6 +529,7 @@
       <div class="section">
         <div class="section-title">6.4 — Affiliates</div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Review affiliate candidate list (built by Bernardo and Miguel) and confirm who to reach out to</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reach out to Adrián to offer him the affiliate spot again</div></div>
         <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Reach out to confirmed affiliates from the list</div></div>
       </div>
     </div>
@@ -886,7 +885,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_notes'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -1504,7 +1503,7 @@
   async function confirmReset() {
     if (!confirm('Reset Miguel checklist for a new challenge?')) return;
     document.querySelectorAll('#recurrentesSection .task.done, #recurrentesSection .subtask.done').forEach(el => el.classList.remove('done'));
-    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_notes'];
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide'];
     fields.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
