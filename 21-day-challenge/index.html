@@ -3137,7 +3137,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function fetchPurchaseCount() {
     const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
                 '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
-                '&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ STARTS WITH '7/'");
+                '&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ STARTS WITH '7/' AND AJ CONTAINS '/2026'");
     fetch(url)
       .then(r => r.text())
       .then(text => {
