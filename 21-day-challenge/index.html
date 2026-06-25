@@ -3137,16 +3137,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function fetchPurchaseCount() {
     const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
                 '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
-                '&tq=' + encodeURIComponent('SELECT *');
+                '&range=A:AJ&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ=" + "'July 2026'");
     fetch(url)
       .then(r => r.text())
       .then(text => {
         const json = text.replace(/^[^{]+/, '').replace(/\);?$/, '');
         const data = JSON.parse(json);
-        if (data.table && data.table.rows) {
-          purchaseCount = data.table.rows.filter(row =>
-            row.c && row.c[35] && row.c[35].v === 'July 2026'
-          ).length;
+        if (data.table && data.table.rows && data.table.rows[0]) {
+          purchaseCount = Math.max(0, Math.floor(data.table.rows[0].c[0].v));
           window._ss_purchaseCount = purchaseCount;
         }
         updateSpotsUI();
