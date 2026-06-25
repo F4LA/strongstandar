@@ -965,14 +965,17 @@ reveals.forEach(el => observer.observe(el));
     }
     var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
               '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
-              '&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ = 'July 2026'");
+              '&tq=' + encodeURIComponent('SELECT A,AJ');
     fetch(url)
       .then(function(r){ return r.text(); })
       .then(function(t){
         var json = t.replace(/^[^{]+/, '').replace(/\);?$/, '');
         var data = JSON.parse(json);
-        if (data.table && data.table.rows && data.table.rows[0]) {
-          updateSpots(Math.max(0, Math.floor(data.table.rows[0].c[0].v)));
+        if (data.table && data.table.rows) {
+          var count = data.table.rows.filter(function(row){
+            return row.c && row.c[1] && row.c[1].v === 'July 2026';
+          }).length;
+          updateSpots(count);
         }
       })
       .catch(function(){});
