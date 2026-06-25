@@ -965,7 +965,7 @@ reveals.forEach(el => observer.observe(el));
     }
     var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
               '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
-              '&tq=' + encodeURIComponent('SELECT COUNT(A) WHERE MONTH(AJ) = 7');
+              '&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ STARTS WITH '7/'");
     fetch(url)
       .then(function(r){ return r.text(); })
       .then(function(t){
