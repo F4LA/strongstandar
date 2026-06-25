@@ -1059,7 +1059,7 @@
     container.innerHTML = '<div class="center"><div class="spinner"></div><div>Fetching Invoices Backup…</div></div>';
     try {
       const [invoiceBackupRows, clientRows] = await Promise.all([
-        fetchRange('Invoices Backup!A:Z'),
+        fetchRange('Invoices Bakcup!A:Z'),
         window._clientRowsCache ? Promise.resolve(window._clientRowsCache) : fetchRange('Client Mastersheet!A:Z'),
       ]);
       window._invoiceAuditLoaded = true;
