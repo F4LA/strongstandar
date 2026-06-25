@@ -534,6 +534,50 @@
     }
     .annual-table tr.future-month td { opacity: .45; }
 
+    /* ── Invoice Audit styles ── */
+    .issue-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .issue-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+    .issue-header.red    { background: var(--red-dim);    color: var(--red); }
+    .issue-header.orange { background: var(--orange-dim); color: var(--orange); }
+    .issue-row {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+    }
+    .issue-row:hover { background: rgba(108,99,255,0.04); }
+    .issue-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .issue-name { font-weight: 600; font-size: 14px; }
+    .issue-detail { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .issue-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .red-badge    { background: var(--red-dim);    color: var(--red); }
+    .orange-badge { background: var(--orange-dim); color: var(--orange); }
+
     @media (max-width: 580px) {
       .fin-cards { grid-template-columns: 1fr; }
       .fin-card .fc-amount { font-size: 26px; }
@@ -561,6 +605,7 @@
   <button class="tab-btn" onclick="switchTab('attribution')">🔍 Sales Attribution</button>
   <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls</button>
   <button class="tab-btn" onclick="switchTab('financials')">📊 Financials</button>
+  <button class="tab-btn" onclick="switchTab('invoice-audit')">🔎 Invoice Audit</button>
 </nav>
 
 <main>
@@ -593,6 +638,15 @@
 
   <div id="tab-financials" class="tab-panel">
     <div id="content-financials">
+      <div class="center">
+        <div class="spinner"></div>
+        <div>Fetching data from Google Sheets…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-invoice-audit" class="tab-panel">
+    <div id="content-invoice-audit">
       <div class="center">
         <div class="spinner"></div>
         <div>Fetching data from Google Sheets…</div>
@@ -762,17 +816,19 @@
       `<div class="center"><div class="spinner"></div><div>Fetching data…</div></div>`;
 
     try {
-      const [clientRows, ppRows, leadsRows, prRows] = await Promise.all([
+      const [clientRows, ppRows, leadsRows, prRows, invoiceBackupRows] = await Promise.all([
         fetchRange('Client Mastersheet!A:Z'),
         fetchRange('Payment Plan!A:F'),
         fetchRange('Leads applied!A:P'),
         fetchRange('Payment Records!A:F'),
+        fetchRange('Invoices Backup!A:Z'),
       ]);
       window._lastRenderArgs = [clientRows, ppRows];
       renderDashboard(clientRows, ppRows);
       renderAttribution(clientRows, leadsRows);
       renderStaleCalls(leadsRows);
       renderFinancials(clientRows, prRows, ppRows);
+      renderInvoiceAudit(invoiceBackupRows, clientRows);
       document.getElementById('last-updated').textContent =
         'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
@@ -1623,6 +1679,152 @@ Let me know if you need anything on our end!`;
     </div>
   </div>
 </div>
+
+<script>
+  // ── Invoice Audit ─────────────────────────────────────
+  function renderInvoiceAudit(invoiceAllRows, clientAllRows) {
+    const container = document.getElementById('content-invoice-audit');
+
+    if (!invoiceAllRows || invoiceAllRows.length < 2) {
+      container.innerHTML = `<div class="error-box">⚠️ No data found in "Invoices Backup" sheet.</div>`;
+      return;
+    }
+
+    // Invoice Backup: col C (index 2) = email, col D (index 3) = date sent
+    // Client Mastersheet: col C (index 2) = email, col F (index 5) = date purchased
+    const IB = { EMAIL: 2, DATE: 3, FULL_NAME: 0 };  // adjust name col if needed
+
+    const invoiceRows = invoiceAllRows.slice(1);
+    const clientRows  = clientAllRows.slice(1);
+
+    // Build a lookup from mastersheet: email → array of {date, rowData}
+    // We support multiple rows per email (resigns)
+    const masterMap = {};
+    for (const r of clientRows) {
+      const email = (r[C.EMAIL] || '').trim().toLowerCase();
+      if (!email) continue;
+      const d = parseDate(r[C.DATE_PURCHASED]);
+      if (!masterMap[email]) masterMap[email] = [];
+      masterMap[email].push({ date: d, row: r });
+    }
+
+    // For each invoice, try to find a matching client row.
+    // Match criteria: same email AND dates within 30 days of each other.
+    // If email doesn't exist at all → "Missing from Mastersheet"
+    // If email exists but no date match → "Date mismatch (possible resign not recorded)"
+    const DATE_TOLERANCE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+    const missing   = [];  // email not in mastersheet at all
+    const dateMiss  = [];  // email exists but no date match
+    const matched   = [];  // fully matched
+
+    for (const r of invoiceRows) {
+      const email    = (r[IB.EMAIL] || '').trim().toLowerCase();
+      const sentDate = parseDate(r[IB.DATE]);
+      const name     = (r[IB.FULL_NAME] || '').trim() || email;
+
+      if (!email) continue; // skip blank rows
+
+      if (!masterMap[email]) {
+        missing.push({ name, email, sentDate, row: r });
+      } else {
+        // Check if any master row is within tolerance
+        const entries = masterMap[email];
+        const hasDateMatch = entries.some(e => {
+          if (!e.date || !sentDate) return true; // if no date, don't flag as mismatch
+          return Math.abs(e.date - sentDate) <= DATE_TOLERANCE_MS;
+        });
+        if (hasDateMatch) {
+          matched.push({ name, email, sentDate });
+        } else {
+          // Email exists but all purchase dates are far off — probably a resign not recorded
+          const masterDates = entries.map(e => e.date ? e.date.toLocaleDateString('en-US') : '—').join(', ');
+          dateMiss.push({ name, email, sentDate, masterDates, row: r });
+        }
+      }
+    }
+
+    const totalInvoices = invoiceRows.filter(r => (r[IB.EMAIL] || '').trim()).length;
+    const alertCount    = missing.length + dateMiss.length;
+
+    // ── Summary cards
+    let html = `<div class="summary" style="grid-template-columns:repeat(3,1fr)">
+      <div class="scard ${alertCount > 0 ? 'red' : 'green'}">
+        <div class="num">${alertCount}</div>
+        <div class="lbl">⚠️ Alerts</div>
+      </div>
+      <div class="scard red">
+        <div class="num">${missing.length}</div>
+        <div class="lbl">Missing from Mastersheet</div>
+      </div>
+      <div class="scard orange">
+        <div class="num">${dateMiss.length}</div>
+        <div class="lbl">Date Mismatch (Resign?)</div>
+      </div>
+    </div>`;
+
+    html += `<div class="period-bar">
+      Comparing <strong>${totalInvoices}</strong> invoice records vs Client Mastersheet &nbsp;·&nbsp;
+      Matched: <strong style="color:var(--green)">${matched.length}</strong> &nbsp;·&nbsp;
+      Issues: <strong style="color:var(--red)">${alertCount}</strong>
+      <br><small style="color:var(--muted)">Match logic: same email + invoice date within 30 days of purchase date. Clients with multiple rows (resigns) are checked against all their entries.</small>
+    </div>`;
+
+    // ── Missing section
+    if (missing.length > 0) {
+      html += `<div class="issue-group">
+        <div class="issue-header red">
+          <span>🚨 Not in Mastersheet (${missing.length})</span>
+          <span style="font-size:11px;font-weight:400">Invoice sent but client has NO row in Client Mastersheet</span>
+        </div>`;
+      for (const { name, email, sentDate } of missing) {
+        const dateStr = sentDate ? sentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+        html += `<div class="issue-row">
+          <div class="issue-main">
+            <span class="issue-name">${esc(name)}</span>
+            <span class="issue-badge red-badge">MISSING</span>
+          </div>
+          <div class="issue-detail">
+            📧 ${esc(email)} &nbsp;·&nbsp; 🗓 Invoice sent: ${dateStr}
+            &nbsp;&nbsp;${emailBtn(email)}
+          </div>
+        </div>`;
+      }
+      html += `</div>`;
+    }
+
+    // ── Date mismatch section
+    if (dateMiss.length > 0) {
+      html += `<div class="issue-group">
+        <div class="issue-header orange">
+          <span>⚠️ Date Mismatch — Possible Resign Not Recorded (${dateMiss.length})</span>
+          <span style="font-size:11px;font-weight:400">Email found in Mastersheet but invoice date doesn't match any purchase date (±30 days)</span>
+        </div>`;
+      for (const { name, email, sentDate, masterDates } of dateMiss) {
+        const dateStr = sentDate ? sentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
+        html += `<div class="issue-row">
+          <div class="issue-main">
+            <span class="issue-name">${esc(name)}</span>
+            <span class="issue-badge orange-badge">DATE MISMATCH</span>
+          </div>
+          <div class="issue-detail">
+            📧 ${esc(email)} &nbsp;·&nbsp; 🗓 Invoice sent: ${dateStr} &nbsp;·&nbsp; Mastersheet date(s): ${esc(masterDates)}
+            &nbsp;&nbsp;${emailBtn(email)}
+          </div>
+        </div>`;
+      }
+      html += `</div>`;
+    }
+
+    if (alertCount === 0) {
+      html += `<div class="error-box" style="background:var(--green-dim);border-color:var(--green);color:var(--green)">
+        ✅ All invoice records match the Client Mastersheet. No issues found.
+      </div>`;
+    }
+
+    container.innerHTML = html;
+  }
+</script>
 
 </body>
 </html>
