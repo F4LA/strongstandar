@@ -370,38 +370,23 @@
           </div>
           <div style="font-size:11px;color:var(--muted);margin-top:6px;">Required to push date changes to landing pages. Stored securely.</div>
         </div>
-        <div class="cohort-card cohort-card--wide">
-          <div class="cohort-card__label"><span class="cohort-dot" style="background:#2e7d5e;"></span>Miguel — Resources</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div class="cohort-field">
-              <label>Forum ID</label>
-              <input type="text" id="forum_id" placeholder="e.g. 12345" oninput="saveField('forum_id')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
-            </div>
-            <div class="cohort-field">
-              <label>Welcome Guide Link</label>
-              <input type="url" id="welcome_guide" placeholder="https://..." oninput="saveField('welcome_guide')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+        <div class="cohort-card">
+          <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
+          <div class="cohort-field" style="margin-top:4px;">
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a onclick="event.stopPropagation()" href="https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ clarity-call-21dc</a>
+              <button onclick="navigator.clipboard.writeText('https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
           </div>
         </div>
-        <div class="cohort-card cohort-card--wide">
-          <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Affiliates</div>
-          <div id="affiliatesList" style="margin-bottom:10px;"></div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <button onclick="addAffiliateRow()" style="font-size:12px;font-weight:600;color:var(--accent);background:white;border:1.5px solid var(--accent);border-radius:6px;padding:6px 12px;cursor:pointer;">+ Add Affiliate</button>
-            <button onclick="saveAffiliates()" style="font-size:12px;font-weight:600;color:white;background:var(--accent);border:none;border-radius:6px;padding:6px 12px;cursor:pointer;">Save</button>
-            <span id="affiliatesSaveStatus" style="font-size:11px;color:var(--muted);"></span>
-          </div>
-        </div>
-        <div class="cohort-card cohort-card--wide">
-          <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div class="cohort-field" style="flex:1;margin-bottom:0;">
-              <input type="password" id="gh_token" placeholder="ghp_..." oninput="saveField('gh_token')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+        <div class="cohort-card">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#9b59b6;"></span>Discovery Call</div>
+          <div class="cohort-field" style="margin-top:4px;">
+            <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
+              <a onclick="event.stopPropagation()" href="https://api.leadconnectorhq.com/widget/bookings/21-day-challenge-to-101-coaching" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ 21-day-challenge-to-101-coaching</a>
+              <button onclick="navigator.clipboard.writeText('https://api.leadconnectorhq.com/widget/bookings/21-day-challenge-to-101-coaching');this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
-            <button onclick="const f=document.getElementById('gh_token');f.type=f.type==='password'?'text':'password'" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:6px 10px;cursor:pointer;white-space:nowrap;">Show/Hide</button>
           </div>
-          <div style="font-size:11px;color:var(--muted);margin-top:6px;">Required to push date changes to landing pages. Stored securely.</div>
-        </div>
         </div>
       </div>
     </div>
