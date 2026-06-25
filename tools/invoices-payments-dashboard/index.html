@@ -816,19 +816,18 @@
       `<div class="center"><div class="spinner"></div><div>Fetching data…</div></div>`;
 
     try {
-      const [clientRows, ppRows, leadsRows, prRows, invoiceBackupRows] = await Promise.all([
+      const [clientRows, ppRows, leadsRows, prRows] = await Promise.all([
         fetchRange('Client Mastersheet!A:Z'),
         fetchRange('Payment Plan!A:F'),
         fetchRange('Leads applied!A:P'),
         fetchRange('Payment Records!A:F'),
-        fetchRange('Invoices Backup!A:Z'),
       ]);
       window._lastRenderArgs = [clientRows, ppRows];
+      window._clientRowsCache = clientRows;
       renderDashboard(clientRows, ppRows);
       renderAttribution(clientRows, leadsRows);
       renderStaleCalls(leadsRows);
       renderFinancials(clientRows, prRows, ppRows);
-      renderInvoiceAudit(invoiceBackupRows, clientRows);
       document.getElementById('last-updated').textContent =
         'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
@@ -1050,6 +1049,24 @@
     document.querySelectorAll('.tab-btn').forEach(b => {
       if (b.getAttribute('onclick').includes("'" + name + "'")) b.classList.add('active');
     });
+    if (name === 'invoice-audit' && !window._invoiceAuditLoaded) {
+      loadInvoiceAudit();
+    }
+  }
+
+  async function loadInvoiceAudit() {
+    const container = document.getElementById('content-invoice-audit');
+    container.innerHTML = '<div class="center"><div class="spinner"></div><div>Fetching Invoices Backup…</div></div>';
+    try {
+      const [invoiceBackupRows, clientRows] = await Promise.all([
+        fetchRange('Invoices Backup!A:Z'),
+        window._clientRowsCache ? Promise.resolve(window._clientRowsCache) : fetchRange('Client Mastersheet!A:Z'),
+      ]);
+      window._invoiceAuditLoaded = true;
+      renderInvoiceAudit(invoiceBackupRows, clientRows);
+    } catch (err) {
+      container.innerHTML = '<div class="error-box">⚠️ Error loading Invoice Audit<br><small>' + esc(err.message) + '</small></div>';
+    }
   }
 
   // ── Sales Attribution render ──────────────────────────
