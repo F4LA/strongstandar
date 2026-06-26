@@ -1678,7 +1678,7 @@ function bSpanishMonth(ymd) { return ['ene','feb','mar','abr','may','jun','jul',
 function bSpanishMonthCap(ymd) { return ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][bDateObj(ymd).getMonth()]; }
 function bDayNum(ymd) { return bDateObj(ymd).getDate(); }
 function bYear(ymd) { return bDateObj(ymd).getFullYear(); }
-function bPreviewDate(ymd) { return `${bSpanishDay(ymd)} ${bDayNum(ymd)} ${bSpanishMonth(ymd)}`; }
+function bPreviewDate(ymd) { return `${bShortDay(ymd)} ${bShortMonth(ymd)} ${bDayNum(ymd)}`; }
 function bLongDate(ymd) { return `${bFullDay(ymd)}, ${bFullMonth(ymd)} ${bDayNum(ymd)}, ${bYear(ymd)}`; }
 
 function bParseDT(dtStr) {
@@ -2205,8 +2205,8 @@ function computeChallengeDates(anchors) {
 
   const items = [
     // Tasks
-    { id:'T1', type:'TASK', section:'Calentarización', date:t1Date, hh:null, mm:null, title:'Calentarización inicial', author:'Gabi', sched:'TASK', flag:false },
-    { id:'T2', type:'TASK', section:'Calentarización', date:t2Date, hh:null, mm:null, title:'Calentarización final',   author:'Gabi', sched:'TASK', flag:false },
+    { id:'T1', type:'TASK', section:'Pre-scheduling', date:t1Date, hh:null, mm:null, title:'Pre-scheduling — Round 1', author:'Gabi', sched:'TASK', flag:false },
+    { id:'T2', type:'TASK', section:'Pre-scheduling', date:t2Date, hh:null, mm:null, title:'Pre-scheduling — Round 2',   author:'Gabi', sched:'TASK', flag:false },
     // Week 0
     { id:'P01', type:'POST', section:'Pre-Challenge', date:bAddDays(eOpen,-1), hh:null, mm:null, title:'PINNED: How this challenge works', author:'Challenge Team', sched:'SCHED', flag:false },
     { id:'P02', type:'POST', section:'Pre-Challenge', date:eOpen,              hh:null, mm:null, title:'Welcome from Bernardo',            author:'Bernardo',       sched:'SCHED', flag:false },
@@ -2219,7 +2219,7 @@ function computeChallengeDates(anchors) {
     { id:'P08', type:'POST', section:'Pre-Challenge', date:kickoffDT.date, hh:null, mm:null, title:'Thanks + recording tomorrow',         author:'Challenge Team', sched:'MANUAL', flag:true },
     { id:'P09', type:'POST', section:'Pre-Challenge', date:bAddDays(kickoffDT.date, 1), hh:null, mm:null, title:'Kickoff Call recording', author:'Challenge Team', sched:'MANUAL', flag:false },
     // T3
-    { id:'T3', type:'TASK', section:'Week 1', date:bAddDays(d1, 1), hh:null, mm:null, title:'Recordatorio DM Day 2 — CC booking', author:'Gabi', sched:'TASK', flag:false },
+    { id:'T3', type:'TASK', section:'Week 1', date:bAddDays(d1, 1), hh:null, mm:null, title:'Reminder: DM Day 2 — CC booking', author:'Gabi', sched:'TASK', flag:false },
     // Week 1
     { id:'P10', type:'POST', section:'Week 1', date:d1,               hh:9,  mm:0,  title:'Day 1 is here',                           author:'Bernardo',       sched:'SCHED',  flag:false },
     { id:'P11', type:'POST', section:'Week 1', date:d1,               hh:11, mm:0,  title:'Meet Your Coaching Team',                 author:'Challenge Team', sched:'SCHED',  flag:false },
@@ -2277,21 +2277,21 @@ function computeChallengeDates(anchors) {
 function validateAnchors(anchors) {
   const { day1, enrollment_open, enrollment_close, kickoff_date, closing_date } = anchors;
   const errors = [], warnings = [];
-  if (!day1) { errors.push('Falta Day 1'); return { errors, warnings }; }
-  if (!kickoff_date) { errors.push('Falta Kickoff date'); return { errors, warnings }; }
-  if (!closing_date) { errors.push('Falta Closing date'); return { errors, warnings }; }
+  if (!day1) { errors.push('Day 1 is required'); return { errors, warnings }; }
+  if (!kickoff_date) { errors.push('Kickoff date is required'); return { errors, warnings }; }
+  if (!closing_date) { errors.push('Closing date is required'); return { errors, warnings }; }
 
   const d = bDateObj(day1);
-  if (d.getDay() !== 1) warnings.push('Day 1 no cae en lunes — verifica que sea correcto');
+  if (d.getDay() !== 1) warnings.push('Day 1 is not Monday — please verify');
 
-  if (kickoff_date >= day1 + 'T') errors.push('Kickoff debe ser ANTES de Day 1');
+  if (kickoff_date >= day1 + 'T') errors.push('Kickoff must be BEFORE Day 1');
 
   if (enrollment_open && enrollment_close && enrollment_open >= enrollment_close)
-    warnings.push('Enrollment open debe ser antes de enrollment close');
+    warnings.push('Enrollment open must be before enrollment close');
 
   const day22 = bAddDays(day1, 21);
   const closDate = closing_date.slice(0,10);
-  if (closDate !== day22) warnings.push(`Closing date (${closDate}) no coincide con Day 22 calculado (${day22}) — verifica`);
+  if (closDate !== day22) warnings.push(`Closing date (${closDate}) does not match calculated Day 22 (${day22}) — please verify`);
 
   return { errors, warnings };
 }
@@ -2319,7 +2319,7 @@ async function handleBPreviewBtn() {
   }
 
   bBtnEnable(btn, false);
-  bBtnText('bPreviewBtnText', 'Calculando...');
+  bBtnText('bPreviewBtnText', 'Calculating...');
   status.textContent = '';
   status.style.color = '';
 
@@ -2327,14 +2327,14 @@ async function handleBPreviewBtn() {
 
   const kickoffTimeStr = bFormatTime12(kickoffDT.hh, kickoffDT.mm);
   const closingTimeStr = bFormatTime12(closingDT.hh, closingDT.mm);
-  const monthYear = `${bSpanishMonthCap(d1)} ${bYear(d1)}`;
+  const monthYear = `${bFullMonth(d1)} ${bYear(d1)}`;
 
-  let html = '<div style="font-weight:600;margin-bottom:8px;">Anclaje resuelto</div>';
+  let html = '<div style="font-weight:600;margin-bottom:8px;">Anchors resolved</div>';
   html += `Day 1 = ${bPreviewDate(d1)} · Day 21 = ${bPreviewDate(day21)} · Day 22 = ${bPreviewDate(day22)}<br>`;
   html += `Kickoff = ${bPreviewDate(kickoffDT.date)} ${kickoffTimeStr} · Closing = ${bPreviewDate(closingDT.date)} ${closingTimeStr}<br>`;
-  html += `Calentarización 1 = ${bPreviewDate(t1Date)} · Calentarización 2 = ${bPreviewDate(t2Date)}<br>`;
-  if (anchors.enrollment_open) html += `Enrollment abre = ${bPreviewDate(eOpen)}`;
-  if (anchors.enrollment_close) html += ` · cierra = ${bPreviewDate(anchors.enrollment_close)}`;
+  html += `Pre-scheduling 1 = ${bPreviewDate(t1Date)} · Pre-scheduling 2 = ${bPreviewDate(t2Date)}<br>`;
+  if (anchors.enrollment_open) html += `Enrollment opens = ${bPreviewDate(eOpen)}`;
+  if (anchors.enrollment_close) html += ` · closes = ${bPreviewDate(anchors.enrollment_close)}`;
 
   if (warnings.length) {
     html += '<div style="margin-top:8px;color:#e67e22;">';
@@ -2342,10 +2342,10 @@ async function handleBPreviewBtn() {
     html += '</div>';
   }
 
-  html += `<div style="font-weight:600;margin:12px 0 4px;">Board y miembros</div>`;
-  html += `Board: 21DC Posts &amp; Ops (${monthYear}) · Invita a: Bernardo, Gabi, Jackie<br>`;
+  html += `<div style="font-weight:600;margin:12px 0 4px;">Board & members</div>`;
+  html += `Board: 21DC Posts &amp; Ops (${monthYear}) · Inviting: Bernardo, Gabi, Jackie<br>`;
 
-  html += `<div style="font-weight:600;margin:12px 0 4px;">45 ítems en orden cronológico</div>`;
+  html += `<div style="font-weight:600;margin:12px 0 4px;">45 items in chronological order</div>`;
   let currentSection = '';
   items.forEach(it => {
     if (it.section !== currentSection) {
@@ -2366,7 +2366,7 @@ async function handleBPreviewBtn() {
 
   bBtnEnable(btn, true);
   bBtnText('bPreviewBtnText', 'Preview Asana board');
-  status.textContent = `Preview listo — ${items.length} ítems`;
+  status.textContent = `Preview ready — ${items.length} items`;
   status.style.color = '#27ae60';
 }
 
@@ -2439,10 +2439,10 @@ async function handleBCreateAsanaBtn() {
   const status = document.getElementById('bAutoStatus');
   const result = document.getElementById('bPreviewResult');
 
-  if (!window._bLastAnchors) { status.textContent = 'Haz Preview primero.'; return; }
+  if (!window._bLastAnchors) { status.textContent = 'Run Preview first.'; return; }
 
   const token = document.getElementById('asana_token')?.value?.trim();
-  if (!token) { status.textContent = 'Falta token de Asana.'; status.style.color='#c0392b'; return; }
+  if (!token) { status.textContent = 'Asana token missing.'; status.style.color='#c0392b'; return; }
 
   const emailB = document.getElementById('asana_email_bernardo')?.value?.trim() || 'bernardo@strongstandard.com';
   const emailJ = document.getElementById('asana_email_jackie')?.value?.trim()   || 'jackie@fit4lifeacademy.health';
@@ -2450,7 +2450,7 @@ async function handleBCreateAsanaBtn() {
 
   bBtnEnable(btn, false);
   bBtnText('bCreateBtnText', 'Working...');
-  status.textContent = 'Conectando con Asana...';
+  status.textContent = 'Connecting to Asana...';
   status.style.color = '';
   result.innerHTML = '';
   result.style.display = 'block';
@@ -2462,32 +2462,32 @@ async function handleBCreateAsanaBtn() {
     const monthYear = `${bSpanishMonthCap(d1)} ${bYear(d1)}`;
     const projName = `21DC Posts & Ops (${monthYear})`;
 
-    log('Obteniendo workspace...');
+    log('Getting workspace...');
     const ws = await asanaGetWorkspace(token);
     const wsGid = ws.gid;
 
-    log('Buscando team...');
+    log('Looking for team...');
     const teamGid = await asanaGetTeam(token, wsGid);
 
-    log('Buscando usuarios...');
+    log('Looking up users...');
     const allEmails = [emailB, emailJ, emailG];
     const gidMap = await asanaGetUserGids(token, wsGid, allEmails);
 
-    log(`Creando proyecto: ${projName}...`);
+    log(`Creating project: ${projName}...`);
     const projGid = await asanaCreateProject(token, wsGid, projName, teamGid);
 
-    log('Agregando miembros...');
+    log('Adding members...');
     const memberGids = Object.values(gidMap).filter(Boolean);
     if (memberGids.length > 0) await asanaAddMembers(token, projGid, memberGids);
 
-    log('Creando secciones...');
-    const sectionNames = ['Calentarización', 'Pre-Challenge', 'Week 1', 'Week 2', 'Week 3', 'Day 21 & Closing'];
+    log('Creating sections...');
+    const sectionNames = ['Pre-scheduling', 'Pre-Challenge', 'Week 1', 'Week 2', 'Week 3', 'Day 21 & Closing'];
     const sections = {};
     for (const sn of sectionNames) {
       sections[sn] = await asanaCreateSection(token, projGid, sn);
     }
 
-    log('Creando tareas...');
+    log('Creating tasks...');
     let created = 0, failed = 0;
 
     const bernardoIds = new Set(['P02','P06','P10','P21','P22','P30','P39','P42']);
@@ -2511,15 +2511,15 @@ async function handleBCreateAsanaBtn() {
 
         await asanaCreateTask(token, projGid, sectionGid, it.title, copy, dueOn, dueAt, assigneeGid);
         created++;
-        if (created % 5 === 0) log(`Creados ${created}/45...`);
+        if (created % 5 === 0) log(`Created ${created}/45...`);
       } catch(e) {
         failed++;
-        log(`⚠ Error en ${it.id}: ${e.message}`);
+        log(`⚠ Error on ${it.id}: ${e.message}`);
       }
     }
 
-    log(`✓ Board creado: ${projName}`);
-    log(`✓ ${created} tareas creadas${failed ? `, ${failed} con error` : ''}`);
+    log(`✓ Board created: ${projName}`);
+    log(`✓ ${created} tasks created${failed ? `, ${failed} with errors` : ''}`);
     status.style.color = '#27ae60';
 
     // Mark "Update post dates in Asana" as done
@@ -2552,14 +2552,14 @@ async function handleBDownloadGuideBtn() {
   };
 
   if (!anchors.day1 || !anchors.kickoff_date || !anchors.closing_date) {
-    status.textContent = 'Completa Day 1, Kickoff y Closing antes de descargar.';
+    status.textContent = 'Fill in Day 1, Kickoff and Closing before downloading.';
     status.style.color = '#c0392b';
     return;
   }
 
   bBtnEnable(btn, false);
-  bBtnText('bGuideBtnText', 'Generando...');
-  status.textContent = 'Cargando template...';
+  bBtnText('bGuideBtnText', 'Generating...');
+  status.textContent = 'Loading template...';
   status.style.color = '';
 
   try {
@@ -2573,7 +2573,7 @@ async function handleBDownloadGuideBtn() {
     const closingTimeStr = bFormatTime12(closingDT.hh, closingDT.mm);
 
     const res = await fetch('./welcome-guide-template.html');
-    if (!res.ok) throw new Error('No se pudo cargar el template del Welcome Guide');
+    if (!res.ok) throw new Error('Could not load Welcome Guide template');
     let html = await res.text();
 
     // 1. Cover eyebrow: "July 6 – July 27, 2026"
@@ -2653,13 +2653,13 @@ async function handleBDownloadGuideBtn() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Welcome-Guide-${bSpanishMonthCap(d1)}-${bYear(d1)}.html`;
+    a.download = `Welcome-Guide-${bFullMonth(d1)}-${bYear(d1)}.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    status.textContent = '✓ Welcome Guide descargado';
+    status.textContent = '✓ Welcome Guide downloaded';
     status.style.color = '#27ae60';
 
     // Mark "Update Welcome Guide" as done
