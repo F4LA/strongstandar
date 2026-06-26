@@ -2423,8 +2423,8 @@ async function asanaCreateSection(token, projGid, name) {
   return res.data.gid;
 }
 
-async function asanaCreateTask(token, projGid, sectionGid, name, notes, dueOn, dueAt, assigneeGid) {
-  const body = { name, notes, memberships: [{ project: projGid, section: sectionGid }] };
+async function asanaCreateTask(token, projGid, sectionGid, wsGid, name, notes, dueOn, dueAt, assigneeGid) {
+  const body = { name, notes, workspace: wsGid, memberships: [{ project: projGid, section: sectionGid }] };
   if (dueAt) body.due_at = dueAt;
   else if (dueOn) body.due_on = dueOn;
   if (assigneeGid) body.assignee = assigneeGid;
@@ -2509,7 +2509,7 @@ async function handleBCreateAsanaBtn() {
           dueOn = it.date;
         }
 
-        await asanaCreateTask(token, projGid, sectionGid, it.title, copy, dueOn, dueAt, assigneeGid);
+        await asanaCreateTask(token, projGid, sectionGid, wsGid, it.title, copy, dueOn, dueAt, assigneeGid);
         created++;
         if (created % 5 === 0) log(`Created ${created}/45...`);
       } catch(e) {
