@@ -2459,7 +2459,7 @@ async function handleBCreateAsanaBtn() {
 
   try {
     const { items, d1, kickoffDT } = computeChallengeDates(window._bLastAnchors);
-    const monthYear = `${bSpanishMonthCap(d1)} ${bYear(d1)}`;
+    const monthYear = `${bFullMonth(d1)} ${bYear(d1)}`;
     const projName = `21DC Posts & Ops (${monthYear})`;
 
     log('Getting workspace...');
