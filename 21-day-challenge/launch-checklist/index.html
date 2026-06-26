@@ -361,6 +361,23 @@
           </div>
         </div>
         <div class="cohort-card cohort-card--wide">
+          <div class="cohort-card__label"><span class="cohort-dot" style="background:#2d6a4f;"></span>Bernardo — Challenge Dates</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div class="cohort-field">
+              <label>Day 1 <span style="font-weight:400;color:var(--muted);">(must be Monday)</span></label>
+              <input type="date" id="day1" oninput="saveField('day1')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+            <div class="cohort-field">
+              <label>Enrollment Opens</label>
+              <input type="date" id="enrollment_open" oninput="saveField('enrollment_open')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+            <div class="cohort-field">
+              <label>Enrollment Closes</label>
+              <input type="date" id="enrollment_close" oninput="saveField('enrollment_close')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+          </div>
+        </div>
+        <div class="cohort-card cohort-card--wide">
           <div class="cohort-card__label"><span class="cohort-dot" style="background:#6b7f94;"></span>GitHub Access Token</div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div class="cohort-field" style="flex:1;margin-bottom:0;">
@@ -569,6 +586,58 @@
       <div class="b-progress-wrap"><div class="b-progress-bar" id="bProgressBar"></div></div>
       <div class="b-progress-label"><span id="bDoneCount">0</span> of <span id="bTotalCount">0</span> tasks completed</div>
     </div>
+
+    <!-- AUTOMATION CARD -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(15,35,64,0.07);margin-bottom:24px;">
+      <div style="background:linear-gradient(135deg,#1a3a2a,#2d6a4f);padding:18px 24px;display:flex;align-items:center;gap:12px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.8;flex-shrink:0;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        <div style="font-family:'DM Serif Display',serif;font-size:18px;color:white;flex:1;">Post Automation</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.45);">Asana board + Welcome Guide</div>
+      </div>
+      <div style="padding:20px 24px;">
+        <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-bottom:16px;">
+          <div>
+            <label style="display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;letter-spacing:0.5px;">ASANA TOKEN</label>
+            <input type="password" id="asana_token" placeholder="1/…" oninput="saveField('asana_token')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+          </div>
+          <button onclick="const f=document.getElementById('asana_token');f.type=f.type==='password'?'text':'password'" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:8px 10px;cursor:pointer;white-space:nowrap;height:36px;">Show/Hide</button>
+        </div>
+        <details style="margin-bottom:16px;">
+          <summary style="font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;letter-spacing:0.5px;user-select:none;">TEAM EMAILS (for task assignment)</summary>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;">
+            <div>
+              <label style="display:block;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:4px;">Bernardo</label>
+              <input type="email" id="asana_email_bernardo" value="bernardo@strongstandard.com" oninput="saveField('asana_email_bernardo')" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:4px;">Jackie</label>
+              <input type="email" id="asana_email_jackie" value="jackie@fit4lifeacademy.health" oninput="saveField('asana_email_jackie')" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:4px;">Gabi (Challenge Team)</label>
+              <input type="email" id="asana_email_gabi" value="support@fit4lifeacademy.health" oninput="saveField('asana_email_gabi')" style="width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:var(--white);outline:none;">
+            </div>
+          </div>
+        </details>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <button onclick="handleBPreviewBtn()" id="bPreviewBtn" style="display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a3a2a,#2d6a4f);color:white;border:none;border-radius:9px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity 0.2s;box-shadow:0 3px 12px rgba(0,0,0,0.2);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="bPreviewBtnText">Preview Asana board</span>
+          </button>
+          <button onclick="handleBCreateAsanaBtn()" id="bCreateBtn" disabled style="display:flex;align-items:center;gap:8px;background:#2d6a4f;color:white;border:none;border-radius:9px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:not-allowed;opacity:0.45;transition:opacity 0.2s;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span id="bCreateBtnText">Create board in Asana</span>
+          </button>
+          <button onclick="handleBDownloadGuideBtn()" id="bGuideBtn" style="display:flex;align-items:center;gap:8px;background:var(--off-white);color:var(--text);border:1.5px solid var(--border);border-radius:9px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span id="bGuideBtnText">Download Welcome Guide</span>
+          </button>
+          <span id="bAutoStatus" style="font-size:12px;color:var(--muted);"></span>
+        </div>
+        <div id="bPreviewResult" style="display:none;margin-top:16px;background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:12px;line-height:1.9;font-family:'DM Sans',monospace;white-space:pre-wrap;max-height:480px;overflow-y:auto;"></div>
+      </div>
+    </div>
+    <!-- END AUTOMATION CARD -->
 
     <div class="b-phase collapsed" id="bphase1">
       <div class="b-phase-header" onclick="toggleBPhase('bphase1')"><div class="b-phase-title">App &amp; Tech</div><div class="phase-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 5 7 10 12 5"/></svg></div></div>
@@ -895,7 +964,7 @@
       const rows = await res.json();
       const map = {};
       rows.forEach(r => { map[r.key] = r.value || ''; });
-      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_data'].forEach(id => {
+      ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_data','day1','enrollment_open','enrollment_close','asana_token','asana_email_bernardo','asana_email_jackie','asana_email_gabi'].forEach(id => {
         const el = document.getElementById(id);
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
@@ -1580,6 +1649,1036 @@
     updateBProgress();
     await writeToDB(BERN_API, 'checks', '');
   }
+
+// ─── BERNARDO AUTOMATION ENGINE ──────────────────────────────────────────────
+
+function bBtnText(spanId, text) {
+  const s = document.getElementById(spanId);
+  if (s) s.textContent = text;
+}
+function bBtnEnable(btn, enabled) {
+  btn.disabled = !enabled;
+  btn.style.opacity = enabled ? '1' : '0.45';
+  btn.style.cursor = enabled ? 'pointer' : 'not-allowed';
+}
+
+// Date helpers (all operate on YYYY-MM-DD strings or datetime-local "YYYY-MM-DDTHH:MM")
+function bAddDays(ymd, n) {
+  const d = new Date(ymd + 'T12:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+function bDateObj(ymd) { return new Date(ymd + 'T12:00:00'); }
+function bFullDay(ymd) { return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][bDateObj(ymd).getDay()]; }
+function bShortDay(ymd) { return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][bDateObj(ymd).getDay()]; }
+function bFullMonth(ymd) { return ['January','February','March','April','May','June','July','August','September','October','November','December'][bDateObj(ymd).getMonth()]; }
+function bShortMonth(ymd) { return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][bDateObj(ymd).getMonth()]; }
+function bSpanishDay(ymd) { return ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][bDateObj(ymd).getDay()]; }
+function bSpanishMonth(ymd) { return ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][bDateObj(ymd).getMonth()]; }
+function bSpanishMonthCap(ymd) { return ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][bDateObj(ymd).getMonth()]; }
+function bDayNum(ymd) { return bDateObj(ymd).getDate(); }
+function bYear(ymd) { return bDateObj(ymd).getFullYear(); }
+function bPreviewDate(ymd) { return `${bSpanishDay(ymd)} ${bDayNum(ymd)} ${bSpanishMonth(ymd)}`; }
+function bLongDate(ymd) { return `${bFullDay(ymd)}, ${bFullMonth(ymd)} ${bDayNum(ymd)}, ${bYear(ymd)}`; }
+
+function bParseDT(dtStr) {
+  // dtStr = "YYYY-MM-DDTHH:MM" (datetime-local)
+  const [date, time] = dtStr.split('T');
+  const [hh, mm] = time.split(':').map(Number);
+  return { date, hh, mm };
+}
+
+function bFormatTime12(hh, mm) {
+  const ampm = hh < 12 ? 'AM' : 'PM';
+  const h = hh % 12 || 12;
+  const m = String(mm).padStart(2, '0');
+  return `${h}:${m} ${ampm} EST`;
+}
+
+function bSubtract15(hh, mm) {
+  let m = hh * 60 + mm - 15;
+  return { hh: Math.floor(m / 60), mm: m % 60 };
+}
+
+function bAsanaDueAt(ymd, hh, mm) {
+  const offsetMin = new Date().getTimezoneOffset();
+  const sign = offsetMin > 0 ? '-' : '+';
+  const oh = String(Math.floor(Math.abs(offsetMin) / 60)).padStart(2, '0');
+  const om = String(Math.abs(offsetMin) % 60).padStart(2, '0');
+  const tz = `${sign}${oh}:${om}`;
+  const h = String(hh).padStart(2, '0');
+  const m = String(mm).padStart(2, '0');
+  return `${ymd}T${h}:${m}:00.000${tz}`;
+}
+
+// ─── COPY BANK ───────────────────────────────────────────────────────────────
+
+const BCOPY = {
+T1: `Primer task del ciclo. Hazlo hoy, dos días antes de que abra el enrollment.
+
+Qué es calentarizar: programar por adelantado en Everfit todos los posts que se pueda, para que salgan solos en su fecha. Programa primero tus posts desde la cuenta del equipo, luego los de Bernardo desde su cuenta (tienes acceso; el solo aparece como autor).
+
+El limite de Everfit: Everfit solo deja programar aproximadamente un mes adelante desde hoy. Por eso los posts del final del challenge (Week 3, Day 21 y Day 22) caen fuera de esa ventana y NO se pueden programar en esta pasada. Son los posts de mayor peso emocional del challenge, asi que no se pueden perder.
+
+Como marcar:
+- Cada post que logres programar, marcalo como completado aqui en el board. Queda hecho.
+- Los posts marcados MANUAL dejalos SIN marcar a proposito. Necesitan un link que todavia no existe (las grabaciones de las calls y los links en vivo). Al quedar sin marcar, la notificacion reaparece el dia que toca publicarlos en vivo y te acuerdas de hacerlo.
+
+El segundo task: ya existe en este board un task llamado Calentarizacion final, fechado para cuando Everfit por fin alcance los posts del final. Cuando llegue ese dia, programa el resto. Trata ese recordatorio como no negociable: sin esa segunda pasada, los posts de cierre nunca salen.`,
+
+T2: `Segunda y ultima pasada de calentarizacion. La ventana de Everfit ya alcanza los posts del final del challenge que quedaron fuera en la primera pasada.
+
+Programa en Everfit los posts restantes: Week 3, Day 21 y Day 22. Marca cada uno como completado aqui cuando lo programes. Deja sin marcar los que sigan siendo MANUAL (los que necesitan link en vivo o grabacion).
+
+Con esto el board queda completo y todos los posts schedulables estan programados.`,
+
+T3: `Recordatorio: hoy es Day 2. Revisa en el dashboard quiénes no han agendado su Clarity Call todavía y envíales un DM personalizado con el link de booking.`,
+
+P01: `Welcome to the Strong Standard 21-Day Challenge forum!
+
+Before things officially get started, we want to make sure you know exactly how this works so you feel confident from Day 1.
+
+Here's what you get:
+
+  - Personalized calorie and protein targets
+  - 3-4 day strength training plan (gym and home versions available)
+  - Weekly educational videos on nutrition, training, and body composition
+  - Weekly coaching calls, technique feedback, and this forum
+
+Your training plan and nutrition targets will be ready inside Everfit once you complete your onboarding tasks.
+
+Weekly Coaching Calls happen every Wednesday at 6:30 PM EST and Saturday at 10:00 AM EST. Each call is led by one of our coaches, so throughout the challenge you'll get to learn from the whole team. Zoom link: [ZOOM LINK]
+
+Technique Feedback runs every week. Coach Jackie opens a thread every Thursday where you can post up to 3 exercise videos. Feedback gets delivered on Friday.
+
+How to navigate the app: here's a quick video showing you where to find everything inside Everfit: [PASTE LOOM LINK]
+
+If you have a question and can't find the answer here, post it in the forum. A coach checks this space every single day, and chances are someone else is wondering the same thing.
+
+[PIN THIS. Update specific dates each run in this post only.]`,
+
+P02: `Hey everyone!
+
+If we haven't met yet, I'm Bernardo, co-founder and Head Coach at Strong Standard.
+
+Really happy you're here, and honestly, excited for you to go through these next 21 days with us.
+
+I wanted to give you a little context before we get started, because I know a challenge can sometimes feel like "okay, here we go again, another 21 days where I have to be perfect or I failed." And that's not what we're doing here.
+
+The goal of this challenge is to give you structure, clarity, and real support. You're going to have nutrition targets, a training program, weekly coaching calls, technique feedback, and this forum, so you're not figuring everything out on your own.
+
+And that matters, because at some point life is going to do what life does.
+
+Your schedule gets weird. You miss a workout. You have a meal that doesn't go as planned. That's normal. That's going to happen.
+
+What I don't want is for you to disappear for a few days and convince yourself you already messed everything up. That's exactly why this forum exists.
+
+This challenge is run by our whole coaching team. Different coaches lead the weekly calls, review your technique videos, and jump in here every day to answer questions. You're not getting one coach, you're getting all of us.
+
+So let's start right now. Drop a comment below and tell me one thing you'd love to feel, do, or improve by Day 21.
+
+It can be confidence, energy, consistency, something with your nutrition, your workouts, anything at all. No right or wrong answer. I read every single one.
+
+See you at the Kickoff Call!`,
+
+P03: `While you're getting set up this week, we want you to know who's in your corner.
+
+This challenge is backed by a full coaching team: Dr. Brent, Coach Ceci, Coach Miguel, Coach Jackie, Joey, and Bernardo, our Head Coach. They'll be leading your weekly calls, reviewing your technique videos, and jumping into the forum to answer your questions throughout the challenge.
+
+You'll also see me around here every day. I help keep everything running day to day, so if you post a question, share a win, or hit a snag with the app, I'm usually the one who'll point you in the right direction or get the right coach to weigh in.
+
+You'll meet the coaches properly on Day 1. For now: get your onboarding done, say hi in the forum, and bring your questions. We're really glad you're here.`,
+
+P04: `Hey! If you joined in the last couple of days and haven't had a chance to go through everything yet, here's where to start.
+
+Complete your onboarding tasks inside Everfit. They take about 10 minutes and they make Day 1 a whole lot smoother.
+
+Register for the Kickoff Call if you haven't already. This is where everything gets explained: your targets, your training plan, how to use the forum, and how to get the most out of the next 21 days. If you can't make it live, watch the recording before Day 1.
+
+And introduce yourself in the forum if you haven't yet! Tell us where you're from and what you're hoping to get out of these 21 days. This community is honestly one of the best parts of the challenge.
+
+[Covers people who purchased days after enrollment opened.]`,
+
+P05: `We're just a few days out from Day 1, so this is your friendly nudge to get the last setup steps done if you haven't yet.
+
+Two things to check off:
+
+  - Fill out your intake form. This is what the team uses to set your nutrition targets and training plan, so the sooner it's done, the sooner we can get you fully set up before Monday.
+  - Complete your onboarding tasks inside Everfit so the app is ready to go on Day 1.
+
+If you've already done both, you're all set, nothing to do here.
+
+@[tag anyone who hasn't completed the intake form]
+
+If you're not sure whether you're done or you're stuck on something, just reply here and I'll help you sort it out.
+
+[VA tags participants who haven't completed the intake form, pulled from the dashboard / Everfit.]`,
+
+P06: `One of the questions we get the most as coaches: "what supplements should I be taking?"
+
+So instead of giving you a quick answer that fits in a comment, we built something better.
+
+Inside the Resource Collection you'll now find a Supplements section. Each guide breaks down one supplement: what the science actually says, who benefits from it, who doesn't need it, and how to take it if you decide it's right for you.
+
+No hype, no miracle claims. Just the evidence, explained in plain language.
+
+You can find it here: On Demand tab, Resource Collection, 21 Day Challenge, Supplements
+
+One thing I want to be clear about: supplements are the last 5%. Nothing in there matters more than your calories, your protein, your training, and your sleep. But if you've got those moving in the right direction and you're curious about what's actually worth your money, these guides will save you a lot of confusion.
+
+Heads up: the guides include links to the brand we trust for quality, and if you buy through them we earn a small commission at no extra cost to you. We only recommend what we'd take ourselves.
+
+Start with the one called "Do You Even Need Supplements?" It'll tell you in 5 minutes where everything else fits.
+
+[Holiday exception: in July, this post moves to Day -5 (Wednesday) so it doesn't stack on the Friday recording. Confirm the Supplements section exists in Everfit before this post goes live.]`,
+
+P07: `We're starting in 15 minutes!
+
+Kickoff Call, [TIME] EST: [PASTE ZOOM LINK]
+
+See you inside!`,
+
+P08: `Really great call today. Loved the energy in that room.
+
+If you missed it, don't worry. The recording goes up tomorrow morning. Watch it before Day 1 on Monday so you're not starting cold.
+
+In the meantime, make sure your onboarding tasks are done inside Everfit. Your targets and training plan are already in there waiting for you.
+
+Day 1 is Monday. We're almost there!
+
+[Post manually after the call ends.]`,
+
+P09: `The Kickoff Call recording is up!
+
+[PASTE RECORDING LINK]
+
+Watch it today so you show up ready tomorrow. We also added it as a task inside Everfit so you can check it off once you've watched it.
+
+If anything's unclear after watching, drop your question in the forum. We'll get it answered before Day 1.
+
+See you tomorrow!
+
+[Post when the recording is ready.]`,
+
+P10: `Day 1 is here!! Let's go.
+
+I'm so excited to officially get started with you all!
+
+Today does not need to be perfect. Please remember that. The goal today is to get moving, build momentum, and take the first step instead of overthinking everything.
+
+Three things to focus on today:
+
+  - Finish any remaining onboarding tasks if you still have some
+  - Get your workout in if you can
+  - Upload your initial progress pictures by end of day, these are required for prize eligibility!
+
+And if anything feels confusing, post it here. Don't sit there wondering if you're the only one confused about something, because I promise you're probably not. And even if you were, that's completely fine!
+
+That's what we're here for.
+
+Let's have an awesome Day 1!`,
+
+P11: `You've already heard from Bernardo. Now meet the rest of the team that's going to be with you for the next 21 days!
+
+Throughout the challenge, our coaches will be leading the weekly calls, reviewing your technique videos, and answering your questions right here in the forum.
+
+Coaches, you're up: drop a comment below and introduce yourselves.
+
+And everyone else, when you see a coach's intro, say hi! These are the people in your corner for the next three weeks.
+
+[This post triggers each coach's task to introduce themselves in the comments on Day 1. Verification: 6 coach comments visible.]`,
+
+P12: `Hey! Quick note for anyone who hasn't booked their Clarity and Next Steps Call yet.
+
+This is a free 20-minute call where we sit down with you one on one, talk about what's been holding you back, and help you figure out your best next step after the challenge.
+
+It's not a sales call. It's just coaching.
+
+Spots are limited, so if you want one, grab it now while there's still availability!
+
+[BOOKING LINK]
+
+@[tag non-bookers individually]
+
+[Tag each non-booker by name, pulled from the dashboard.]`,
+
+P13: `Hey everyone!
+
+Just a reminder that we have our coaching call tonight at 6:30 PM EST.
+
+Bring a question, a win, or something you've been stuck on. If you can't make it live, drop your question in the forum before 6:00 PM and we'll make sure it gets covered on the call.
+
+Link to join: [ZOOM LINK]
+
+See you tonight!`,
+
+P14: `Starting in 15 minutes!
+
+Wednesday Coaching Call, 6:30 PM EST: [ZOOM LINK]
+
+See you inside!`,
+
+P15: `Technique Feedback is open for Week 1!
+
+Post up to 3 exercise videos in this thread by end of day today and I'll review them all and have feedback ready for you tomorrow.
+
+A couple of quick notes:
+
+  - Only videos posted in this thread get feedback, so make sure they go here and not somewhere else in the forum
+  - Up to 3 videos total, not per exercise
+
+Looking forward to seeing what you've got!`,
+
+P16: `The Wednesday call recording is up!
+
+[PASTE RECORDING LINK]
+
+If you missed it or want to go back and rewatch something, it's all in there. Drop any follow-up questions in the forum.
+
+[Post the day after each Wednesday call.]`,
+
+P17: `Week 1 technique feedback is up!
+
+Lower Body: [LOOM LINK]
+
+Upper Body: [LOOM LINK]
+
+Watch your feedback and pick one thing to focus on in your next session. If you have any questions about what I flagged or want me to clarify something, just reply here!
+
+[Post with Loom links when ready.]`,
+
+P18: `Hey everyone!
+
+Just a reminder that we have a coaching call this morning at 10:00 AM EST.
+
+Bring a question, something you want to troubleshoot, or a win you want to share. If you can't make it live, drop your question in the forum before 9:30 AM and we'll cover it on the call.
+
+Link to join: [ZOOM LINK]`,
+
+P19: `Starting in 15 minutes!
+
+Saturday Coaching Call, 10:00 AM EST: [ZOOM LINK]
+
+See you inside!`,
+
+P20: `The Saturday call recording is up!
+
+[PASTE RECORDING LINK]
+
+If you missed it or want to rewatch anything, it's all there. Drop any follow-up questions in the forum!
+
+[Post the day after each Saturday call.]`,
+
+P21: `Week 2 is here!!
+
+First of all, I'm proud of you for getting through Week 1. Starting something new and actually sticking with it through the first week is a bigger deal than it sounds, especially when you're adding workouts, nutrition targets, calls, and everything else on top of your normal life.
+
+Now, this is usually the part where the excitement from the first few days starts to calm down a little bit. And that's completely okay! That's actually where this challenge starts to become more valuable, because anyone can feel motivated for a few days. The real skill is learning how to keep going when it feels more like routine than excitement.
+
+But before we dive into Week 2, I want you to take a second to look back. I'd love to hear from you.
+
+What was the biggest win you had this past week? And I don't just mean the gym or the scale. What's something that shifted for you, even a little, that you didn't expect when you signed up?
+
+Be honest and take your time with it. The people who read your answer might be feeling exactly what you felt a week ago.
+
+This week, keep your workouts going, aim for your targets most days, and stay active in here. And if something isn't working, say something before you go quiet. That's what I'm here for.
+
+Let's have a strong Week 2!`,
+
+P22: `Hey everyone!
+
+Coaching call is tonight at 6:30 PM EST!
+
+Link to join: [ZOOM LINK]
+
+And quick note while I have you here: if the last couple of days haven't been great, that's okay. Don't try to make up for lost days and don't feel like you need to restart.
+
+Just come back today. One solid day is enough to get back on track.
+
+Bring whatever you're working through to the call tonight. That's exactly what it's for.`,
+
+P23: `Starting in 15 minutes!
+
+Wednesday Coaching Call, 6:30 PM EST: [ZOOM LINK]
+
+See you inside!`,
+
+P24: `Technique Feedback is open for Week 2!
+
+Post up to 3 exercise videos in this thread by end of day today. I'm especially excited to see how things have progressed since last week!
+
+Same as before:
+
+  - Only videos posted in this thread get feedback
+  - Up to 3 videos total, not per exercise
+
+Let's see that progress.`,
+
+P25: `The Wednesday call recording is up!
+
+[PASTE RECORDING LINK]
+
+If you missed it or want to go back and rewatch something, it's all in there. Drop any follow-up questions in the forum.
+
+[Post the day after each Wednesday call.]`,
+
+P26: `Week 2 technique feedback is up!
+
+Lower Body: [LOOM LINK]
+
+Upper Body: [LOOM LINK]
+
+Watch your feedback and pick one thing to focus on this week. Questions about anything I flagged? Just reply here!
+
+[Post with Loom links when ready.]`,
+
+P27: `Hey everyone!
+
+Just a reminder that we have a coaching call this morning at 10:00 AM EST.
+
+Bring a question, something you want to troubleshoot, or a win you want to share. If you can't make it live, drop your question in the forum before 9:30 AM and we'll cover it on the call.
+
+Link to join: [ZOOM LINK]`,
+
+P28: `Starting in 15 minutes!
+
+Saturday Coaching Call, 10:00 AM EST: [ZOOM LINK]
+
+See you inside!`,
+
+P29: `The Saturday call recording is up!
+
+[PASTE RECORDING LINK]
+
+If you missed it or want to rewatch anything, it's all there. Drop any follow-up questions in the forum!
+
+[Post the day after each Saturday call.]`,
+
+P30: `Week 3!! Last one!
+
+I can't believe we're already here, honestly. It feels like we just started.
+
+Before we close this out, I want you to take a real moment and look back at where you were on Day 1. Not where you wish you were. Where you actually started.
+
+So let's go deeper this week.
+
+What's something you didn't think you were capable of when you started, that you think about differently now? And how does that change feel for you?
+
+Reading these has honestly been one of my favorite parts of this challenge. Your answer reminds everyone else what's actually possible here, especially the people still pushing through the hard days.
+
+Two important things to keep on your radar this week:
+
+  - Final progress pictures are due by the end of Day 21 (Sunday)
+  - The Closing Call is the Monday after Day 21 at 6:30 PM EST, this one is required for prize eligibility!
+
+Keep your workouts going, stay active in the forum, and let's finish the way you said you would when you first joined. One more week. Let's make it count.`,
+
+P31: `Last Wednesday call of the challenge is tonight at 6:30 PM EST!
+
+If you've been sitting on a question for the past few days, tonight is the night to bring it. Don't leave it for after the challenge.
+
+Can't make it? Drop your question in the forum before 6:00 PM and we'll cover it on the call.
+
+Join here: [ZOOM LINK]`,
+
+P32: `Starting in 15 minutes!
+
+Wednesday Coaching Call, 6:30 PM EST: [ZOOM LINK]
+
+See you inside!`,
+
+P33: `Last technique feedback session of the challenge!
+
+Post up to 3 exercise videos in this thread by end of day today. I really want to see where you've landed compared to Week 1.
+
+Same rules:
+
+  - Only videos posted in this thread get feedback
+  - Up to 3 videos total
+
+This is your last chance to get feedback before the challenge ends, so use it!`,
+
+P34: `The Wednesday call recording is up!
+
+[PASTE RECORDING LINK]
+
+If you missed it or want to rewatch anything, it's all in there.
+
+[Post the day after each Wednesday call.]`,
+
+P35: `Week 3 technique feedback is up!
+
+Lower Body: [LOOM LINK]
+
+Upper Body: [LOOM LINK]
+
+Take a moment to look back at where you started and where you are now. The progress is real, even when it doesn't always feel like it.
+
+Take this feedback with you into whatever comes next.
+
+[Post with Loom links when ready.]`,
+
+P36: `The last coaching call of the challenge is today at 10:00 AM EST!
+
+Bring your final questions, anything you want to go over before Day 21, or just come to close things out with the group.
+
+Drop your questions in the forum if you can't make it live!
+
+Join here: [ZOOM LINK]`,
+
+P37: `Starting in 15 minutes!
+
+Saturday Coaching Call, 10:00 AM EST: [ZOOM LINK]
+
+See you inside!`,
+
+P38: `The Saturday call recording is up!
+
+[PASTE RECORDING LINK]
+
+Drop any follow-up questions in the forum!
+
+[Post the day after each Saturday call.]`,
+
+P39: `Today is Day 21!
+
+Really proud of everyone who has stayed consistent throughout this challenge. It hasn't been easy, and you showed up anyway. That matters.
+
+Before the day is over, two things:
+
+Final progress pictures need to be uploaded today. This is required if you want to be eligible for prizes, so please don't let the day go by without doing this!
+
+The Closing Call is tomorrow, Monday, at 6:30 PM EST. Also required for prize eligibility. The Zoom link goes up in the morning.
+
+That's it. Get your pictures in and show up tomorrow.
+
+You've done the work. Let's finish it right.`,
+
+P40: `The Closing Call is tonight at 6:30 PM EST!
+
+Here's the Zoom link: [PASTE ZOOM LINK]
+
+This is where we celebrate everything you've done over the last 21 days, talk about what's next, and close out the challenge the right way.
+
+Don't skip this one. See you tonight!
+
+[Post with Zoom link in the morning.]`,
+
+P41: `Starting in 15 minutes!
+
+Closing Call, 6:30 PM EST: [PASTE ZOOM LINK]
+
+See you inside!`,
+
+P42: `And just like that, the 21-Day Challenge is officially done.
+
+If you showed up, followed the plan, and stayed active in this forum when things got hard, you did something real. Not everyone who starts a challenge finishes it. You did.
+
+Take what you built here and keep going. The habits, the structure, the consistency, that's all yours now. It doesn't disappear when the challenge ends.
+
+For anyone who wants to keep building on this with more personalized coaching and support, we'll be sharing how to do that separately. No pressure at all. But the door is open if you're ready.
+
+Really proud of this group. Thank you for trusting us with your 21 days.
+
+[Post manually after the Closing Call ends.]`
+};
+
+// ─── DATE ENGINE ─────────────────────────────────────────────────────────────
+
+function computeChallengeDates(anchors) {
+  const { day1, enrollment_open, kickoff_date, closing_date } = anchors;
+  const d1 = day1;
+  const eOpen = enrollment_open;
+  const kickoffDT = bParseDT(kickoff_date);
+  const closingDT = bParseDT(closing_date);
+  const day21 = bAddDays(d1, 20);
+  const day22 = bAddDays(d1, 21);
+
+  // T1 and T2
+  const t1Date = bAddDays(eOpen, -2);
+  const t2Date = bAddDays(t1Date, 30);
+
+  // P07: kickoff date, kickoff time - 15 min
+  const p07time = bSubtract15(kickoffDT.hh, kickoffDT.mm);
+  // P41: day22, closing time - 15 min
+  const p41time = bSubtract15(closingDT.hh, closingDT.mm);
+
+  const items = [
+    // Tasks
+    { id:'T1', type:'TASK', section:'Calentarización', date:t1Date, hh:null, mm:null, title:'Calentarización inicial', author:'Gabi', sched:'TASK', flag:false },
+    { id:'T2', type:'TASK', section:'Calentarización', date:t2Date, hh:null, mm:null, title:'Calentarización final',   author:'Gabi', sched:'TASK', flag:false },
+    // Week 0
+    { id:'P01', type:'POST', section:'Pre-Challenge', date:bAddDays(eOpen,-1), hh:null, mm:null, title:'PINNED: How this challenge works', author:'Challenge Team', sched:'SCHED', flag:false },
+    { id:'P02', type:'POST', section:'Pre-Challenge', date:eOpen,              hh:null, mm:null, title:'Welcome from Bernardo',            author:'Bernardo',       sched:'SCHED', flag:false },
+    { id:'P03', type:'POST', section:'Pre-Challenge', date:bAddDays(eOpen, 1), hh:null, mm:null, title:'The team behind your challenge',   author:'Challenge Team', sched:'SCHED', flag:false },
+    { id:'P04', type:'POST', section:'Pre-Challenge', date:bAddDays(eOpen, 2), hh:null, mm:null, title:'If you just joined, start here',   author:'Challenge Team', sched:'SCHED', flag:false },
+    { id:'P05', type:'POST', section:'Pre-Challenge', date:bAddDays(d1,  -5),  hh:null, mm:null, title:'Quick check before we start',     author:'Challenge Team', sched:'SCHED', flag:false },
+    { id:'P06', type:'POST', section:'Pre-Challenge', date:bAddDays(d1,  -3),  hh:null, mm:null, title:'The truth about supplements',     author:'Bernardo',       sched:'SCHED', flag:true  },
+    // Kickoff (family C)
+    { id:'P07', type:'POST', section:'Pre-Challenge', date:kickoffDT.date, hh:p07time.hh, mm:p07time.mm, title:'15-min reminder — Kickoff Call', author:'Challenge Team', sched:'MANUAL', flag:true },
+    { id:'P08', type:'POST', section:'Pre-Challenge', date:kickoffDT.date, hh:null, mm:null, title:'Thanks + recording tomorrow',         author:'Challenge Team', sched:'MANUAL', flag:true },
+    { id:'P09', type:'POST', section:'Pre-Challenge', date:bAddDays(kickoffDT.date, 1), hh:null, mm:null, title:'Kickoff Call recording', author:'Challenge Team', sched:'MANUAL', flag:false },
+    // T3
+    { id:'T3', type:'TASK', section:'Week 1', date:bAddDays(d1, 1), hh:null, mm:null, title:'Recordatorio DM Day 2 — CC booking', author:'Gabi', sched:'TASK', flag:false },
+    // Week 1
+    { id:'P10', type:'POST', section:'Week 1', date:d1,               hh:9,  mm:0,  title:'Day 1 is here',                           author:'Bernardo',       sched:'SCHED',  flag:false },
+    { id:'P11', type:'POST', section:'Week 1', date:d1,               hh:11, mm:0,  title:'Meet Your Coaching Team',                 author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P12', type:'POST', section:'Week 1', date:bAddDays(d1,1),   hh:null,mm:null,title:'Clarity Call reminder for non-bookers', author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P13', type:'POST', section:'Week 1', date:bAddDays(d1,2),   hh:null,mm:null,title:'Coaching call tonight (W1 Wed)',        author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P14', type:'POST', section:'Week 1', date:bAddDays(d1,2),   hh:18, mm:15, title:'15-min reminder Wednesday Call W1',      author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P15', type:'POST', section:'Week 1', date:bAddDays(d1,3),   hh:9,  mm:0,  title:'Technique Feedback Thread W1',           author:'Jackie',         sched:'SCHED',  flag:false },
+    { id:'P16', type:'POST', section:'Week 1', date:bAddDays(d1,3),   hh:null,mm:null,title:'Recording Wednesday Call W1',          author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P17', type:'POST', section:'Week 1', date:bAddDays(d1,4),   hh:12, mm:0,  title:'Technique feedback ready W1',            author:'Jackie',         sched:'MANUAL', flag:false },
+    { id:'P18', type:'POST', section:'Week 1', date:bAddDays(d1,5),   hh:null,mm:null,title:'Coaching call today (W1 Sat)',         author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P19', type:'POST', section:'Week 1', date:bAddDays(d1,5),   hh:9,  mm:45, title:'15-min reminder Saturday Call W1',      author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P20', type:'POST', section:'Week 1', date:bAddDays(d1,6),   hh:null,mm:null,title:'Recording Saturday Call W1',          author:'Challenge Team', sched:'MANUAL', flag:false },
+    // Week 2
+    { id:'P21', type:'POST', section:'Week 2', date:bAddDays(d1,7),   hh:9,  mm:0,  title:'Week 2 is here',                                     author:'Bernardo',       sched:'SCHED',  flag:false },
+    { id:'P22', type:'POST', section:'Week 2', date:bAddDays(d1,9),   hh:null,mm:null,title:'Coaching call tonight + come back (W2 Wed)',         author:'Bernardo',       sched:'SCHED',  flag:false },
+    { id:'P23', type:'POST', section:'Week 2', date:bAddDays(d1,9),   hh:18, mm:15, title:'15-min reminder Wednesday Call W2',                   author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P24', type:'POST', section:'Week 2', date:bAddDays(d1,10),  hh:9,  mm:0,  title:'Technique Feedback Thread W2',                        author:'Jackie',         sched:'SCHED',  flag:false },
+    { id:'P25', type:'POST', section:'Week 2', date:bAddDays(d1,10),  hh:null,mm:null,title:'Recording Wednesday Call W2',                       author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P26', type:'POST', section:'Week 2', date:bAddDays(d1,11),  hh:12, mm:0,  title:'Technique feedback ready W2',                         author:'Jackie',         sched:'MANUAL', flag:false },
+    { id:'P27', type:'POST', section:'Week 2', date:bAddDays(d1,12),  hh:null,mm:null,title:'Coaching call today (W2 Sat)',                      author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P28', type:'POST', section:'Week 2', date:bAddDays(d1,12),  hh:9,  mm:45, title:'15-min reminder Saturday Call W2',                   author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P29', type:'POST', section:'Week 2', date:bAddDays(d1,13),  hh:null,mm:null,title:'Recording Saturday Call W2',                       author:'Challenge Team', sched:'MANUAL', flag:false },
+    // Week 3
+    { id:'P30', type:'POST', section:'Week 3', date:bAddDays(d1,14),  hh:9,  mm:0,  title:'Week 3 last one',                                     author:'Bernardo',       sched:'SCHED',  flag:false },
+    { id:'P31', type:'POST', section:'Week 3', date:bAddDays(d1,16),  hh:null,mm:null,title:'Last Wednesday call of the challenge',              author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P32', type:'POST', section:'Week 3', date:bAddDays(d1,16),  hh:18, mm:15, title:'15-min reminder Wednesday Call W3',                   author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P33', type:'POST', section:'Week 3', date:bAddDays(d1,17),  hh:9,  mm:0,  title:'Technique Feedback Thread W3',                        author:'Jackie',         sched:'SCHED',  flag:false },
+    { id:'P34', type:'POST', section:'Week 3', date:bAddDays(d1,17),  hh:null,mm:null,title:'Recording Wednesday Call W3',                       author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P35', type:'POST', section:'Week 3', date:bAddDays(d1,18),  hh:12, mm:0,  title:'Technique feedback ready W3',                         author:'Jackie',         sched:'MANUAL', flag:false },
+    { id:'P36', type:'POST', section:'Week 3', date:bAddDays(d1,19),  hh:null,mm:null,title:'Last Saturday call',                                author:'Challenge Team', sched:'SCHED',  flag:false },
+    { id:'P37', type:'POST', section:'Week 3', date:bAddDays(d1,19),  hh:9,  mm:45, title:'15-min reminder Saturday Call W3',                   author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P38', type:'POST', section:'Week 3', date:bAddDays(d1,20),  hh:null,mm:null,title:'Recording Saturday Call W3',                       author:'Challenge Team', sched:'MANUAL', flag:false },
+    // Day 21 & Closing
+    { id:'P39', type:'POST', section:'Day 21 & Closing', date:bAddDays(d1,20),  hh:10, mm:0,  title:'Day 21 two things',             author:'Bernardo',       sched:'SCHED',  flag:false },
+    { id:'P40', type:'POST', section:'Day 21 & Closing', date:bAddDays(d1,21),  hh:null,mm:null,title:'Closing Call is tonight',     author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P41', type:'POST', section:'Day 21 & Closing', date:bAddDays(d1,21),  hh:p41time.hh, mm:p41time.mm, title:'15-min reminder Closing Call', author:'Challenge Team', sched:'MANUAL', flag:false },
+    { id:'P42', type:'POST', section:'Day 21 & Closing', date:bAddDays(d1,21),  hh:null,mm:null,title:'That\'s a wrap',             author:'Bernardo',       sched:'MANUAL', flag:false },
+  ];
+
+  // Sort by date, then by hh (null = end of day = 23:59 for sort)
+  items.sort((a,b) => {
+    const da = a.date, db = b.date;
+    if (da < db) return -1;
+    if (da > db) return 1;
+    const ta = a.hh !== null ? a.hh * 60 + (a.mm||0) : 1440;
+    const tb = b.hh !== null ? b.hh * 60 + (b.mm||0) : 1440;
+    return ta - tb;
+  });
+
+  return { items, d1, eOpen, kickoffDT, closingDT, day21, day22, t1Date, t2Date };
+}
+
+// ─── VALIDATION ──────────────────────────────────────────────────────────────
+
+function validateAnchors(anchors) {
+  const { day1, enrollment_open, enrollment_close, kickoff_date, closing_date } = anchors;
+  const errors = [], warnings = [];
+  if (!day1) { errors.push('Falta Day 1'); return { errors, warnings }; }
+  if (!kickoff_date) { errors.push('Falta Kickoff date'); return { errors, warnings }; }
+  if (!closing_date) { errors.push('Falta Closing date'); return { errors, warnings }; }
+
+  const d = bDateObj(day1);
+  if (d.getDay() !== 1) warnings.push('Day 1 no cae en lunes — verifica que sea correcto');
+
+  if (kickoff_date >= day1 + 'T') errors.push('Kickoff debe ser ANTES de Day 1');
+
+  if (enrollment_open && enrollment_close && enrollment_open >= enrollment_close)
+    warnings.push('Enrollment open debe ser antes de enrollment close');
+
+  const day22 = bAddDays(day1, 21);
+  const closDate = closing_date.slice(0,10);
+  if (closDate !== day22) warnings.push(`Closing date (${closDate}) no coincide con Day 22 calculado (${day22}) — verifica`);
+
+  return { errors, warnings };
+}
+
+// ─── PREVIEW ─────────────────────────────────────────────────────────────────
+
+async function handleBPreviewBtn() {
+  const btn = document.getElementById('bPreviewBtn');
+  const status = document.getElementById('bAutoStatus');
+  const result = document.getElementById('bPreviewResult');
+
+  const anchors = {
+    day1: document.getElementById('day1')?.value,
+    enrollment_open: document.getElementById('enrollment_open')?.value,
+    enrollment_close: document.getElementById('enrollment_close')?.value,
+    kickoff_date: document.getElementById('kickoff_date')?.value,
+    closing_date: document.getElementById('closing_date')?.value
+  };
+
+  const { errors, warnings } = validateAnchors(anchors);
+  if (errors.length) {
+    status.textContent = 'Error: ' + errors.join('; ');
+    status.style.color = '#c0392b';
+    return;
+  }
+
+  bBtnEnable(btn, false);
+  bBtnText('bPreviewBtnText', 'Calculando...');
+  status.textContent = '';
+  status.style.color = '';
+
+  const { items, d1, eOpen, kickoffDT, closingDT, day21, day22, t1Date, t2Date } = computeChallengeDates(anchors);
+
+  const kickoffTimeStr = bFormatTime12(kickoffDT.hh, kickoffDT.mm);
+  const closingTimeStr = bFormatTime12(closingDT.hh, closingDT.mm);
+  const monthYear = `${bSpanishMonthCap(d1)} ${bYear(d1)}`;
+
+  let html = '<div style="font-weight:600;margin-bottom:8px;">Anclaje resuelto</div>';
+  html += `Day 1 = ${bPreviewDate(d1)} · Day 21 = ${bPreviewDate(day21)} · Day 22 = ${bPreviewDate(day22)}<br>`;
+  html += `Kickoff = ${bPreviewDate(kickoffDT.date)} ${kickoffTimeStr} · Closing = ${bPreviewDate(closingDT.date)} ${closingTimeStr}<br>`;
+  html += `Calentarización 1 = ${bPreviewDate(t1Date)} · Calentarización 2 = ${bPreviewDate(t2Date)}<br>`;
+  if (anchors.enrollment_open) html += `Enrollment abre = ${bPreviewDate(eOpen)}`;
+  if (anchors.enrollment_close) html += ` · cierra = ${bPreviewDate(anchors.enrollment_close)}`;
+
+  if (warnings.length) {
+    html += '<div style="margin-top:8px;color:#e67e22;">';
+    warnings.forEach(w => { html += `⚠ ${w}<br>`; });
+    html += '</div>';
+  }
+
+  html += `<div style="font-weight:600;margin:12px 0 4px;">Board y miembros</div>`;
+  html += `Board: 21DC Posts &amp; Ops (${monthYear}) · Invita a: Bernardo, Gabi, Jackie<br>`;
+
+  html += `<div style="font-weight:600;margin:12px 0 4px;">45 ítems en orden cronológico</div>`;
+  let currentSection = '';
+  items.forEach(it => {
+    if (it.section !== currentSection) {
+      currentSection = it.section;
+      html += `<div style="margin-top:8px;font-weight:600;color:#2d6a4f;">— ${currentSection} —</div>`;
+    }
+    let timeStr = '';
+    if (it.hh !== null) timeStr = ` ${bFormatTime12(it.hh, it.mm)}`;
+    const flagMark = it.flag ? ' [REVISAR]' : '';
+    html += `${bPreviewDate(it.date)}${timeStr} · ${it.id} ${it.title} · ${it.author} · ${it.sched}${flagMark}<br>`;
+  });
+
+  result.innerHTML = html;
+  result.style.display = 'block';
+
+  bBtnEnable(document.getElementById('bCreateBtn'), true);
+  window._bLastAnchors = anchors;
+
+  bBtnEnable(btn, true);
+  bBtnText('bPreviewBtnText', 'Preview Asana board');
+  status.textContent = `Preview listo — ${items.length} ítems`;
+  status.style.color = '#27ae60';
+}
+
+// ─── ASANA HELPERS ────────────────────────────────────────────────────────────
+
+async function asanaReq(token, method, path, body) {
+  const opts = {
+    method,
+    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/json' }
+  };
+  if (body) opts.body = JSON.stringify({ data: body });
+  const res = await fetch(`https://app.asana.com/api/1.0${path}`, opts);
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.errors?.[0]?.message || `Asana error ${res.status}`);
+  return json;
+}
+
+async function asanaGetWorkspace(token) {
+  const me = await asanaReq(token, 'GET', '/users/me?opt_fields=workspaces.gid,workspaces.name,workspaces.is_organization');
+  return me.data.workspaces[0];
+}
+
+async function asanaGetTeam(token, wsGid) {
+  try {
+    const res = await asanaReq(token, 'GET', `/workspaces/${wsGid}/teams?limit=1&opt_fields=gid,name`);
+    if (res.data && res.data.length > 0) return res.data[0].gid;
+  } catch(e) {}
+  return null;
+}
+
+async function asanaGetUserGids(token, wsGid, emails) {
+  const res = await asanaReq(token, 'GET', `/workspaces/${wsGid}/users?opt_fields=gid,email`);
+  const map = {};
+  (res.data || []).forEach(u => { if (u.email) map[u.email.toLowerCase()] = u.gid; });
+  const gids = {};
+  emails.forEach(e => { const g = map[e.toLowerCase()]; if (g) gids[e] = g; });
+  return gids;
+}
+
+async function asanaCreateProject(token, wsGid, name, teamGid) {
+  const body = { name, default_view: 'board', color: 'light-green' };
+  if (teamGid) body.team = teamGid;
+  else body.workspace = wsGid;
+  const res = await asanaReq(token, 'POST', '/projects', body);
+  return res.data.gid;
+}
+
+async function asanaAddMembers(token, projGid, memberGids) {
+  await asanaReq(token, 'POST', `/projects/${projGid}/addMembers`, { members: memberGids });
+}
+
+async function asanaCreateSection(token, projGid, name) {
+  const res = await asanaReq(token, 'POST', `/projects/${projGid}/sections`, { name });
+  return res.data.gid;
+}
+
+async function asanaCreateTask(token, projGid, sectionGid, name, notes, dueOn, dueAt, assigneeGid) {
+  const body = { name, notes, memberships: [{ project: projGid, section: sectionGid }] };
+  if (dueAt) body.due_at = dueAt;
+  else if (dueOn) body.due_on = dueOn;
+  if (assigneeGid) body.assignee = assigneeGid;
+  const res = await asanaReq(token, 'POST', '/tasks', body);
+  return res.data.gid;
+}
+
+// ─── CREATE ASANA BOARD ───────────────────────────────────────────────────────
+
+async function handleBCreateAsanaBtn() {
+  const btn = document.getElementById('bCreateBtn');
+  const status = document.getElementById('bAutoStatus');
+  const result = document.getElementById('bPreviewResult');
+
+  if (!window._bLastAnchors) { status.textContent = 'Haz Preview primero.'; return; }
+
+  const token = document.getElementById('asana_token')?.value?.trim();
+  if (!token) { status.textContent = 'Falta token de Asana.'; status.style.color='#c0392b'; return; }
+
+  const emailB = document.getElementById('asana_email_bernardo')?.value?.trim() || 'bernardo@strongstandard.com';
+  const emailJ = document.getElementById('asana_email_jackie')?.value?.trim()   || 'jackie@fit4lifeacademy.health';
+  const emailG = document.getElementById('asana_email_gabi')?.value?.trim()     || 'support@fit4lifeacademy.health';
+
+  bBtnEnable(btn, false);
+  bBtnText('bCreateBtnText', 'Working...');
+  status.textContent = 'Conectando con Asana...';
+  status.style.color = '';
+  result.innerHTML = '';
+  result.style.display = 'block';
+
+  const log = (msg) => { result.innerHTML += msg + '<br>'; status.textContent = msg; };
+
+  try {
+    const { items, d1, kickoffDT } = computeChallengeDates(window._bLastAnchors);
+    const monthYear = `${bSpanishMonthCap(d1)} ${bYear(d1)}`;
+    const projName = `21DC Posts & Ops (${monthYear})`;
+
+    log('Obteniendo workspace...');
+    const ws = await asanaGetWorkspace(token);
+    const wsGid = ws.gid;
+
+    log('Buscando team...');
+    const teamGid = await asanaGetTeam(token, wsGid);
+
+    log('Buscando usuarios...');
+    const allEmails = [emailB, emailJ, emailG];
+    const gidMap = await asanaGetUserGids(token, wsGid, allEmails);
+
+    log(`Creando proyecto: ${projName}...`);
+    const projGid = await asanaCreateProject(token, wsGid, projName, teamGid);
+
+    log('Agregando miembros...');
+    const memberGids = Object.values(gidMap).filter(Boolean);
+    if (memberGids.length > 0) await asanaAddMembers(token, projGid, memberGids);
+
+    log('Creando secciones...');
+    const sectionNames = ['Calentarización', 'Pre-Challenge', 'Week 1', 'Week 2', 'Week 3', 'Day 21 & Closing'];
+    const sections = {};
+    for (const sn of sectionNames) {
+      sections[sn] = await asanaCreateSection(token, projGid, sn);
+    }
+
+    log('Creando tareas...');
+    let created = 0, failed = 0;
+
+    const bernardoIds = new Set(['P02','P06','P10','P21','P22','P30','P39','P42']);
+    const jackieIds   = new Set(['P15','P17','P24','P26','P33','P35']);
+
+    for (const it of items) {
+      try {
+        const copy = BCOPY[it.id] || '';
+        const sectionGid = sections[it.section] || Object.values(sections)[0];
+
+        let assigneeGid = gidMap[emailG] || null; // default Gabi
+        if (bernardoIds.has(it.id)) assigneeGid = gidMap[emailB] || null;
+        else if (jackieIds.has(it.id)) assigneeGid = gidMap[emailJ] || null;
+
+        let dueAt = null, dueOn = null;
+        if (it.hh !== null) {
+          dueAt = bAsanaDueAt(it.date, it.hh, it.mm);
+        } else {
+          dueOn = it.date;
+        }
+
+        await asanaCreateTask(token, projGid, sectionGid, it.title, copy, dueOn, dueAt, assigneeGid);
+        created++;
+        if (created % 5 === 0) log(`Creados ${created}/45...`);
+      } catch(e) {
+        failed++;
+        log(`⚠ Error en ${it.id}: ${e.message}`);
+      }
+    }
+
+    log(`✓ Board creado: ${projName}`);
+    log(`✓ ${created} tareas creadas${failed ? `, ${failed} con error` : ''}`);
+    status.style.color = '#27ae60';
+
+    // Mark "Update post dates in Asana" as done
+    document.querySelectorAll('#recurrentesSection .b-task').forEach(el => {
+      if (el.querySelector('.task-text')?.textContent.includes('Update post dates in Asana')) {
+        el.classList.add('done');
+      }
+    });
+    saveBChecks(); updateBProgress();
+
+  } catch(e) {
+    log(`Error: ${e.message}`);
+    status.style.color = '#c0392b';
+  }
+
+  bBtnEnable(btn, true);
+  bBtnText('bCreateBtnText', 'Create board in Asana');
+}
+
+// ─── DOWNLOAD WELCOME GUIDE ───────────────────────────────────────────────────
+
+async function handleBDownloadGuideBtn() {
+  const btn = document.getElementById('bGuideBtn');
+  const status = document.getElementById('bAutoStatus');
+
+  const anchors = {
+    day1: document.getElementById('day1')?.value,
+    kickoff_date: document.getElementById('kickoff_date')?.value,
+    closing_date: document.getElementById('closing_date')?.value
+  };
+
+  if (!anchors.day1 || !anchors.kickoff_date || !anchors.closing_date) {
+    status.textContent = 'Completa Day 1, Kickoff y Closing antes de descargar.';
+    status.style.color = '#c0392b';
+    return;
+  }
+
+  bBtnEnable(btn, false);
+  bBtnText('bGuideBtnText', 'Generando...');
+  status.textContent = 'Cargando template...';
+  status.style.color = '';
+
+  try {
+    const d1 = anchors.day1;
+    const kickoffDT = bParseDT(anchors.kickoff_date);
+    const closingDT = bParseDT(anchors.closing_date);
+    const day21 = bAddDays(d1, 20);
+    const day22 = bAddDays(d1, 21);
+
+    const kickoffTimeStr = bFormatTime12(kickoffDT.hh, kickoffDT.mm);
+    const closingTimeStr = bFormatTime12(closingDT.hh, closingDT.mm);
+
+    const res = await fetch('./welcome-guide-template.html');
+    if (!res.ok) throw new Error('No se pudo cargar el template del Welcome Guide');
+    let html = await res.text();
+
+    // 1. Cover eyebrow: "July 6 – July 27, 2026"
+    const eyebrow = `${bFullMonth(d1)} ${bDayNum(d1)} – ${bFullMonth(day22)} ${bDayNum(day22)}, ${bYear(d1)}`;
+    html = html.replace(/(<div class="cover-eyebrow">)[^<]*(<\/div>)/, `$1${eyebrow}$2`);
+
+    // 2. Kickoff pill: "Sun July 5<br>10:00 AM EST"
+    const kickoffPill = `${bShortDay(kickoffDT.date)} ${bFullMonth(kickoffDT.date)} ${bDayNum(kickoffDT.date)}<br>${kickoffTimeStr}`;
+    html = html.replace(
+      /(<div class="p-label">Kickoff Call<\/div>\s*<div class="p-val">)[^<]*<br>[^<]*(<\/div>)/,
+      `$1${kickoffPill}$2`
+    );
+
+    // 3. Day 1 Starts pill: "Mon, July 6<br>2026"
+    const day1Pill = `${bShortDay(d1)}, ${bFullMonth(d1)} ${bDayNum(d1)}<br>${bYear(d1)}`;
+    html = html.replace(
+      /(<div class="p-label">Day 1 Starts<\/div>\s*<div class="p-val">)[^<]*<br>[^<]*(<\/div>)/,
+      `$1${day1Pill}$2`
+    );
+
+    // 4. Day 21 Ends pill: "Sun, July 26<br>2026"
+    const day21Pill = `${bShortDay(day21)}, ${bFullMonth(day21)} ${bDayNum(day21)}<br>${bYear(day21)}`;
+    html = html.replace(
+      /(<div class="p-label">Day 21 Ends<\/div>\s*<div class="p-val">)[^<]*<br>[^<]*(<\/div>)/,
+      `$1${day21Pill}$2`
+    );
+
+    // 5. Closing Call pill: "Mon July 27<br>6:30 PM EST"
+    const closingPill = `${bShortDay(day22)} ${bFullMonth(day22)} ${bDayNum(day22)}<br>${closingTimeStr}`;
+    html = html.replace(
+      /(<div class="p-label">Closing Call<\/div>\s*<div class="p-val">)[^<]*<br>[^<]*(<\/div>)/,
+      `$1${closingPill}$2`
+    );
+
+    // 6. Key Dates table — Kickoff Call row: "Sunday, July 5 · 10:00 AM EST"
+    const kdKickoff = `${bFullDay(kickoffDT.date)}, ${bFullMonth(kickoffDT.date)} ${bDayNum(kickoffDT.date)} · ${kickoffTimeStr}`;
+    html = html.replace(
+      /(<td>Kickoff Call<\/td>\s*<td>)[^<]*(<\/td>)/,
+      `$1${kdKickoff}$2`
+    );
+
+    // 7. Key Dates table — Day 1 row: "Monday, July 6, 2026" (em dash in label)
+    const kdDay1 = `${bFullDay(d1)}, ${bFullMonth(d1)} ${bDayNum(d1)}, ${bYear(d1)}`;
+    html = html.replace(
+      /(<td>Day 1 — Challenge Starts<\/td>\s*<td>)[^<]*(<\/td>)/,
+      `$1${kdDay1}$2`
+    );
+
+    // 8. Key Dates table — Day 21 row: "Sunday, July 26, 2026"
+    const kdDay21 = `${bFullDay(day21)}, ${bFullMonth(day21)} ${bDayNum(day21)}, ${bYear(day21)}`;
+    html = html.replace(
+      /(<td>Day 21 — Challenge Ends<\/td>\s*<td>)[^<]*(<\/td>)/,
+      `$1${kdDay21}$2`
+    );
+
+    // 9. Key Dates table — Closing Call row: "Monday, July 27 · 6:30 PM EST"
+    const kdClosing = `${bFullDay(day22)}, ${bFullMonth(day22)} ${bDayNum(day22)} · ${closingTimeStr}`;
+    html = html.replace(
+      /(<td>Closing Call<\/td>\s*<td>)[^<]*(<\/td>)/,
+      `$1${kdClosing}$2`
+    );
+
+    // 10. Onboarding initial pictures: "end of Day 1 (July 6)"
+    html = html.replace(
+      /(<li>Upload your <strong>initial progress pictures<\/strong> by end of Day 1 \()[^)]*/,
+      `$1${bFullMonth(d1)} ${bDayNum(d1)}`
+    );
+
+    // 11. Onboarding final pictures: "end of Day 21 (July 26)"
+    html = html.replace(
+      /(<li>Upload your <strong>final progress pictures<\/strong> by end of Day 21 \()[^)]*/,
+      `$1${bFullMonth(day21)} ${bDayNum(day21)}`
+    );
+
+    // Download
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Welcome-Guide-${bSpanishMonthCap(d1)}-${bYear(d1)}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    status.textContent = '✓ Welcome Guide descargado';
+    status.style.color = '#27ae60';
+
+    // Mark "Update Welcome Guide" as done
+    document.querySelectorAll('#recurrentesSection .b-task').forEach(el => {
+      if (el.querySelector('.task-text')?.textContent.includes('Update Welcome Guide')) {
+        el.classList.add('done');
+      }
+    });
+    saveBChecks(); updateBProgress();
+
+  } catch(e) {
+    status.textContent = `Error: ${e.message}`;
+    status.style.color = '#c0392b';
+  }
+
+  bBtnEnable(btn, true);
+  bBtnText('bGuideBtnText', 'Download Welcome Guide');
+}
+
 
   // ── INIT ──────────────────────────────────────────────────
   updateProgress(); updateBProgress(); updateEProgress();
