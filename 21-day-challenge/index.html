@@ -2155,7 +2155,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="#results" class="btn-outline">See Results</a>
       </div>
 
-      <p class="hero__start-date">Starts Jul 5, 2026</p>
+      <p class="hero__start-date">Starts Jul 6, 2026</p>
     </div>
   </div>
 </section>
@@ -3031,7 +3031,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   'use strict';
 
   // ── COUNTDOWN ─────────────────────────────────────
-  const deadline = new Date('2026-07-05T14:00:00Z');
+  const deadline = new Date('2026-07-06T14:00:00Z');
 
   function updateCountdown() {
     const diff = deadline - new Date();
@@ -3443,7 +3443,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         .catch(function(){ names=shuffle(fallback.slice()); })
         .finally(function(){
           if(!names.length) names=shuffle(fallback.slice());
-          setTimeout(function(){ showNext(); setInterval(showNext,120000); },20000);
+          setTimeout(function(){ showNext(); setInterval(showNext,300000); },20000);
         });
     }
     loadAndStart();
