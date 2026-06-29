@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D1A">
+<title>Why Your Diet Falls Apart on Weekends (And How to Fix It) | Strong Standard Coaching</title>
+<meta name="description" content="If your diet is clean Monday through Friday but falls apart on weekends, the problem isn't discipline. Here's the cycle that's causing it and how to break it.">
+<link rel="canonical" href="https://strongstandard.com/blog/why-diet-falls-apart-weekends/">
+<meta name="robots" content="index, follow">
+<script src="/scripts/utm-persist.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --ice:         #A8CDE0;
+  --page-bg:     #F7F5F0;
+  --surface:     #FFFFFF;
+  --ink:         #1A1A1A;
+  --ink-2:       #3A3A3A;
+  --ink-muted:   #6B6B6B;
+  --rule:        #E4E0D8;
+  --accent:      #2278AC;
+  --accent-soft: #EBF4FB;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-serif:  'DM Serif Display', serif;
+  --font-body:   'DM Sans', sans-serif;
+  --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+  --content-width: 920px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); font-size: 18px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: var(--navy); }
+nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: var(--r-full); transition: all 0.2s; border: none; }
+.btn-primary { background: var(--steel-mid); color: #fff; padding: 11px 26px; font-size: 13px; }
+.btn-primary:hover { background: var(--steel-light); }
+
+.post-banner { background: var(--navy); padding: 112px 5% 72px; border-bottom: 3px solid var(--accent); }
+.post-banner__inner { max-width: var(--content-width); margin: 0 auto; }
+.post-banner__back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 36px; transition: color 0.2s; font-family: var(--font-body); }
+.post-banner__back:hover { color: var(--ice); }
+.post-banner__tag { display: block; padding: 4px 12px; border-radius: var(--r-full); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(34,120,172,0.2); color: var(--ice); margin-bottom: 24px; }
+.post-banner h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1; letter-spacing: 0.02em; color: #fff; margin-bottom: 28px; }
+.post-banner h1 em { color: var(--ice); font-style: normal; }
+.post-banner__excerpt { font-size: 20px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 36px; max-width: 620px; font-weight: 300; }
+.post-banner__meta { display: flex; align-items: center; gap: 14px; font-size: 13px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+.post-banner__author { display: flex; align-items: center; gap: 10px; }
+.post-banner__avatar { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(56,153,204,0.4); }
+.post-banner__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.post-banner__name { color: rgba(255,255,255,0.8); font-weight: 500; }
+.dot { color: rgba(255,255,255,0.2); }
+
+.post-wrap { max-width: var(--content-width); margin: 0 auto; padding: 64px 5% 100px; }
+.post-body { font-size: 18px; line-height: 1.8; color: var(--ink-2); }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.05; letter-spacing: 0.02em; color: var(--ink); margin: 40px 0 16px; padding-top: 16px; border-top: 2px solid var(--accent); display: block; }
+.post-body h3 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--ink); margin: 40px 0 12px; font-weight: 400; }
+.post-body ul, .post-body ol { margin: 0 0 24px 0; padding-left: 0; list-style: none; }
+.post-body li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.post-body li:last-child { border-bottom: none; }
+.post-body li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.post-body strong { color: var(--ink); font-weight: 600; }
+.post-body em { color: var(--ink-muted); font-style: italic; }
+.post-body a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(34,120,172,0.3); }
+.post-body a:hover { text-decoration-color: var(--accent); }
+.post-body blockquote { border-left: 4px solid var(--accent); padding: 20px 28px; margin: 40px 0; background: var(--accent-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--ink); line-height: 1.6; }
+.post-body hr { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+
+/* YouTube lazy embed */
+.yt-embed { position: relative; padding-bottom: 56.25%; background: #000; border-radius: var(--r-md); overflow: hidden; margin: 40px 0; cursor: pointer; }
+.yt-embed img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: opacity 0.2s; }
+.yt-embed:hover img { opacity: 1; }
+.yt-embed__play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.yt-embed__play svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6)); transition: transform 0.2s; }
+.yt-embed:hover .yt-embed__play svg { transform: scale(1.08); }
+.yt-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+/* Cycle diagram */
+.cycle-box { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); padding: 28px 32px; margin: 28px 0 36px; }
+.cycle-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.cycle-steps { display: flex; flex-direction: column; gap: 0; }
+.cycle-step { display: flex; align-items: flex-start; gap: 16px; position: relative; padding-bottom: 20px; }
+.cycle-step:last-child { padding-bottom: 0; }
+.cycle-step__left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.cycle-step__dot { width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.cycle-step__line { width: 2px; background: var(--rule); flex: 1; min-height: 20px; margin-top: 4px; }
+.cycle-step:last-child .cycle-step__line { display: none; }
+.cycle-step__title { font-weight: 600; color: var(--ink); font-size: 15px; margin-bottom: 3px; padding-top: 6px; }
+.cycle-step__desc { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
+
+/* Phase steps */
+.phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
+.phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
+.phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+.phase-step:last-child { border-radius: 0 0 var(--r-md) var(--r-md); }
+.phase-step__num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; }
+.phase-step__title { font-weight: 600; color: var(--ink); margin-bottom: 4px; font-size: 15px; }
+.phase-step__desc { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
+
+/* Takeaway */
+.takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
+.takeaway-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); margin-bottom: 16px; }
+.takeaway-box ul { margin: 0; padding: 0; list-style: none; }
+.takeaway-box li { padding: 10px 0 10px 24px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.5; }
+.takeaway-box li:last-child { border-bottom: none; }
+.takeaway-box li::before { content: ''; position: absolute; left: 0; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: var(--steel-light); }
+
+.post-cta { background: var(--navy); border-radius: var(--r-lg); padding: 48px 40px; text-align: center; margin: 56px 0 0; }
+.post-cta h3 { font-family: var(--font-display); font-size: 2.4rem; color: #fff; margin-bottom: 12px; letter-spacing: 0.02em; line-height: 1; }
+.post-cta p { color: rgba(255,255,255,0.55); margin-bottom: 20px; font-size: 15px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
+.footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; }
+.footer-brand__tagline { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: var(--ice); }
+.footer-socials { display: flex; gap: 12px; }
+.social-icon { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(34,120,172,0.25); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); transition: all 0.2s; }
+.social-icon:hover { border-color: var(--ice); color: var(--ice); }
+.footer__bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+.footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+@media (max-width: 640px) {
+  .post-banner { padding: 100px 5% 56px; }
+  .post-banner__excerpt { font-size: 17px; }
+  .post-cta { padding: 36px 24px; }
+  .takeaway-box { padding: 24px; }
+  .cycle-box { padding: 20px; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why Your Diet Falls Apart on Weekends (And How to Fix It)",
+  "description": "If your diet is clean Monday through Friday but falls apart on weekends, the problem isn't discipline. Here's the cycle that's causing it and how to break it.",
+  "url": "https://strongstandard.com/blog/why-diet-falls-apart-weekends/",
+  "datePublished": "2026-06-29",
+  "author": {
+    "@type": "Person",
+    "@id": "https://strongstandard.com/#joey-munoz",
+    "name": "Dr. Joey Munoz"
+  },
+  "publisher": {
+    "@id": "https://strongstandard.com/#organization",
+    "@type": "Organization",
+    "name": "Strong Standard Coaching"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://strongstandard.com/blog/why-diet-falls-apart-weekends/"
+  }
+}
+</script>
+<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="/">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="120" height="24" style="height:24px;width:auto;display:block;">
+  </a>
+  <a href="/schedule-call/?utm_source=blog&utm_medium=nav&utm_campaign=blog_post" class="btn btn-primary">
+    Apply Now
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<header class="post-banner">
+  <div class="post-banner__inner">
+    <a href="/blog/" class="post-banner__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+    <div><span class="post-banner__tag">Nutrition</span></div>
+    <h1>Why Your Diet Falls Apart <em>on Weekends</em></h1>
+    <p class="post-banner__excerpt">If your diet is spotless Monday through Friday but unravels every weekend, the problem isn't your discipline. It's what you're doing during the week.</p>
+    <div class="post-banner__meta">
+      <div class="post-banner__author">
+        <div class="post-banner__avatar">
+          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz">
+        </div>
+        <span class="post-banner__name">Dr. Joey Munoz, PhD</span>
+      </div>
+      <span class="dot">·</span>
+      <span>June 29, 2026</span>
+      <span class="dot">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</header>
+
+<main class="post-wrap">
+  <article class="post-body">
+
+    <!-- YouTube lazy embed -->
+    <div class="yt-embed" id="yt-player" onclick="
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/IZW8IoUP3Cs?autoplay=1';
+      iframe.allow = 'autoplay; encrypted-media';
+      iframe.allowFullscreen = true;
+      this.innerHTML = '';
+      this.appendChild(iframe);
+    ">
+      <img src="https://img.youtube.com/vi/IZW8IoUP3Cs/maxresdefault.jpg" alt="Why Your Diet Falls Apart on Weekends">
+      <div class="yt-embed__play">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="36" cy="36" r="36" fill="rgba(0,0,0,0.55)"/>
+          <polygon points="28,20 58,36 28,52" fill="#ffffff"/>
+        </svg>
+      </div>
+    </div>
+
+    <p>Monday through Friday you're locked in. Meal prep is ready, lunches are on point, you're passing on dessert, and you're proud of it. Then Friday evening arrives and something shifts. By Sunday night you've eaten everything you said you wouldn't, and the guilt loop starts all over again.</p>
+
+    <p>If that sounds familiar, the first thing I want you to understand is this: it's almost never a discipline problem. When I work with clients who describe this pattern, my first question isn't "what are you eating on the weekends?" It's "what are you eating Monday through Friday?" Because in most cases, that's where the real answer lives.</p>
+
+    <h2>The Restriction-Reward Cycle</h2>
+
+    <p>Here's what I typically hear when someone says they eat "clean" during the week: no pizza, no ice cream, no bread, no sugar, nothing processed. Just chicken, rice, broccoli, and discipline. And it works, technically, because the weekday schedule creates enough structure to muscle through it.</p>
+
+    <p>But here's what's actually happening underneath that. After five days of eating in a way that doesn't feel enjoyable, combined with the stress of a demanding job, family responsibilities, and everything else life throws at you, the weekend becomes a pressure release valve. You feel like you've earned it. And when you've been that restricted all week, the rebound isn't a choice. It's a predictable psychological response.</p>
+
+    <blockquote>The more you restrict yourself during the week, the more forcefully you'll rebound on the weekend. This isn't a character flaw. It's biology and psychology working exactly as designed.</blockquote>
+
+    <p>And then the cycle compounds. After going overboard on the weekend, the natural response is to restrict even harder next week to "undo the damage." Which makes the following weekend rebound even stronger. Most people inside this cycle believe the solution is more discipline. It never is.</p>
+
+    <div class="cycle-box">
+      <div class="cycle-box__label">The Restriction-Reward Cycle</div>
+      <div class="cycle-steps">
+        <div class="cycle-step">
+          <div class="cycle-step__left">
+            <div class="cycle-step__dot">1</div>
+            <div class="cycle-step__line"></div>
+          </div>
+          <div>
+            <div class="cycle-step__title">Restrict all week</div>
+            <div class="cycle-step__desc">Overly clean diet, no flexibility, white-knuckling it through the work week.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="cycle-step__left">
+            <div class="cycle-step__dot">2</div>
+            <div class="cycle-step__line"></div>
+          </div>
+          <div>
+            <div class="cycle-step__title">Reward on the weekend</div>
+            <div class="cycle-step__desc">The weekend feels like the release valve. You feel you've earned it and go overboard.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="cycle-step__left">
+            <div class="cycle-step__dot">3</div>
+            <div class="cycle-step__line"></div>
+          </div>
+          <div>
+            <div class="cycle-step__title">Regret and negative self-talk</div>
+            <div class="cycle-step__desc">"I always do this. I'm a failure. What's the point." The all-or-nothing mindset kicks in.</div>
+          </div>
+        </div>
+        <div class="cycle-step">
+          <div class="cycle-step__left">
+            <div class="cycle-step__dot">4</div>
+            <div class="cycle-step__line"></div>
+          </div>
+          <div>
+            <div class="cycle-step__title">Restrict even harder next week</div>
+            <div class="cycle-step__desc">To undo the "damage," the restriction tightens. The cycle repeats, amplified.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Why One Bad Weekend Isn't the Real Problem</h2>
+
+    <p>Here's something most people don't want to hear: one bad weekend won't derail your progress. Calorie balance happens over weeks, not days. The math on a single weekend of eating more rarely undoes meaningful progress on its own.</p>
+
+    <p>What actually causes the damage is the black-and-white thinking that follows. The research on this is fairly consistent: dichotomous thinking around food, meaning seeing foods as strictly "good" or "bad," correlates with less consistency and worse outcomes in weight loss over time. When you decide you've already failed, the weekend bleeds into Monday, then into Tuesday, then sometimes into weeks of disrupted habits.</p>
+
+    <p>The "I already screwed up, so what's the point" mindset is the real problem. Not the pizza on Saturday night.</p>
+
+    <h2>The Real Fix: Flexibility All Week, Not Just on Weekends</h2>
+
+    <p>The gap between how you eat during the week and how you eat on the weekend is the core issue. When that gap is enormous, weekends feel like escapes from a prison. When the gap is small, weekends just feel like weekends.</p>
+
+    <p>I eat chocolate almost every day. I'll split a frozen pizza with my wife on a weeknight when neither of us feels like cooking. I'll have ice cream with my son once a week because he loves it. My diet is healthy overall, but it's also genuinely enjoyable all the time. So when the weekend comes, I don't feel deprived. I don't need to reward myself for being "good." My weekends look pretty much the same as my weekdays, and that's the point.</p>
+
+    <p>This is the 80/20 approach, but I'd frame it differently than most people do. It's not "be good 80% of the time and let loose 20% of the time." It's: be consistent 100% of the time by building flexibility into every day. When your eating feels sustainable and enjoyable throughout the week, you're consistent all seven days, not just five.</p>
+
+    <blockquote>The goal isn't to survive the week so you can enjoy the weekend. The goal is to build a way of eating you actually enjoy all the time, so the weekend isn't a reward you need to earn.</blockquote>
+
+    <h2>Practical Structure for the Weekend</h2>
+
+    <p>Flexibility doesn't mean anything goes. Some structure still matters on weekends, especially if you know you tend to lose all guardrails when Friday hits. Here are the strategies I use and recommend to clients:</p>
+
+    <div class="phase-steps">
+      <div class="phase-step">
+        <div class="phase-step__num">1</div>
+        <div>
+          <div class="phase-step__title">Calorie banking</div>
+          <div class="phase-step__desc">If you know you have a big dinner Saturday night, eat lighter at breakfast and lunch. You're not restricting, you're allocating. I'll skip lunch entirely before my favorite all-you-can-eat sushi spot so I can enjoy it without guilt or going way over on the day.</div>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="phase-step__num">2</div>
+        <div>
+          <div class="phase-step__title">Anchor around protein and vegetables</div>
+          <div class="phase-step__desc">Even at a restaurant, build your plate around a solid protein source and something with fiber. This naturally limits how far over you go on calories without feeling like you're on a diet. You can still enjoy everything else, just with a foundation in place.</div>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="phase-step__num">3</div>
+        <div>
+          <div class="phase-step__title">Set limits before you go out</div>
+          <div class="phase-step__desc">Decide in advance what you're going to have, especially with alcohol. Look at the menu ahead of time. Pick what looks good and aligns with your goals. This isn't restriction, it's a conscious decision made from a clear head rather than in the middle of a social situation.</div>
+        </div>
+      </div>
+      <div class="phase-step">
+        <div class="phase-step__num">4</div>
+        <div>
+          <div class="phase-step__title">Use friction to moderate, not willpower</div>
+          <div class="phase-step__desc">If you want to limit alcohol, set a rule: one full glass of water between every drink. You're not telling yourself you can't have the next one, you're just creating a small barrier. You'll naturally drink less without feeling deprived. This works with food too.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>The psychology here matters. There's a big difference between "I can't have that" and "I choose not to have that because my goals matter to me." One comes from restriction, the other from ownership. Telling yourself you can't have something is almost guaranteed to make you want it more. Setting a small behavioral rule that slows you down doesn't carry that psychological cost.</p>
+
+    <h2>What "Getting Back on Track" Actually Looks Like</h2>
+
+    <p>If you do have a weekend where things go sideways, the move is simple: the next meal is a normal meal. Not a punishment meal, not a "make up for it" day of extreme restriction. Just a normal, good meal.</p>
+
+    <p>Progress isn't about being perfect. It's about how quickly you return to your baseline after you deviate. Someone who eats perfectly five days and then eats like garbage for an entire week before getting back on track will always lose to someone who has an imperfect weekend and is back to normal by Monday breakfast. That second person might not have a "cleaner" diet on paper, but they'll make far more progress over time.</p>
+
+    <div class="takeaway-box">
+      <div class="takeaway-box__label">Key Takeaways</div>
+      <ul>
+        <li>Weekend overeating is almost always caused by over-restriction during the week, not a lack of willpower on weekends.</li>
+        <li>The restriction-reward cycle compounds itself: the harder you restrict Monday through Friday, the harder the rebound on Saturday and Sunday.</li>
+        <li>One bad weekend doesn't derail progress. The all-or-nothing thinking that follows it does.</li>
+        <li>The fix is building real flexibility into every day of the week, not saving all your enjoyment for the weekend.</li>
+        <li>Weekend structure still matters: calorie banking, anchoring meals around protein, and setting limits before you go out are all practical tools that work without feeling restrictive.</li>
+      </ul>
+    </div>
+
+    <p>The version of "healthy eating" that requires you to white-knuckle it through the week is not sustainable, and it's not necessary. When your daily nutrition is something you actually enjoy, the weekend stops being an escape and starts being just another part of a life you're building on your terms.</p>
+
+    <div class="post-cta">
+      <h3>Done Fighting Your Diet Every Weekend?</h3>
+      <p>We build personalized nutrition plans that fit your real life, including the weekends. No restriction cycles, no all-or-nothing thinking. Apply and let's talk.</p>
+      <a href="/schedule-call/?utm_source=blog&utm_medium=cta&utm_content=why-diet-falls-apart-weekends" style="display:inline-flex;align-items:center;gap:10px;background:#2278AC;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;padding:16px 40px;border-radius:9999px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3899CC'" onmouseout="this.style.background='#2278AC'">
+        Apply Now &rarr;
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="110" height="22" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+      <a href="mailto:drjoey@strongstandard.com">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/dr.joeymunoz/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+</script>
+</body>
+</html>
