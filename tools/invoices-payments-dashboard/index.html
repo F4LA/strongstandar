@@ -816,18 +816,19 @@
       `<div class="center"><div class="spinner"></div><div>Fetching data…</div></div>`;
 
     try {
-      const [clientRows, ppRows, leadsRows, prRows] = await Promise.all([
+      const [clientRows, ppRows, leadsRows, prRows, refundRows] = await Promise.all([
         fetchRange('Client Mastersheet!A:Z'),
         fetchRange('Payment Plan!A:F'),
         fetchRange('Leads applied!A:P'),
         fetchRange('Payment Records!A:F'),
+        fetchRange('Refund Records!A:D'),
       ]);
       window._lastRenderArgs = [clientRows, ppRows];
       window._clientRowsCache = clientRows;
       renderDashboard(clientRows, ppRows);
       renderAttribution(clientRows, leadsRows);
       renderStaleCalls(leadsRows);
-      renderFinancials(clientRows, prRows, ppRows);
+      renderFinancials(clientRows, prRows, ppRows, refundRows);
       document.getElementById('last-updated').textContent =
         'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
@@ -1480,11 +1481,12 @@ Let me know if you need anything on our end!`;
             'July','August','September','October','November','December'][m];
   }
 
-  function calcFinancials(clientRows, prRows, ppRows, year, month) {
+  function calcFinancials(clientRows, prRows, ppRows, year, month, refundRows) {
     const startOfMonth = new Date(year, month, 1);
     const endOfMonth   = new Date(year, month + 1, 0); // last day
 
     // Build set of refunded emails (col Y = index 24, value "TRUE")
+    // Still used for Contracted/Pending exclusion (unchanged for now)
     const refundedEmails = new Set();
     clientRows.slice(1).forEach(r => {
       if ((r[24] || '').trim().toUpperCase() === 'TRUE') {
@@ -1505,18 +1507,25 @@ Let me know if you need anything on our end!`;
       }
     });
 
-    // ── Collected: Amount from Payment Records, by Date ──
-    // PR cols: Full Name(0) Email(1) Date(2) Amount(3) Invoice(4) New or Resign(5)
-    // Skip payments from refunded clients (matched by email)
-    let collected = 0;
+    // ── Collected: Payment Records (by Date) minus Refund Records (by Refund Date) ──
+    // No longer excludes by email — refunds are subtracted in the month they happened.
+    let collectedGross = 0;
     prRows.slice(1).forEach(r => {
-      const email = (r[1] || '').trim().toLowerCase();
-      if (refundedEmails.has(email)) return; // skip refunded
       const d = parseDate(r[2]);
       if (d && d >= startOfMonth && d <= endOfMonth) {
-        collected += parseMoney(r[3]);
+        collectedGross += parseMoney(r[3]);
       }
     });
+
+    let refunded = 0;
+    (refundRows || []).slice(1).forEach(r => {
+      const d = parseDate(r[2]); // col C = Date (refund date)
+      if (d && d >= startOfMonth && d <= endOfMonth) {
+        refunded += parseMoney(r[3]); // col D = Amount
+      }
+    });
+
+    const collected = collectedGross - refunded;
 
     // ── Pending: Payment amount from Payment Plan, Status ≠ paid, by Date ──
     // Skip installments from refunded clients (matched by email)
@@ -1531,15 +1540,15 @@ Let me know if you need anything on our end!`;
       }
     });
 
-    return { contracted, collected, pending };
+    return { contracted, collected, pending, collectedGross, refunded };
   }
 
-  function renderFinancials(clientRows, prRows, ppRows, year, month) {
+  function renderFinancials(clientRows, prRows, ppRows, refundRows, year, month) {
     // Store data for navigation re-renders
     if (clientRows) {
-      window._finData = { clientRows, prRows, ppRows };
+      window._finData = { clientRows, prRows, ppRows, refundRows };
     } else {
-      ({ clientRows, prRows, ppRows } = window._finData);
+      ({ clientRows, prRows, ppRows, refundRows } = window._finData);
     }
 
     const y = year  !== undefined ? year  : window._finYear;
@@ -1553,11 +1562,11 @@ Let me know if you need anything on our end!`;
     const isFuture  = y > curYear || (y === curYear && m > curMonth);
 
     // Current month metrics
-    const cur = calcFinancials(clientRows, prRows, ppRows, y, m);
+    const cur = calcFinancials(clientRows, prRows, ppRows, y, m, refundRows);
 
     // Build annual table (Jan–Dec for selected year)
     const annualRows = Array.from({ length: 12 }, (_, mi) => {
-      const d = calcFinancials(clientRows, prRows, ppRows, y, mi);
+      const d = calcFinancials(clientRows, prRows, ppRows, y, mi, refundRows);
       return { month: mi, ...d };
     });
 
@@ -1658,7 +1667,7 @@ Let me know if you need anything on our end!`;
     // Don't navigate past current month
     const now = new Date();
     if (y > now.getFullYear() || (y === now.getFullYear() && m > now.getMonth())) return;
-    renderFinancials(null, null, null, y, m);
+    renderFinancials(null, null, null, null, y, m);
   }
 
   // Close modal on overlay click
