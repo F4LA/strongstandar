@@ -606,6 +606,7 @@
   <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls</button>
   <button class="tab-btn" onclick="switchTab('financials')">📊 Financials</button>
   <button class="tab-btn" onclick="switchTab('invoice-audit')">🔎 Invoice Audit</button>
+  <button class="tab-btn" onclick="switchTab('alerts')">🚨 Alerts</button>
 </nav>
 
 <main>
@@ -650,6 +651,15 @@
       <div class="center">
         <div class="spinner"></div>
         <div>Fetching data from Google Sheets…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-alerts" class="tab-panel">
+    <div id="content-alerts">
+      <div class="center">
+        <div class="spinner"></div>
+        <div>Scanning for anomalies…</div>
       </div>
     </div>
   </div>
@@ -1052,6 +1062,9 @@
     });
     if (name === 'invoice-audit' && !window._invoiceAuditLoaded) {
       loadInvoiceAudit();
+    }
+    if (name === 'alerts' && !window._alertsLoaded) {
+      loadAlerts();
     }
   }
 
@@ -1849,6 +1862,134 @@ Let me know if you need anything on our end!`;
     }
 
     container.innerHTML = html;
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // ── ALERTS MODULE ────────────────────────────────────────────
+  // Read-only anomaly checks across existing sheets. Does NOT modify
+  // any data in any sheet, and does NOT change any other tab's logic.
+  // "Solved" state persists in Supabase (shared across the team) and
+  // is only cleared by a manual click — it never auto-clears.
+  // ══════════════════════════════════════════════════════════════
+  const ALERTS_SUPABASE_URL = 'https://akrxgohrlpiprqwnhkzc.supabase.co';
+  const ALERTS_SUPABASE_KEY = 'sb_publishable_k5qrLybTNeW3F8N3u9uTpg_ZXymerMh';
+  const ALERTS_API = `${ALERTS_SUPABASE_URL}/rest/v1/checklist`;
+  const ALERTS_HEADERS = {
+    'apikey': ALERTS_SUPABASE_KEY,
+    'Authorization': `Bearer ${ALERTS_SUPABASE_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'resolution=merge-duplicates'
+  };
+
+  window._alertsLoaded   = false;
+  window._solvedAlertKeys = new Set();
+
+  function alertKeyFor(type, email, dateStr, amount) {
+    return `alert__${type}__${(email || '').toLowerCase().trim()}__${dateStr}__${amount}`;
+  }
+
+  async function fetchSolvedAlerts() {
+    try {
+      const res  = await fetch(`${ALERTS_API}?select=key,value`, { headers: ALERTS_HEADERS });
+      const rows = await res.json();
+      (rows || []).forEach(r => {
+        if (r.key && r.key.startsWith('alert__') && r.value === 'true') {
+          window._solvedAlertKeys.add(r.key);
+        }
+      });
+    } catch (e) {
+      console.warn('Alerts: failed to load solved state', e);
+    }
+  }
+
+  async function markAlertSolved(key) {
+    window._solvedAlertKeys.add(key);
+    try {
+      await fetch(ALERTS_API, {
+        method: 'POST',
+        headers: ALERTS_HEADERS,
+        body: JSON.stringify({ key, value: 'true' }),
+      });
+    } catch (e) {
+      console.warn('Alerts: failed to save solved state', e);
+    }
+  }
+
+  // ── Detection: Payment Plan row marked "Paid" but due date is in the future ──
+  function detectFutureDatedPaidAlerts(ppRows) {
+    const now = today0();
+    const alerts = [];
+    (ppRows || []).slice(1).forEach(r => {
+      const name    = (r[P.FULL_NAME] || '').trim();
+      const email   = (r[P.EMAIL]     || '').trim();
+      const dateStr = (r[P.DATE]      || '').trim();
+      const amount  = (r[P.AMOUNT]    || '').trim();
+      const status  = (r[P.STATUS]    || '').trim().toLowerCase();
+      const d = parseDate(dateStr);
+      if (d && status === 'paid' && d > now) {
+        alerts.push({
+          type: 'future_paid',
+          key: alertKeyFor('future_paid', email, dateStr, amount),
+          name, email, dateStr, amount,
+          message: `Marked "Paid" but due date (${dateStr}) is in the future`,
+        });
+      }
+    });
+    return alerts;
+  }
+
+  async function loadAlerts() {
+    const container = document.getElementById('content-alerts');
+    container.innerHTML = `<div class="center"><div class="spinner"></div><div>Scanning for anomalies…</div></div>`;
+    try {
+      await fetchSolvedAlerts();
+      // Reuse Payment Plan data already loaded for other tabs — no extra
+      // fetch, no mutation, no effect on Financials/Pending/etc.
+      let ppRows = (window._finData && window._finData.ppRows) ||
+                   (window._lastRenderArgs && window._lastRenderArgs[1]);
+      if (!ppRows) ppRows = await fetchRange('Payment Plan!A:F');
+      window._alertsLoaded = true;
+      renderAlerts(ppRows);
+    } catch (err) {
+      container.innerHTML = `<div class="error-box">⚠️ Error loading Alerts<br><small>${esc(err.message)}</small></div>`;
+    }
+  }
+
+  function renderAlerts(ppRows) {
+    const container  = document.getElementById('content-alerts');
+    const allAlerts  = detectFutureDatedPaidAlerts(ppRows);
+    const pending    = allAlerts.filter(a => !window._solvedAlertKeys.has(a.key));
+
+    let html = `<div style="margin-bottom:16px;">
+      <h2 style="margin:0 0 4px;">🚨 Alerts</h2>
+      <div style="color:var(--muted);font-size:13px;">Read-only checks — these don't change any data in your sheets or other tabs. Click "Solved" once you've fixed it in the sheet; it stays hidden for everyone after that.</div>
+    </div>`;
+
+    if (pending.length === 0) {
+      html += `<div class="error-box" style="background:var(--green-dim);border-color:var(--green);color:var(--green)">
+        ✅ No active alerts. Everything looks consistent.
+      </div>`;
+    } else {
+      html += `<div style="margin-bottom:8px;font-weight:600;">Payment Plan — Paid before due date (${pending.length})</div>`;
+      pending.forEach(a => {
+        html += `<div class="error-box" style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;">
+          <div>
+            <div style="font-weight:600;">${esc(a.name)} &nbsp;·&nbsp; ${esc(a.email)}</div>
+            <div style="font-size:13px;margin-top:2px;">${esc(a.message)} &nbsp;·&nbsp; Amount: ${esc(a.amount)}</div>
+          </div>
+          <button onclick="resolveAlert('${a.key}')" style="white-space:nowrap;padding:6px 14px;border-radius:6px;border:1px solid var(--green);background:var(--green-dim);color:var(--green);font-weight:600;cursor:pointer;">✓ Solved</button>
+        </div>`;
+      });
+    }
+
+    container.innerHTML = html;
+  }
+
+  async function resolveAlert(key) {
+    await markAlertSolved(key);
+    const ppRows = (window._finData && window._finData.ppRows) ||
+                    (window._lastRenderArgs && window._lastRenderArgs[1]);
+    if (ppRows) renderAlerts(ppRows);
   }
 </script>
 
