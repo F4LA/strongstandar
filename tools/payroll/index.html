@@ -569,6 +569,7 @@ function isTRUE(v)   { return ['true','1','yes'].includes(String(v||'').trim().t
 function money(v)    { if(!v||isNaN(v))return '$0.00'; return (v<0?'-':'')+'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtDate(d)  { if(!d)return '—'; return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
 function fmtDI(d)    { if(!d)return ''; const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${dd}`; }
+function isShowStatus(st){ const s=(st||'').trim().toLowerCase(); return s.startsWith('show')||s.includes('follow up')||s.includes('follow-up')||s.includes('followup'); }
 function getPeriod(pv){ const pd=new Date(pv+'T12:00:00'); return { start:new Date(pd.getFullYear(),pd.getMonth()-1,1), end:new Date(pd.getFullYear(),pd.getMonth(),0,23,59,59) }; }
 
 // ── DATA ──────────────────────────────────────────────────────
@@ -1082,7 +1083,7 @@ function renderSetter() {
 
   // All calls booked by this setter in the period (regardless of show status)
   const setterLeads=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(sLow)&&inR(parseDate(r[LA.bookedDate])));
-  const showLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase().startsWith('show'));
+  const showLeads=setterLeads.filter(r=>isShowStatus(r[LA.showStatus]));
 
   // Dynamic breakdown by whatever status values actually appear in the sheet (Showed, No Show, Cancelled, Disqualified, etc.)
   const statusCounts={};
@@ -1093,7 +1094,7 @@ function renderSetter() {
   const statusRows=Object.entries(statusCounts)
     .sort((a,b)=>b[1]-a[1])
     .map(([st,count])=>{
-      const isShow=st.toLowerCase().startsWith('show');
+      const isShow=isShowStatus(st);
       return `<div class="sum-row"><span class="sum-label">${st}</span><span class="sum-val${isShow?' green':''}">${count}</span></div>`;
     }).join('');
 
@@ -1105,7 +1106,7 @@ function renderSetter() {
   setterLeads.sort((a,b)=>(parseDate(a[LA.bookedDate])?.getTime()||0)-(parseDate(b[LA.bookedDate])?.getTime()||0));
 
   const setterRows=setterLeads.map(r=>{
-    const isShow=(r[LA.showStatus]||'').trim().toLowerCase().startsWith('show');
+    const isShow=isShowStatus(r[LA.showStatus]);
     const statusLabel=(r[LA.showStatus]||'—').trim();
     return `<tr style="${isShow?'':'background:rgba(231,76,60,0.05)'}">
     <td style="font-weight:500">${r[LA.firstName]||''} ${r[LA.lastName]||''}</td>
@@ -1117,13 +1118,13 @@ function renderSetter() {
 
   // ── DATA HYGIENE ALERT ──────────────────────────────────────
   // A call whose booked date has already passed should have a resolved outcome
-  // (Showed / No Show / Cancelled / Disqualified / Rescheduled, etc). If it's still
+  // (Showed / Follow Up / No Show / Cancelled / Disqualified / Rescheduled, etc). If it's still
   // sitting on a "pre-call" status like "Confirmed", nobody updated it after the call —
   // and that call won't get counted correctly for setter pay.
   const today=new Date(); today.setHours(0,0,0,0);
   const isResolvedStatus=(st)=>{
-    const s=st.toLowerCase();
-    return s.startsWith('show') || s.includes('no show') || s.includes('no-show') ||
+    const s=(st||'').trim().toLowerCase();
+    return isShowStatus(s) || s.includes('no show') || s.includes('no-show') ||
            s.includes('cancel') || s.includes('disqualif') || s.includes('reschedul');
   };
   const staleCalls=setterLeads.filter(r=>{
