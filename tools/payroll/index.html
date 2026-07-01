@@ -396,10 +396,6 @@ select:focus{border-color:var(--steel-mid);}
             <label class="setting-label">Deniz — Base Salary</label>
             <input type="text" class="setting-input" id="set-cl-base" placeholder="$0.00"/>
           </div>
-          <div class="setting-item">
-            <label class="setting-label">DC Set Commission</label>
-            <input type="text" class="setting-input" id="set-cl-dc" placeholder="Coming soon" disabled style="opacity:.4;cursor:not-allowed"/>
-          </div>
         </div>
       </div>
 
@@ -453,10 +449,6 @@ select:focus{border-color:var(--steel-mid);}
           <input type="text" class="config-input" id="cl-base-salary" placeholder="$0.00" oninput="renderCloser()"/>
         </div>
         <div class="config-field">
-          <label>DC Set Commission</label>
-          <input type="text" class="config-input" id="cl-dc" placeholder="Coming soon" disabled/>
-        </div>
-        <div class="config-field">
           <label>Notes</label>
           <input type="text" class="config-input" id="cl-notes" placeholder="Optional…" style="width:220px" oninput="renderCloser()"/>
         </div>
@@ -507,8 +499,8 @@ const COACHES_SHEET = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const COACHES       = ['Brent','Bernardo','Ceci','Miguel','Joey','Jackie'];
 
 // Column maps
-const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30 };
-const GC = { firstName:0,lastName:1,dealValue:4,saleDate:5,closer:10,cashCollected:16,payoutDate:17,excludeFlag:18 };
+const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30,dcSetter:21 };
+const GC = { firstName:0,lastName:1,dealValue:4,saleDate:5,closer:10,cashCollected:16,payoutDate:17,excludeFlag:18,dcSetter:13 };
 const CM = { firstName:0,lastName:1,product:3,saleDate:5,startDate:6,endDate:7,coach:9,tier:10,coachPay:11,nonQFlag:15,status:18,retComm:22,excludeFlag:24 };
 
 // State
@@ -713,6 +705,13 @@ function renderCloser() {
   const gcComm=raw.gc.filter(r=>(r[GC.closer]||'').toLowerCase().includes(cLow)&&!isTRUE(r[GC.excludeFlag])&&inR(parseDate(r[GC.payoutDate])));
   const msRef =raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase()===cLow&&isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.refundDate])));
 
+  // DC Set Commission: 2.5% of Package (col E) for calls where col V (MS) / col N (GC) = Deniz,
+  // matched by Date Purchased (col F = saleDate), NOT payout date.
+  const msDC=raw.ms.filter(r=>(r[MS.dcSetter]||'').toLowerCase().includes(cLow)&&inR(parseDate(r[MS.saleDate])));
+  const gcDC=raw.gc.filter(r=>(r[GC.dcSetter]||'').toLowerCase().includes(cLow)&&inR(parseDate(r[GC.saleDate])));
+  const dcPackageTotal=msDC.reduce((s,r)=>s+parseAmt(r[MS.dealValue]),0)+gcDC.reduce((s,r)=>s+parseAmt(r[GC.dealValue]),0);
+  const dcSetComm=dcPackageTotal*0.025;
+
   const htCash=msComm.reduce((s,r)=>s+parseAmt(r[MS.cashCollected]),0);
   const gcCash=gcComm.reduce((s,r)=>s+parseAmt(r[GC.cashCollected]),0);
   const totalCash=htCash+gcCash;
@@ -720,7 +719,7 @@ function renderCloser() {
   const t1=Math.min(totalCash,T1),t2=totalCash>T1?Math.min(totalCash-T1,T2-T1):0,t3=totalCash>T2?totalCash-T2:0;
   const tierComm=(t1*.10)+(t2*.125)+(t3*.15);
   const baseSalary=parseAmt(document.getElementById('cl-base-salary')?.value)||0;
-  const totalPayment=tierComm+baseSalary;
+  const totalPayment=tierComm+baseSalary+dcSetComm;
   const notes=document.getElementById('cl-notes')?.value||'';
   const approveKey=`closer|${pd}`;
   const approved=!!approvedMap[approveKey];
@@ -743,6 +742,18 @@ function renderCloser() {
     <td style="font-family:var(--font-display);color:var(--text-muted)">${money(c.deal)}</td>
   </tr>`).join('');
 
+  const dcCalls=[
+    ...msDC.map(r=>({name:`${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),saleDate:parseDate(r[MS.saleDate]),pkg:parseAmt(r[MS.dealValue])})),
+    ...gcDC.map(r=>({name:`${r[GC.firstName]||''} ${r[GC.lastName]||''}`.trim(),saleDate:parseDate(r[GC.saleDate]),pkg:parseAmt(r[GC.dealValue])})),
+  ].sort((a,b)=>(a.saleDate?.getTime()||0)-(b.saleDate?.getTime()||0));
+
+  const dcRows=dcCalls.map(c=>`<tr>
+    <td style="font-weight:500">${c.name||'—'}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.saleDate)}</td>
+    <td style="font-family:var(--font-display);color:var(--text-muted)">${money(c.pkg)}</td>
+    <td style="font-family:var(--font-display);color:var(--gold);font-weight:500">${money(c.pkg*0.025)}</td>
+  </tr>`).join('');
+
   container.innerHTML=`<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Closer Commission Slip</span></div></div>
@@ -758,7 +769,7 @@ function renderCloser() {
         <div class="section-title">Payment Breakdown</div>
         <div class="sum-row"><span class="sum-label">Close Commission</span><span class="sum-val gold">${money(tierComm)}</span></div>
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(baseSalary)}</span></div>
-        <div class="sum-row"><span class="sum-label">DC Set Commission</span><span class="sum-val" style="color:var(--text-dim)">Pending</span></div>
+        <div class="sum-row"><span class="sum-label">DC Set Commission</span><span class="sum-val gold">${money(dcSetComm)}</span></div>
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(totalPayment)}</span></div>
       </div>
       <div class="slip-right">
@@ -777,6 +788,11 @@ function renderCloser() {
         <tfoot><tr><td style="font-weight:700">Total</td><td style="color:var(--steel-light)">${money(totalCash)}</td><td></td><td style="color:var(--gold)">${money(tierComm)}</td></tr></tfoot>
       </table></div>
     </div>
+    ${dcCalls.length>0?`<div class="slip-section closer-section">
+      <div class="section-header-bar closer-bar"><span class="sh-title">DC Set Breakdown</span><span class="count-badge">${dcCalls.length} calls &nbsp;·&nbsp; ${money(dcSetComm)}</span></div>
+      <table class="data-table"><thead><tr><th>Client</th><th>Date Purchased</th><th>Package</th><th>Commission (2.5%)</th></tr></thead>
+      <tbody>${dcRows}</tbody></table>
+    </div>`:''}
     ${clients.length>0?`<div class="slip-section active-section">
       <div class="section-header-bar active-bar"><span class="sh-title">Client Breakdown</span><span class="count-badge">${clients.length} clients</span></div>
       <table class="data-table"><thead><tr><th>Client</th><th>Sale Date</th><th>Payout Date</th><th>Cash Collected</th><th>Deal Value</th></tr></thead>
