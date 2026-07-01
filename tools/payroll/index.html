@@ -787,6 +787,12 @@ function renderCloser() {
   const dcCalls=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&!isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])))
     .sort((a,b)=>(parseDate(a[LA.bookedDate])?.getTime()||0)-(parseDate(b[LA.bookedDate])?.getTime()||0));
   const dcSetComm=dcCalls.length*100;
+  // Refunded leads (col V = TRUE) that would otherwise match — shown for visibility, not paid.
+  const dcRefunds=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])));
+  const dcAll=[
+    ...dcCalls.map(r=>({name:`${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim(),email:r[LA.email],bookedDate:parseDate(r[LA.bookedDate]),isRefund:false})),
+    ...dcRefunds.map(r=>({name:`${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim(),email:r[LA.email],bookedDate:parseDate(r[LA.bookedDate]),isRefund:true})),
+  ].sort((a,b)=>(a.bookedDate?.getTime()||0)-(b.bookedDate?.getTime()||0));
 
   const htCash=msComm.reduce((s,r)=>s+parseAmt(r[MS.cashCollected]),0);
   const gcCash=gcComm.reduce((s,r)=>s+parseAmt(r[GC.cashCollected]),0);
@@ -818,11 +824,11 @@ function renderCloser() {
     <td style="font-family:var(--font-display);color:var(--text-muted)">${money(c.deal)}</td>
   </tr>`).join('');
 
-  const dcRows=dcCalls.map(r=>`<tr>
-    <td style="font-weight:500">${r[LA.firstName]||''} ${r[LA.lastName]||''}</td>
-    <td style="color:var(--text-muted)">${r[LA.email]||'—'}</td>
-    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(parseDate(r[LA.bookedDate]))}</td>
-    <td style="font-family:var(--font-display);color:var(--gold);font-weight:500">${money(100)}</td>
+  const dcRows=dcAll.map(c=>`<tr style="${c.isRefund?'background:rgba(231,76,60,0.05)':''}">
+    <td style="font-weight:500;${c.isRefund?'color:var(--red)':''}">${c.name||'—'}${c.isRefund?' <span class="tag tag-nonq">REFUND</span>':''}</td>
+    <td style="color:var(--text-muted)">${c.email||'—'}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.bookedDate)}</td>
+    <td style="font-family:var(--font-display);font-weight:500;${c.isRefund?'color:var(--red)':'color:var(--gold)'}">${c.isRefund?'Not paid (refund)':money(100)}</td>
   </tr>`).join('');
 
   container.innerHTML=`<div class="slip">
@@ -859,8 +865,8 @@ function renderCloser() {
         <tfoot><tr><td style="font-weight:700">Total</td><td style="color:var(--steel-light)">${money(totalCash)}</td><td></td><td style="color:var(--gold)">${money(tierComm)}</td></tr></tfoot>
       </table></div>
     </div>
-    ${dcCalls.length>0?`<div class="slip-section closer-section">
-      <div class="section-header-bar closer-bar"><span class="sh-title">21 DC Set Breakdown</span><span class="count-badge">${dcCalls.length} calls &nbsp;·&nbsp; ${money(dcSetComm)}</span></div>
+    ${dcAll.length>0?`<div class="slip-section closer-section">
+      <div class="section-header-bar closer-bar"><span class="sh-title">21 DC Set Breakdown</span><span class="count-badge">${dcCalls.length} paid &nbsp;·&nbsp; ${money(dcSetComm)}${dcRefunds.length>0?` &nbsp;·&nbsp; ${dcRefunds.length} refunded`:''}</span></div>
       <table class="data-table"><thead><tr><th>Lead</th><th>Email</th><th>Booked Date</th><th>Commission ($100 flat)</th></tr></thead>
       <tbody>${dcRows}</tbody></table>
     </div>`:''}
