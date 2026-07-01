@@ -1076,8 +1076,8 @@ function renderSetter() {
 
   // All calls booked by this setter in the period (regardless of show status)
   const setterLeads=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(sLow)&&inR(parseDate(r[LA.bookedDate])));
-  const showLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase()==='show');
-  const noShowLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase()!=='show');
+  const showLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase().startsWith('show'));
+  const noShowLeads=setterLeads.filter(r=>!(r[LA.showStatus]||'').trim().toLowerCase().startsWith('show'));
 
   const notes=document.getElementById('st-notes')?.value||'';
   const approveKey=`setter|${setter}|${pd}`;
