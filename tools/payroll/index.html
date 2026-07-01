@@ -433,6 +433,7 @@ select:focus{border-color:var(--steel-mid);}
   <div class="tabs-bar">
     <button class="tab-btn active" onclick="switchTab('closer',this)"><span class="tab-icon">🎯</span> Closer</button>
     <button class="tab-btn"        onclick="switchTab('coaches',this)"><span class="tab-icon">🎓</span> Coaches</button>
+    <button class="tab-btn"        onclick="switchTab('setter',this)"><span class="tab-icon">📞</span> Setter</button>
   </div>
 
   <!-- CONTROLS (shared) -->
@@ -487,6 +488,17 @@ select:focus{border-color:var(--steel-mid);}
       <div id="coach-slip"></div>
     </div>
 
+    <!-- ── SETTER TAB ── -->
+    <div class="tab-pane" id="pane-setter">
+      <div class="config-row">
+        <div class="config-field">
+          <label>Notes</label>
+          <input type="text" class="config-input" id="st-notes" placeholder="Optional…" style="width:260px" oninput="renderSetter()"/>
+        </div>
+      </div>
+      <div id="setter-slip"></div>
+    </div>
+
   </div>
 </div>
 
@@ -498,15 +510,17 @@ const DASHBOARD_PASSWORD = 'Strong2026';
 const CLOSER_SHEET  = '1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ';
 const COACHES_SHEET = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const COACHES       = ['Brent','Bernardo','Ceci','Miguel','Joey','Jackie'];
+const SETTERS       = ['Emery'];
 
 // Column maps
 const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30,dcSetter:21 };
 const GC = { firstName:0,lastName:1,dealValue:4,saleDate:5,closer:10,cashCollected:16,payoutDate:17,excludeFlag:18,dcSetter:13 };
 const CM = { firstName:0,lastName:1,product:3,saleDate:5,startDate:6,endDate:7,coach:9,tier:10,coachPay:11,nonQFlag:15,status:18,retComm:22,excludeFlag:24 };
+const LA = { firstName:0,lastName:1,email:2,bookedDate:10,showStatus:11,source:16 };
 
 // State
-const raw = { ms:[],gc:[],cm:[] };
-let dataLoaded  = { closer:false, coaches:false };
+const raw = { ms:[],gc:[],cm:[],la:[] };
+let dataLoaded  = { closer:false, coaches:false, setter:false };
 let currentTab  = 'closer';
 let approvedMap = {};
 let salaries    = {};
@@ -586,6 +600,19 @@ async function loadCoachData() {
   dataLoaded.coaches=true;
 }
 
+async function loadSetterData() {
+  if(dataLoaded.setter) return;
+  const meta=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${CLOSER_SHEET}?key=AIzaSyC7WtRVmLS2mo53i_Cge8NAlJ5tB2kaHjE&fields=sheets.properties.title`);
+  if(!meta.ok) throw new Error('Cannot access closer spreadsheet.');
+  const tabs=(await meta.json()).sheets.map(s=>s.properties.title);
+  const find=(...names)=>{ for(const n of names){const t=tabs.find(t=>t.toLowerCase()===n.toLowerCase());if(t)return t;} for(const n of names){const t=tabs.find(t=>t.toLowerCase().includes(n.toLowerCase()));if(t)return t;} return null; };
+  const laTab=find('IMPORT - LEADS APPLIED','LEADS APPLIED');
+  if(!laTab) throw new Error(`"IMPORT - LEADS APPLIED" tab not found. Available: ${tabs.join(', ')}`);
+  const rows=await apiFetch(CLOSER_SHEET,`'${laTab}'!A1:Q3000`);
+  raw.la=rows.slice(1).filter(r=>r&&r.length);
+  dataLoaded.setter=true;
+}
+
 // ── TABS ──────────────────────────────────────────────────────
 async function switchTab(tab, btn) {
   currentTab=tab;
@@ -598,6 +625,7 @@ async function switchTab(tab, btn) {
   try {
     if(tab==='closer')  { await loadCloserData();  renderCloser(); }
     if(tab==='coaches') { await loadCoachData();   buildSalaryGrid(); renderCoach(); }
+    if(tab==='setter')  { await loadSetterData();  renderSetter(); }
   } catch(e) { alert('Error loading data: '+e.message); }
   showLoading(false);
 }
@@ -617,10 +645,12 @@ async function refreshData() {
   // Force a re-fetch next time each tab's data is requested
   dataLoaded.closer=false;
   dataLoaded.coaches=false;
+  dataLoaded.setter=false;
   showLoading(true);
   try {
     if(currentTab==='closer')  { await loadCloserData();  renderCloser(); }
     if(currentTab==='coaches') { await loadCoachData();   buildSalaryGrid(); renderCoach(); }
+    if(currentTab==='setter')  { await loadSetterData();  renderSetter(); }
     markUpdated();
   } catch(e) { alert('Error refreshing data: '+e.message); }
   showLoading(false);
@@ -642,7 +672,7 @@ function buildControls(tab) {
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="cl-period-display">—</span></div>`;
     updatePeriodDisplay('cl');
-  } else {
+  } else if(tab==='coaches') {
     const savedPD = localStorage.getItem('ss_co_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
     bar.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px">
@@ -655,11 +685,25 @@ function buildControls(tab) {
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="co-period-display">—</span></div>`;
     updatePeriodDisplay('co');
+  } else {
+    const savedPD = localStorage.getItem('ss_st_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+    bar.innerHTML=`
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="control-label">Setter</span>
+        <div class="select-wrapper"><select id="st-setter-select" onchange="renderSetter()">${SETTERS.map(s=>`<option value="${s}">${s}</option>`).join('')}</select></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="control-label">Pay Date</span>
+        <input type="date" class="date-input" id="st-pay-date" value="${savedPD}" oninput="onSTPayDate()"/>
+      </div>
+      <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="st-period-display">—</span></div>`;
+    updatePeriodDisplay('st');
   }
 }
 
 function onCLPayDate(){ localStorage.setItem('ss_cl_paydate',document.getElementById('cl-pay-date').value); updatePeriodDisplay('cl'); renderCloser(); }
 function onCOPayDate(){ localStorage.setItem('ss_co_paydate',document.getElementById('co-pay-date').value); updatePeriodDisplay('co'); renderCoach(); }
+function onSTPayDate(){ localStorage.setItem('ss_st_paydate',document.getElementById('st-pay-date').value); updatePeriodDisplay('st'); renderSetter(); }
 
 function updatePeriodDisplay(prefix) {
   const inp=document.getElementById(prefix+'-pay-date');
@@ -1011,6 +1055,72 @@ function renderCoach() {
   </div>`;
 }
 
+// ── SETTER RENDER ───────────────────────────────────────────────
+function renderSetter() {
+  const container=document.getElementById('setter-slip');
+  const pd=document.getElementById('st-pay-date')?.value;
+  const setter=document.getElementById('st-setter-select')?.value;
+  if(!pd||!setter||!dataLoaded.setter){container.innerHTML='<div class="empty-state">Select a setter and pay date to generate the slip.</div>';return;}
+  const {start,end}=getPeriod(pd);
+  const inR=(d)=>d&&d>=start&&d<=end;
+  const sLow=setter.trim().toLowerCase();
+
+  // All calls booked by this setter in the period (regardless of show status)
+  const setterLeads=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(sLow)&&inR(parseDate(r[LA.bookedDate])));
+  const showLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase()==='show');
+  const noShowLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase()!=='show');
+
+  const notes=document.getElementById('st-notes')?.value||'';
+  const approveKey=`setter|${setter}|${pd}`;
+  const approved=!!approvedMap[approveKey];
+  const periodLabel=start.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+
+  showLeads.sort((a,b)=>(parseDate(a[LA.bookedDate])?.getTime()||0)-(parseDate(b[LA.bookedDate])?.getTime()||0));
+
+  const showRows=showLeads.map(r=>`<tr>
+    <td style="font-weight:500">${r[LA.firstName]||''} ${r[LA.lastName]||''}</td>
+    <td style="color:var(--text-muted)">${r[LA.email]||'—'}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(parseDate(r[LA.bookedDate]))}</td>
+    <td><span class="tag tag-closed">Show</span></td>
+  </tr>`).join('');
+
+  container.innerHTML=`<div class="slip">
+    <div class="slip-header">
+      <div><div class="slip-brand">STRONG STANDARD <span>Setter Call Slip</span></div></div>
+      <div style="text-align:right"><div class="slip-name">${setter.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
+    </div>
+    <div class="slip-dates">
+      <div class="slip-date-cell"><div class="slip-date-label">Pay Date</div><div class="slip-date-val">${fmtDate(parseDate(pd+'T12:00:00'))}</div></div>
+      <div class="slip-date-cell"><div class="slip-date-label">Period Start</div><div class="slip-date-val">${fmtDate(start)}</div></div>
+      <div class="slip-date-cell"><div class="slip-date-label">Period End</div><div class="slip-date-val">${fmtDate(end)}</div></div>
+    </div>
+    <div class="slip-summary">
+      <div class="slip-left">
+        <div class="section-title">Summary</div>
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Calls Booked (Show)</span><span class="sum-val big">${showLeads.length}</span></div>
+      </div>
+      <div class="slip-right">
+        <div class="section-title">Breakdown</div>
+        <div class="sum-row"><span class="sum-label">Total Booked</span><span class="sum-val">${setterLeads.length}</span></div>
+        <div class="sum-row"><span class="sum-label">Show</span><span class="sum-val green">${showLeads.length}</span></div>
+        <div class="sum-row"><span class="sum-label">No-Show</span><span class="sum-val" style="color:${noShowLeads.length>0?'var(--red)':'var(--text-dim)'}">${noShowLeads.length}</span></div>
+      </div>
+    </div>
+    <div class="slip-section active-section">
+      <div class="section-header-bar active-bar"><span class="sh-title">Calls Booked — Show</span><span class="count-badge">${showLeads.length} calls</span></div>
+      ${showLeads.length>0?`<table class="data-table"><thead><tr><th>Lead</th><th>Email</th><th>Booked Date</th><th>Status</th></tr></thead><tbody>${showRows}</tbody></table>`:'<div class="empty-section">No show calls this period</div>'}
+    </div>
+    ${notes?`<div style="padding:14px 28px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">📝 ${notes}</div>`:''}
+    <div class="slip-footer">
+      <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
+      <div class="footer-btns">
+        <button class="btn-pdf" onclick="generatePDF(this)">🖨 Generate PDF</button>
+        <button class="btn-approve ${approved?'approved':''}" onclick="doApprove('${approveKey}','setter')" id="st-approve-btn">${approved?'✓ Approved':'✓ Approve & Send'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
 // ── GENERATE PDF ─────────────────────────────────────────────
 async function generatePDF(btn) {
   const slip = document.querySelector('.tab-pane.active .slip');
@@ -1088,7 +1198,8 @@ async function generatePDF(btn) {
     const personName = (nameEl?.textContent || '').trim();
     const periodEl  = slip.querySelector('.slip-period');
     const period    = (periodEl?.textContent || '').trim();
-    const type      = currentTab === 'coaches' ? 'Coach Payroll' : 'Closer Payroll';
+    const typeMap   = { coaches:'Coach Payroll', setter:'Setter Payroll' };
+    const type      = typeMap[currentTab] || 'Closer Payroll';
     pdf.save(`${type} ${personName} - ${period}.pdf`);
 
   } catch(e) {
@@ -1111,7 +1222,8 @@ async function generatePDF(btn) {
   const personName = (nameEl?.textContent || '').trim();
   const periodEl = slip.querySelector('.slip-period');
   const period   = (periodEl?.textContent || '').trim();
-  const type     = currentTab === 'coaches' ? 'Coach Payroll' : 'Closer Payroll';
+  const typeMap  = { coaches:'Coach Payroll', setter:'Setter Payroll' };
+  const type     = typeMap[currentTab] || 'Closer Payroll';
   const filename = `${type} ${personName} - ${period}`;
 
   const origTitle    = document.title;
@@ -1167,10 +1279,13 @@ function doApprove(key, type) {
   if(approvedMap[key]) return;
   approvedMap[key]=true;
   try{ localStorage.setItem('ss_payroll_approved',JSON.stringify(approvedMap)); }catch(e){}
-  const prefix=type==='closer'?'cl':'co';
+  const prefixMap = { closer:'cl', coach:'co', setter:'st' };
+  const paneMap   = { closer:'closer', coach:'coaches', setter:'setter' };
+  const prefix=prefixMap[type]||'co';
+  const paneId=paneMap[type]||'coaches';
   const btn=document.getElementById(prefix+'-approve-btn');
-  const dot=document.querySelector(`#pane-${type==='closer'?'closer':'coaches'} .status-dot`);
-  const txt=document.querySelector(`#pane-${type==='closer'?'closer':'coaches'} .status-text`);
+  const dot=document.querySelector(`#pane-${paneId} .status-dot`);
+  const txt=document.querySelector(`#pane-${paneId} .status-text`);
   if(btn){btn.textContent='✓ Approved';btn.classList.add('approved');}
   if(dot) dot.classList.add('approved');
   if(txt) txt.textContent='✓ Approved — Ready to send payment';
