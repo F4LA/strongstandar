@@ -516,7 +516,7 @@ const SETTERS       = ['Emery'];
 const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30 };
 const GC = { firstName:0,lastName:1,dealValue:4,saleDate:5,closer:10,cashCollected:16,payoutDate:17,excludeFlag:18 };
 const CM = { firstName:0,lastName:1,product:3,saleDate:5,startDate:6,endDate:7,coach:9,tier:10,coachPay:11,nonQFlag:15,status:18,retComm:22,excludeFlag:24 };
-const LA = { firstName:0,lastName:1,email:2,closer:12,bookedDate:10,showStatus:11,source:16 };
+const LA = { firstName:0,lastName:1,email:2,closer:12,bookedDate:10,showStatus:11,source:16,refundFlag:21 };
 
 // State
 const raw = { ms:[],gc:[],cm:[],la:[] };
@@ -608,7 +608,7 @@ async function loadSetterData() {
   const find=(...names)=>{ for(const n of names){const t=tabs.find(t=>t.toLowerCase()===n.toLowerCase());if(t)return t;} for(const n of names){const t=tabs.find(t=>t.toLowerCase().includes(n.toLowerCase()));if(t)return t;} return null; };
   const laTab=find('IMPORT - LEADS APPLIED','LEADS APPLIED');
   if(!laTab) throw new Error(`"IMPORT - LEADS APPLIED" tab not found. Available: ${tabs.join(', ')}`);
-  const rows=await apiFetch(CLOSER_SHEET,`'${laTab}'!A1:Q3000`);
+  const rows=await apiFetch(CLOSER_SHEET,`'${laTab}'!A1:V3000`);
   raw.la=rows.slice(1).filter(r=>r&&r.length);
   dataLoaded.setter=true;
 }
@@ -782,8 +782,9 @@ function renderCloser() {
 
   // 21 DC Set Commission: $100 flat per Challenger lead in "IMPORT - LEADS APPLIED" where
   // col Q (Source/setter) = Deniz AND col M (Closer) = Dr. Joey, matched by Sales Call Booked Date (col K).
+  // Excludes refunds (col V = TRUE).
   // (Deniz does not earn this on sets she closes herself — enforced naturally since closer must be Joey.)
-  const dcCalls=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&inR(parseDate(r[LA.bookedDate])))
+  const dcCalls=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&!isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])))
     .sort((a,b)=>(parseDate(a[LA.bookedDate])?.getTime()||0)-(parseDate(b[LA.bookedDate])?.getTime()||0));
   const dcSetComm=dcCalls.length*100;
 
