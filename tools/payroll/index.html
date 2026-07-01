@@ -522,7 +522,7 @@ const SETTERS       = ['Emery'];
 const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30 };
 const GC = { firstName:0,lastName:1,dealValue:4,saleDate:5,closer:10,cashCollected:16,payoutDate:17,excludeFlag:18 };
 const CM = { firstName:0,lastName:1,product:3,saleDate:5,startDate:6,endDate:7,coach:9,tier:10,coachPay:11,nonQFlag:15,status:18,retComm:22,excludeFlag:24 };
-const LA = { firstName:0,lastName:1,email:2,closer:12,bookedDate:10,showStatus:11,source:16,refundFlag:21 };
+const LA = { firstName:0,lastName:1,email:2,closer:12,purchased:13,bookedDate:10,showStatus:11,source:16,refundFlag:21 };
 
 // State
 const raw = { ms:[],gc:[],cm:[],la:[] };
@@ -788,14 +788,14 @@ function renderCloser() {
   const msRef =raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase()===cLow&&isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.refundDate])));
 
   // 21 DC Set Commission: $100 flat per Challenger lead in "IMPORT - LEADS APPLIED" where
-  // col Q (Source/setter) = Deniz AND col M (Closer) = Dr. Joey, matched by Sales Call Booked Date (col K).
-  // Excludes refunds (col V = TRUE).
+  // col Q (Source/setter) = Deniz AND col M (Closer) = Dr. Joey AND col N (Purchased) = "Yes",
+  // matched by Sales Call Booked Date (col K). Excludes refunds (col V = TRUE).
   // (Deniz does not earn this on sets she closes herself — enforced naturally since closer must be Joey.)
-  const dcCalls=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&!isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])))
+  const dcCalls=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&(r[LA.purchased]||'').trim().toLowerCase()==='yes'&&!isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])))
     .sort((a,b)=>(parseDate(a[LA.bookedDate])?.getTime()||0)-(parseDate(b[LA.bookedDate])?.getTime()||0));
   const dcSetComm=dcCalls.length*100;
   // Refunded leads (col V = TRUE) that would otherwise match — shown for visibility, not paid.
-  const dcRefunds=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])));
+  const dcRefunds=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(cLow)&&(r[LA.closer]||'').toLowerCase().includes('joey')&&(r[LA.purchased]||'').trim().toLowerCase()==='yes'&&isTRUE(r[LA.refundFlag])&&inR(parseDate(r[LA.bookedDate])));
   const dcAll=[
     ...dcCalls.map(r=>({name:`${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim(),email:r[LA.email],bookedDate:parseDate(r[LA.bookedDate]),isRefund:false})),
     ...dcRefunds.map(r=>({name:`${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim(),email:r[LA.email],bookedDate:parseDate(r[LA.bookedDate]),isRefund:true})),
