@@ -422,6 +422,7 @@ select:focus{border-color:var(--steel-mid);}
     <div class="logo">STRONG STANDARD <span>Payroll Portal</span></div>
     <div class="header-right">
       <span style="font-size:11px;color:var(--text-dim);font-family:var(--font-display)" id="last-updated">—</span>
+      <button class="hbtn" id="refresh-btn" onclick="refreshData()">🔄 Refresh Data</button>
       <button class="hbtn" onclick="openSettings()">⚙ Settings</button>
       <button class="hbtn theme-toggle" onclick="toggleTheme()"><span id="theme-icon">☀️</span> <span id="theme-label">Light</span></button>
       <button class="hbtn" onclick="location.href='closer dashboard.html'">← Dashboard</button>
@@ -602,6 +603,29 @@ async function switchTab(tab, btn) {
 }
 
 function showLoading(v){ document.getElementById('loading').style.display=v?'flex':'none'; }
+
+function markUpdated(){
+  const el=document.getElementById('last-updated');
+  if(el) el.textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+
+// ── REFRESH DATA ────────────────────────────────────────────────
+async function refreshData() {
+  const btn=document.getElementById('refresh-btn');
+  const orig=btn?btn.innerHTML:'';
+  if(btn){ btn.disabled=true; btn.innerHTML='⏳ Refreshing…'; }
+  // Force a re-fetch next time each tab's data is requested
+  dataLoaded.closer=false;
+  dataLoaded.coaches=false;
+  showLoading(true);
+  try {
+    if(currentTab==='closer')  { await loadCloserData();  renderCloser(); }
+    if(currentTab==='coaches') { await loadCoachData();   buildSalaryGrid(); renderCoach(); }
+    markUpdated();
+  } catch(e) { alert('Error refreshing data: '+e.message); }
+  showLoading(false);
+  if(btn){ btn.disabled=false; btn.innerHTML=orig; }
+}
 
 function buildControls(tab) {
   const bar=document.getElementById('controls-bar');
@@ -1161,7 +1185,7 @@ async function init() {
   // Load closer data first (default tab)
   buildControls('closer');
   showLoading(true);
-  try{ await loadCloserData(); renderCloser(); }catch(e){ alert('Error: '+e.message); }
+  try{ await loadCloserData(); renderCloser(); markUpdated(); }catch(e){ alert('Error: '+e.message); }
   showLoading(false);
   // Restore base salary
   const savedSal=localStorage.getItem('ss_cl_base_salary');
