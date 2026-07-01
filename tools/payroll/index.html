@@ -707,8 +707,8 @@ function renderCloser() {
 
   // DC Set Commission: 2.5% of Package (col E) for calls where col V (MS) / col N (GC) = Deniz,
   // matched by Date Purchased (col F = saleDate), NOT payout date.
-  const msDC=raw.ms.filter(r=>(r[MS.dcSetter]||'').toLowerCase().includes(cLow)&&inR(parseDate(r[MS.saleDate])));
-  const gcDC=raw.gc.filter(r=>(r[GC.dcSetter]||'').toLowerCase().includes(cLow)&&inR(parseDate(r[GC.saleDate])));
+  const msDC=raw.ms.filter(r=>(r[MS.dcSetter]||'').toLowerCase().includes(cLow)&&!isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.saleDate])));
+  const gcDC=raw.gc.filter(r=>(r[GC.dcSetter]||'').toLowerCase().includes(cLow)&&!isTRUE(r[GC.excludeFlag])&&inR(parseDate(r[GC.saleDate])));
   const dcPackageTotal=msDC.reduce((s,r)=>s+parseAmt(r[MS.dealValue]),0)+gcDC.reduce((s,r)=>s+parseAmt(r[GC.dealValue]),0);
   const dcSetComm=dcPackageTotal*0.025;
 
