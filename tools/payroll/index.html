@@ -1364,12 +1364,13 @@ async function init() {
   document.getElementById('app').style.display='block';
   // Load closer data first (default tab)
   buildControls('closer');
+  // Restore base salary BEFORE rendering, so the first paint (and any PDF generated
+  // without touching the page first) already reflects the saved value.
+  const savedSal=localStorage.getItem('ss_cl_base_salary');
+  if(savedSal){ const inp=document.getElementById('cl-base-salary'); if(inp)inp.value=savedSal; }
   showLoading(true);
   try{ await loadCloserData(); await loadSetterDataSafe(); renderCloser(); markUpdated(); }catch(e){ alert('Error: '+e.message); }
   showLoading(false);
-  // Restore base salary
-  const savedSal=localStorage.getItem('ss_cl_base_salary');
-  if(savedSal){ const inp=document.getElementById('cl-base-salary'); if(inp)inp.value=savedSal; }
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
