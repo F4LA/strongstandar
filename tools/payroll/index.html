@@ -1077,7 +1077,19 @@ function renderSetter() {
   // All calls booked by this setter in the period (regardless of show status)
   const setterLeads=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(sLow)&&inR(parseDate(r[LA.bookedDate])));
   const showLeads=setterLeads.filter(r=>(r[LA.showStatus]||'').trim().toLowerCase().startsWith('show'));
-  const noShowLeads=setterLeads.filter(r=>!(r[LA.showStatus]||'').trim().toLowerCase().startsWith('show'));
+
+  // Dynamic breakdown by whatever status values actually appear in the sheet (Showed, No Show, Cancelled, Disqualified, etc.)
+  const statusCounts={};
+  setterLeads.forEach(r=>{
+    const st=(r[LA.showStatus]||'').trim()||'(blank)';
+    statusCounts[st]=(statusCounts[st]||0)+1;
+  });
+  const statusRows=Object.entries(statusCounts)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([st,count])=>{
+      const isShow=st.toLowerCase().startsWith('show');
+      return `<div class="sum-row"><span class="sum-label">${st}</span><span class="sum-val${isShow?' green':''}">${count}</span></div>`;
+    }).join('');
 
   const notes=document.getElementById('st-notes')?.value||'';
   const approveKey=`setter|${setter}|${pd}`;
@@ -1115,8 +1127,7 @@ function renderSetter() {
       <div class="slip-right">
         <div class="section-title">Breakdown</div>
         <div class="sum-row"><span class="sum-label">Total Booked</span><span class="sum-val">${setterLeads.length}</span></div>
-        <div class="sum-row"><span class="sum-label">Show</span><span class="sum-val green">${showLeads.length}</span></div>
-        <div class="sum-row"><span class="sum-label">No-Show</span><span class="sum-val" style="color:${noShowLeads.length>0?'var(--red)':'var(--text-dim)'}">${noShowLeads.length}</span></div>
+        ${statusRows}
       </div>
     </div>
     <div class="slip-section active-section">
