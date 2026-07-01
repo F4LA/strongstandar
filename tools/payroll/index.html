@@ -103,6 +103,12 @@ select:focus{border-color:var(--steel-mid);}
 .config-input:focus{border-color:var(--steel-mid);}
 .config-input:disabled{opacity:.4;cursor:not-allowed;}
 
+/* ── ALERT BANNER ───────────────────────────────────────────── */
+.alert-banner{background:var(--red-pale);border:1px solid rgba(231,76,60,0.35);border-radius:12px;padding:16px 20px;margin-bottom:20px;}
+.alert-banner-header{font-size:13px;font-weight:600;color:var(--red);margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;line-height:1.4;}
+.alert-banner .data-table{background:var(--navy);border-radius:8px;overflow:hidden;}
+.alert-banner .data-table th{background:rgba(231,76,60,0.1)!important;color:var(--red)!important;}
+
 /* ── CUSTOM ITEMS PANEL ─────────────────────────────────────── */
 .custom-panel{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 24px;margin-bottom:24px;}
 .custom-panel-header{margin-bottom:12px;}
@@ -244,7 +250,7 @@ select:focus{border-color:var(--steel-mid);}
 
   /* ── Hide UI chrome ── */
   #pw-screen, .loading-overlay, .settings-overlay,
-  .header, .tabs-bar, .controls-bar, .config-row, .custom-panel,
+  .header, .tabs-bar, .controls-bar, .config-row, .custom-panel, .alert-banner,
   .slip-footer, .sort-bar { display:none !important; }
 
   /* ── Base ── */
@@ -1109,7 +1115,40 @@ function renderSetter() {
   </tr>`;
   }).join('');
 
-  container.innerHTML=`<div class="slip">
+  // ── DATA HYGIENE ALERT ──────────────────────────────────────
+  // A call whose booked date has already passed should have a resolved outcome
+  // (Showed / No Show / Cancelled / Disqualified / Rescheduled, etc). If it's still
+  // sitting on a "pre-call" status like "Confirmed", nobody updated it after the call —
+  // and that call won't get counted correctly for setter pay.
+  const today=new Date(); today.setHours(0,0,0,0);
+  const isResolvedStatus=(st)=>{
+    const s=st.toLowerCase();
+    return s.startsWith('show') || s.includes('no show') || s.includes('no-show') ||
+           s.includes('cancel') || s.includes('disqualif') || s.includes('reschedul');
+  };
+  const staleCalls=setterLeads.filter(r=>{
+    const bd=parseDate(r[LA.bookedDate]);
+    const st=(r[LA.showStatus]||'').trim();
+    return bd && bd<today && !isResolvedStatus(st);
+  });
+
+  const staleRows=staleCalls.map(r=>{
+    const bd=parseDate(r[LA.bookedDate]);
+    const daysAgo=Math.floor((today-bd)/86400000);
+    return `<tr>
+    <td style="font-weight:500">${r[LA.firstName]||''} ${r[LA.lastName]||''}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(bd)}</td>
+    <td style="color:var(--red);font-family:var(--font-display)">${daysAgo} day${daysAgo!==1?'s':''} ago</td>
+    <td><span class="tag tag-nonq">${r[LA.showStatus]||'(blank)'}</span></td>
+  </tr>`;
+  }).join('');
+
+  const alertBanner=staleCalls.length>0?`<div class="alert-banner">
+    <div class="alert-banner-header">⚠️ ${staleCalls.length} call${staleCalls.length>1?'s':''} already happened but ${staleCalls.length>1?"still show":"still shows"} a pre-call status — this affects setter pay accuracy. Update these in the sheet.</div>
+    <table class="data-table"><thead><tr><th>Lead</th><th>Booked Date</th><th>Overdue</th><th>Current Status</th></tr></thead><tbody>${staleRows}</tbody></table>
+  </div>`:'';
+
+  container.innerHTML=`${alertBanner}<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Setter Call Slip</span></div></div>
       <div style="text-align:right"><div class="slip-name">${setter.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
