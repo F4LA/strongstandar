@@ -1138,6 +1138,7 @@ function renderSetter() {
     const daysAgo=Math.floor((today-bd)/86400000);
     return `<tr>
     <td style="font-weight:500">${r[LA.firstName]||''} ${r[LA.lastName]||''}</td>
+    <td style="color:var(--text-muted)">${r[LA.closer]||'—'}</td>
     <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(bd)}</td>
     <td style="color:var(--red);font-family:var(--font-display)">${daysAgo} day${daysAgo!==1?'s':''} ago</td>
     <td><span class="tag tag-nonq">${r[LA.showStatus]||'(blank)'}</span></td>
@@ -1146,7 +1147,7 @@ function renderSetter() {
 
   const alertBanner=staleCalls.length>0?`<div class="alert-banner">
     <div class="alert-banner-header">⚠️ ${staleCalls.length} call${staleCalls.length>1?'s':''} already happened but ${staleCalls.length>1?"still show":"still shows"} a pre-call status — this affects setter pay accuracy. Update these in the sheet.</div>
-    <table class="data-table"><thead><tr><th>Lead</th><th>Booked Date</th><th>Overdue</th><th>Current Status</th></tr></thead><tbody>${staleRows}</tbody></table>
+    <table class="data-table"><thead><tr><th>Lead</th><th>Sales Person</th><th>Booked Date</th><th>Overdue</th><th>Current Status</th></tr></thead><tbody>${staleRows}</tbody></table>
   </div>`:'';
 
   container.innerHTML=`${alertBanner}<div class="slip">
