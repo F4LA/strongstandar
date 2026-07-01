@@ -103,6 +103,20 @@ select:focus{border-color:var(--steel-mid);}
 .config-input:focus{border-color:var(--steel-mid);}
 .config-input:disabled{opacity:.4;cursor:not-allowed;}
 
+/* ── CUSTOM ITEMS PANEL ─────────────────────────────────────── */
+.custom-panel{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 24px;margin-bottom:24px;}
+.custom-panel-header{margin-bottom:12px;}
+.custom-panel-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);font-weight:600;}
+.custom-panel-sub{display:block;text-transform:none;letter-spacing:0;font-size:11px;color:var(--text-dim);font-weight:400;margin-top:3px;}
+.custom-panel-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.custom-item-row{display:flex;align-items:center;gap:12px;background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:8px 14px;}
+.custom-item-concept{flex:1;font-size:13px;color:var(--text);}
+.custom-item-amount{font-family:var(--font-display);font-size:14px;color:var(--gold);letter-spacing:.5px;white-space:nowrap;}
+.custom-item-remove{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px;transition:all .15s;line-height:1;}
+.custom-item-remove:hover{color:var(--red);background:var(--red-pale);}
+.custom-empty{font-size:12px;color:var(--text-dim);padding:6px 2px;}
+.custom-panel-add{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+
 /* ── SETTINGS MODAL ─────────────────────────────────────────── */
 .settings-overlay{position:fixed;inset:0;z-index:150;background:rgba(4,8,18,0.7);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:24px;}
 .settings-overlay.open{display:flex;}
@@ -161,7 +175,7 @@ select:focus{border-color:var(--steel-mid);}
 /* ── TABLE SECTIONS ─────────────────────────────────────────── */
 .slip-section{border-bottom:1px solid var(--border);}
 .slip-section:last-of-type{border-bottom:none;}
-.retention-section,.nonq-section{border-top:3px solid var(--border);}
+.retention-section,.nonq-section,.custom-section{border-top:3px solid var(--border);}
 .section-header-bar{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 22px;
@@ -181,12 +195,14 @@ select:focus{border-color:var(--steel-mid);}
 .active-bar{background:rgba(34,120,172,0.14);color:var(--steel-light);border-bottom:1px solid rgba(56,153,204,0.2);}
 .retention-bar{background:rgba(155,89,182,0.14);color:var(--purple);border-bottom:1px solid rgba(155,89,182,0.2);}
 .nonq-bar{background:rgba(231,76,60,0.1);color:var(--red);border-bottom:1px solid rgba(231,76,60,0.15);}
+.custom-bar{background:rgba(201,168,76,0.14);color:var(--gold);border-bottom:1px solid rgba(201,168,76,0.2);}
 .closer-bar{background:rgba(201,168,76,0.1);color:var(--gold);border-bottom:1px solid rgba(201,168,76,0.2);}
 .data-table{width:100%;border-collapse:collapse;}
 .data-table th{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;padding:9px 18px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
 .active-section    .data-table th{background:rgba(34,120,172,0.08);color:var(--steel-light);}
 .retention-section .data-table th{background:rgba(155,89,182,0.08);color:var(--purple);}
 .nonq-section      .data-table th{background:rgba(231,76,60,0.06);color:var(--red);}
+.custom-section    .data-table th{background:rgba(201,168,76,0.08);color:var(--gold);}
 .closer-section    .data-table th{background:rgba(201,168,76,0.07);color:var(--gold);}
 .data-table td{padding:10px 18px;font-size:13px;color:var(--text);border-bottom:1px solid rgba(56,153,204,0.05);white-space:nowrap;}
 .data-table tbody tr:last-child td{border-bottom:none;}
@@ -230,7 +246,7 @@ select:focus{border-color:var(--steel-mid);}
 
   /* ── Hide UI chrome ── */
   #pw-screen, .loading-overlay, .settings-overlay,
-  .header, .tabs-bar, .controls-bar, .config-row,
+  .header, .tabs-bar, .controls-bar, .config-row, .custom-panel,
   .slip-footer, .sort-bar { display:none !important; }
 
   /* ── Base ── */
@@ -273,13 +289,14 @@ select:focus{border-color:var(--steel-mid);}
   .sum-row.total { border-top:2px solid #dde4ef !important; border-bottom:none !important; }
 
   /* ── Section header bars ── */
-  .retention-section, .nonq-section { border-top:2px solid #dde4ef !important; margin-top:10px !important; }
+  .retention-section, .nonq-section, .custom-section { border-top:2px solid #dde4ef !important; margin-top:10px !important; }
   .section-header-bar { background:white !important; border-top:none !important; border-bottom:1px solid #dde4ef !important; padding:10px 18px !important; }
   .sh-title    { font-family:'Bebas Neue',sans-serif !important; font-size:18px !important; letter-spacing:2px !important; }
   .count-badge { font-family:'Bebas Neue',sans-serif !important; font-size:14px !important; background:none !important; letter-spacing:1px !important; }
   .active-bar    { color:#1a68a0 !important; border-left:4px solid #1a68a0 !important; }
   .retention-bar { color:#7d3c98 !important; border-left:4px solid #7d3c98 !important; }
   .nonq-bar      { color:#c0392b !important; border-left:4px solid #c0392b !important; }
+  .custom-bar    { color:#b58a00 !important; border-left:4px solid #b58a00 !important; }
   .closer-bar    { color:#b58a00 !important; border-left:4px solid #b58a00 !important; }
 
   /* ── Data tables ── */
@@ -291,6 +308,7 @@ select:focus{border-color:var(--steel-mid);}
   .active-section    .data-table th { color:#1a68a0 !important; }
   .retention-section .data-table th { color:#7d3c98 !important; }
   .nonq-section      .data-table th { color:#c0392b !important; }
+  .custom-section    .data-table th { color:#b58a00 !important; }
   .closer-section    .data-table th { color:#b58a00 !important; }
   .data-table td {
     font-family:'DM Sans',sans-serif !important;
@@ -464,6 +482,19 @@ select:focus{border-color:var(--steel-mid);}
           </button>
         </div>
       </div>
+      <div class="custom-panel" id="co-custom-panel">
+        <div class="custom-panel-header">
+          <span class="custom-panel-title">➕ Custom Items
+            <span class="custom-panel-sub">Bonos, referidos u otros pagos no estándar — se suman al total y salen en el PDF de este coach para este periodo.</span>
+          </span>
+        </div>
+        <div class="custom-panel-list" id="co-custom-list"></div>
+        <div class="custom-panel-add">
+          <input type="text" class="config-input" id="co-custom-concept" placeholder="Concepto (ej. Bono por cliente referido)" style="width:300px" onkeydown="if(event.key==='Enter')addCustomItem()"/>
+          <input type="text" class="config-input" id="co-custom-amount" placeholder="$0.00" style="width:110px" onkeydown="if(event.key==='Enter')addCustomItem()"/>
+          <button class="hbtn" onclick="addCustomItem()">+ Add Item</button>
+        </div>
+      </div>
       <div id="coach-slip"></div>
     </div>
 
@@ -491,6 +522,7 @@ let currentTab  = 'closer';
 let approvedMap = {};
 let salaries    = {};
 let coachSort   = 'name';
+let customItems = {};
 
 // ── PASSWORD ─────────────────────────────────────────────────
 function checkPW() {
@@ -764,10 +796,61 @@ function renderCloser() {
   </div>`;
 }
 
+// ── CUSTOM ITEMS (coaches) ─────────────────────────────────────
+function loadCustomItems(){ try{ customItems=JSON.parse(localStorage.getItem('ss_co_custom_items')||'{}'); }catch(e){ customItems={}; } }
+function saveCustomItems(){ try{ localStorage.setItem('ss_co_custom_items',JSON.stringify(customItems)); }catch(e){} }
+function customKey(coach,pd){ return `${coach}|${pd}`; }
+function getCustomItems(coach,pd){ return (coach&&pd&&customItems[customKey(coach,pd)])||[]; }
+
+function renderCustomPanel(){
+  const list=document.getElementById('co-custom-list');
+  if(!list) return;
+  const coach=document.getElementById('co-coach-select')?.value;
+  const pd=document.getElementById('co-pay-date')?.value;
+  if(!coach||!pd){ list.innerHTML='<div class="custom-empty">Select a coach and pay date first.</div>'; return; }
+  const items=getCustomItems(coach,pd);
+  if(!items.length){ list.innerHTML='<div class="custom-empty">No custom items for this period.</div>'; return; }
+  list.innerHTML=items.map((it,i)=>`
+    <div class="custom-item-row">
+      <span class="custom-item-concept">${it.concept}</span>
+      <span class="custom-item-amount">${money(it.amount)}</span>
+      <button class="custom-item-remove" onclick="removeCustomItem(${i})" title="Remove">✕</button>
+    </div>`).join('');
+}
+
+function addCustomItem(){
+  const coach=document.getElementById('co-coach-select')?.value;
+  const pd=document.getElementById('co-pay-date')?.value;
+  if(!coach||!pd){ alert('Select a coach and pay date first.'); return; }
+  const conceptInp=document.getElementById('co-custom-concept');
+  const amountInp=document.getElementById('co-custom-amount');
+  const concept=(conceptInp.value||'').trim();
+  const amount=parseAmt(amountInp.value);
+  if(!concept){ alert('Enter a concept/description.'); return; }
+  if(!amount){ alert('Enter a valid amount.'); return; }
+  const key=customKey(coach,pd);
+  if(!customItems[key]) customItems[key]=[];
+  customItems[key].push({concept,amount});
+  saveCustomItems();
+  conceptInp.value=''; amountInp.value='';
+  renderCoach();
+}
+
+function removeCustomItem(i){
+  const coach=document.getElementById('co-coach-select')?.value;
+  const pd=document.getElementById('co-pay-date')?.value;
+  const key=customKey(coach,pd);
+  if(!customItems[key]) return;
+  customItems[key].splice(i,1);
+  saveCustomItems();
+  renderCoach();
+}
+
 // ── COACH RENDER ──────────────────────────────────────────────
 function setCoachSort(s){ coachSort=s; renderCoach(); }
 
 function renderCoach() {
+  renderCustomPanel();
   const container=document.getElementById('coach-slip');
   const pd=document.getElementById('co-pay-date')?.value;
   const coach=document.getElementById('co-coach-select')?.value;
@@ -798,7 +881,9 @@ function renderCoach() {
   const activeClientPay  = activeClients.reduce((s,r)=>s+parseAmt(r[CM.coachPay]),0);
   const retCommPay       = retClients.reduce((s,r)=>s+parseAmt(r[CM.retComm]),0);
   const baseSalary       = salaries[coach]||0;
-  const totalPayment     = activeClientPay+retCommPay+baseSalary;
+  const customItemsArr   = getCustomItems(coach,pd);
+  const customTotal      = customItemsArr.reduce((s,it)=>s+parseAmt(it.amount),0);
+  const totalPayment     = activeClientPay+retCommPay+baseSalary+customTotal;
   const notes=document.getElementById('co-notes')?.value||'';
   const approveKey=`coach|${coach}|${pd}`;
   const approved=!!approvedMap[approveKey];
@@ -836,6 +921,11 @@ function renderCoach() {
     <td><span class="tag tag-nonq">Non-Qualifier</span></td>
   </tr>`).join('');
 
+  const customRows=customItemsArr.map(it=>`<tr>
+    <td style="font-weight:500">${it.concept}</td>
+    <td style="font-family:var(--font-display);color:var(--gold);font-weight:500">${money(it.amount)}</td>
+  </tr>`).join('');
+
   container.innerHTML=`<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Coach Commission Slip</span></div></div>
@@ -852,6 +942,7 @@ function renderCoach() {
         <div class="sum-row"><span class="sum-label">Active Client Pay</span><span class="sum-val green">${money(activeClientPay)}</span></div>
         <div class="sum-row"><span class="sum-label">Retention Commission</span><span class="sum-val purple">${money(retCommPay)}</span></div>
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(baseSalary)}</span></div>
+        ${customItemsArr.length>0?`<div class="sum-row"><span class="sum-label">Custom Items</span><span class="sum-val gold">${money(customTotal)}</span></div>`:''}
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(totalPayment)}</span></div>
       </div>
       <div class="slip-right">
@@ -874,6 +965,10 @@ function renderCoach() {
       <div class="section-header-bar retention-bar"><span class="sh-title">Retention Commission</span><span class="count-badge">${retClients.length} clients &nbsp;·&nbsp; ${money(retCommPay)}</span></div>
       ${retClients.length>0?`<table class="data-table"><thead><tr><th>Client</th><th>Start Date</th><th>End Date</th><th>Status</th><th>Commission</th></tr></thead><tbody>${retRows}</tbody></table>`:'<div class="empty-section">No retention commissions this period</div>'}
     </div>
+    ${customItemsArr.length>0?`<div class="slip-section custom-section">
+      <div class="section-header-bar custom-bar"><span class="sh-title">Custom Items</span><span class="count-badge">${customItemsArr.length} item${customItemsArr.length>1?'s':''} &nbsp;·&nbsp; ${money(customTotal)}</span></div>
+      <table class="data-table"><thead><tr><th>Concept</th><th>Amount</th></tr></thead><tbody>${customRows}</tbody></table>
+    </div>`:''}
     ${nonQClients.length>0?`<div class="slip-section nonq-section">
       <div class="section-header-bar nonq-bar"><span class="sh-title">Non-Qualifiers</span><span class="count-badge">${nonQClients.length} clients &nbsp;·&nbsp; not included in pay</span></div>
       <table class="data-table"><thead><tr><th>Client</th><th>Product</th><th>Sale Date</th><th>Status</th></tr></thead><tbody>${nonQRows}</tbody></table>
@@ -1058,6 +1153,7 @@ function doApprove(key, type) {
 async function init() {
   try{ salaries=JSON.parse(localStorage.getItem('ss_coach_salaries')||'{}'); }catch(e){}
   try{ approvedMap=JSON.parse(localStorage.getItem('ss_payroll_approved')||'{}'); }catch(e){}
+  loadCustomItems();
   document.getElementById('app').style.display='block';
   // Load closer data first (default tab)
   buildControls('closer');
