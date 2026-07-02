@@ -840,7 +840,6 @@ function renderCloser() {
     <td style="font-weight:500;color:var(--red)">${c.name||'—'}</td>
     <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.saleDate)}</td>
     <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.refundDate)}</td>
-    <td style="font-family:var(--font-display);color:var(--red)">${money(0)}</td>
   </tr>`).join('');
 
   const dcRows=dcAll.map(c=>`<tr style="${c.isRefund?'background:rgba(231,76,60,0.05)':''}">
@@ -895,7 +894,7 @@ function renderCloser() {
       <tbody>${clientRows}</tbody></table></div>`:''}
     ${refundEntries.length>0?`<div class="slip-section nonq-section">
       <div class="section-header-bar nonq-bar"><span class="sh-title">Refunds</span><span class="count-badge">${refundEntries.length} refunded &nbsp;·&nbsp; not counted in commission</span></div>
-      <table class="data-table"><thead><tr><th>Client</th><th>Sale Date</th><th>Refund Date</th><th>Amount</th></tr></thead>
+      <table class="data-table"><thead><tr><th>Client</th><th>Sale Date</th><th>Refund Date</th></tr></thead>
       <tbody>${refundRows}</tbody></table></div>`:''}
     ${notes?`<div style="padding:14px 28px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">📝 ${notes}</div>`:''}
     <div class="slip-footer">
