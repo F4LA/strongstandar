@@ -815,20 +815,32 @@ function renderCloser() {
   const periodLabel=start.toLocaleDateString('en-US',{month:'long',year:'numeric'});
 
   const clients=[
-    ...msComm.map(r=>({name:`${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),saleDate:parseDate(r[MS.saleDate]),payoutDate:parseDate(r[MS.payoutDate]),cc:parseAmt(r[MS.cashCollected]),deal:parseAmt(r[MS.dealValue]),isRefund:false})),
-    ...gcComm.map(r=>({name:`${r[GC.firstName]||''} ${r[GC.lastName]||''}`.trim(),saleDate:parseDate(r[GC.saleDate]),payoutDate:parseDate(r[GC.payoutDate]),cc:parseAmt(r[GC.cashCollected]),deal:parseAmt(r[GC.dealValue]),isRefund:false})),
-    ...msRef.map(r=>({name:`${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),saleDate:parseDate(r[MS.saleDate]),payoutDate:parseDate(r[MS.refundDate]),cc:parseAmt(r[MS.cashCollected]),deal:0,isRefund:true})),
+    ...msComm.map(r=>({name:`${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),saleDate:parseDate(r[MS.saleDate]),payoutDate:parseDate(r[MS.payoutDate]),cc:parseAmt(r[MS.cashCollected]),deal:parseAmt(r[MS.dealValue])})),
+    ...gcComm.map(r=>({name:`${r[GC.firstName]||''} ${r[GC.lastName]||''}`.trim(),saleDate:parseDate(r[GC.saleDate]),payoutDate:parseDate(r[GC.payoutDate]),cc:parseAmt(r[GC.cashCollected]),deal:parseAmt(r[GC.dealValue])})),
   ].sort((a,b)=>(a.payoutDate?.getTime()||0)-(b.payoutDate?.getTime()||0));
+
+  // Refunds get their own table — kept separate from Client Breakdown so it's clear
+  // these amounts are NOT subtracted from the commission (they were already excluded
+  // from totalCash above, since msComm filters out refunded rows entirely).
+  const refundEntries=msRef.map(r=>({name:`${r[MS.firstName]||''} ${r[MS.lastName]||''}`.trim(),saleDate:parseDate(r[MS.saleDate]),refundDate:parseDate(r[MS.refundDate]),cc:parseAmt(r[MS.cashCollected])}))
+    .sort((a,b)=>(a.refundDate?.getTime()||0)-(b.refundDate?.getTime()||0));
 
   const tierRows=[{label:'Tier 1 ($0 – $12,500)',amount:t1,rate:'10.00%',comm:t1*.10},{label:'Tier 2 ($12,500 – $25,000)',amount:t2,rate:'12.50%',comm:t2*.125},{label:'Tier 3 ($25,000+)',amount:t3,rate:'15.00%',comm:t3*.15}]
     .filter(t=>t.amount>0).map(t=>`<tr><td class="tier-label">${t.label}</td><td>${money(t.amount)}</td><td style="color:var(--text-muted)">${t.rate}</td><td style="color:var(--gold);font-weight:500">${money(t.comm)}</td></tr>`).join('');
 
-  const clientRows=clients.map(c=>`<tr style="${c.isRefund?'background:rgba(231,76,60,0.05)':''}">
-    <td style="font-weight:500;${c.isRefund?'color:var(--red)':''}">${c.name||'—'}${c.isRefund?' <span class="tag tag-nonq">REFUND</span>':''}</td>
+  const clientRows=clients.map(c=>`<tr>
+    <td style="font-weight:500">${c.name||'—'}</td>
     <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.saleDate)}</td>
     <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.payoutDate)}</td>
-    <td style="font-family:var(--font-display);${c.isRefund?'color:var(--red)':'color:var(--steel-light)'}">${c.isRefund?'-':''}${money(c.cc)}</td>
+    <td style="font-family:var(--font-display);color:var(--steel-light)">${money(c.cc)}</td>
     <td style="font-family:var(--font-display);color:var(--text-muted)">${money(c.deal)}</td>
+  </tr>`).join('');
+
+  const refundRows=refundEntries.map(c=>`<tr>
+    <td style="font-weight:500;color:var(--red)">${c.name||'—'}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.saleDate)}</td>
+    <td style="color:var(--text-dim);font-family:var(--font-display)">${fmtDate(c.refundDate)}</td>
+    <td style="font-family:var(--font-display);color:var(--red)">${money(0)}</td>
   </tr>`).join('');
 
   const dcRows=dcAll.map(c=>`<tr style="${c.isRefund?'background:rgba(231,76,60,0.05)':''}">
@@ -881,6 +893,10 @@ function renderCloser() {
       <div class="section-header-bar active-bar"><span class="sh-title">Client Breakdown</span><span class="count-badge">${clients.length} clients</span></div>
       <table class="data-table"><thead><tr><th>Client</th><th>Sale Date</th><th>Payout Date</th><th>Cash Collected</th><th>Deal Value</th></tr></thead>
       <tbody>${clientRows}</tbody></table></div>`:''}
+    ${refundEntries.length>0?`<div class="slip-section nonq-section">
+      <div class="section-header-bar nonq-bar"><span class="sh-title">Refunds</span><span class="count-badge">${refundEntries.length} refunded &nbsp;·&nbsp; not counted in commission</span></div>
+      <table class="data-table"><thead><tr><th>Client</th><th>Sale Date</th><th>Refund Date</th><th>Amount</th></tr></thead>
+      <tbody>${refundRows}</tbody></table></div>`:''}
     ${notes?`<div style="padding:14px 28px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">📝 ${notes}</div>`:''}
     <div class="slip-footer">
       <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
