@@ -785,7 +785,7 @@ function renderCloser() {
 
   const msComm=raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase().includes(cLow)&&!isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.payoutDate])));
   const gcComm=raw.gc.filter(r=>(r[GC.closer]||'').toLowerCase().includes(cLow)&&!isTRUE(r[GC.excludeFlag])&&inR(parseDate(r[GC.payoutDate])));
-  const msRef =raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase()===cLow&&isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.refundDate])));
+  const msRef =raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase().includes(cLow)&&isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.refundDate])));
 
   // 21 DC Set Commission: $100 flat per Challenger lead in "IMPORT - LEADS APPLIED" where
   // col Q (Source/setter) = Deniz AND col M (Closer) = Dr. Joey AND col N (Purchased) = "Yes",
