@@ -235,6 +235,12 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://strongstandard.com/blog/how-much-muscle-can-you-gain-in-a-year/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
