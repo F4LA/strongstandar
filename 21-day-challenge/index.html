@@ -1988,17 +1988,22 @@ footer {
   .container--narrow { padding: 0 18px; }
   .section { padding: 64px 0; }
   .section__header { margin-bottom: 40px; }
-  .section__header h2 { font-size: clamp(2.2rem,7vw,3.5rem); }
-  .section__header p { font-size: 16px; }
+
+  /* ── Unified mobile type scale ──
+     H1 (hero):     ~34px  ·  H2 (all sections): ~27px
+     Body:          16px   ·  Secondary: 15px   ·  Micro-labels: 11px */
+  .section__header h2 { font-size: clamp(1.6rem, 7vw, 1.75rem); line-height: 1.2; }
+  .section__header p { font-size: 16px; line-height: 1.6; }
   .hero { padding: 100px 0 64px; min-height: auto; }
-  .hero h1 { font-size: clamp(2.2rem,8vw,3.2rem); }
+  .hero h1 { font-size: clamp(2rem, 8.5vw, 2.25rem); line-height: 1.15; margin-bottom: 16px; }
   .desktop-br { display: none; }
   .hero h1 .accent { display: inline; }
-  .hero__kicker { font-size: 11px; }
-  .hero__subhead { font-size: 17px; line-height: 1.5; margin-bottom: 16px; }
+  .hero__spots-pill { font-size: 13px; padding: 8px 18px; margin-bottom: 16px; }
+  .hero__kicker { font-size: 11px; margin-bottom: 8px; }
+  .hero__subhead { font-size: 16px; line-height: 1.6; margin-bottom: 16px; }
   .hero__start-date { font-size: 11px; letter-spacing: 0.04em; line-height: 1.6; padding: 0 8px; margin-bottom: 24px; }
   .hero__sub { font-size: 16px; color: var(--off-white); }
-  .hero__guarantee-microcopy { font-size: 12px; padding: 0 12px; }
+  .hero__guarantee-microcopy { font-size: 11px; padding: 0 12px; }
   .hero__ctas { flex-direction: column; align-items: stretch; }
   .hero__ctas .btn-primary, .hero__ctas .btn-outline { width: 100%; justify-content: center; }
   .floating-cta { bottom: 16px; right: 16px; }
@@ -2022,10 +2027,10 @@ footer {
   .offer__tier { padding: 20px 16px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
   /* Guarantee box */
   .guarantee__box { padding: 32px 20px; }
-  .guarantee__box h2 { font-size: clamp(1.8rem,6vw,3rem); }
+  .guarantee__box h2 { font-size: clamp(1.6rem, 7vw, 1.75rem); line-height: 1.2; }
   /* FAQ */
-  .faq-item__question { padding: 18px 20px; font-size: 14px; }
-  .faq-item__answer p { padding: 0 20px 18px; }
+  .faq-item__question { padding: 18px 20px; font-size: 15px; }
+  .faq-item__answer p { padding: 0 20px 18px; font-size: 15px; }
   /* Prizes */
   .prizes__showcase { padding: 36px 20px; }
   /* Footer */
@@ -2035,11 +2040,11 @@ footer {
   #nav .btn-primary { font-size: 12px !important; padding: 13px 22px !important; }
   /* Final CTA */
   .final-cta-section { padding: 80px 0; }
-  .final-cta-section h2 { font-size: clamp(2.8rem,9vw,5rem); }
+  .final-cta-section h2 { font-size: clamp(1.75rem, 7.5vw, 2rem); line-height: 1.15; }
   /* VSL */
   .vsl-section { padding: 64px 0; }
   /* What 21 days list */
-  .what-21-days__list li { padding: 16px 18px; font-size: 14px; }
+  .what-21-days__list li { padding: 16px 18px; font-size: 15px; }
   .what-21-days__stats { grid-template-columns: 1fr; gap: 12px; }
   .what-21-days__stat { padding: 20px 16px; }
 }
@@ -2052,7 +2057,9 @@ footer {
 
 /* ─── 400px breakpoint ─── */
 @media (max-width: 400px) {
-  .hero h1 { font-size: 2rem; }
+  .hero h1 { font-size: 1.85rem; }
+  .section__header h2, .guarantee__box h2 { font-size: 1.5rem; }
+  .final-cta-section h2 { font-size: 1.65rem; }
   .hero__start-date { font-size: 10px; }
 }
 
