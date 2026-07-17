@@ -418,6 +418,23 @@ h3 {
   font-weight: 500;
 }
 
+.hero__subhead {
+  font-size: 20px;
+  color: var(--off-white);
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 0 18px;
+  font-weight: 500;
+}
+
+.hero__guarantee-microcopy {
+  font-size: 13px;
+  color: var(--faint);
+  margin-top: 10px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
 .hero__ctas {
   display: flex;
   gap: 16px;
@@ -704,6 +721,42 @@ h3 {
   flex-shrink: 0;
   color: var(--success);
   margin-top: 2px;
+}
+
+.what-21-days__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.what-21-days__stat {
+  background: var(--navy-2);
+  border: 1px solid rgba(34,120,172,0.15);
+  border-radius: var(--r-lg);
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.what-21-days__stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--steel-light);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.what-21-days__stat-label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .what-21-days__stats { grid-template-columns: 1fr; }
 }
 
 /* ═══════════════════════════════════════════════
@@ -2138,10 +2191,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <h1>
-        Lose Fat.<br>
-        Build Muscle.<br>
-        <span class="accent">Feel Confident.</span>
+        Lose 3–6 lbs of Fat and Get<br>
+        Noticeably Stronger in 21 Days<br>
+        <span class="accent">Without Giving Up the Foods You Love</span>
       </h1>
+
+      <p class="hero__subhead">
+        Designed for men and women 40+ with real lives and responsibilities who are ready for their health and body to finally match the life they're building next.
+      </p>
+
+      <p class="hero__start-date">Starts Jul 6, 2026 &middot; Limited to 60 Spots &middot; From $97 &middot; 21-Day &ldquo;Love It Or It&rsquo;s Free&rdquo; Guarantee</p>
 
       <p class="hero__sub">
         Join the science-backed 21-day challenge that's helped <strong>375+ people</strong> start transforming their bodies, with expert coaching from a PhD-led team, personalized nutrition, and a community that actually shows up for you.
@@ -2155,7 +2214,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="#results" class="btn-outline">See Results</a>
       </div>
 
-      <p class="hero__start-date">Starts Jul 6, 2026</p>
+      <p class="hero__guarantee-microcopy">Try the full 21 days. Not thrilled with your progress? Email us on day 21 and we'll refund every penny.</p>
     </div>
   </div>
 </section>
@@ -2262,6 +2321,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- ═══════════════════════════════════════════════
+     WHO THIS IS FOR
+═══════════════════════════════════════════════ -->
+<section class="section section--mid fade-in" id="who-its-for">
+  <div class="container--narrow">
+    <div class="section__header reveal">
+      <span class="label">Sound Familiar?</span>
+      <h2>Who This 21-Day Challenge Is For</h2>
+    </div>
+
+    <ul class="what-21-days__list reveal">
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>You're 40+ and life just shifted: kids out of the house, menopause, retirement, or a milestone birthday that's got you thinking differently.</div>
+      </li>
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>You've spent years focused on your career and your family, and now you're finally ready to do something for yourself.</div>
+      </li>
+      <li>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>You're tired of starting over every few months and want a plan that actually fits your real schedule, not someone else's.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
      WHAT 21 DAYS CAN DO
 ═══════════════════════════════════════════════ -->
 <section class="section section--dark fade-in" id="about">
@@ -2270,6 +2356,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="label">The Real Question</span>
       <h2>What Can 21 Days<br>Actually Do?</h2>
     </div>
+
+    <div class="what-21-days__stats reveal">
+      <div class="what-21-days__stat">
+        <span class="what-21-days__stat-num">3–6 lbs</span>
+        <span class="what-21-days__stat-label">of fat lost by most challengers in 21 days</span>
+      </div>
+      <div class="what-21-days__stat">
+        <span class="what-21-days__stat-num">10–20%</span>
+        <span class="what-21-days__stat-label">added to main lifts by many challengers</span>
+      </div>
+      <div class="what-21-days__stat">
+        <span class="what-21-days__stat-num">80%+</span>
+        <span class="what-21-days__stat-label">report higher energy and better consistency by week 3</span>
+      </div>
+    </div>
+
     <p class="what-21-days__body reveal">Three weeks won't undo years of frustration, and we'd never insult you by pretending it will. But 21 days is more than enough to prove something most people have stopped believing: that real progress is possible within the life you're already living. No overhaul required.</p>
 
     <ul class="what-21-days__list reveal">
@@ -2300,6 +2402,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Join the Challenge
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
+      <p style="font-size:13px;color:var(--faint);margin-top:12px;">Try the full 21 days. If you're not thrilled with your progress, email us on day 21 and we'll refund every penny.</p>
     </div>
   </div>
 </section>
@@ -2611,7 +2714,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
         </div>
         <h3>3-4 Day Workout Plans</h3>
-        <p>Strength and muscle-building workouts designed to maximize results, at home or in the gym, without wasting hours training.</p>
+        <p>3-4 short, joint-friendly workouts per week so you build muscle without living in the gym.</p>
       </div>
 
       <div class="included-card reveal fade-in" style="transition-delay:0.08s">
@@ -2619,7 +2722,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
         </div>
         <h3>Tailored Nutrition Targets</h3>
-        <p>Personalized calorie and macro targets so you know exactly what to eat, without restrictive dieting or giving up foods you love.</p>
+        <p>Simple daily nutrition targets so you know exactly what to eat to lose fat without cutting the foods you love.</p>
       </div>
 
       <div class="included-card reveal fade-in" style="transition-delay:0.16s">
@@ -2628,7 +2731,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <h3>Coaching Calls and Community</h3>
-        <p>Weekly live coaching calls plus a private community of like-minded challengers for support, accountability, and real answers to your questions.</p>
+        <p>Weekly check-ins so you stay on track even when work, travel, or family life gets busy, plus a private community for support and accountability.</p>
       </div>
 
       <div class="included-card reveal fade-in" style="transition-delay:0.24s">
@@ -2872,6 +2975,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Join the Challenge
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
+        <p style="font-size:13px;color:var(--faint);margin-top:12px;">Try the full 21 days. If you're not thrilled with your progress, email us on day 21 and we'll refund every penny.</p>
       </div>
     </div>
   </div>
@@ -2979,6 +3083,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Join the Challenge
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:12px;">Try the full 21 days. If you're not thrilled with your progress, email us on day 21 and we'll refund every penny.</p>
       <div class="final-cta__spots">
         <span class="spots-dot spots-dot--white"></span>
         <strong id="final-spots-count">60</strong> of 60 spots remaining
