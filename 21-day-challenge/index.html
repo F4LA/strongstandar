@@ -381,16 +381,25 @@ h3 {
 .hero__spots-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: rgba(34,120,172,0.1);
   border: 1px solid rgba(34,120,172,0.25);
   border-radius: var(--r-full);
-  padding: 6px 16px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--steel-light);
   letter-spacing: 0.06em;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+}
+
+.hero__kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
 }
 
 .hero h1 {
@@ -1983,6 +1992,8 @@ footer {
   .section__header p { font-size: 16px; }
   .hero { padding: 100px 0 64px; min-height: auto; }
   .hero h1 { font-size: clamp(2.2rem,8vw,3.2rem); }
+  .desktop-br { display: none; }
+  .hero__kicker { font-size: 11px; }
   .hero__subhead { font-size: 17px; line-height: 1.5; margin-bottom: 16px; }
   .hero__start-date { font-size: 11px; letter-spacing: 0.04em; line-height: 1.6; padding: 0 8px; margin-bottom: 24px; }
   .hero__sub { font-size: 16px; color: var(--off-white); }
@@ -2189,19 +2200,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="hero__inner reveal">
 
-      <div class="hero__badge">
-        <span class="pulse"></span>
-        Now Accepting Challengers
-      </div>
-
       <div class="hero__spots-pill">
         <span class="spots-dot spots-dot--accent"></span>
         <span id="hero-spots-count">60</span> of 60 Spots Remaining
       </div>
 
+      <div class="hero__kicker">The 21-Day Lean &amp; Strong Challenge</div>
+
       <h1>
-        Lose 3–6 lbs of Fat and Get<br>
-        Noticeably Stronger in 21 Days<br>
+        Lose 3–6 lbs of Fat and Get<br class="desktop-br">
+        Noticeably Stronger in 21 Days<br class="desktop-br">
         <span class="accent">Without Giving Up the Foods You Love</span>
       </h1>
 
