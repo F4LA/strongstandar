@@ -1218,17 +1218,9 @@
     return { sha: data.sha, content: decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))) };
   }
 
-  async function testGithubToken() {
-    const btn = document.getElementById('ghTestBtn');
-    const statusEl = document.getElementById('ghTestStatus');
+  async function validateGithubToken() {
     const token = document.getElementById('gh_token')?.value || '';
-    if (btn) { btn.disabled = true; btn.textContent = 'Probando...'; }
-    if (statusEl) { statusEl.textContent = ''; statusEl.style.color = 'var(--muted)'; }
-    if (!token) {
-      if (statusEl) { statusEl.textContent = '⚠️ No hay token ingresado'; statusEl.style.color = '#c0392b'; }
-      if (btn) { btn.disabled = false; btn.textContent = 'Probar Token'; }
-      return;
-    }
+    if (!token) return { ok: false, message: 'No hay GitHub Access Token ingresado' };
     try {
       const res = await fetch(GH_API + '21-day-challenge/index.html', {
         headers: { 'Authorization': 'token ' + token },
@@ -1236,14 +1228,25 @@
       if (!res.ok) {
         let apiMessage = '';
         try { apiMessage = (await res.json()).message; } catch(e) {}
-        throw new Error('(' + res.status + ') ' + githubErrorReason(res.status, apiMessage));
+        return { ok: false, message: '(' + res.status + ') ' + githubErrorReason(res.status, apiMessage) };
       }
-      if (statusEl) { statusEl.textContent = '✅ Token funciona correctamente'; statusEl.style.color = '#2d6a4f'; }
+      return { ok: true, message: 'Token funciona correctamente' };
     } catch (e) {
-      if (statusEl) { statusEl.textContent = '❌ ' + e.message; statusEl.style.color = '#c0392b'; }
-    } finally {
-      if (btn) { btn.disabled = false; btn.textContent = 'Probar Token'; }
+      return { ok: false, message: 'No se pudo conectar a GitHub: ' + e.message };
     }
+  }
+
+  async function testGithubToken() {
+    const btn = document.getElementById('ghTestBtn');
+    const statusEl = document.getElementById('ghTestStatus');
+    if (btn) { btn.disabled = true; btn.textContent = 'Probando...'; }
+    if (statusEl) { statusEl.textContent = ''; statusEl.style.color = 'var(--muted)'; }
+    const result = await validateGithubToken();
+    if (statusEl) {
+      statusEl.textContent = (result.ok ? '✅ ' : '❌ ') + result.message;
+      statusEl.style.color = result.ok ? '#2d6a4f' : '#c0392b';
+    }
+    if (btn) { btn.disabled = false; btn.textContent = 'Probar Token'; }
   }
 
   function formatKickoffDate(dt) {
@@ -1400,10 +1403,27 @@
     const btn = document.getElementById('launchBtn');
     const statusEl = document.getElementById('launchStatus');
     const resultEl = document.getElementById('launchResult');
+
+    // Gate: verify GitHub token BEFORE touching calendar or pages
     btn.disabled = true;
     btn.style.opacity = '0.6';
-    document.getElementById('launchBtnText').textContent = 'Working...';
+    document.getElementById('launchBtnText').textContent = 'Checking token...';
+    statusEl.textContent = '🔑 Verificando GitHub Token...';
+    statusEl.style.color = 'var(--muted)';
     resultEl.style.display = 'none';
+
+    const tokenCheck = await validateGithubToken();
+    if (!tokenCheck.ok) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      document.getElementById('launchBtnText').textContent = 'Create Events &amp; Update Pages';
+      statusEl.textContent = '❌ ' + tokenCheck.message;
+      statusEl.style.color = '#c0392b';
+      alert('No se puede continuar — el GitHub Token no funciona:\n\n' + tokenCheck.message + '\n\nActualízalo en el campo "GitHub Access Token" arriba y prueba de nuevo.');
+      return;
+    }
+
+    document.getElementById('launchBtnText').textContent = 'Working...';
 
     // Step 1: Google Calendar
     statusEl.textContent = '📅 Creating calendar events...';
