@@ -384,8 +384,10 @@
               <input type="password" id="gh_token" placeholder="ghp_..." oninput="saveField('gh_token')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
             </div>
             <button onclick="const f=document.getElementById('gh_token');f.type=f.type==='password'?'text':'password'" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:6px 10px;cursor:pointer;white-space:nowrap;">Show/Hide</button>
+            <button id="ghTestBtn" onclick="testGithubToken()" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:6px 10px;cursor:pointer;white-space:nowrap;">Probar Token</button>
           </div>
           <div style="font-size:11px;color:var(--muted);margin-top:6px;">Required to push date changes to landing pages. Stored securely.</div>
+          <div id="ghTestStatus" style="font-size:11px;font-weight:600;margin-top:4px;"></div>
         </div>
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--green"></span>Clarity Call</div>
@@ -1175,6 +1177,16 @@
   const GH_REPO  = 'F4LA/strongstandar';
   const GH_API   = 'https://api.github.com/repos/' + GH_REPO + '/contents/';
 
+  function githubErrorReason(status, apiMessage) {
+    if (status === 401) return 'Token inválido o vencido — actualiza el GitHub Access Token arriba';
+    if (status === 403) return apiMessage && /rate limit/i.test(apiMessage)
+      ? 'Límite de peticiones de GitHub alcanzado — espera unos minutos'
+      : 'Sin permisos suficientes — el token necesita permiso "repo"';
+    if (status === 404) return 'Archivo o repo no encontrado (revisa el path)';
+    if (status === 409) return 'Conflicto de versión — alguien más editó el archivo, intenta de nuevo';
+    return apiMessage || ('Error HTTP ' + status);
+  }
+
   async function githubUpdateFile(path, newContent, sha, message) {
     const encoded = btoa(unescape(encodeURIComponent(newContent)));
     const res = await fetch(GH_API + path, {
@@ -1186,8 +1198,9 @@
       body: JSON.stringify({ message, content: encoded, sha }),
     });
     if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || 'GitHub error');
+      let apiMessage = '';
+      try { apiMessage = (await res.json()).message; } catch(e) {}
+      throw new Error('(' + res.status + ') ' + githubErrorReason(res.status, apiMessage));
     }
     return res.json();
   }
@@ -1196,9 +1209,41 @@
     const res = await fetch(GH_API + path, {
       headers: { 'Authorization': 'token ' + (document.getElementById('gh_token')?.value || '') },
     });
-    if (!res.ok) throw new Error('Could not fetch ' + path);
+    if (!res.ok) {
+      let apiMessage = '';
+      try { apiMessage = (await res.json()).message; } catch(e) {}
+      throw new Error('(' + res.status + ') ' + githubErrorReason(res.status, apiMessage));
+    }
     const data = await res.json();
     return { sha: data.sha, content: decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))) };
+  }
+
+  async function testGithubToken() {
+    const btn = document.getElementById('ghTestBtn');
+    const statusEl = document.getElementById('ghTestStatus');
+    const token = document.getElementById('gh_token')?.value || '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Probando...'; }
+    if (statusEl) { statusEl.textContent = ''; statusEl.style.color = 'var(--muted)'; }
+    if (!token) {
+      if (statusEl) { statusEl.textContent = '⚠️ No hay token ingresado'; statusEl.style.color = '#c0392b'; }
+      if (btn) { btn.disabled = false; btn.textContent = 'Probar Token'; }
+      return;
+    }
+    try {
+      const res = await fetch(GH_API + '21-day-challenge/index.html', {
+        headers: { 'Authorization': 'token ' + token },
+      });
+      if (!res.ok) {
+        let apiMessage = '';
+        try { apiMessage = (await res.json()).message; } catch(e) {}
+        throw new Error('(' + res.status + ') ' + githubErrorReason(res.status, apiMessage));
+      }
+      if (statusEl) { statusEl.textContent = '✅ Token funciona correctamente'; statusEl.style.color = '#2d6a4f'; }
+    } catch (e) {
+      if (statusEl) { statusEl.textContent = '❌ ' + e.message; statusEl.style.color = '#c0392b'; }
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = 'Probar Token'; }
+    }
   }
 
   function formatKickoffDate(dt) {
