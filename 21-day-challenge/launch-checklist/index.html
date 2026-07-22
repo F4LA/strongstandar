@@ -365,7 +365,7 @@
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
             <div class="cohort-field">
               <label>Day 1 <span style="font-weight:400;color:var(--muted);">(must be Monday)</span></label>
-              <input type="date" id="day1" oninput="saveField('day1')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+              <input type="date" id="day1" oninput="saveField('day1');updateWeek2Preview()" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
             </div>
             <div class="cohort-field">
               <label>Enrollment Opens</label>
@@ -445,9 +445,9 @@
       </div>
       <div class="section">
         <div class="section-title">1.3 — Clarity Call Calendar (GHL)</div>
-        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Adjust Clarity Call availability in GHL — open only during week 2 of the challenge</div></div>
+        <div class="task" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Adjust Clarity Call availability in GHL — open only during week 2 of the challenge (<strong id="week2Range" style="color:var(--accent);">set Day 1 date to see range</strong>)</div></div>
         <div class="subtasks">
-          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Block all dates outside week 2 so participants cannot book outside that window</div></div>
+          <div class="subtask" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Block all dates outside <span id="week2RangeSub">week 2</span> so participants cannot book outside that window</div></div>
         </div>
       </div>
     </div>
@@ -977,6 +977,7 @@
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
       updateLiveCallPreview();
+      updateWeek2Preview();
       if (map.affiliates_data) loadAffiliates(map.affiliates_data);
       if (map.closing_page_status) {
         const el = document.getElementById('closingPageStatus');
@@ -1751,6 +1752,22 @@ function bDayNum(ymd) { return bDateObj(ymd).getDate(); }
 function bYear(ymd) { return bDateObj(ymd).getFullYear(); }
 function bPreviewDate(ymd) { return `${bShortDay(ymd)} ${bShortMonth(ymd)} ${bDayNum(ymd)}`; }
 function bLongDate(ymd) { return `${bFullDay(ymd)}, ${bFullMonth(ymd)} ${bDayNum(ymd)}, ${bYear(ymd)}`; }
+
+function updateWeek2Preview() {
+  const el = document.getElementById('week2Range');
+  const subEl = document.getElementById('week2RangeSub');
+  const day1 = document.getElementById('day1')?.value;
+  if (!day1) {
+    if (el) el.textContent = 'set Day 1 date to see range';
+    if (subEl) subEl.textContent = 'week 2';
+    return;
+  }
+  const start = bAddDays(day1, 7);  // Day 8 — Monday of week 2
+  const end = bAddDays(day1, 13);   // Day 14 — Sunday of week 2
+  const rangeText = `${bShortMonth(start)} ${bDayNum(start)}–${bShortMonth(end)} ${bDayNum(end)}, ${bYear(end)}`;
+  if (el) el.textContent = rangeText;
+  if (subEl) subEl.textContent = rangeText;
+}
 
 function bParseDT(dtStr) {
   // dtStr = "YYYY-MM-DDTHH:MM" (datetime-local)
