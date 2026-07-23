@@ -707,6 +707,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     COACH:          9,   // col J
     SALES_PERSON:   12,  // col M
     NEW_OR_RESIGN:  18,  // col S
+    REFUND:         24,  // col Y
     CASH_COLLECTED: 25,  // col Z
   };
 
@@ -902,7 +903,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const newClients = clients.filter(r => {
       const d       = parseDate(r[C.DATE_PURCHASED]);
       const isResign = (r[C.NEW_OR_RESIGN] || '').trim().toLowerCase().includes('resign');
-      return d && d >= lastThursday && d <= thisThursday && !isResign;
+      const isRefund = (r[C.REFUND] || '').trim().toUpperCase() === 'TRUE';
+      return d && d >= lastThursday && d <= thisThursday && !isResign && !isRefund;
     });
 
     const clientIssues = newClients.reduce((acc, r) => {
