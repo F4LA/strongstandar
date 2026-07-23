@@ -924,6 +924,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
+<script src="/scripts/cohort-config.js"></script>
 <script>
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
@@ -940,9 +941,9 @@ reveals.forEach(el => observer.observe(el));
 
   // ── LIVE SPOTS BAR ────────────────────────────────
   (function() {
-    var SHEET_ID  = '1QWWYn5_SgwCOPaFtq_7CV-WsVnrtmwjUoXPFm7gVM7A';
-    var SHEET_GID = '0';
-    var TOTAL     = 60;
+    var SHEET_ID  = window.SS_COHORT.SHEET_ID;
+    var SHEET_GID = window.SS_COHORT.SHEET_GID;
+    var TOTAL     = window.SS_COHORT.TOTAL_SPOTS;
     function updateSpots(taken) {
       var left     = Math.max(0, TOTAL - taken);
       var pct      = Math.min(100, (taken / TOTAL) * 100);
@@ -955,7 +956,7 @@ reveals.forEach(el => observer.observe(el));
     }
     var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
               '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
-              '&range=A:AJ&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ = date '2026-07-01'");
+              '&range=A:AJ&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ = date '" + window.SS_COHORT.CHALLENGE_MONTH_DATE + "'");
     fetch(url)
       .then(function(r){ return r.text(); })
       .then(function(t){
@@ -970,8 +971,8 @@ reveals.forEach(el => observer.observe(el));
 
   // ── SOCIAL PROOF POPUP ────────────────────────────
   (function() {
-    var SHEET_ID  = '1QWWYn5_SgwCOPaFtq_7CV-WsVnrtmwjUoXPFm7gVM7A';
-    var SHEET_GID = '0';
+    var SHEET_ID  = window.SS_COHORT.SHEET_ID;
+    var SHEET_GID = window.SS_COHORT.SHEET_GID;
     var fallback = [
       'James R.','Maria L.','Daniel K.','Ashley M.','Chris T.',
       'Jennifer S.','Marcus W.','Stephanie B.','Ryan H.','Nicole P.',
