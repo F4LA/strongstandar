@@ -561,7 +561,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="price-block__label" id="price-tier-label">Early Bird Price</span>
           <div class="price-block__amount"><span class="currency">$</span><span id="price-amount">97</span></div>
           <div class="price-block__note" id="price-note">Loading availability...</div>
-          <div class="price-block__sub">Starts July 6, 2026 · Led by Dr. Joey Munoz, PhD</div>
+          <div class="price-block__sub">Starts Aug 3, 2026 · Led by Dr. Joey Munoz, PhD</div>
         </div>
         <a href="https://strongstandard.com/21-day-challenge/?utm_source=blueprint" id="checkout-btn" class="btn-challenge" target="_blank" rel="noopener">
           Join the Challenge
@@ -643,7 +643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
       <div class="guarantee-line" style="margin-top:16px;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        21-day money-back guarantee · Starts July 6, 2026 · <span id="final-spots-note">Only a few spots left at $97</span>
+        21-day money-back guarantee · Starts Aug 3, 2026 · <span id="final-spots-note">Only a few spots left at $97</span>
       </div>
     </div>
   </div>
@@ -726,7 +726,7 @@ function updateUI(purchaseCount) {
 function fetchSpots() {
   const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
               '/gviz/tq?tqx=out:json&gid=' + SHEET_GID +
-              '&range=A:AJ&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ = date '2026-07-01'");
+              '&range=A:AJ&tq=' + encodeURIComponent("SELECT COUNT(A) WHERE AJ = date '2026-08-01'");
   fetch(url)
     .then(r => r.text())
     .then(text => {
