@@ -756,9 +756,9 @@ h3 {
 
 .what-21-days__stat-label {
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* ═══════════════════════════════════════════════
@@ -992,6 +992,15 @@ h3 {
 .section--white .label {
   color: var(--steel-mid);
 }
+
+/* what-21-days list on white background */
+.section--white .what-21-days__list li {
+  background: #F8FAFC;
+  border-color: rgba(34,120,172,0.15);
+  color: #2A3A50;
+}
+.section--white .what-21-days__list li strong { color: #080D1A; }
+.section--white .what-21-days__list li:hover { border-color: rgba(34,120,172,0.35); }
 
 /* ═══════════════════════════════════════════════
    INCLUDED
@@ -2050,6 +2059,7 @@ footer {
   .vsl-section { padding: 64px 0; }
   /* What 21 days list */
   .what-21-days__list li { padding: 16px 18px; font-size: 17px; }
+  .what-21-days__stat-label { font-size: 17px; line-height: 1.45; }
   .what-21-days__stats { grid-template-columns: 1fr; gap: 12px; }
   .what-21-days__stat { padding: 20px 16px; }
 }
@@ -2331,7 +2341,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      WHO THIS IS FOR
 ═══════════════════════════════════════════════ -->
-<section class="section section--mid fade-in" id="who-its-for">
+<section class="section section--white fade-in" id="who-its-for">
   <div class="container--narrow">
     <div class="section__header reveal">
       <span class="label">Sound Familiar?</span>
@@ -2372,7 +2382,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="what-21-days__stat">
         <span class="what-21-days__stat-num">10–20%</span>
-        <span class="what-21-days__stat-label">added to main lifts by many challengers</span>
+        <span class="what-21-days__stat-label">improvements in strength by many challengers</span>
       </div>
       <div class="what-21-days__stat">
         <span class="what-21-days__stat-num">80%+</span>
