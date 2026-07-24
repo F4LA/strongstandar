@@ -812,78 +812,6 @@ footer {
 .form-iframe-wrap { position: relative; }
 .form-iframe-wrap iframe { display: block; }
 
-/* ── TESTIMONIAL CAROUSEL ────────────────────────── */
-.tst-section { padding: 4px 24px 8px; }
-.tst-wrap { max-width: 460px; margin: 0 auto; }
-.tst-label {
-  text-align: center;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--steel-light);
-  margin-bottom: 14px;
-  font-weight: 600;
-}
-.tst-carousel { position: relative; overflow: hidden; }
-.tst-carousel__track {
-  display: flex;
-  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-.tst-slide {
-  flex: 0 0 100%;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-  padding: 0 2px;
-}
-.tst-slide img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--r-lg);
-  border: 1px solid rgba(34,120,172,0.18);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-  display: block;
-}
-.tst-carousel__nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 16px;
-}
-.tst-carousel__btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: transparent;
-  border: 1px solid rgba(34,120,172,0.3);
-  color: var(--muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-.tst-carousel__btn:hover { border-color: var(--steel-light); color: var(--steel-light); }
-.tst-carousel__dots { display: flex; gap: 7px; }
-.tst-carousel__dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--faint); border: none; cursor: pointer;
-  transition: background 0.2s; flex-shrink: 0; padding: 0;
-}
-.tst-carousel__dot.active {
-  background: var(--steel-light);
-  box-shadow: 0 0 8px rgba(56,153,204,0.6);
-}
-.tst-disclaimer {
-  text-align: center;
-  font-size: 11px;
-  color: var(--faint);
-  margin-top: 16px;
-  line-height: 1.6;
-}
-
 </style>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
 <!-- Google Tag Manager -->
@@ -926,33 +854,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="page-header-phone">
       Have questions or need assistance? Text us at <a href="tel:+18136862306">+1 (813) 686-2306</a> and we'll be happy to help.
     </p>
-  </div>
-</section>
-
-<!-- TESTIMONIAL CAROUSEL -->
-<section class="tst-section">
-  <div class="tst-wrap">
-    <div class="tst-label">What Our Clients Are Saying</div>
-    <div class="tst-carousel" id="tstCarousel">
-      <div class="tst-carousel__track" id="tstTrack">
-        <div class="tst-slide"><img src="../assets/testimonials/testimonial-latisha-gonzalez.png" alt="Client testimonial from LaTisha Gonzalez" loading="lazy"></div>
-        <div class="tst-slide"><img src="../assets/testimonials/testimonial-susan-calcek.png" alt="Client testimonial from Susan Calcek" loading="lazy"></div>
-        <div class="tst-slide"><img src="../assets/testimonials/testimonial-carla-swiney-scale.png" alt="Client testimonial from Carla Swiney" loading="lazy"></div>
-        <div class="tst-slide"><img src="../assets/testimonials/testimonial-shaindy-katz.png" alt="Client testimonial from Shaindy Katz" loading="lazy"></div>
-        <div class="tst-slide"><img src="../assets/testimonials/testimonial-violette-berberian.png" alt="Client testimonial from Violette Berberian" loading="lazy"></div>
-        <div class="tst-slide"><img src="../assets/testimonials/testimonial-amy-southwick.png" alt="Client testimonial from Amy Southwick" loading="lazy"></div>
-      </div>
-      <div class="tst-carousel__nav">
-        <button class="tst-carousel__btn" id="tstPrev" aria-label="Previous testimonial">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <div class="tst-carousel__dots" id="tstDots"></div>
-        <button class="tst-carousel__btn" id="tstNext" aria-label="Next testimonial">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
-    </div>
-    <p class="tst-disclaimer">These reflect personal experiences from Strong Standard coaching clients and are not results from the 21-Day Challenge specifically. Results vary based on individual effort and consistency.</p>
   </div>
 </section>
 
@@ -1044,50 +945,6 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 reveals.forEach(el => observer.observe(el));
-
-// ── TESTIMONIAL CAROUSEL ────────────────────────────
-(function() {
-  const track = document.getElementById('tstTrack');
-  const dotsContainer = document.getElementById('tstDots');
-  const total = track ? track.children.length : 0;
-  let active = 0;
-
-  if (track && total > 0) {
-    for (let i = 0; i < total; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'tst-carousel__dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
-      dot.addEventListener('click', () => goTo(i));
-      dotsContainer.appendChild(dot);
-    }
-
-    function goTo(n) {
-      active = (n + total) % total;
-      track.style.transform = 'translateX(-' + (active * 100) + '%)';
-      dotsContainer.querySelectorAll('.tst-carousel__dot').forEach((d, i) => {
-        d.classList.toggle('active', i === active);
-      });
-    }
-
-    document.getElementById('tstPrev').addEventListener('click', () => goTo(active - 1));
-    document.getElementById('tstNext').addEventListener('click', () => goTo(active + 1));
-
-    let touchX = null;
-    track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener('touchend', e => {
-      if (touchX === null) return;
-      const dx = touchX - e.changedTouches[0].clientX;
-      if (Math.abs(dx) > 40) goTo(dx > 0 ? active + 1 : active - 1);
-      touchX = null;
-    }, { passive: true });
-
-    let autoTimer = setInterval(() => goTo(active + 1), 6000);
-    track.addEventListener('touchstart', () => clearInterval(autoTimer), { passive: true });
-    dotsContainer.addEventListener('click', () => clearInterval(autoTimer));
-    document.getElementById('tstPrev').addEventListener('click', () => clearInterval(autoTimer));
-    document.getElementById('tstNext').addEventListener('click', () => clearInterval(autoTimer));
-  }
-})();
 
   // ── LIVE SPOTS BAR ────────────────────────────────
   (function() {
