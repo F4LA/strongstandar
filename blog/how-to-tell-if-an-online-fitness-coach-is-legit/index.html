@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080D1A">
-<title>Get More Online Coaching Clients | Strong Standard</title>
-<meta name="description" content="Struggling to keep clients as an online coach? Cody McBroom breaks down the framework that turns results into referrals, no ads required.">
-<link rel="canonical" href="https://strongstandard.com/blog/how-to-get-more-clients-as-an-online-fitness-coach/">
+<title>Is Your Online Fitness Coach Legit? | Strong Standard</title>
+<meta name="description" content="Impressive Instagram, unclear results. Cody McBroom breaks down the 3 things that actually predict whether an online coach is legit or a red flag.">
+<link rel="canonical" href="https://strongstandard.com/blog/how-to-tell-if-an-online-fitness-coach-is-legit/">
 <meta name="robots" content="index, follow">
 <script src="/scripts/utm-persist.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +64,7 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .post-body { font-size: 18px; line-height: 1.8; color: var(--ink-2); }
 .post-body p { margin-bottom: 20px; }
 .post-body h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.05; letter-spacing: 0.02em; color: var(--ink); margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid var(--accent); display: block; }
-.post-body h3 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--ink); margin: 36px 0 12px; font-weight: 400; }
+.post-body h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.15; letter-spacing: 0.02em; color: var(--ink); margin: 32px 0 10px; }
 .post-body ul, .post-body ol { margin: 0 0 24px 0; padding-left: 0; list-style: none; }
 .post-body li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
 .post-body li:last-child { border-bottom: none; }
@@ -82,6 +82,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .guest-box__name { font-weight: 600; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
 .guest-box__bio { font-size: 14px; color: var(--ink-muted); line-height: 1.5; }
 
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 /* ── PHASE STEPS ── */
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
@@ -90,6 +101,21 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .phase-step__num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; }
 .phase-step__title { font-weight: 600; color: var(--ink); margin-bottom: 4px; font-size: 15px; }
 .phase-step__desc { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
+
+/* ── COMPARE GRID ── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 28px 0 36px; border-radius: var(--r-md); overflow: hidden; }
+.compare-grid__col { background: var(--surface); border: 1px solid var(--rule); padding: 24px; }
+.compare-grid__col--bad { border-top: 3px solid #E05252; }
+.compare-grid__col--good { border-top: 3px solid #3899CC; }
+.compare-grid__label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+.compare-grid__label--bad { color: #E05252; }
+.compare-grid__label--good { color: var(--steel-light); }
+.compare-grid ul { margin: 0; padding: 0; }
+.compare-grid li { font-size: 15px; padding: 8px 0 8px 20px; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.compare-grid li:last-child { border-bottom: none; }
+.compare-grid li::before { width: 6px; height: 6px; top: 17px; }
+.compare-grid__col--bad li::before { background: #E05252; }
+.compare-grid__col--good li::before { background: var(--steel-light); }
 
 /* ── TAKEAWAY BOX ── */
 .takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
@@ -121,6 +147,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 20px 20px 40px; }
   .takeaway-box { padding: 24px; }
   .guest-box { flex-direction: column; gap: 12px; }
+  .compare-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -128,9 +155,9 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "How to Get More Clients as an Online Fitness Coach",
-  "description": "Struggling to keep clients as an online coach? Cody McBroom breaks down the framework that turns results into referrals, no ads required.",
-  "url": "https://strongstandard.com/blog/how-to-get-more-clients-as-an-online-fitness-coach/",
+  "headline": "How to Tell If an Online Fitness Coach Is Actually Legit",
+  "description": "Impressive Instagram, unclear results. Cody McBroom breaks down the 3 things that actually predict whether an online coach is legit or a red flag.",
+  "url": "https://strongstandard.com/blog/how-to-tell-if-an-online-fitness-coach-is-legit/",
   "datePublished": "2026-07-27",
   "author": {
     "@type": "Person",
@@ -144,9 +171,49 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://strongstandard.com/blog/how-to-get-more-clients-as-an-online-fitness-coach/"
+    "@id": "https://strongstandard.com/blog/how-to-tell-if-an-online-fitness-coach-is-legit/"
   },
-  "keywords": "online fitness coaching, how to get more coaching clients, client retention, referrals, coaching business"
+  "keywords": "how to choose an online fitness coach, is my coach legit, online coaching red flags, how to find a good fitness coach"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it a red flag if a coach doesn't list their prices online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can be. Coaches confident in the value they deliver are usually willing to be upfront about pricing. Random, constantly shifting promos with no listed rate are more often a sign of sales pressure than a sign of quality."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is shadow coaching in online fitness?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Shadow coaching is when you sign up believing a specific person will coach you directly, but a different team member handles your calls and check-ins under that person's name. It's different from a coach being transparent about having a team; the issue is the deception, not the team itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a coach need a huge following to be legitimate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Many legitimate coaching businesses grow primarily through client results, reviews, and referrals rather than social media reach. A smaller following paired with strong reviews and a clear track record is often a better sign than a large one with vague results."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I ask a coach before signing up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ask what results they've actually produced for people like you, how long they've been coaching in this specific format, who will be coaching you day to day, and what their pricing and cancellation terms are. Vague or evasive answers to any of these are worth taking seriously."
+      }
+    }
+  ]
 }
 </script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
@@ -181,8 +248,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Back to Blog
     </a>
     <div><span class="post-banner__tag">Mindset</span></div>
-    <h1>How to Get More Clients as an <em>Online</em> Fitness Coach</h1>
-    <p class="post-banner__excerpt">You post consistently, you get clients in the door, and then they quietly disappear. Cody McBroom, who has run an online coaching business for eight and a half years, breaks down the exact sequence that turns good coaching into a business that grows on its own.</p>
+    <h1>Is Your Online Fitness Coach <em>Actually</em> Legit?</h1>
+    <p class="post-banner__excerpt">The Instagram looks impressive and the testimonials sound great, but you've been burned before and you're not sure what actually separates a real coach from someone good at marketing. Cody McBroom, who has coached online for 16 years, breaks down exactly what to check.</p>
     <div class="post-banner__meta">
       <div class="post-banner__author">
         <div class="post-banner__avatar">
@@ -193,7 +260,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="dot">·</span>
       <span>July 27, 2026</span>
       <span class="dot">·</span>
-      <span>7 min read</span>
+      <span>9 min read</span>
     </div>
   </div>
 </header>
@@ -227,107 +294,133 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="guest-box__avatar">CM</div>
       <div>
         <div class="guest-box__name">Cody McBroom</div>
-        <div class="guest-box__bio">Online fitness coach of 16 years, founder of a coaching business running for over eight years. Now mentors other coaches on building sustainable, results-driven fitness businesses.</div>
+        <div class="guest-box__bio">Online fitness coach of 16 years, founder of a coaching business running for over eight years. Now mentors other coaches, and has thought deeply about what separates legitimate coaching from marketing hype.</div>
       </div>
     </div>
 
-    <p>You know how to coach. Your clients get results when they stick around. But retention is inconsistent, referrals feel like luck instead of a system, and every time growth stalls you find yourself scrolling for the next marketing tactic: a new funnel, a different offer structure, a paid ad strategy someone swears by.</p>
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>A legitimate coach's business runs on client results, reviews, and referrals, not on how polished their content is. Check three things before you sign up: does their philosophy match what you actually want, do they have a real track record in this specific business, and are they transparent about pricing, methods, and who will actually coach you.</p>
+    </div>
 
-    <p>I sat down with Cody McBroom, who has been coaching online for 16 years and running his own coaching business for over eight, to talk about why this happens and what actually fixes it. His answer surprised me, because it had nothing to do with marketing at all.</p>
+    <p>You've scrolled past a dozen fitness accounts today. Every one of them has a jacked before-and-after, a caption about mindset, and a link in bio. Some of them are probably legitimate. Some of them are very good at marketing and not much else. You've maybe even been burned once already, paid for a program that felt generic, or worked with someone who disappeared the moment you had a real question.</p>
 
-    <h2>Why Chasing Tactics Keeps You in the Same Spot</h2>
+    <p>I talked with Cody McBroom, who has coached online for 16 years, about this exact problem. His answer was refreshingly specific: this isn't a mystery you have to solve on gut feeling. There are three concrete things to check, and a short list of red flags that predict a bad experience almost every time.</p>
 
-    <p>Cody sees the same pattern constantly in the coaches he mentors. Someone runs a big promotion, signs a wave of clients on a paid in full offer, and it works. Then they try to run the exact same promotion again a few months later, and it falls flat. Worse, the clients they signed the first time don't resign. They can't figure out why.</p>
+    <h2>Why Judging a Coach by Their Content Gets People Burned</h2>
 
-    <p>His answer to them is always the same: before you market, you have to focus on retaining. Marketing without a retention problem solved just refills a leaking bucket faster.</p>
+    <h3>The Assumption Most People Make</h3>
 
-    <p>This matters because of something Cody said that reframes the whole problem. Anyone with an Instagram account and a decent physique can call themselves an online coach now. That has flooded the space with people who jump straight to funnels and offers without ever solving the actual thing a coaching business is built on: keeping clients long enough, and happy enough, that they tell other people.</p>
+    <p>Most people evaluate an online coach the way they'd evaluate an influencer: production quality, follower count, how good the transformations look in the grid. It makes sense, because that's the only information visible from a phone screen.</p>
 
-    <h2>The Sequence That Actually Builds a Coaching Business</h2>
+    <h3>What Actually Predicts a Good Experience</h3>
 
-    <p>Cody teaches his mentees a five step sequence he calls the 5 Rs. The order matters more than any individual step, because skipping ahead is exactly what creates the leaking bucket problem.</p>
+    <p>McBroom points out that the barrier to entry for calling yourself an online coach is close to zero. Anyone with an Instagram account and a decent physique can put "online coach" in their bio, whether or not they've ever actually delivered a result for a client. That's exactly why content quality is such a poor filter. The things that actually predict whether someone will deliver are invisible in a 15 second video, and they're the same three things McBroom tells his own mentees to look for when choosing a mentor themselves.</p>
+
+    <h2>The Three Things Worth Actually Checking</h2>
 
     <div class="phase-steps">
       <div class="phase-step">
         <div class="phase-step__num">1</div>
         <div>
-          <div class="phase-step__title">Results</div>
-          <div class="phase-step__desc">If your clients aren't getting results, nothing else on this list works. This is the foundation. Cody is direct about it: if you can't get results, your product is the problem, not your marketing.</div>
+          <div class="phase-step__title">Values alignment</div>
+          <div class="phase-step__desc">Does their approach match what you actually want long term? A coach who preaches extreme, unsustainable methods will build you a plan around what they're willing to sacrifice, not what you are.</div>
         </div>
       </div>
       <div class="phase-step">
         <div class="phase-step__num">2</div>
         <div>
-          <div class="phase-step__title">Reviews</div>
-          <div class="phase-step__desc">Real results should naturally produce reviews, but you still have to ask for them in the right places, at the right moment, from the right clients.</div>
+          <div class="phase-step__title">Real track record</div>
+          <div class="phase-step__desc">Have they actually run a coaching business, or built a following and pivoted into selling advice about running one? Ask directly what they've done. Vague or evasive answers are the answer.</div>
         </div>
       </div>
       <div class="phase-step">
         <div class="phase-step__num">3</div>
         <div>
-          <div class="phase-step__title">Referrals</div>
-          <div class="phase-step__desc">Cody has never met a coaching business with great results that had to beg for referrals. They come on their own once results and reviews are in place.</div>
-        </div>
-      </div>
-      <div class="phase-step">
-        <div class="phase-step__num">4</div>
-        <div>
-          <div class="phase-step__title">Reactivations</div>
-          <div class="phase-step__desc">This isn't mass DMing. It's reaching out to people who already showed interest or already know you, and reopening a real conversation.</div>
-        </div>
-      </div>
-      <div class="phase-step">
-        <div class="phase-step__num">5</div>
-        <div>
-          <div class="phase-step__title">Request</div>
-          <div class="phase-step__desc">Only at the end do you teach clients and followers organic calls to action, because by this point you've earned the right to ask.</div>
+          <div class="phase-step__title">Transparency</div>
+          <div class="phase-step__desc">Are pricing, methods, and who will actually coach you clearly stated? A coach confident in their value has nothing to hide about any of these.</div>
         </div>
       </div>
     </div>
 
-    <p>Notice what isn't on that list: ad spend, funnels, or a new offer structure. Those things can amplify a business that already has the first three Rs working. They cannot fix a business that doesn't.</p>
+    <p>None of these require you to become a detective. McBroom's own words: it's pretty easy to see who aligns with you and who doesn't once you know what to actually look for.</p>
 
-    <h2>What Skipping Ahead Actually Costs You</h2>
+    <h2>The Red Flags That Actually Predict a Bad Experience</h2>
 
-    <p>Cody's client base is a good example of what happens when the sequence works in the right order. About 10% of his clients come from Kuwait, not because of any targeted campaign, but because his business partner delivered a great result to one person there, and that person told fifteen others. Cody's own roster grew the same way through word of mouth after he helped one client's friend with a shoulder issue, who turned out to be connected to a network of professional wrestlers.</p>
+    <p>Two specific patterns come up constantly in McBroom's world, and both are easy to spot once you know to look for them.</p>
 
-    <blockquote>Our clients' results are kind of like our business card. You never know who your clients know.</blockquote>
+    <p>The first is fake scarcity. A post that says "looking for 5 people" sitting up for a month straight, never updated, is a script, not a real cap. The second, more serious one, is what McBroom calls shadow coaching: you sign up believing a specific coach will work with you directly, and instead a team member handles your calls under that coach's name. That's not the same as a coach being upfront about having a team. The problem isn't the team, it's the lie about who you're actually talking to.</p>
 
-    <p>Neither of those growth stories started with a marketing tactic. They started with a result good enough that someone felt compelled to talk about it. That's the piece coaches skip when they go straight to trying to fix their funnel.</p>
+    <div class="compare-grid">
+      <div class="compare-grid__col compare-grid__col--bad">
+        <div class="compare-grid__label compare-grid__label--bad">Red Flags</div>
+        <ul>
+          <li>"Looking for 5 spots" post that never changes or updates</li>
+          <li>No pricing listed anywhere, only "message me for info"</li>
+          <li>You're told you'll work with them, then handed off silently</li>
+          <li>Big following, but no verifiable client results or reviews</li>
+        </ul>
+      </div>
+      <div class="compare-grid__col compare-grid__col--good">
+        <div class="compare-grid__label compare-grid__label--good">Good Signs</div>
+        <ul>
+          <li>Clear, consistent pricing stated up front</li>
+          <li>Upfront about who coaches you day to day, team or not</li>
+          <li>Real, verifiable reviews tied to specific results</li>
+          <li>Willing to answer direct questions about their own track record</li>
+        </ul>
+      </div>
+    </div>
 
-    <h2>Putting the 5 Rs to Work This Month</h2>
+    <blockquote>You could just be honest, and if you believe in what you're doing and you're good at it, people literally don't care that it's not you personally on every call.</blockquote>
 
-    <p>If you're stuck, the fix isn't a new tactic, it's an honest audit of where you actually are in the sequence. Ask yourself these questions in order, and stop at the first one you can't answer with confidence:</p>
+    <h2>What It Looks Like When a Coaching Business Is the Real Deal</h2>
 
-    <ul>
-      <li>Are my current clients getting a result they'd tell a friend about?</li>
-      <li>Am I actively asking satisfied clients for reviews, or hoping they volunteer one?</li>
-      <li>When a client refers someone, do I have a simple way to say thank you and keep the relationship warm?</li>
-      <li>Do I have a list of past leads and inactive clients I could reasonably reach out to this week?</li>
-      <li>Am I only asking for new business after I've delivered, not before?</li>
-    </ul>
+    <p>McBroom's own coaching company doesn't lean on his personal following to grow. A client recently signed up and then called back to sign up her husband too, without ever knowing who McBroom was or listening to a single podcast episode. She found the company through a Google search and reviews. Hundreds of reviews, and by his account, not a single bad one.</p>
 
-    <p>Whichever question stopped you is where your actual work is. Fix that before you touch anything related to marketing.</p>
+    <p>That's the actual signal worth trusting: a business that keeps growing because of what it delivers, verifiable by strangers who've never met the coach in person, not because of how good the content looks in your feed.</p>
 
     <div class="takeaway-box">
       <div class="takeaway-box__label">Key Takeaways</div>
       <ul>
-        <li>Marketing amplifies a business that already retains clients. It can't fix one that doesn't.</li>
-        <li>The 5 Rs go in order: Results, Reviews, Referrals, Reactivations, Request. Skipping ahead is what creates the leaking bucket.</li>
-        <li>A single client with a great result can bring you a dozen more without you spending on ads.</li>
-        <li>Reactivating warm leads is different from mass outreach. It's reopening real conversations with people who already know you.</li>
-        <li>Before you ask for anything, audit honestly whether you've actually earned it yet.</li>
+        <li>Content quality and follower count are a poor filter, because the barrier to calling yourself a coach is nearly zero.</li>
+        <li>Check three things instead: values alignment, an actual track record, and transparency about pricing and who coaches you.</li>
+        <li>A "looking for 5 spots" post that never changes is a script, not a real cap. Treat it as a signal, not a coincidence.</li>
+        <li>Shadow coaching, being handed to a different person than advertised, is different from a coach being upfront about their team.</li>
+        <li>Real reviews from strangers who found a coach through search, not through their following, are one of the strongest signals available.</li>
       </ul>
     </div>
 
-    <p>The coaches who grow without burning out on ad spend and constant funnel tweaks are the ones who treat the 5 Rs as a sequence, not a menu. Results come first because everything else is downstream of them. Get that right, and the referrals stop feeling like something you have to chase.</p>
+    <p>The question was never really whether a coach looks legitimate online. It's whether their business would still hold up if you asked the three direct questions above, out loud, and waited for a straight answer. The coaches worth working with will give you one without hesitation.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Is it a red flag if a coach doesn't list their prices online?</h3>
+      <p>It can be. Coaches confident in the value they deliver are usually willing to be upfront about pricing. Random, constantly shifting promos with no listed rate are more often a sign of sales pressure than a sign of quality.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What is shadow coaching in online fitness?</h3>
+      <p>Shadow coaching is when you sign up believing a specific person will coach you directly, but a different team member handles your calls and check-ins under that person's name. It's different from a coach being transparent about having a team; the issue is the deception, not the team itself.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Does a coach need a huge following to be legitimate?</h3>
+      <p>No. Many legitimate coaching businesses grow primarily through client results, reviews, and referrals rather than social media reach. A smaller following paired with strong reviews and a clear track record is often a better sign than a large one with vague results.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What should I ask a coach before signing up?</h3>
+      <p>Ask what results they've actually produced for people like you, how long they've been coaching in this specific format, who will be coaching you day to day, and what their pricing and cancellation terms are. Vague or evasive answers to any of these are worth taking seriously.</p>
+    </div>
 
     <hr>
 
     <div class="post-cta">
       <h3>Ready to Build a Body That Lasts?</h3>
       <p>Science-backed coaching for busy professionals over 40. Apply today and get a personalized plan built around your life.</p>
-      <a href="/schedule-call/?utm_source=blog&utm_medium=cta&utm_content=how-to-get-more-clients-as-an-online-fitness-coach" style="display:inline-flex;align-items:center;gap:10px;background:#2278AC;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;padding:16px 40px;border-radius:9999px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3899CC'" onmouseout="this.style.background='#2278AC'">
+      <a href="/schedule-call/?utm_source=blog&utm_medium=cta&utm_content=how-to-tell-if-an-online-fitness-coach-is-legit" style="display:inline-flex;align-items:center;gap:10px;background:#2278AC;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;padding:16px 40px;border-radius:9999px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3899CC'" onmouseout="this.style.background='#2278AC'">
         Apply Now &rarr;
       </a>
     </div>
