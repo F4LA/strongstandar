@@ -629,7 +629,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 
 <nav class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('payments')">💳 Invoices &amp; Payments</button>
+  <button class="tab-btn active" onclick="switchTab('payments')">💳 Invoices &amp; Payments<span class="tab-badge" id="badge-payments"></span></button>
   <button class="tab-btn" onclick="switchTab('attribution')">🔍 Sales Attribution<span class="tab-badge" id="badge-attribution"></span></button>
   <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls<span class="tab-badge" id="badge-stale-calls"></span></button>
   <button class="tab-btn" onclick="switchTab('financials')">📊 Financials</button>
@@ -1080,6 +1080,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     document.getElementById('content').innerHTML = html;
+    updateTabBadge('payments', total);
   }
 
   // ── Tab switching ─────────────────────────────────────
