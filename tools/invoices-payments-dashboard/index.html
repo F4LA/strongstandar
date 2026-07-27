@@ -379,6 +379,23 @@
     }
     .tab-btn:hover { color: var(--text); }
     .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-badge {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 5px;
+      margin-left: 6px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 700;
+      background: var(--red);
+      color: #fff;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    .tab-badge.show { display: inline-flex; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
     /* ── Financials Tab ── */
@@ -613,11 +630,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <nav class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('payments')">💳 Invoices &amp; Payments</button>
-  <button class="tab-btn" onclick="switchTab('attribution')">🔍 Sales Attribution</button>
-  <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls</button>
+  <button class="tab-btn" onclick="switchTab('attribution')">🔍 Sales Attribution<span class="tab-badge" id="badge-attribution"></span></button>
+  <button class="tab-btn" onclick="switchTab('stale-calls')">📞 Stale Confirmed Calls<span class="tab-badge" id="badge-stale-calls"></span></button>
   <button class="tab-btn" onclick="switchTab('financials')">📊 Financials</button>
-  <button class="tab-btn" onclick="switchTab('invoice-audit')">🔎 Invoice Audit</button>
-  <button class="tab-btn" onclick="switchTab('alerts')">🚨 Alerts</button>
+  <button class="tab-btn" onclick="switchTab('invoice-audit')">🔎 Invoice Audit<span class="tab-badge" id="badge-invoice-audit"></span></button>
+  <button class="tab-btn" onclick="switchTab('alerts')">🚨 Alerts<span class="tab-badge" id="badge-alerts"></span></button>
 </nav>
 
 <main>
@@ -1066,6 +1083,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   // ── Tab switching ─────────────────────────────────────
+  function updateTabBadge(tabName, count) {
+    const badge = document.getElementById(`badge-${tabName}`);
+    if (!badge) return;
+    if (count > 0) {
+      badge.textContent = count > 99 ? '99+' : count;
+      badge.classList.add('show');
+    } else {
+      badge.textContent = '';
+      badge.classList.remove('show');
+    }
+  }
+
   function switchTab(name) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1248,6 +1277,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     document.getElementById('content-attribution').innerHTML = html;
+    updateTabBadge('attribution', total);
   }
 
   function copyTeamMsg(btn) {
@@ -1350,6 +1380,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     document.getElementById('content-stale-calls').innerHTML = html;
+    updateTabBadge('stale-calls', stale.length);
   }
 
   // ── Slack ID Settings ────────────────────────────────
@@ -1877,6 +1908,7 @@ Let me know if you need anything on our end!`;
     }
 
     container.innerHTML = html;
+    updateTabBadge('invoice-audit', alertCount);
   }
 
   // ══════════════════════════════════════════════════════════════
@@ -1998,6 +2030,7 @@ Let me know if you need anything on our end!`;
     }
 
     container.innerHTML = html;
+    updateTabBadge('alerts', pending.length);
   }
 
   async function resolveAlert(key) {
