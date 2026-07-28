@@ -76,6 +76,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .post-body blockquote { border-left: 4px solid var(--accent); padding: 20px 28px; margin: 40px 0; background: var(--accent-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--ink); line-height: 1.6; }
 .post-body hr { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
 
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
 .phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
@@ -146,6 +157,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
     "@type": "WebPage",
     "@id": "https://strongstandard.com/blog/feel-full-calorie-deficit/"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much protein and fiber should I eat to feel less hungry in a deficit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aim for at least 0.8 grams of protein per pound of your goal body weight, and 14 to 16 grams of fiber per 1,000 calories consumed, which lands most people between 25 and 35 grams a day. Both are the two most satiating macronutrients, and most people undereat them while dieting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does drinking water before meals actually reduce hunger, or just fill you up temporarily?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Research shows it genuinely reduces calorie intake without reducing how full or satisfied people feel afterward. In one study, participants who drank water before breakfast ate 140 fewer calories while reporting the same satisfaction as those who skipped the water."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I eat a bigger breakfast or a bigger dinner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A bigger breakfast tapering down to a smaller dinner reduces hunger throughout the entire day compared to the reverse pattern, even at identical total calories. A large meal right before bed largely wastes its satiating effect while you sleep through it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does poor sleep make me hungrier even if I eat the same food?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sleep restriction directly shifts the hormones that regulate hunger and fullness. In one study, participants sleeping about 5 hours reported significantly more hunger and ate roughly 500 more calories over the day than those sleeping 8 hours, despite eating an identical breakfast."
+      }
+    }
+  ]
 }
 </script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
@@ -227,6 +278,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post-body">
 
     <p>You've done the math. You're eating less than you burn, on paper it should be working, and yet by 3pm you're thinking about food constantly. By dinner you're fighting the urge to eat everything in the kitchen. Somewhere around week two, you give in, eat past the point of hunger, and feel like you failed at something that was supposed to be simple.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>A calorie deficit feels hungry when you just eat less of the same foods. Prioritize minimally processed, high-protein, high-fiber foods, drink water before meals, front-load your calories earlier in the day, and protect your sleep. Same deficit, far less hunger.</p>
+    </div>
 
     <p>Here's what's actually happening: a calorie deficit is not optional for fat loss, but the way most people create that deficit is the exact thing making them miserable. The problem isn't your willpower. It's that you took your normal diet and just ate less of it, without changing what you're eating or when. That approach is almost guaranteed to leave you hungry, and hungry people don't stick to diets for long.</p>
 
@@ -328,6 +384,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>None of these strategies require perfection. You don't need to hit every target every day, you need to move in the right direction until you find what works for your schedule and your goals. The calorie deficit was never the problem. Eating the same foods in smaller amounts was. Change the inputs, and staying in a deficit stops feeling like something you have to white-knuckle through.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>How much protein and fiber should I eat to feel less hungry in a deficit?</h3>
+      <p>Aim for at least 0.8 grams of protein per pound of your goal body weight, and 14 to 16 grams of fiber per 1,000 calories consumed, which lands most people between 25 and 35 grams a day. Both are the two most satiating macronutrients, and most people undereat them while dieting.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Does drinking water before meals actually reduce hunger, or just fill you up temporarily?</h3>
+      <p>Research shows it genuinely reduces calorie intake without reducing how full or satisfied people feel afterward. In one study, participants who drank water before breakfast ate 140 fewer calories while reporting the same satisfaction as those who skipped the water.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Should I eat a bigger breakfast or a bigger dinner?</h3>
+      <p>A bigger breakfast tapering down to a smaller dinner reduces hunger throughout the entire day compared to the reverse pattern, even at identical total calories. A large meal right before bed largely wastes its satiating effect while you sleep through it.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why does poor sleep make me hungrier even if I eat the same food?</h3>
+      <p>Sleep restriction directly shifts the hormones that regulate hunger and fullness. In one study, participants sleeping about 5 hours reported significantly more hunger and ate roughly 500 more calories over the day than those sleeping 8 hours, despite eating an identical breakfast.</p>
+    </div>
 
     <hr>
 

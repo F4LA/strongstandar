@@ -103,6 +103,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .landmark-table tbody td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
 
 /* Phase steps */
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
 .phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
@@ -179,6 +190,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between the Flexible Fuel Method and a regular diet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A regular diet has a finish line and relies on rigid rules or restriction. The Flexible Fuel Method has no end date, focuses on adding sustainable habits rather than cutting things out, and builds in structural flexibility from day one so it fits your actual life instead of fighting it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to track calories forever with this method?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Tracking is a temporary tool used to build accurate intuition about portions and calorie content. Once you've tracked consistently for a period of time, most people can maintain results by eating intuitively, without logging every meal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between the 20% flexibility and a cheat meal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A cheat meal is restriction followed by release, deprivation all week leading to an \"earned\" binge. The 20% flexibility in this method is a permanent, built-in feature of the plan, not a reward for good behavior, which is why it doesn't trigger the same guilt-and-restart cycle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much protein and fiber does this framework actually require?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Target about 0.8 grams of protein per pound of body weight daily, and 25 to 35 grams of fiber a day. These two targets alone drive a large share of the results, regardless of which specific foods you use to hit them."
+      }
+    }
+  ]
+}
+</script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -250,6 +301,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>Every diet you've ever tried was designed with an end date built into it. You go on it, you go off it, you go back to your old habits, you regain the weight. Then you blame yourself for lacking discipline and try a different diet. The cycle continues.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>The Flexible Fuel Method is a 3-pillar nutrition framework, not a diet: build a foundation of 6 core habits like protein, fiber, and consistent meal timing, calibrate calories to your specific goal, and build in structural 80/20 flexibility permanently. All three pillars have to work together.</p>
+    </div>
 
     <p>Here's what I want you to understand: discipline was never the problem. The structure of diets is. They're built to fail because they create a finish line, rely on rules without understanding, emphasize restriction over addition, and ignore your personal preferences entirely. None of that produces lasting change.</p>
 
@@ -408,6 +464,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>The version of nutrition that works long-term isn't the strictest one. It's the one you can actually live with, that supports your goals, and that feels sustainable enough to keep doing indefinitely. When you get the three pillars working together, nutrition stops being a battle and becomes something you're simply good at.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>What's the difference between the Flexible Fuel Method and a regular diet?</h3>
+      <p>A regular diet has a finish line and relies on rigid rules or restriction. The Flexible Fuel Method has no end date, focuses on adding sustainable habits rather than cutting things out, and builds in structural flexibility from day one so it fits your actual life instead of fighting it.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do I need to track calories forever with this method?</h3>
+      <p>No. Tracking is a temporary tool used to build accurate intuition about portions and calorie content. Once you've tracked consistently for a period of time, most people can maintain results by eating intuitively, without logging every meal.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What's the difference between the 20% flexibility and a cheat meal?</h3>
+      <p>A cheat meal is restriction followed by release, deprivation all week leading to an "earned" binge. The 20% flexibility in this method is a permanent, built-in feature of the plan, not a reward for good behavior, which is why it doesn't trigger the same guilt-and-restart cycle.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How much protein and fiber does this framework actually require?</h3>
+      <p>Target about 0.8 grams of protein per pound of body weight daily, and 25 to 35 grams of fiber a day. These two targets alone drive a large share of the results, regardless of which specific foods you use to hit them.</p>
+    </div>
 
     <div class="post-cta">
       <h3>Ready to Stop Dieting for Good?</h3>

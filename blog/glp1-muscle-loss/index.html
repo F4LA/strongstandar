@@ -104,6 +104,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .math-box__row:last-child span:last-child { color: var(--steel-light); font-size: 17px; }
 
 /* Phase steps */
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
 .phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
@@ -169,6 +180,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
     "@type": "WebPage",
     "@id": "https://strongstandard.com/blog/glp1-muscle-loss/"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is muscle loss on GLP-1s worse than regular dieting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not proportionally. The ratio of lean mass to total weight lost is similar to dieting without medication, around 25 to 40%. The difference is the absolute numbers: because total weight loss on GLP-1s is much larger, the actual pounds of muscle lost end up being significantly higher."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much weight comes back after stopping a GLP-1 medication?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The STEP 4 trial found participants regained approximately two-thirds of their lost weight within one year of stopping. Losing significant muscle while on the medication lowers metabolism, which is a major driver of that rebound if no training or nutrition habits were built during treatment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much protein should I eat while on a GLP-1 medication?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Target about 0.8 grams per pound of body weight daily, using your target body weight if you have significant weight to lose. Appetite suppression can make hitting that number difficult, so prioritizing protein at every meal and using protein powder to close gaps is often necessary."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I prevent muscle loss while losing weight on Ozempic or Mounjaro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, though not entirely. Resistance training at least 3 times a week is the single most evidence-based way to preserve muscle during a deficit. Combined with adequate protein and a capped, more moderate rate of weight loss, most people can significantly limit how much lean mass they lose."
+      }
+    }
+  ]
 }
 </script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
@@ -242,6 +293,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>Millions of people are on GLP-1 medications right now, and the weight loss numbers are genuinely impressive. But there's a conversation almost nobody is having about what's happening underneath those numbers. Because when you look at the clinical trials closely, a significant portion of the weight people lose on these medications isn't fat. It's muscle.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>About 25 to 40% of weight lost on GLP-1 medications is lean mass, mostly muscle, a similar ratio to regular dieting but much larger in absolute terms because total weight loss is bigger. Resistance training at least 3 times a week, hitting 0.8g of protein per pound of body weight, and capping your deficit protects muscle and helps prevent the rapid weight regain seen after stopping.</p>
+    </div>
 
     <p>I want to be clear upfront: I have nothing against GLP-1s. They're legitimate, powerful tools. But tools only work well when you understand them fully, and right now most people starting on Ozempic or Mounjaro have no plan for what they're losing or what happens when they stop. This post is about closing that gap.</p>
 
@@ -366,6 +422,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>GLP-1s are a genuinely powerful tool when used with the right support structure around them. The weight loss is real. The muscle loss risk is also real. Knowing both, and having a plan for both, is the difference between a transformation that lasts and one that reverses in a year.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Is muscle loss on GLP-1s worse than regular dieting?</h3>
+      <p>Not proportionally. The ratio of lean mass to total weight lost is similar to dieting without medication, around 25 to 40%. The difference is the absolute numbers: because total weight loss on GLP-1s is much larger, the actual pounds of muscle lost end up being significantly higher.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How much weight comes back after stopping a GLP-1 medication?</h3>
+      <p>The STEP 4 trial found participants regained approximately two-thirds of their lost weight within one year of stopping. Losing significant muscle while on the medication lowers metabolism, which is a major driver of that rebound if no training or nutrition habits were built during treatment.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How much protein should I eat while on a GLP-1 medication?</h3>
+      <p>Target about 0.8 grams per pound of body weight daily, using your target body weight if you have significant weight to lose. Appetite suppression can make hitting that number difficult, so prioritizing protein at every meal and using protein powder to close gaps is often necessary.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I prevent muscle loss while losing weight on Ozempic or Mounjaro?</h3>
+      <p>Yes, though not entirely. Resistance training at least 3 times a week is the single most evidence-based way to preserve muscle during a deficit. Combined with adequate protein and a capped, more moderate rate of weight loss, most people can significantly limit how much lean mass they lose.</p>
+    </div>
 
     <div class="post-cta">
       <h3>On GLP-1s and Need a Plan?</h3>
