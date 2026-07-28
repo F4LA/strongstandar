@@ -173,6 +173,17 @@ nav.scrolled {
 }
 
 /* ── PHASE STEPS ── */
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step {
   display: flex; gap: 20px; align-items: flex-start;
@@ -281,6 +292,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   "keywords": "calorie tracking, weight loss, fat loss, calorie deficit, intuitive eating, busy professionals, sustainable weight loss, habit formation"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Should I stop tracking calories completely?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not right away. Tracking is a valuable learning tool for 4 to 6 months while you build awareness of portions and habits. The goal is to eventually rely on those habits instead of the app, not to avoid tracking from the start."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do I regain weight every time I stop tracking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually because tracking was doing two jobs at once: creating the deficit and acting as your only guardrail against overeating. If no habits were built alongside it, both jobs disappear the moment you stop logging, and there's nothing left holding the results in place."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What habits should I build before I try to stop tracking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A consistent daily step goal, protein and fiber at every meal, a regular meal schedule, fueling earlier in the day instead of saving most calories for dinner, and following the 80/20 rule for consistency. These are the behaviors that hold results in place without an app."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long should the transition off tracking take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Step down gradually over several weeks: from daily tracking to 5 days a week, then 3 to 4, then 1 to 2, confirming your weight stays stable for 3 to 4 weeks at each stage before removing more support. Going from daily tracking to none overnight is the most common reason the habits don't hold."
+      }
+    }
+  ]
+}
+</script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -363,6 +414,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post-body">
 
     <p>Let me start with the person I talk to most often. They have been tracking calories for over a year. They know what a deficit is. They have lost weight before - multiple times, actually. But they keep ending up back at the same place, frustrated, wondering what they are doing wrong.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Calorie tracking works, but it only teaches you what to do if you build habits alongside it. When tracking is the only strategy, stopping removes both the deficit and the guardrail at once, which is why weight comes back. Build the habits first, then step down tracking gradually.</p>
+    </div>
 
     <p>The honest answer is usually this: nothing is wrong with their discipline. Something is wrong with their strategy. And the thing they think is helping them - the tracking - is often the exact thing keeping them stuck.</p>
 
@@ -461,6 +517,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <hr>
 
     <p>Nobody wants to log every meal forever. You should not have to. But the path off the tracking treadmill is not willpower or motivation - it is building something underneath it that works on its own. Do that, and the app becomes optional. That is the goal.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Should I stop tracking calories completely?</h3>
+      <p>Not right away. Tracking is a valuable learning tool for 4 to 6 months while you build awareness of portions and habits. The goal is to eventually rely on those habits instead of the app, not to avoid tracking from the start.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why do I regain weight every time I stop tracking?</h3>
+      <p>Usually because tracking was doing two jobs at once: creating the deficit and acting as your only guardrail against overeating. If no habits were built alongside it, both jobs disappear the moment you stop logging, and there's nothing left holding the results in place.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What habits should I build before I try to stop tracking?</h3>
+      <p>A consistent daily step goal, protein and fiber at every meal, a regular meal schedule, fueling earlier in the day instead of saving most calories for dinner, and following the 80/20 rule for consistency. These are the behaviors that hold results in place without an app.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How long should the transition off tracking take?</h3>
+      <p>Step down gradually over several weeks: from daily tracking to 5 days a week, then 3 to 4, then 1 to 2, confirming your weight stays stable for 3 to 4 weeks at each stage before removing more support. Going from daily tracking to none overnight is the most common reason the habits don't hold.</p>
+    </div>
+
     <div class="post-cta">
       <h3>Ready to Build Habits That Actually Last?</h3>
       <p>Science-backed coaching for busy professionals over 40. We'll build the system around your real life, no tracking obsession required.</p>

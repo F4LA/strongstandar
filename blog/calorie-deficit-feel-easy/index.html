@@ -96,6 +96,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .math-box__line:last-child { border-bottom: none; color: #fff; font-weight: 600; }
 .math-box__line span:last-child { color: var(--ice); font-weight: 600; }
 
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
 .phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
@@ -159,6 +170,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
     "@type": "WebPage",
     "@id": "https://strongstandard.com/blog/calorie-deficit-feel-easy/"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do diet sodas and artificial sweeteners actually help with weight loss?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They can. The health concerns around sweeteners like aspartame are significantly overstated at the amounts people actually consume. Research shows people who use artificially sweetened drinks are more likely to maintain fat loss long-term, likely because they satisfy sweet cravings without adding calories."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I still lose fat eating processed food if my calories are on point?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can, but it will likely feel harder. A controlled study matching whole food and ultra-processed diets on calories, macros, and fiber still found participants ate 400 more calories a day on the processed diet without feeling any fuller. The processing itself, not just the nutrition label, affects how much you naturally eat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does poor sleep actually affect a calorie deficit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "More than most people expect. One study found sleep-restricted participants ate about 559 extra calories a day compared to those sleeping 8 hours, with no increase in activity to offset it. That's enough to erase a typical 500-calorie deficit entirely."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which should I fix first: liquid calories, food quality, or sleep?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with liquid calories since it's the fastest, lowest-effort change with an immediate return. Whole food swaps and sleep habits take longer to build but compound with that first change rather than replacing it."
+      }
+    }
+  ]
 }
 </script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
@@ -240,6 +291,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post-body">
 
     <p>I hear this all the time: someone tracked their food, cut their portions, and held it together for a week or two. Then hunger caught up, the cravings got louder, and they gave in. They told themselves they lacked discipline. They were wrong. They just did it the hard way.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>A calorie deficit feels easier when you cut liquid calories, favor whole foods over processed ones, and protect your sleep. All three change how full you feel at the same calorie level, without requiring more willpower.</p>
+    </div>
 
     <p>A calorie deficit doesn't have to feel like a constant battle. The difference between people who lose fat and keep it off versus those who quit isn't willpower. It's strategy. Specifically, it's how they structure their diet so their body isn't working against them every hour of the day.</p>
 
@@ -327,6 +383,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>Fat loss doesn't require suffering. It requires building a version of a calorie deficit that your body and your habits can actually sustain. Most people fail not because the goal was wrong but because the approach made it harder than it needed to be. Fix the strategy, and the execution becomes manageable.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Do diet sodas and artificial sweeteners actually help with weight loss?</h3>
+      <p>They can. The health concerns around sweeteners like aspartame are significantly overstated at the amounts people actually consume. Research shows people who use artificially sweetened drinks are more likely to maintain fat loss long-term, likely because they satisfy sweet cravings without adding calories.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I still lose fat eating processed food if my calories are on point?</h3>
+      <p>You can, but it will likely feel harder. A controlled study matching whole food and ultra-processed diets on calories, macros, and fiber still found participants ate 400 more calories a day on the processed diet without feeling any fuller. The processing itself, not just the nutrition label, affects how much you naturally eat.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How much does poor sleep actually affect a calorie deficit?</h3>
+      <p>More than most people expect. One study found sleep-restricted participants ate about 559 extra calories a day compared to those sleeping 8 hours, with no increase in activity to offset it. That's enough to erase a typical 500-calorie deficit entirely.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Which should I fix first: liquid calories, food quality, or sleep?</h3>
+      <p>Start with liquid calories since it's the fastest, lowest-effort change with an immediate return. Whole food swaps and sleep habits take longer to build but compound with that first change rather than replacing it.</p>
+    </div>
 
     <div class="post-cta">
       <h3>Tired of Starting Over Every Few Months?</h3>
