@@ -76,6 +76,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .post-body blockquote { border-left: 4px solid var(--accent); padding: 20px 28px; margin: 40px 0; background: var(--accent-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--ink); line-height: 1.6; }
 .post-body hr { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
 
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .phase-steps { margin: 28px 0 36px; display: flex; flex-direction: column; gap: 2px; }
 .phase-step { display: flex; gap: 20px; align-items: flex-start; background: var(--surface); border: 1px solid var(--rule); padding: 20px 24px; }
 .phase-step:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
@@ -158,6 +169,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can intermediate or advanced lifters actually recomp, or only beginners?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most intermediate and advanced lifters still have room to recomp, because they're rarely optimizing every variable at once. Recomposition lives in the gap between current training quality, nutrition, and sleep and what those variables could actually be. Only elite athletes already dialing in every detail are largely locked out of it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many calories should I eat to lose fat and build muscle at the same time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Stay close to maintenance. If fat loss is the priority, eat 200 to 300 calories below maintenance. If muscle gain is the priority, eat 100 to 200 calories above. To target both equally, eat at maintenance and expect body weight to stay roughly stable while composition shifts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does sleep matter so much for body recomposition?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sleep restriction lowers testosterone and slows training recovery, but the bigger issue is that sleep-deprived people in a calorie deficit lose more lean mass than people who sleep well, even when total weight lost is identical. You can do everything else right and still lose muscle simply from not sleeping enough."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know if my training intensity is high enough for recomp?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Film your sets. The last rep of a true working set should look noticeably slower than the first, and if you're training close to failure, your reps should drop from set to set, for example 10, then 8 or 9, then 7 or 8. Hitting the same rep count on every set with the same weight usually means there was more left in the tank."
+      }
+    }
+  ]
+}
+</script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -211,6 +262,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post-body">
 
     <p>I talk to a lot of people who have been putting in the work for months. The scale isn't moving the way they want, and when they look in the mirror, they're still not sure if they're actually building muscle or just spinning their wheels. Someone at the gym told them to pick a goal: bulk or cut. Not both. Never both.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Yes, most people can lose fat and build muscle at the same time, not just beginners. It requires training close to failure, keeping calories within a small window of maintenance rather than a large deficit or surplus, hitting 1 gram of protein per pound of body weight, and protecting sleep.</p>
+    </div>
 
     <p>That advice is wrong. And it's been holding a lot of people back from the results they're actually capable of getting.</p>
 
@@ -327,6 +383,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>The reason most people never experience body recomposition isn't that it's impossible for them. It's that they're optimizing one variable while ignoring three others. Dial in training intensity, set calories correctly for the actual goal, protect sleep, and manage the lifestyle factors that undercut recovery. When all four are working together, the body has what it needs to build muscle and lose fat at the same time.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Can intermediate or advanced lifters actually recomp, or only beginners?</h3>
+      <p>Most intermediate and advanced lifters still have room to recomp, because they're rarely optimizing every variable at once. Recomposition lives in the gap between current training quality, nutrition, and sleep and what those variables could actually be. Only elite athletes already dialing in every detail are largely locked out of it.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How many calories should I eat to lose fat and build muscle at the same time?</h3>
+      <p>Stay close to maintenance. If fat loss is the priority, eat 200 to 300 calories below maintenance. If muscle gain is the priority, eat 100 to 200 calories above. To target both equally, eat at maintenance and expect body weight to stay roughly stable while composition shifts.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why does sleep matter so much for body recomposition?</h3>
+      <p>Sleep restriction lowers testosterone and slows training recovery, but the bigger issue is that sleep-deprived people in a calorie deficit lose more lean mass than people who sleep well, even when total weight lost is identical. You can do everything else right and still lose muscle simply from not sleeping enough.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I know if my training intensity is high enough for recomp?</h3>
+      <p>Film your sets. The last rep of a true working set should look noticeably slower than the first, and if you're training close to failure, your reps should drop from set to set, for example 10, then 8 or 9, then 7 or 8. Hitting the same rep count on every set with the same weight usually means there was more left in the tank.</p>
+    </div>
 
     <div class="post-cta">
       <h3>Stop Guessing. Start Recomping.</h3>
