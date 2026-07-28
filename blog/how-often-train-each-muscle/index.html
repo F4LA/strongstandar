@@ -112,6 +112,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .math-box__row:last-child .math-box__val { color: var(--ice); font-size: 1.8rem; }
 
 /* Takeaway box */
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
 .takeaway-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); margin-bottom: 16px; }
 .takeaway-box ul { margin: 0; padding: 0; list-style: none; }
@@ -169,6 +180,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does the Huberman/Mentzer once-a-week training approach actually work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can, but it's rarely optimal for a natural, busy adult. It tends to work for people with unusually responsive genetics, extreme training intensity most people won't replicate, or performance-enhancing drug use that extends the muscle-building window well beyond the natural 24 to 72 hour range."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does the muscle-building window actually stay open after a workout?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Research measuring muscle protein synthesis found it rises noticeably within hours of training, peaks around 24 hours, and returns to baseline by about 36 hours, with a real-world range of 24 to 72 hours depending on training experience. Doing more volume in one session doesn't extend that window, it just adds fatigue."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do smaller muscles like biceps and triceps need to be trained twice a week too?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily. They get substantial indirect stimulus from compound pressing and pulling movements, so training them directly once a week is generally sufficient. The twice-per-week recommendation matters most for major muscle groups like chest, back, quads, glutes, hamstrings, and shoulders."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will splitting my volume into two sessions take more time at the gym?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The same total sets simply get distributed across two sessions instead of one. Twelve sets of chest split into 6 on Monday and 6 on Thursday takes the same combined time as 12 sets in a single session, with meaningfully better performance and stimulus on each set."
+      }
+    }
+  ]
+}
+</script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -222,6 +273,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post-body">
 
     <p>You follow the bro-split. Chest Monday, back Tuesday, legs Wednesday, shoulders Thursday, arms Friday. Each session is intense, you push hard, and you leave the gym feeling wrecked. So why does progress feel slower than it should?</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Train each major muscle group twice a week, spaced 3 to 4 days apart, instead of once. Performance drops sharply after 6 to 8 hard sets in a session, and the muscle-building window closes within 24 to 72 hours, so splitting the same volume across two sessions produces better results at no extra time cost.</p>
+    </div>
 
     <p>The issue isn't your effort. It's your frequency. And there are two very specific physiological reasons why training each muscle group once a week is not the most effective way to build muscle or strength, even if it feels like it is.</p>
 
@@ -336,6 +392,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>The bro-split isn't broken. It just isn't optimized. If you're already putting in the effort, the simplest upgrade you can make is to distribute that effort more intelligently across the week. Same time, more results.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Does the Huberman/Mentzer once-a-week training approach actually work?</h3>
+      <p>It can, but it's rarely optimal for a natural, busy adult. It tends to work for people with unusually responsive genetics, extreme training intensity most people won't replicate, or performance-enhancing drug use that extends the muscle-building window well beyond the natural 24 to 72 hour range.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How long does the muscle-building window actually stay open after a workout?</h3>
+      <p>Research measuring muscle protein synthesis found it rises noticeably within hours of training, peaks around 24 hours, and returns to baseline by about 36 hours, with a real-world range of 24 to 72 hours depending on training experience. Doing more volume in one session doesn't extend that window, it just adds fatigue.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do smaller muscles like biceps and triceps need to be trained twice a week too?</h3>
+      <p>Not necessarily. They get substantial indirect stimulus from compound pressing and pulling movements, so training them directly once a week is generally sufficient. The twice-per-week recommendation matters most for major muscle groups like chest, back, quads, glutes, hamstrings, and shoulders.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Will splitting my volume into two sessions take more time at the gym?</h3>
+      <p>No. The same total sets simply get distributed across two sessions instead of one. Twelve sets of chest split into 6 on Monday and 6 on Thursday takes the same combined time as 12 sets in a single session, with meaningfully better performance and stimulus on each set.</p>
+    </div>
 
     <div class="post-cta">
       <h3>Train Smarter, Not Longer</h3>

@@ -101,6 +101,17 @@ nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
 .phase-step__desc { font-size: 14px; color: var(--ink-muted); line-height: 1.55; }
 
 /* Takeaway box */
+/* ── QUICK ANSWER BOX ── */
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+/* ── FAQ ── */
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
 .takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
 .takeaway-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); margin-bottom: 16px; }
 .takeaway-box ul { margin: 0; padding: 0; list-style: none; }
@@ -158,6 +169,46 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do I keep gaining back weight I've already lost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually because the effort stopped at the outcome instead of continuing as a process. Once a goal weight is hit, the behaviors that got there often stop too, because the finish line felt like the point. Shifting focus to the daily behaviors themselves, and letting the physique be a byproduct, is what actually holds results in place."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to track calories forever to keep weight off?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily calories specifically, but people who maintain weight loss long-term almost always keep tracking something: morning weight, protein, steps, or workouts. The specific metric matters less than never fully stopping paying attention."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it actually take to break the yo-yo dieting cycle for good?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Longer than most quick-fix programs promise. Real, lasting change is usually measured in years, not 90 days, and often includes plateaus that last months. The people who break the cycle are the ones who keep going through a plateau instead of quitting and restarting somewhere new."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why doesn't willpower alone work for lasting weight loss?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Willpower treats symptoms, not the underlying pattern. Exercise framed as punishment for eating poorly requires a constant supply of shame to sustain, and an all-or-nothing relationship with food doesn't respond to gritting your teeth harder. Awareness, a meaningful why, and consistency over time address the actual pattern instead."
+      }
+    }
+  ]
+}
+</script>
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -211,6 +262,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <article class="post-body">
 
     <p>You've lost the weight before. Maybe more than once. You know how to eat less and move more. You've done the cardio, tried the diets, felt the momentum, and then watched it unravel the moment life got busy again. If that cycle feels familiar, this post is for you.</p>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Yo-yo dieting is usually an outcome problem, not a strategy problem. Ending it for good requires a why that isn't about appearance, daily awareness through some form of tracking, and a timeline measured in years instead of a 90-day program.</p>
+    </div>
 
     <p>Nate Waldron is one of our clients and has been part of our community for over two years. He grew up obese, ran over 55 races across 15 years, had double jaw surgery partly hoping it would force weight loss, and still found himself gaining it back every single time. Today he's down over 45 pounds and, for the first time in his adult life, took his shirt off in public. Not because he found the right diet. Because something more fundamental shifted.</p>
 
@@ -326,6 +382,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>Nate's story isn't about discipline or genetics or a perfect program. It's about finally building a foundation solid enough to stand on when life gets hard. That's what we work on here. And if you've been in the cycle long enough to know that the next quick fix won't be the last, it might be time for a different kind of conversation.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Why do I keep gaining back weight I've already lost?</h3>
+      <p>Usually because the effort stopped at the outcome instead of continuing as a process. Once a goal weight is hit, the behaviors that got there often stop too, because the finish line felt like the point. Shifting focus to the daily behaviors themselves, and letting the physique be a byproduct, is what actually holds results in place.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do I need to track calories forever to keep weight off?</h3>
+      <p>Not necessarily calories specifically, but people who maintain weight loss long-term almost always keep tracking something: morning weight, protein, steps, or workouts. The specific metric matters less than never fully stopping paying attention.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How long does it actually take to break the yo-yo dieting cycle for good?</h3>
+      <p>Longer than most quick-fix programs promise. Real, lasting change is usually measured in years, not 90 days, and often includes plateaus that last months. The people who break the cycle are the ones who keep going through a plateau instead of quitting and restarting somewhere new.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why doesn't willpower alone work for lasting weight loss?</h3>
+      <p>Willpower treats symptoms, not the underlying pattern. Exercise framed as punishment for eating poorly requires a constant supply of shame to sustain, and an all-or-nothing relationship with food doesn't respond to gritting your teeth harder. Awareness, a meaningful why, and consistency over time address the actual pattern instead.</p>
+    </div>
 
     <div class="post-cta">
       <h3>Ready to Break the Cycle for Good?</h3>
