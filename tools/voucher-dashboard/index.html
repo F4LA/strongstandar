@@ -268,7 +268,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="toolbar">
     <input type="text" class="search-input" id="search-input" placeholder="Search by referrer or friend name…" oninput="renderTable()">
     <select class="sort-select" id="challenge-select" onchange="updateStats(); renderTable();">
-      <option value="__all__">All Challenges</option>
     </select>
     <select class="sort-select" id="sort-select" onchange="renderTable()">
       <option value="total">Sort by Total Score</option>
@@ -409,12 +408,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const challenges = getChallenges(allRows);
     const previousValue = select.value;
 
-    select.innerHTML = '<option value="__all__">All Challenges</option>' +
-      challenges.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+    select.innerHTML = challenges.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
 
     // Keep the previous selection if it still exists; otherwise default to the
-    // most recent challenge (first in the sorted list) so the dashboard opens
-    // on a meaningful "current cohort" view instead of everything mixed together.
+    // most recent challenge (first in the sorted list).
     if (previousValue && [...select.options].some(o => o.value === previousValue)){
       select.value = previousValue;
     } else if (challenges.length > 0){
@@ -426,7 +423,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const withIdx = rows.map((row, i) => ({ row, i, total: num(row[12]) }));
     const eligible = withIdx.filter(item => {
       if (isExcluded(item.row)) return false;
-      if (challengeFilter !== '__all__' && formatChallenge(item.row[19]) !== challengeFilter) return false;
+      if (formatChallenge(item.row[19]) !== challengeFilter) return false;
       return true;
     });
     const sorted = [...eligible].sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity));
@@ -439,15 +436,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const wrap = document.getElementById('table-wrap');
     const q = (document.getElementById('search-input').value || '').trim().toLowerCase();
     const sortField = document.getElementById('sort-select').value;
-    const challengeFilter = document.getElementById('challenge-select').value || '__all__';
+    const challengeFilter = document.getElementById('challenge-select').value;
 
     const rankByIdx = computeRanks(allRows, challengeFilter);
 
     let indexed = allRows.map((row, i) => ({ row, i, rank: rankByIdx[i] }));
-
-    if (challengeFilter !== '__all__'){
-      indexed = indexed.filter(({row}) => formatChallenge(row[19]) === challengeFilter);
-    }
+    indexed = indexed.filter(({row}) => formatChallenge(row[19]) === challengeFilter);
 
     if (q){
       indexed = indexed.filter(({row}) => {
@@ -500,9 +494,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       else if (excluded) statusPill = '<span class="pill excluded">EXCLUDED</span>';
 
       // Insert the top-10 divider only when the visible order is the Total-Score order
-      // (no search filter, sorted by total) AND a single challenge is selected —
-      // "top 10" only makes sense within one cohort, not mixed across challenges.
-      if (sortField === 'total' && !q && challengeFilter !== '__all__' && !dividerInserted && rank !== null && rank > 10){
+      // (no search filter, sorted by total) — "top 10" is scoped to the selected challenge.
+      if (sortField === 'total' && !q && !dividerInserted && rank !== null && rank > 10){
         rowsHtml += `<tr class="top10-divider"><td colspan="9"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
         dividerInserted = true;
       }
@@ -640,10 +633,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   function updateStats(){
-    const challengeFilter = document.getElementById('challenge-select').value || '__all__';
-    const scoped = challengeFilter === '__all__'
-      ? allRows
-      : allRows.filter(r => formatChallenge(r[19]) === challengeFilter);
+    const challengeFilter = document.getElementById('challenge-select').value;
+    const scoped = allRows.filter(r => formatChallenge(r[19]) === challengeFilter);
 
     const total = scoped.length;
     const unscored = scoped.filter(r => num(r[12]) === null).length;
