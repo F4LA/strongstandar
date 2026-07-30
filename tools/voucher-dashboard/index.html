@@ -165,6 +165,48 @@
   }
   .top10-divider-inner::before, .top10-divider-inner::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.4); }
 
+  .pill {
+    display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .pill.winner { background: var(--gold-pale); color: var(--gold); }
+  .pill.excluded { background: var(--red-pale); color: var(--red); }
+
+  tr.row-excluded { opacity: 0.55; }
+  tr.row-excluded .cell-name, tr.row-excluded .total-score { text-decoration: line-through; }
+
+  .actions-row { display: flex; gap: 10px; padding-top: 4px; }
+  .action-btn {
+    border: 1px solid var(--border); border-radius: 8px; padding: 9px 16px; font-size: 12px; font-weight: 600;
+    background: var(--navy-light); color: var(--text); transition: all 0.15s;
+  }
+  .action-btn.winner { border-color: rgba(201,168,76,0.4); color: var(--gold); }
+  .action-btn.winner:hover { background: var(--gold-pale); }
+  .action-btn.exclude { border-color: rgba(231,76,60,0.4); color: var(--red); }
+  .action-btn.exclude:hover { background: var(--red-pale); }
+  .action-btn.undo:hover { border-color: var(--steel-mid); color: var(--steel-light); }
+
+  /* ── EXCLUDE MODAL ── */
+  #exclude-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.55);
+    align-items: center; justify-content: center;
+  }
+  .modal-card {
+    background: var(--navy-mid); border: 1px solid var(--border-bright); border-radius: 14px;
+    padding: 28px; width: 440px; max-width: 90vw;
+  }
+  .modal-heading { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; color: var(--red); margin-bottom: 10px; }
+  .modal-body { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+  .modal-textarea {
+    width: 100%; min-height: 90px; background: var(--navy); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; color: var(--text); font-family: var(--font-body); font-size: 13px; resize: vertical; outline: none;
+  }
+  .modal-textarea:focus { border-color: var(--red); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 16px; justify-content: flex-end; }
+  .modal-btn { padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--navy-light); color: var(--text); }
+  .modal-btn.confirm { background: var(--red); border-color: var(--red); color: #fff; }
+  .modal-btn.confirm:disabled { opacity: 0.4; cursor: default; background: var(--navy-light); color: var(--text-dim); border-color: var(--border); }
+
   .empty-state, .error-state, .loading-state {
     padding: 60px 24px; text-align: center; color: var(--text-muted); font-size: 13px;
   }
@@ -239,18 +281,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
+<!-- EXCLUDE CONFIRMATION MODAL -->
+<div id="exclude-modal-overlay">
+  <div class="modal-card">
+    <div class="modal-heading">⚠️ Heads up</div>
+    <div class="modal-body">
+      You're about to exclude this nomination from voucher selection, overriding the AI score.
+      This person will not be counted toward the top 10, even if their score qualifies.
+      Please explain why (required):
+    </div>
+    <textarea class="modal-textarea" id="exclude-reason-input" placeholder="e.g. Referrer's own account shows a history of no-shows on past challenges…" oninput="updateExcludeConfirmState()"></textarea>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeExcludeModal()">Cancel</button>
+      <button class="modal-btn confirm" id="exclude-confirm-btn" disabled onclick="confirmExclude()">Confirm Exclusion</button>
+    </div>
+  </div>
+</div>
+
 <script>
   // Live data source: Strong Standard - Voucher Program Nominations
   // https://docs.google.com/spreadsheets/d/1n5IXdQv4UDuag5X7QAK-7mM2EA7N3i0u5k0RONv0_BE/edit
   // NOTE: this sheet must be shared as "Anyone with the link — Viewer" for the
   // gviz read below to work client-side (same setup as affiliate-dashboard / invoices-payments-dashboard).
   const SHEET_ID = '1n5IXdQv4UDuag5X7QAK-7mM2EA7N3i0u5k0RONv0_BE';
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby-29wDR4pG0ThMnjWcS-O5dnw2_ZGB0gtUwKhZdtOi1sSC7LOMwL7mrhQ9NRcOQZPa/exec';
 
   // Column order as defined in the sheet header row:
   // 0 Timestamp | 1 Referrer Name | 2 Friend Name | 3 Friend Email | 4 Friend Phone |
   // 5 Relationship to Friend | 6 Why Good Fit | 7 Talked to Them About It (open text) |
   // 8 AI Score - Commitment/Mindset | 9 AI Score - Goal/Situation Fit | 10 AI Raw Output (hidden helper) |
-  // 11 AI Total Score | 12 AI Rationale | 13 Status | 14 Coupon Code | 15 Redeemed (Y/N) | 16 Outcome
+  // 11 AI Total Score | 12 AI Rationale | 13 Status | 14 Coupon Code | 15 Redeemed (Y/N) | 16 Outcome |
+  // 17 Reviewer Override Reason
+  // NOTE: sheet row number for row i in the data array = i + 2 (row 1 is the header).
 
   let allRows = [];
   let expandedKey = null; // unique key of the currently expanded row, or null
@@ -292,9 +354,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // Rank is always based on Total Score descending across ALL rows,
   // regardless of the sort-select or the search filter — so "top 10"
   // means the same thing no matter how the table is currently displayed.
+  // Rows manually excluded by a reviewer never count toward the ranking or the cutoff.
+  function isExcluded(row){
+    return (row[13] || '').toString().trim().toLowerCase().startsWith('excluded');
+  }
+
   function computeRanks(rows){
     const withIdx = rows.map((row, i) => ({ row, i, total: num(row[11]) }));
-    const sorted = [...withIdx].sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity));
+    const eligible = withIdx.filter(item => !isExcluded(item.row));
+    const sorted = [...eligible].sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity));
     const rankByIdx = {};
     sorted.forEach((item, pos) => { rankByIdx[item.i] = (item.total === null) ? null : pos + 1; });
     return rankByIdx;
@@ -346,17 +414,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const goal = num(row[9]);
       const total = num(row[11]);
       const rationale = escapeHtml(row[12]);
-      const isTop10 = rank !== null && rank <= 10;
+      const status = (row[13] || '').toString().trim();
+      const overrideReason = escapeHtml(row[17]);
+      const excluded = isExcluded(row);
+      const isWinner = status.toLowerCase().startsWith('voucher assigned');
+      const isTop10 = !excluded && rank !== null && rank <= 10;
       const isExpanded = expandedKey === key;
+
+      let statusPill = '';
+      if (isWinner) statusPill = '<span class="pill winner">WINNER</span>';
+      else if (excluded) statusPill = '<span class="pill excluded">EXCLUDED</span>';
 
       // Insert the top-10 divider only when the visible order is the Total-Score order
       // (i.e. no search filter active and sorted by total) so it lines up correctly.
       if (sortField === 'total' && !q && !dividerInserted && rank !== null && rank > 10){
-        rowsHtml += `<tr class="top10-divider"><td colspan="7"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
+        rowsHtml += `<tr class="top10-divider"><td colspan="8"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
         dividerInserted = true;
       }
 
-      rowsHtml += `<tr class="data-row${isTop10 ? ' row-top10' : ''}${isExpanded ? ' expanded' : ''}" onclick="toggleExpand('${key}')">
+      rowsHtml += `<tr class="data-row${isTop10 ? ' row-top10' : ''}${excluded ? ' row-excluded' : ''}${isExpanded ? ' expanded' : ''}" onclick="toggleExpand('${key}')">
         <td><span class="expand-icon">▶</span><span class="rank-num${isTop10 ? ' top10' : ''}">${rank !== null ? '#' + rank : '—'}</span></td>
         <td class="cell-name">${referrer || '—'}</td>
         <td class="cell-name">${friend || '—'}</td>
@@ -364,17 +440,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <td>${scoreBadge(goal)}</td>
         <td><span class="total-score">${total !== null ? total : '—'}</span></td>
         <td class="cell-muted">${relationship || '—'}</td>
+        <td>${statusPill}</td>
       </tr>`;
 
       if (isExpanded){
+        const actionsHtml = excluded
+          ? `<button class="action-btn undo" onclick="event.stopPropagation(); handleUndo(${i})">↺ Undo Exclusion</button>`
+          : `<button class="action-btn winner" onclick="event.stopPropagation(); handleMarkWinner(${i})">✓ Mark as Winner</button>
+             <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`;
+
         rowsHtml += `<tr class="detail-row">
-          <td colspan="7">
+          <td colspan="8">
             <div class="detail-grid">
               <div class="detail-block"><div class="detail-label">Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
               <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
               <div class="detail-block rationale"><div class="detail-label">AI Rationale</div><div class="detail-text">${rationale || 'Not yet scored.'}</div></div>
+              ${excluded ? `<div class="detail-block rationale"><div class="detail-label">Reviewer Override Reason</div><div class="detail-text">${overrideReason || '—'}</div></div>` : ''}
+              <div class="detail-block rationale actions-row">${actionsHtml}</div>
             </div>
           </td>
         </tr>`;
@@ -391,6 +475,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <th>Goal Fit</th>
           <th>Total</th>
           <th>Relationship</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>${rowsHtml}</tbody>
@@ -402,10 +487,84 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     renderTable();
   }
 
+  // ── WRITE ACTIONS (via Apps Script web app) ──
+  // Sent as a plain string body (not JSON content-type) to avoid CORS preflight,
+  // which Apps Script web apps don't handle. The web app is restricted to
+  // Strong Standard company Google accounts, so the browser must have an
+  // active session with a company account for these calls to succeed.
+  async function postAction(action, rowIndexInArray, reason){
+    const rowIndex = rowIndexInArray + 2; // +2: header is row 1, data starts at row 2
+    const payload = { action, rowIndex };
+    if (reason !== undefined) payload.reason = reason;
+
+    let res, text;
+    try {
+      res = await fetch(WEBAPP_URL, { method: 'POST', body: JSON.stringify(payload) });
+      text = await res.text();
+    } catch (e){
+      alert('Could not reach the write endpoint. Check your connection and try again.');
+      return false;
+    }
+
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch (e){
+      // Apps Script returned an HTML page instead of JSON — almost always means
+      // the browser isn't logged into a Strong Standard Google account.
+      alert('Action not saved. Please make sure you are logged into your Strong Standard Google account in this browser, then try again.');
+      return false;
+    }
+
+    if (json.error){
+      alert('Could not save: ' + json.error);
+      return false;
+    }
+    return true;
+  }
+
+  async function handleMarkWinner(rowIndexInArray){
+    const ok = await postAction('markWinner', rowIndexInArray);
+    if (ok) loadData(true);
+  }
+
+  async function handleUndo(rowIndexInArray){
+    const ok = await postAction('undoExclude', rowIndexInArray);
+    if (ok) loadData(true);
+  }
+
+  let pendingExcludeRowIndex = null;
+
+  function openExcludeModal(rowIndexInArray){
+    pendingExcludeRowIndex = rowIndexInArray;
+    document.getElementById('exclude-reason-input').value = '';
+    updateExcludeConfirmState();
+    document.getElementById('exclude-modal-overlay').style.display = 'flex';
+  }
+
+  function closeExcludeModal(){
+    pendingExcludeRowIndex = null;
+    document.getElementById('exclude-modal-overlay').style.display = 'none';
+  }
+
+  function updateExcludeConfirmState(){
+    const val = document.getElementById('exclude-reason-input').value.trim();
+    document.getElementById('exclude-confirm-btn').disabled = !val;
+  }
+
+  async function confirmExclude(){
+    const reason = document.getElementById('exclude-reason-input').value.trim();
+    if (!reason || pendingExcludeRowIndex === null) return;
+    const rowIndex = pendingExcludeRowIndex;
+    closeExcludeModal();
+    const ok = await postAction('exclude', rowIndex, reason);
+    if (ok) loadData(true);
+  }
+
   function updateStats(){
     const total = allRows.length;
     const unscored = allRows.filter(r => num(r[11]) === null).length;
-    const totals = allRows.map(r => num(r[11])).filter(n => n !== null).sort((a,b) => b - a);
+    const totals = allRows.filter(r => !isExcluded(r)).map(r => num(r[11])).filter(n => n !== null).sort((a,b) => b - a);
     const cutoff = totals.length >= 10 ? totals[9] : (totals.length > 0 ? totals[totals.length - 1] : null);
     document.getElementById('stat-total').textContent = total;
     document.getElementById('stat-unscored').textContent = unscored;
