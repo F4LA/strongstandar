@@ -91,7 +91,7 @@
   .page-title { font-family: var(--font-display); font-size: 40px; letter-spacing: 3px; color: var(--text); line-height: 1; }
   .page-sub { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 6px; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 28px; }
   @media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr; } }
   .stat-card {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
@@ -172,10 +172,6 @@
       <div class="stat-value" id="stat-total">—</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Already Interested</div>
-      <div class="stat-value" id="stat-interested">—</div>
-    </div>
-    <div class="stat-card">
       <div class="stat-label">Not Yet Scored</div>
       <div class="stat-value" id="stat-unscored">—</div>
     </div>
@@ -201,7 +197,7 @@
 
   // Column order as defined in the sheet header row:
   // 0 Timestamp | 1 Referrer Name | 2 Friend Name | 3 Friend Email | 4 Friend Phone |
-  // 5 Relationship to Friend | 6 Why Good Fit | 7 Friend Already Interested (Y/N) |
+  // 5 Relationship to Friend | 6 Why Good Fit | 7 Talked to Them & Interested Now (open text) |
   // 8 AI Score - Commitment/Mindset | 9 AI Score - Goal/Situation Fit | 10 AI Score - Payment Capacity |
   // 11 AI Total Score | 12 AI Rationale | 13 Status | 14 Coupon Code | 15 Redeemed (Y/N) | 16 Outcome
 
@@ -217,13 +213,6 @@
     const json = JSON.parse(text.substring(jsonStart, jsonEnd + 1));
     if (!json.table || !json.table.rows) return [];
     return json.table.rows.map(r => (r.c || []).map(c => (c ? c.v : null)));
-  }
-
-  function yesNoPill(val){
-    const v = (val || '').toString().trim().toUpperCase();
-    if (v === 'Y' || v === 'YES') return '<span class="pill yes">YES</span>';
-    if (v === 'N' || v === 'NO') return '<span class="pill no">NO</span>';
-    return '<span class="pill unknown">—</span>';
   }
 
   function escapeHtml(str){
@@ -255,7 +244,7 @@
       const phone = escapeHtml(row[4]);
       const relationship = escapeHtml(row[5]);
       const whyFit = escapeHtml(row[6]);
-      const interested = yesNoPill(row[7]);
+      const talkedInterested = escapeHtml(row[7]);
       return `<tr>
         <td class="cell-muted">${timestamp}</td>
         <td class="cell-name">${referrer || '—'}</td>
@@ -263,7 +252,7 @@
         <td class="cell-muted">${email || '—'}<br>${phone || ''}</td>
         <td>${relationship || '—'}</td>
         <td class="cell-wide">${whyFit || '—'}</td>
-        <td>${interested}</td>
+        <td class="cell-wide">${talkedInterested || '—'}</td>
       </tr>`;
     }).join('');
 
@@ -276,7 +265,7 @@
           <th>Contact</th>
           <th>Relationship</th>
           <th>Why Good Fit</th>
-          <th>Interested Now?</th>
+          <th>Talked to Them / Interested Now</th>
         </tr>
       </thead>
       <tbody>${rowsHtml}</tbody>
@@ -285,10 +274,8 @@
 
   function updateStats(){
     const total = allRows.length;
-    const interested = allRows.filter(r => (r[7] || '').toString().trim().toUpperCase().startsWith('Y')).length;
     const unscored = allRows.filter(r => !r[11]).length;
     document.getElementById('stat-total').textContent = total;
-    document.getElementById('stat-interested').textContent = interested;
     document.getElementById('stat-unscored').textContent = unscored;
   }
 
