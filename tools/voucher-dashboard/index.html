@@ -311,7 +311,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // 5 Relationship to Friend | 6 Why Good Fit | 7 Talked to Them About It (open text) |
   // 8 AI Score - Commitment/Mindset | 9 AI Score - Goal/Situation Fit | 10 AI Raw Output (hidden helper) |
   // 11 AI Total Score | 12 AI Rationale | 13 Status | 14 Coupon Code | 15 Redeemed (Y/N) | 16 Outcome |
-  // 17 Reviewer Override Reason | 18 Referrer Email | 19 Referrer Phone
+  // 17 Reviewer Override Reason | 18 Referrer Email
   // NOTE: sheet row number for row i in the data array = i + 2 (row 1 is the header).
 
   let allRows = [];
@@ -417,7 +417,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const status = (row[13] || '').toString().trim();
       const overrideReason = escapeHtml(row[17]);
       const referrerEmail = escapeHtml(row[18]);
-      const referrerPhone = escapeHtml(row[19]);
       const excluded = isExcluded(row);
       const isWinner = status.toLowerCase().startsWith('voucher assigned');
       const isTop10 = !excluded && rank !== null && rank <= 10;
@@ -455,7 +454,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <td colspan="8">
             <div class="detail-grid">
               <div class="detail-block"><div class="detail-label">Friend Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
-              <div class="detail-block"><div class="detail-label">Referrer Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}<br>${referrerPhone || '—'}</div></div>
+              <div class="detail-block"><div class="detail-label">Referrer Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
               <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
