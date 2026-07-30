@@ -306,12 +306,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const SHEET_ID = '1n5IXdQv4UDuag5X7QAK-7mM2EA7N3i0u5k0RONv0_BE';
   const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby-29wDR4pG0ThMnjWcS-O5dnw2_ZGB0gtUwKhZdtOi1sSC7LOMwL7mrhQ9NRcOQZPa/exec';
 
-  // Column order as defined in the sheet header row:
-  // 0 Timestamp | 1 Referrer Name | 2 Friend Name | 3 Friend Email | 4 Friend Phone |
-  // 5 Relationship to Friend | 6 Why Good Fit | 7 Talked to Them About It (open text) |
-  // 8 AI Score - Commitment/Mindset | 9 AI Score - Goal/Situation Fit | 10 AI Raw Output (hidden helper) |
-  // 11 AI Total Score | 12 AI Rationale | 13 Status | 14 Coupon Code | 15 Redeemed (Y/N) | 16 Outcome |
-  // 17 Reviewer Override Reason | 18 Referrer Email
+  // Column order as defined in the sheet header row (confirmed live, Jul 30 2026):
+  // 0 Timestamp | 1 Referrer Name | 2 Referrer Email | 3 Friend Name | 4 Friend Email |
+  // 5 Friend Phone | 6 Relationship to Friend | 7 Why Good Fit | 8 Talked to Them About It |
+  // 9 AI Score - Commitment/Mindset | 10 AI Score - Goal/Situation Fit | 11 AI Raw Output (hidden helper) |
+  // 12 AI Total Score | 13 AI Rationale | 14 Status | 15 Coupon Code | 16 Redeemed (Y/N) |
+  // 17 Outcome | 18 Reviewer Override Reason
   // NOTE: sheet row number for row i in the data array = i + 2 (row 1 is the header).
 
   let allRows = [];
@@ -356,11 +356,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // means the same thing no matter how the table is currently displayed.
   // Rows manually excluded by a reviewer never count toward the ranking or the cutoff.
   function isExcluded(row){
-    return (row[13] || '').toString().trim().toLowerCase().startsWith('excluded');
+    return (row[14] || '').toString().trim().toLowerCase().startsWith('excluded');
   }
 
   function computeRanks(rows){
-    const withIdx = rows.map((row, i) => ({ row, i, total: num(row[11]) }));
+    const withIdx = rows.map((row, i) => ({ row, i, total: num(row[12]) }));
     const eligible = withIdx.filter(item => !isExcluded(item.row));
     const sorted = [...eligible].sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity));
     const rankByIdx = {};
@@ -380,12 +380,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (q){
       indexed = indexed.filter(({row}) => {
         const referrer = (row[1] || '').toString().toLowerCase();
-        const friend = (row[2] || '').toString().toLowerCase();
+        const friend = (row[3] || '').toString().toLowerCase();
         return referrer.includes(q) || friend.includes(q);
       });
     }
 
-    const sortKeyIdx = sortField === 'commitment' ? 8 : sortField === 'goal' ? 9 : 11;
+    const sortKeyIdx = sortField === 'commitment' ? 9 : sortField === 'goal' ? 10 : 12;
     indexed.sort((a, b) => {
       const av = num(a.row[sortKeyIdx]);
       const bv = num(b.row[sortKeyIdx]);
@@ -404,19 +404,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const key = 'row-' + i;
       const timestamp = row[0] ? escapeHtml(row[0]) : '—';
       const referrer = escapeHtml(row[1]);
-      const friend = escapeHtml(row[2]);
-      const email = escapeHtml(row[3]);
-      const phone = escapeHtml(row[4]);
-      const relationship = escapeHtml(row[5]);
-      const whyFit = escapeHtml(row[6]);
-      const talked = escapeHtml(row[7]);
-      const commitment = num(row[8]);
-      const goal = num(row[9]);
-      const total = num(row[11]);
-      const rationale = escapeHtml(row[12]);
-      const status = (row[13] || '').toString().trim();
-      const overrideReason = escapeHtml(row[17]);
-      const referrerEmail = escapeHtml(row[18]);
+      const referrerEmail = escapeHtml(row[2]);
+      const friend = escapeHtml(row[3]);
+      const email = escapeHtml(row[4]);
+      const phone = escapeHtml(row[5]);
+      const relationship = escapeHtml(row[6]);
+      const whyFit = escapeHtml(row[7]);
+      const talked = escapeHtml(row[8]);
+      const commitment = num(row[9]);
+      const goal = num(row[10]);
+      const total = num(row[12]);
+      const rationale = escapeHtml(row[13]);
+      const status = (row[14] || '').toString().trim();
+      const overrideReason = escapeHtml(row[18]);
       const excluded = isExcluded(row);
       const isWinner = status.toLowerCase().startsWith('voucher assigned');
       const isTop10 = !excluded && rank !== null && rank <= 10;
@@ -565,8 +565,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   function updateStats(){
     const total = allRows.length;
-    const unscored = allRows.filter(r => num(r[11]) === null).length;
-    const totals = allRows.filter(r => !isExcluded(r)).map(r => num(r[11])).filter(n => n !== null).sort((a,b) => b - a);
+    const unscored = allRows.filter(r => num(r[12]) === null).length;
+    const totals = allRows.filter(r => !isExcluded(r)).map(r => num(r[12])).filter(n => n !== null).sort((a,b) => b - a);
     const cutoff = totals.length >= 10 ? totals[9] : (totals.length > 0 ? totals[totals.length - 1] : null);
     document.getElementById('stat-total').textContent = total;
     document.getElementById('stat-unscored').textContent = unscored;
