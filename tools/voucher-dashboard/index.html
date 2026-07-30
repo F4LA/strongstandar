@@ -91,7 +91,7 @@
   .page-title { font-family: var(--font-display); font-size: 40px; letter-spacing: 3px; color: var(--text); line-height: 1; }
   .page-sub { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 6px; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 28px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
   @media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr; } }
   .stat-card {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
@@ -101,8 +101,11 @@
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(56,153,204,0.4), transparent);
   }
+  .stat-card.gold { border-color: rgba(201,168,76,0.25); background: linear-gradient(135deg, var(--navy-mid), rgba(201,168,76,0.05)); }
+  .stat-card.gold::before { background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); }
   .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
   .stat-value { font-family: var(--font-display); font-size: 34px; letter-spacing: 1px; color: var(--text); line-height: 1; }
+  .stat-value.gold-val { color: var(--gold); }
 
   .toolbar { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
   .search-input {
@@ -111,6 +114,11 @@
   }
   .search-input:focus { border-color: var(--steel-mid); }
   .search-input::placeholder { color: var(--text-dim); }
+  .sort-select {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; color: var(--text); font-family: var(--font-body); font-size: 13px; outline: none;
+  }
+  .sort-select:focus { border-color: var(--steel-mid); }
 
   .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   .table-wrap { overflow-x: auto; }
@@ -121,18 +129,41 @@
     position: sticky; top: 0; background: var(--card-bg);
   }
   tbody td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
-  tbody tr:last-child td { border-bottom: none; }
-  tbody tr:hover { background: rgba(56,153,204,0.05); }
+  tbody tr.data-row { cursor: pointer; }
+  tbody tr.data-row:hover { background: rgba(56,153,204,0.05); }
+  tbody tr.row-top10 td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
   .cell-name { font-weight: 600; }
   .cell-muted { color: var(--text-muted); font-size: 12px; font-family: var(--font-mono); }
-  .cell-wide { max-width: 320px; white-space: normal; }
-  .pill {
-    display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.3px;
+  .cell-wide { max-width: 280px; white-space: normal; }
+  .rank-num { font-family: var(--font-mono); color: var(--text-muted); }
+  .rank-num.top10 { color: var(--gold); font-weight: 600; }
+  .score-badge {
+    display: inline-block; min-width: 30px; text-align: center; padding: 3px 8px; border-radius: 6px;
+    font-family: var(--font-mono); font-weight: 600; font-size: 13px;
   }
-  .pill.yes { background: var(--green-pale); color: var(--green); }
-  .pill.no { background: var(--red-pale); color: var(--red); }
-  .pill.unknown { background: var(--navy-light); color: var(--text-muted); }
+  .score-badge.high { background: var(--green-pale); color: var(--green); }
+  .score-badge.mid { background: var(--gold-pale); color: var(--gold); }
+  .score-badge.low { background: var(--red-pale); color: var(--red); }
+  .score-badge.na { background: var(--navy-light); color: var(--text-dim); }
+  .total-score { font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; }
+  .expand-icon { color: var(--text-dim); font-size: 11px; margin-right: 6px; display: inline-block; transition: transform 0.15s; }
+  tr.expanded .expand-icon { transform: rotate(90deg); }
+
+  tr.detail-row td { background: rgba(56,153,204,0.03); padding: 18px 16px 22px 16px; }
+  .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 32px; }
+  @media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-block .detail-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+  .detail-block .detail-text { font-size: 13px; color: var(--text); white-space: normal; }
+  .detail-block.rationale { grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px; }
+  .detail-block.rationale .detail-text { color: var(--steel-light); font-style: italic; }
+  .detail-contact { font-family: var(--font-mono); color: var(--text-muted); font-size: 12px; }
+
+  .top10-divider td { padding: 0; border-bottom: none; }
+  .top10-divider-inner {
+    display: flex; align-items: center; gap: 10px; padding: 6px 16px;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); font-weight: 700;
+  }
+  .top10-divider-inner::before, .top10-divider-inner::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.4); }
 
   .empty-state, .error-state, .loading-state {
     padding: 60px 24px; text-align: center; color: var(--text-muted); font-size: 13px;
@@ -173,7 +204,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="page-hero">
     <div>
       <div class="page-title">NOMINATIONS</div>
-      <div class="page-sub">Read-only view · Module 1</div>
+      <div class="page-sub">Module 2 · AI scoring review</div>
     </div>
   </div>
 
@@ -186,10 +217,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="stat-label">Not Yet Scored</div>
       <div class="stat-value" id="stat-unscored">—</div>
     </div>
+    <div class="stat-card gold">
+      <div class="stat-label">Current Cutoff Score (#10)</div>
+      <div class="stat-value gold-val" id="stat-cutoff">—</div>
+    </div>
   </div>
 
   <div class="toolbar">
     <input type="text" class="search-input" id="search-input" placeholder="Search by referrer or friend name…" oninput="renderTable()">
+    <select class="sort-select" id="sort-select" onchange="renderTable()">
+      <option value="total">Sort by Total Score</option>
+      <option value="commitment">Sort by Commitment</option>
+      <option value="goal">Sort by Goal Fit</option>
+    </select>
   </div>
 
   <div class="panel">
@@ -208,11 +248,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // Column order as defined in the sheet header row:
   // 0 Timestamp | 1 Referrer Name | 2 Friend Name | 3 Friend Email | 4 Friend Phone |
-  // 5 Relationship to Friend | 6 Why Good Fit | 7 Talked to Them & Interested Now (open text) |
-  // 8 AI Score - Commitment/Mindset | 9 AI Score - Goal/Situation Fit | 10 AI Score - Payment Capacity |
+  // 5 Relationship to Friend | 6 Why Good Fit | 7 Talked to Them About It (open text) |
+  // 8 AI Score - Commitment/Mindset | 9 AI Score - Goal/Situation Fit | 10 AI Raw Output (hidden helper) |
   // 11 AI Total Score | 12 AI Rationale | 13 Status | 14 Coupon Code | 15 Redeemed (Y/N) | 16 Outcome
 
   let allRows = [];
+  let expandedKey = null; // unique key of the currently expanded row, or null
 
   async function fetchSheet(){
     // No &sheet= param -> defaults to the first tab in the spreadsheet.
@@ -231,23 +272,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  function num(val){
+    const n = parseFloat(val);
+    return isNaN(n) ? null : n;
+  }
+
+  function scoreBadgeClass(n){
+    if (n === null) return 'na';
+    if (n >= 7) return 'high';
+    if (n >= 4) return 'mid';
+    return 'low';
+  }
+
+  function scoreBadge(n){
+    if (n === null) return `<span class="score-badge na">—</span>`;
+    return `<span class="score-badge ${scoreBadgeClass(n)}">${n}</span>`;
+  }
+
+  // Rank is always based on Total Score descending across ALL rows,
+  // regardless of the sort-select or the search filter — so "top 10"
+  // means the same thing no matter how the table is currently displayed.
+  function computeRanks(rows){
+    const withIdx = rows.map((row, i) => ({ row, i, total: num(row[11]) }));
+    const sorted = [...withIdx].sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity));
+    const rankByIdx = {};
+    sorted.forEach((item, pos) => { rankByIdx[item.i] = (item.total === null) ? null : pos + 1; });
+    return rankByIdx;
+  }
+
   function renderTable(){
     const wrap = document.getElementById('table-wrap');
     const q = (document.getElementById('search-input').value || '').trim().toLowerCase();
+    const sortField = document.getElementById('sort-select').value;
 
-    const filtered = allRows.filter(row => {
-      if (!q) return true;
-      const referrer = (row[1] || '').toString().toLowerCase();
-      const friend = (row[2] || '').toString().toLowerCase();
-      return referrer.includes(q) || friend.includes(q);
+    const rankByIdx = computeRanks(allRows);
+
+    let indexed = allRows.map((row, i) => ({ row, i, rank: rankByIdx[i] }));
+
+    if (q){
+      indexed = indexed.filter(({row}) => {
+        const referrer = (row[1] || '').toString().toLowerCase();
+        const friend = (row[2] || '').toString().toLowerCase();
+        return referrer.includes(q) || friend.includes(q);
+      });
+    }
+
+    const sortKeyIdx = sortField === 'commitment' ? 8 : sortField === 'goal' ? 9 : 11;
+    indexed.sort((a, b) => {
+      const av = num(a.row[sortKeyIdx]);
+      const bv = num(b.row[sortKeyIdx]);
+      return (bv ?? -Infinity) - (av ?? -Infinity);
     });
 
-    if (filtered.length === 0){
+    if (indexed.length === 0){
       wrap.innerHTML = `<div class="empty-state">${allRows.length === 0 ? 'No nominations yet.' : 'No matches for that search.'}</div>`;
       return;
     }
 
-    const rowsHtml = filtered.map(row => {
+    let rowsHtml = '';
+    let dividerInserted = false;
+
+    indexed.forEach(({row, i, rank}) => {
+      const key = 'row-' + i;
       const timestamp = row[0] ? escapeHtml(row[0]) : '—';
       const referrer = escapeHtml(row[1]);
       const friend = escapeHtml(row[2]);
@@ -255,41 +341,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const phone = escapeHtml(row[4]);
       const relationship = escapeHtml(row[5]);
       const whyFit = escapeHtml(row[6]);
-      const talkedInterested = escapeHtml(row[7]);
-      return `<tr>
-        <td class="cell-muted">${timestamp}</td>
+      const talked = escapeHtml(row[7]);
+      const commitment = num(row[8]);
+      const goal = num(row[9]);
+      const total = num(row[11]);
+      const rationale = escapeHtml(row[12]);
+      const isTop10 = rank !== null && rank <= 10;
+      const isExpanded = expandedKey === key;
+
+      // Insert the top-10 divider only when the visible order is the Total-Score order
+      // (i.e. no search filter active and sorted by total) so it lines up correctly.
+      if (sortField === 'total' && !q && !dividerInserted && rank !== null && rank > 10){
+        rowsHtml += `<tr class="top10-divider"><td colspan="7"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
+        dividerInserted = true;
+      }
+
+      rowsHtml += `<tr class="data-row${isTop10 ? ' row-top10' : ''}${isExpanded ? ' expanded' : ''}" onclick="toggleExpand('${key}')">
+        <td><span class="expand-icon">▶</span><span class="rank-num${isTop10 ? ' top10' : ''}">${rank !== null ? '#' + rank : '—'}</span></td>
         <td class="cell-name">${referrer || '—'}</td>
         <td class="cell-name">${friend || '—'}</td>
-        <td class="cell-muted">${email || '—'}</td>
-        <td class="cell-muted">${phone || '—'}</td>
-        <td>${relationship || '—'}</td>
-        <td class="cell-wide">${whyFit || '—'}</td>
-        <td class="cell-wide">${talkedInterested || '—'}</td>
+        <td>${scoreBadge(commitment)}</td>
+        <td>${scoreBadge(goal)}</td>
+        <td><span class="total-score">${total !== null ? total : '—'}</span></td>
+        <td class="cell-muted">${relationship || '—'}</td>
       </tr>`;
-    }).join('');
+
+      if (isExpanded){
+        rowsHtml += `<tr class="detail-row">
+          <td colspan="7">
+            <div class="detail-grid">
+              <div class="detail-block"><div class="detail-label">Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
+              <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
+              <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
+              <div class="detail-block"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
+              <div class="detail-block rationale"><div class="detail-label">AI Rationale</div><div class="detail-text">${rationale || 'Not yet scored.'}</div></div>
+            </div>
+          </td>
+        </tr>`;
+      }
+    });
 
     wrap.innerHTML = `<table>
       <thead>
         <tr>
-          <th>Submitted</th>
+          <th>Rank</th>
           <th>Referrer</th>
           <th>Friend</th>
-          <th>Email</th>
-          <th>Phone</th>
+          <th>Commitment</th>
+          <th>Goal Fit</th>
+          <th>Total</th>
           <th>Relationship</th>
-          <th>Why Good Fit</th>
-          <th>Talked to Them About It</th>
         </tr>
       </thead>
       <tbody>${rowsHtml}</tbody>
     </table>`;
   }
 
+  function toggleExpand(key){
+    expandedKey = (expandedKey === key) ? null : key;
+    renderTable();
+  }
+
   function updateStats(){
     const total = allRows.length;
-    const unscored = allRows.filter(r => !r[11]).length;
+    const unscored = allRows.filter(r => num(r[11]) === null).length;
+    const totals = allRows.map(r => num(r[11])).filter(n => n !== null).sort((a,b) => b - a);
+    const cutoff = totals.length >= 10 ? totals[9] : (totals.length > 0 ? totals[totals.length - 1] : null);
     document.getElementById('stat-total').textContent = total;
     document.getElementById('stat-unscored').textContent = unscored;
+    document.getElementById('stat-cutoff').textContent = cutoff !== null ? cutoff : '—';
   }
 
   async function loadData(isManualRefresh){
