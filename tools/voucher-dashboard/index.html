@@ -342,6 +342,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return isNaN(n) ? null : n;
   }
 
+  // Google Sheets sometimes auto-detects "August 2026" as an actual date and
+  // stores/returns it as a date value instead of plain text. This normalizes
+  // whatever comes back (a Date-like value, a gviz "Date(y,m,d)" string, or
+  // already-correct plain text) into a consistent "Month Year" display.
+  function formatChallenge(raw){
+    if (!raw) return '';
+    const str = raw.toString().trim();
+
+    // gviz sometimes returns date cells as literal "Date(2026,6,1)" strings
+    const gvizMatch = str.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+    if (gvizMatch){
+      const d = new Date(Number(gvizMatch[1]), Number(gvizMatch[2]), Number(gvizMatch[3]));
+      return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    }
+
+    // Already "Month Year" plain text — leave as-is.
+    if (/^[A-Za-z]+\s+\d{4}$/.test(str)) return str;
+
+    // Anything else that parses as a date (e.g. "2026/7/1", "7/1/2026")
+    const parsed = new Date(str);
+    if (!isNaN(parsed.getTime())) {
+      return parsed.toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+    }
+
+    return str; // fallback: show whatever was there
+  }
+
   function scoreBadgeClass(n){
     if (n === null) return 'na';
     if (n >= 7) return 'high';
@@ -366,7 +393,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function getChallenges(rows){
     const seen = new Set();
     rows.forEach(row => {
-      const c = (row[19] || '').toString().trim();
+      const c = formatChallenge(row[19]);
       if (c) seen.add(c);
     });
     return [...seen].sort((a, b) => {
@@ -399,7 +426,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const withIdx = rows.map((row, i) => ({ row, i, total: num(row[12]) }));
     const eligible = withIdx.filter(item => {
       if (isExcluded(item.row)) return false;
-      if (challengeFilter !== '__all__' && (item.row[19] || '').toString().trim() !== challengeFilter) return false;
+      if (challengeFilter !== '__all__' && formatChallenge(item.row[19]) !== challengeFilter) return false;
       return true;
     });
     const sorted = [...eligible].sort((a, b) => (b.total ?? -Infinity) - (a.total ?? -Infinity));
@@ -419,7 +446,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     let indexed = allRows.map((row, i) => ({ row, i, rank: rankByIdx[i] }));
 
     if (challengeFilter !== '__all__'){
-      indexed = indexed.filter(({row}) => (row[19] || '').toString().trim() === challengeFilter);
+      indexed = indexed.filter(({row}) => formatChallenge(row[19]) === challengeFilter);
     }
 
     if (q){
@@ -462,7 +489,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const rationale = escapeHtml(row[13]);
       const status = (row[14] || '').toString().trim();
       const overrideReason = escapeHtml(row[18]);
-      const challenge = escapeHtml(row[19]);
+      const challenge = escapeHtml(formatChallenge(row[19]));
       const excluded = isExcluded(row);
       const isWinner = status.toLowerCase().startsWith('voucher assigned');
       const isTop10 = !excluded && rank !== null && rank <= 10;
@@ -616,7 +643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const challengeFilter = document.getElementById('challenge-select').value || '__all__';
     const scoped = challengeFilter === '__all__'
       ? allRows
-      : allRows.filter(r => (r[19] || '').toString().trim() === challengeFilter);
+      : allRows.filter(r => formatChallenge(r[19]) === challengeFilter);
 
     const total = scoped.length;
     const unscored = scoped.filter(r => num(r[12]) === null).length;
