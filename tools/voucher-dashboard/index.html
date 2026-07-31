@@ -519,11 +519,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const challenge = escapeHtml(formatChallenge(row[19]));
       const excluded = isExcluded(row);
       const isWinner = status.toLowerCase().startsWith('voucher assigned');
+      const isAccessGranted = status.toLowerCase().startsWith('access granted');
       const isTop10 = !excluded && rank !== null && rank <= 10;
       const isExpanded = expandedKey === key;
 
       let statusPill = '';
-      if (isWinner) statusPill = '<span class="pill winner">WINNER</span>';
+      if (isAccessGranted) statusPill = '<span class="pill winner">ACCESS GRANTED</span>';
+      else if (isWinner) statusPill = '<span class="pill winner">WINNER</span>';
       else if (excluded) statusPill = '<span class="pill excluded">EXCLUDED</span>';
 
       // Insert the top-10 divider only when the visible order is the Total-Score order
@@ -547,6 +549,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (isExpanded){
         const actionsHtml = excluded
           ? `<button class="action-btn undo" onclick="event.stopPropagation(); handleUndo(${i})">↺ Undo Exclusion</button>`
+          : isAccessGranted
+          ? `<span class="cell-muted">✓ Access already granted to this referral.</span>`
+          : isWinner
+          ? `<button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i})">→ Give Access</button>
+             <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`
           : `<button class="action-btn winner" onclick="event.stopPropagation(); handleMarkWinner(${i})">✓ Mark as Winner</button>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`;
 
@@ -654,6 +661,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   async function handleMarkWinner(rowIndexInArray){
     const ok = await postAction('markWinner', rowIndexInArray);
+    if (ok) loadData(true);
+  }
+
+  async function handleGiveAccess(rowIndexInArray){
+    const ok = await postAction('giveAccess', rowIndexInArray);
     if (ok) loadData(true);
   }
 
