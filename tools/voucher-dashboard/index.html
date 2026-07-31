@@ -209,6 +209,17 @@
   }
   @keyframes btn-spin { to { transform: rotate(360deg); } }
 
+  #global-loading-overlay {
+    position: fixed; inset: 0; z-index: 400; background: rgba(0,0,0,0.45);
+    align-items: center; justify-content: center;
+  }
+  .global-loading-card {
+    background: var(--navy-mid); border: 1px solid var(--border-bright); border-radius: 14px;
+    padding: 24px 32px; display: flex; align-items: center; gap: 14px;
+    font-size: 14px; font-weight: 600; color: var(--text); box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .btn-spinner.large { width: 20px; height: 20px; border-width: 3px; color: var(--steel-light); margin-right: 0; }
+
   /* ── EXCLUDE MODAL ── */
   #exclude-modal-overlay {
     display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.55);
@@ -324,6 +335,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button class="modal-btn" onclick="closeExcludeModal()">Cancel</button>
       <button class="modal-btn confirm" id="exclude-confirm-btn" disabled onclick="confirmExclude()">Confirm Exclusion</button>
     </div>
+  </div>
+</div>
+
+<div id="global-loading-overlay" style="display:none;">
+  <div class="global-loading-card">
+    <span class="btn-spinner large"></span>
+    <span id="global-loading-text">Working on it…</span>
   </div>
 </div>
 
@@ -637,35 +655,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // which Apps Script web apps don't handle. The web app is restricted to
   // Strong Standard company Google accounts, so the browser must have an
   // active session with a company account for these calls to succeed.
+  function showGlobalLoading(text){
+    document.getElementById('global-loading-text').textContent = text || 'Working on it…';
+    document.getElementById('global-loading-overlay').style.display = 'flex';
+  }
+
+  function hideGlobalLoading(){
+    document.getElementById('global-loading-overlay').style.display = 'none';
+  }
+
   async function postAction(action, rowIndexInArray, reason){
     const rowIndex = rowIndexInArray + 2; // +2: header is row 1, data starts at row 2
     const payload = { action, rowIndex };
     if (reason !== undefined) payload.reason = reason;
 
-    let res, text;
-    try {
-      res = await fetch(WEBAPP_URL, { method: 'POST', body: JSON.stringify(payload) });
-      text = await res.text();
-    } catch (e){
-      alert('Could not reach the write endpoint. Check your connection and try again.');
-      return false;
-    }
+    const labels = { markWinner: 'Marking as winner…', giveAccess: 'Sending access…', exclude: 'Excluding nomination…', undoExclude: 'Undoing exclusion…' };
+    showGlobalLoading(labels[action] || 'Working on it…');
 
-    let json;
     try {
-      json = JSON.parse(text);
-    } catch (e){
-      // Apps Script returned an HTML page instead of JSON — almost always means
-      // the browser isn't logged into a Strong Standard Google account.
-      alert('Action not saved. Please make sure you are logged into your Strong Standard Google account in this browser, then try again.');
-      return false;
-    }
+      let res, text;
+      try {
+        res = await fetch(WEBAPP_URL, { method: 'POST', body: JSON.stringify(payload) });
+        text = await res.text();
+      } catch (e){
+        alert('Could not reach the write endpoint. Check your connection and try again.');
+        return false;
+      }
 
-    if (json.error){
-      alert('Could not save: ' + json.error);
-      return false;
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (e){
+        // Apps Script returned an HTML page instead of JSON — almost always means
+        // the browser isn't logged into a Strong Standard Google account.
+        alert('Action not saved. Please make sure you are logged into your Strong Standard Google account in this browser, then try again.');
+        return false;
+      }
+
+      if (json.error){
+        alert('Could not save: ' + json.error);
+        return false;
+      }
+      return true;
+    } finally {
+      hideGlobalLoading();
     }
-    return true;
   }
 
   function setButtonLoading(btnEl, loadingLabel){
