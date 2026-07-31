@@ -266,7 +266,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <div class="toolbar">
-    <input type="text" class="search-input" id="search-input" placeholder="Search by referrer or friend name…" oninput="renderTable()">
+    <input type="text" class="search-input" id="search-input" placeholder="Search by client or referral name…" oninput="renderTable()">
     <select class="sort-select" id="challenge-select" onchange="updateStats(); renderTable();">
     </select>
     <select class="sort-select" id="sort-select" onchange="renderTable()">
@@ -292,7 +292,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       This person will not be counted toward the top 10, even if their score qualifies.
       Please explain why (required):
     </div>
-    <textarea class="modal-textarea" id="exclude-reason-input" placeholder="e.g. Referrer's own account shows a history of no-shows on past challenges…" oninput="updateExcludeConfirmState()"></textarea>
+    <textarea class="modal-textarea" id="exclude-reason-input" placeholder="e.g. Client's own account shows a history of no-shows on past challenges…" oninput="updateExcludeConfirmState()"></textarea>
     <div class="modal-actions">
       <button class="modal-btn" onclick="closeExcludeModal()">Cancel</button>
       <button class="modal-btn confirm" id="exclude-confirm-btn" disabled onclick="confirmExclude()">Confirm Exclusion</button>
@@ -521,8 +521,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         rowsHtml += `<tr class="detail-row">
           <td colspan="9">
             <div class="detail-grid">
-              <div class="detail-block"><div class="detail-label">Friend Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
-              <div class="detail-block"><div class="detail-label">Referrer Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
+              <div class="detail-block"><div class="detail-label">Referral Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
+              <div class="detail-block"><div class="detail-label">Client Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
               <div class="detail-block"><div class="detail-label">Relationship</div><div class="detail-text">${relationship || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
@@ -540,8 +540,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <thead>
         <tr>
           <th>Rank</th>
-          <th>Referrer</th>
-          <th>Friend</th>
+          <th>Client</th>
+          <th>Referral</th>
           <th>Challenge</th>
           <th>Commitment</th>
           <th>Goal Fit</th>
