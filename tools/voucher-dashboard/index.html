@@ -91,8 +91,9 @@
   .page-title { font-family: var(--font-display); font-size: 40px; letter-spacing: 3px; color: var(--text); line-height: 1; }
   .page-sub { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 6px; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 20px; }
-  @media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
   .stat-card {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
     padding: 20px 24px; position: relative; overflow: hidden;
@@ -186,6 +187,7 @@
   }
   .pill.winner { background: var(--gold-pale); color: var(--gold); }
   .pill.excluded { background: var(--red-pale); color: var(--red); }
+  .pill.redeemed { background: var(--green-pale); color: var(--green); }
 
   tr.row-excluded { opacity: 0.55; }
   tr.row-excluded .cell-name, tr.row-excluded .total-score { text-decoration: line-through; }
@@ -296,6 +298,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="stat-card gold">
       <div class="stat-label">Winners Selected</div>
       <div class="stat-value gold-val" id="stat-winners">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Access → Redeemed</div>
+      <div class="stat-value" id="stat-redeemed">—</div>
     </div>
   </div>
 
@@ -546,6 +552,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const excluded = isExcluded(row);
       const isWinner = status.toLowerCase().startsWith('voucher assigned');
       const isAccessGranted = status.toLowerCase().startsWith('access granted');
+      const isRedeemed = (row[16] || '').toString().trim().toLowerCase().startsWith('y');
       const isTop10 = !excluded && rank !== null && rank <= 10;
       const isExpanded = expandedKey === key;
 
@@ -553,6 +560,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (isAccessGranted) statusPill = '<span class="pill winner">ACCESS GRANTED</span>';
       else if (isWinner) statusPill = '<span class="pill winner">WINNER</span>';
       else if (excluded) statusPill = '<span class="pill excluded">EXCLUDED</span>';
+      if (isRedeemed) statusPill += ' <span class="pill redeemed">REDEEMED</span>';
 
       // Insert the top-10 divider only when the visible order is the Total-Score order
       // (no search filter, sorted by total) — "top 10" is scoped to the selected challenge.
@@ -775,6 +783,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('stat-total').textContent = total;
     document.getElementById('stat-cutoff').textContent = cutoff !== null ? cutoff : '—';
     document.getElementById('stat-winners').textContent = winnersCount + ' / 10';
+
+    const accessGrantedRows = scoped.filter(r => (r[14] || '').toString().trim().toLowerCase().startsWith('access granted'));
+    const redeemedRows = accessGrantedRows.filter(r => (r[16] || '').toString().trim().toLowerCase().startsWith('y'));
+    const redeemedPct = accessGrantedRows.length > 0 ? Math.round((redeemedRows.length / accessGrantedRows.length) * 100) : null;
+    document.getElementById('stat-redeemed').textContent =
+      accessGrantedRows.length > 0
+        ? redeemedRows.length + ' / ' + accessGrantedRows.length + ' (' + redeemedPct + '%)'
+        : '—';
 
     const alertBox = document.getElementById('unscored-alert');
     if (unscored > 0){
