@@ -91,8 +91,9 @@
   .page-title { font-family: var(--font-display); font-size: 40px; letter-spacing: 3px; color: var(--text); line-height: 1; }
   .page-sub { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 6px; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
-  @media (max-width: 700px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 500px) { .stats-grid { grid-template-columns: 1fr; } }
   .stat-card {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
     padding: 20px 24px; position: relative; overflow: hidden;
@@ -272,6 +273,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="stat-card gold">
       <div class="stat-label">Current Cutoff Score (#10)</div>
       <div class="stat-value gold-val" id="stat-cutoff">—</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="stat-label">Winners Selected</div>
+      <div class="stat-value gold-val" id="stat-winners">—</div>
     </div>
   </div>
 
@@ -689,9 +694,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const unscored = scoped.filter(r => num(r[12]) === null).length;
     const totals = scoped.filter(r => !isExcluded(r)).map(r => num(r[12])).filter(n => n !== null).sort((a,b) => b - a);
     const cutoff = totals.length >= 10 ? totals[9] : (totals.length > 0 ? totals[totals.length - 1] : null);
+    const winnersCount = scoped.filter(r => (r[14] || '').toString().trim().toLowerCase().startsWith('voucher assigned')).length;
     document.getElementById('stat-total').textContent = total;
     document.getElementById('stat-unscored').textContent = unscored;
     document.getElementById('stat-cutoff').textContent = cutoff !== null ? cutoff : '—';
+    document.getElementById('stat-winners').textContent = winnersCount + ' / 10';
   }
 
   async function loadData(isManualRefresh){
