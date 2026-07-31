@@ -85,7 +85,7 @@
   .theme-toggle:hover { border-color: var(--steel-mid); color: var(--steel-light); }
 
   /* ── MAIN ── */
-  .main { max-width: 1300px; margin: 0 auto; padding: 32px 40px; }
+  .main { max-width: 1800px; margin: 0 auto; padding: 32px 32px; }
 
   .page-hero { margin-bottom: 24px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
   .page-title { font-family: var(--font-display); font-size: 40px; letter-spacing: 3px; color: var(--text); line-height: 1; }
@@ -134,7 +134,7 @@
   tbody tr.row-top10 td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
   .cell-name { font-weight: 600; }
   .cell-muted { color: var(--text-muted); font-size: 12px; font-family: var(--font-mono); }
-  .cell-wide { max-width: 280px; white-space: normal; }
+  .cell-wide { max-width: 420px; white-space: normal; }
   .rank-num { font-family: var(--font-mono); color: var(--text-muted); }
   .rank-num.top10 { color: var(--gold); font-weight: 600; }
   .score-badge {
@@ -496,7 +496,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       // Insert the top-10 divider only when the visible order is the Total-Score order
       // (no search filter, sorted by total) — "top 10" is scoped to the selected challenge.
       if (sortField === 'total' && !q && !dividerInserted && rank !== null && rank > 10){
-        rowsHtml += `<tr class="top10-divider"><td colspan="9"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
+        rowsHtml += `<tr class="top10-divider"><td colspan="10"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
         dividerInserted = true;
       }
 
@@ -508,6 +508,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <td>${scoreBadge(commitment)}</td>
         <td>${scoreBadge(goal)}</td>
         <td><span class="total-score">${total !== null ? total : '—'}</span></td>
+        <td class="cell-muted">${relationship || '—'}</td>
         <td class="cell-wide">${rationale || '<span class="cell-muted">Not yet scored.</span>'}</td>
         <td>${statusPill}</td>
       </tr>`;
@@ -519,12 +520,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`;
 
         rowsHtml += `<tr class="detail-row">
-          <td colspan="9">
+          <td colspan="10">
             <div class="detail-grid">
               <div class="detail-block"><div class="detail-label">Referral Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Client Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
-              <div class="detail-block"><div class="detail-label">Relationship</div><div class="detail-text">${relationship || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
               <div class="detail-block rationale"><div class="detail-label">AI Rationale</div><div class="detail-text">${rationale || 'Not yet scored.'}</div></div>
@@ -546,6 +546,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <th>Commitment</th>
           <th>Goal Fit</th>
           <th>Total</th>
+          <th>Relationship</th>
           <th>AI Rationale</th>
           <th>Status</th>
         </tr>
