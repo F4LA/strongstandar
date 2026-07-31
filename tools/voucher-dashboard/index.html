@@ -550,7 +550,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const actionsHtml = excluded
           ? `<button class="action-btn undo" onclick="event.stopPropagation(); handleUndo(${i})">↺ Undo Exclusion</button>`
           : isAccessGranted
-          ? `<span class="cell-muted">✓ Access already granted to this referral.</span>`
+          ? `<span class="cell-muted">✓ Access already granted to this referral.</span>
+             <button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i})">↻ Resend Access</button>`
           : isWinner
           ? `<button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i})">→ Give Access</button>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`
