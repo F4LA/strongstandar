@@ -552,7 +552,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const excluded = isExcluded(row);
       const isWinner = status.toLowerCase().startsWith('voucher assigned');
       const isAccessGranted = status.toLowerCase().startsWith('access granted');
-      const isRedeemed = (row[16] || '').toString().trim().toLowerCase().startsWith('y');
+      const isRedeemed = (row[16] || '').toString().trim().toLowerCase().startsWith('connected');
       const isTop10 = !excluded && rank !== null && rank <= 10;
       const isExpanded = expandedKey === key;
 
@@ -560,7 +560,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (isAccessGranted) statusPill = '<span class="pill winner">ACCESS GRANTED</span>';
       else if (isWinner) statusPill = '<span class="pill winner">WINNER</span>';
       else if (excluded) statusPill = '<span class="pill excluded">EXCLUDED</span>';
-      if (isRedeemed) statusPill += ' <span class="pill redeemed">REDEEMED</span>';
+      if (isRedeemed) statusPill += ' <span class="pill redeemed">CONNECTED</span>';
 
       // Insert the top-10 divider only when the visible order is the Total-Score order
       // (no search filter, sorted by total) — "top 10" is scoped to the selected challenge.
@@ -785,7 +785,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('stat-winners').textContent = winnersCount + ' / 10';
 
     const accessGrantedRows = scoped.filter(r => (r[14] || '').toString().trim().toLowerCase().startsWith('access granted'));
-    const redeemedRows = accessGrantedRows.filter(r => (r[16] || '').toString().trim().toLowerCase().startsWith('y'));
+    const redeemedRows = accessGrantedRows.filter(r => (r[16] || '').toString().trim().toLowerCase().startsWith('connected'));
     const redeemedPct = accessGrantedRows.length > 0 ? Math.round((redeemedRows.length / accessGrantedRows.length) * 100) : null;
     document.getElementById('stat-redeemed').textContent =
       accessGrantedRows.length > 0
