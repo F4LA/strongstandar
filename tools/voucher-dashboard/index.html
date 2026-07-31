@@ -200,6 +200,14 @@
   .action-btn.exclude { border-color: rgba(231,76,60,0.4); color: var(--red); }
   .action-btn.exclude:hover { background: var(--red-pale); }
   .action-btn.undo:hover { border-color: var(--steel-mid); color: var(--steel-light); }
+  .action-btn:disabled { opacity: 0.6; cursor: default; }
+
+  .btn-spinner {
+    display: inline-block; width: 11px; height: 11px; margin-right: 6px;
+    border: 2px solid rgba(255,255,255,0.35); border-top-color: currentColor;
+    border-radius: 50%; animation: btn-spin 0.6s linear infinite; vertical-align: -1px;
+  }
+  @keyframes btn-spin { to { transform: rotate(360deg); } }
 
   /* ── EXCLUDE MODAL ── */
   #exclude-modal-overlay {
@@ -548,14 +556,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       if (isExpanded){
         const actionsHtml = excluded
-          ? `<button class="action-btn undo" onclick="event.stopPropagation(); handleUndo(${i})">↺ Undo Exclusion</button>`
+          ? `<button class="action-btn undo" onclick="event.stopPropagation(); handleUndo(${i}, this)">↺ Undo Exclusion</button>`
           : isAccessGranted
           ? `<span class="cell-muted">✓ Access already granted to this referral.</span>
-             <button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i})">↻ Resend Access</button>`
+             <button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i}, this)">↻ Resend Access</button>`
           : isWinner
-          ? `<button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i})">→ Give Access</button>
+          ? `<button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i}, this)">→ Give Access</button>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`
-          : `<button class="action-btn winner" onclick="event.stopPropagation(); handleMarkWinner(${i})">✓ Mark as Winner</button>
+          : `<button class="action-btn winner" onclick="event.stopPropagation(); handleMarkWinner(${i}, this)">✓ Mark as Winner</button>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`;
 
         rowsHtml += `<tr class="detail-row">
@@ -660,19 +668,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return true;
   }
 
-  async function handleMarkWinner(rowIndexInArray){
+  function setButtonLoading(btnEl, loadingLabel){
+    if (!btnEl) return null;
+    const original = btnEl.innerHTML;
+    btnEl.disabled = true;
+    btnEl.innerHTML = `<span class="btn-spinner"></span>${loadingLabel}`;
+    return original;
+  }
+
+  async function handleMarkWinner(rowIndexInArray, btnEl){
+    setButtonLoading(btnEl, 'Marking…');
     const ok = await postAction('markWinner', rowIndexInArray);
     if (ok) loadData(true);
+    else if (btnEl){ btnEl.disabled = false; btnEl.innerHTML = '✓ Mark as Winner'; }
   }
 
-  async function handleGiveAccess(rowIndexInArray){
+  async function handleGiveAccess(rowIndexInArray, btnEl){
+    const original = setButtonLoading(btnEl, 'Sending…');
     const ok = await postAction('giveAccess', rowIndexInArray);
     if (ok) loadData(true);
+    else if (btnEl){ btnEl.disabled = false; btnEl.innerHTML = original; }
   }
 
-  async function handleUndo(rowIndexInArray){
+  async function handleUndo(rowIndexInArray, btnEl){
+    setButtonLoading(btnEl, 'Undoing…');
     const ok = await postAction('undoExclude', rowIndexInArray);
     if (ok) loadData(true);
+    else if (btnEl){ btnEl.disabled = false; btnEl.innerHTML = '↺ Undo Exclusion'; }
   }
 
   let pendingExcludeRowIndex = null;
@@ -697,6 +719,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   async function confirmExclude(){
     const reason = document.getElementById('exclude-reason-input').value.trim();
     if (!reason || pendingExcludeRowIndex === null) return;
+    document.getElementById('exclude-confirm-btn').disabled = true;
     const rowIndex = pendingExcludeRowIndex;
     closeExcludeModal();
     const ok = await postAction('exclude', rowIndex, reason);
