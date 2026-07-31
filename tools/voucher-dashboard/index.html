@@ -508,7 +508,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <td>${scoreBadge(commitment)}</td>
         <td>${scoreBadge(goal)}</td>
         <td><span class="total-score">${total !== null ? total : '—'}</span></td>
-        <td class="cell-muted">${relationship || '—'}</td>
+        <td class="cell-wide">${rationale || '<span class="cell-muted">Not yet scored.</span>'}</td>
         <td>${statusPill}</td>
       </tr>`;
 
@@ -524,6 +524,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="detail-block"><div class="detail-label">Friend Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Referrer Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
+              <div class="detail-block"><div class="detail-label">Relationship</div><div class="detail-text">${relationship || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
               <div class="detail-block rationale"><div class="detail-label">AI Rationale</div><div class="detail-text">${rationale || 'Not yet scored.'}</div></div>
@@ -545,7 +546,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <th>Commitment</th>
           <th>Goal Fit</th>
           <th>Total</th>
-          <th>Relationship</th>
+          <th>AI Rationale</th>
           <th>Status</th>
         </tr>
       </thead>
