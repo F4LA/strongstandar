@@ -122,19 +122,19 @@
 
   .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
   thead th {
     text-align: left; padding: 12px 16px; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
     color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap;
     position: sticky; top: 0; background: var(--card-bg);
   }
-  tbody td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+  tbody td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); overflow-wrap: break-word; }
   tbody tr.data-row { cursor: pointer; }
   tbody tr.data-row:hover { background: rgba(56,153,204,0.05); }
   tbody tr.row-top10 td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
   .cell-name { font-weight: 600; }
   .cell-muted { color: var(--text-muted); font-size: 12px; font-family: var(--font-mono); }
-  .cell-wide { max-width: 420px; white-space: normal; }
+  .cell-wide { white-space: normal; }
   .rank-num { font-family: var(--font-mono); color: var(--text-muted); }
   .rank-num.top10 { color: var(--gold); font-weight: 600; }
   .score-badge {
@@ -496,7 +496,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       // Insert the top-10 divider only when the visible order is the Total-Score order
       // (no search filter, sorted by total) — "top 10" is scoped to the selected challenge.
       if (sortField === 'total' && !q && !dividerInserted && rank !== null && rank > 10){
-        rowsHtml += `<tr class="top10-divider"><td colspan="10"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
+        rowsHtml += `<tr class="top10-divider"><td colspan="8"><div class="top10-divider-inner">Below cutoff · not currently in top 10</div></td></tr>`;
         dividerInserted = true;
       }
 
@@ -505,8 +505,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <td class="cell-name">${referrer || '—'}</td>
         <td class="cell-name">${friend || '—'}</td>
         <td class="cell-muted">${challenge || '—'}</td>
-        <td>${scoreBadge(commitment)}</td>
-        <td>${scoreBadge(goal)}</td>
         <td><span class="total-score">${total !== null ? total : '—'}</span></td>
         <td class="cell-muted">${relationship || '—'}</td>
         <td class="cell-wide">${rationale || '<span class="cell-muted">Not yet scored.</span>'}</td>
@@ -520,8 +518,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`;
 
         rowsHtml += `<tr class="detail-row">
-          <td colspan="10">
+          <td colspan="8">
             <div class="detail-grid">
+              <div class="detail-block"><div class="detail-label">Commitment Score</div><div class="detail-text">${scoreBadge(commitment)}</div></div>
+              <div class="detail-block"><div class="detail-label">Goal Fit Score</div><div class="detail-text">${scoreBadge(goal)}</div></div>
               <div class="detail-block"><div class="detail-label">Referral Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Client Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
               <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
@@ -537,14 +537,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
 
     wrap.innerHTML = `<table>
+      <colgroup>
+        <col style="width:5%">
+        <col style="width:12%">
+        <col style="width:12%">
+        <col style="width:9%">
+        <col style="width:6%">
+        <col style="width:14%">
+        <col style="width:32%">
+        <col style="width:10%">
+      </colgroup>
       <thead>
         <tr>
           <th>Rank</th>
           <th>Client</th>
           <th>Referral</th>
           <th>Challenge</th>
-          <th>Commitment</th>
-          <th>Goal Fit</th>
           <th>Total</th>
           <th>Relationship</th>
           <th>AI Rationale</th>
