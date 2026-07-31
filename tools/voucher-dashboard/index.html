@@ -149,13 +149,23 @@
   .expand-icon { color: var(--text-dim); font-size: 11px; margin-right: 6px; display: inline-block; transition: transform 0.15s; }
   tr.expanded .expand-icon { transform: rotate(90deg); }
 
-  tr.detail-row td { background: rgba(56,153,204,0.03); padding: 18px 16px 22px 16px; }
+  tr.detail-row td { background: rgba(56,153,204,0.03); padding: 20px 16px 22px 16px; }
+
+  .detail-section { margin-bottom: 20px; }
+  .detail-section.muted { opacity: 0.75; }
+  .detail-section-title {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    color: var(--steel-light); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+  .detail-section.muted .detail-section-title { color: var(--text-dim); }
+
   .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 32px; }
-  @media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-grid.two-col { grid-template-columns: repeat(2, minmax(0,1fr)); max-width: 320px; }
+  .detail-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 800px) { .detail-grid, .detail-grid.three-col { grid-template-columns: 1fr; } }
+  .detail-block.wide { grid-column: 1 / -1; }
   .detail-block .detail-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
   .detail-block .detail-text { font-size: 13px; color: var(--text); white-space: normal; }
-  .detail-block.rationale { grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px; }
-  .detail-block.rationale .detail-text { color: var(--steel-light); font-style: italic; }
   .detail-contact { font-family: var(--font-mono); color: var(--text-muted); font-size: 12px; }
 
   .top10-divider td { padding: 0; border-bottom: none; }
@@ -175,7 +185,7 @@
   tr.row-excluded { opacity: 0.55; }
   tr.row-excluded .cell-name, tr.row-excluded .total-score { text-decoration: line-through; }
 
-  .actions-row { display: flex; gap: 10px; padding-top: 4px; }
+  .detail-actions { display: flex; gap: 10px; padding-top: 16px; border-top: 1px solid var(--border); }
   .action-btn {
     border: 1px solid var(--border); border-radius: 8px; padding: 9px 16px; font-size: 12px; font-weight: 600;
     background: var(--navy-light); color: var(--text); transition: all 0.15s;
@@ -331,6 +341,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return json.table.rows.map(r => (r.c || []).map(c => (c ? c.v : null)));
   }
 
+  // Fixes the same raw "Date(y,m,d,h,mi,s)" gviz issue we saw on the Challenge
+  // column, applied here to the Timestamp field.
+  function formatTimestamp(raw){
+    if (!raw) return '—';
+    const str = raw.toString().trim();
+    const gvizMatch = str.match(/^Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+),(\d+))?\)$/);
+    if (gvizMatch){
+      const [, y, mo, d, h, mi, s] = gvizMatch;
+      const dt = new Date(Number(y), Number(mo), Number(d), Number(h||0), Number(mi||0), Number(s||0));
+      return dt.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    }
+    return str;
+  }
+
   function escapeHtml(str){
     return (str || '').toString()
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -468,7 +492,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     indexed.forEach(({row, i, rank}) => {
       const key = 'row-' + i;
-      const timestamp = row[0] ? escapeHtml(row[0]) : '—';
+      const timestamp = formatTimestamp(row[0]);
       const referrer = escapeHtml(row[1]);
       const referrerEmail = escapeHtml(row[2]);
       const friend = escapeHtml(row[3]);
@@ -519,18 +543,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         rowsHtml += `<tr class="detail-row">
           <td colspan="8">
-            <div class="detail-grid">
-              <div class="detail-block"><div class="detail-label">Commitment Score</div><div class="detail-text">${scoreBadge(commitment)}</div></div>
-              <div class="detail-block"><div class="detail-label">Goal Fit Score</div><div class="detail-text">${scoreBadge(goal)}</div></div>
-              <div class="detail-block"><div class="detail-label">Referral Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
-              <div class="detail-block"><div class="detail-label">Client Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
-              <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
-              <div class="detail-block"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
-              <div class="detail-block"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
-              <div class="detail-block rationale"><div class="detail-label">AI Rationale</div><div class="detail-text">${rationale || 'Not yet scored.'}</div></div>
-              ${excluded ? `<div class="detail-block rationale"><div class="detail-label">Reviewer Override Reason</div><div class="detail-text">${overrideReason || '—'}</div></div>` : ''}
-              <div class="detail-block rationale actions-row">${actionsHtml}</div>
+            <div class="detail-section">
+              <div class="detail-section-title">Evidence</div>
+              <div class="detail-grid">
+                <div class="detail-block wide"><div class="detail-label">Why Good Fit</div><div class="detail-text">${whyFit || '—'}</div></div>
+                <div class="detail-block wide"><div class="detail-label">Talked to Them About It</div><div class="detail-text">${talked || '—'}</div></div>
+              </div>
             </div>
+
+            <div class="detail-section">
+              <div class="detail-section-title">Score Breakdown</div>
+              <div class="detail-grid two-col">
+                <div class="detail-block"><div class="detail-label">Commitment Score</div><div class="detail-text">${scoreBadge(commitment)}</div></div>
+                <div class="detail-block"><div class="detail-label">Goal Fit Score</div><div class="detail-text">${scoreBadge(goal)}</div></div>
+              </div>
+              ${excluded ? `<div class="detail-block" style="margin-top:14px;"><div class="detail-label">Reviewer Override Reason</div><div class="detail-text">${overrideReason || '—'}</div></div>` : ''}
+            </div>
+
+            <div class="detail-section muted">
+              <div class="detail-section-title">Contact &amp; Metadata</div>
+              <div class="detail-grid three-col">
+                <div class="detail-block"><div class="detail-label">Referral Contact</div><div class="detail-text detail-contact">${email || '—'}<br>${phone || '—'}</div></div>
+                <div class="detail-block"><div class="detail-label">Client Contact</div><div class="detail-text detail-contact">${referrerEmail || '—'}</div></div>
+                <div class="detail-block"><div class="detail-label">Submitted</div><div class="detail-text detail-contact">${timestamp}</div></div>
+              </div>
+            </div>
+
+            <div class="detail-actions">${actionsHtml}</div>
           </td>
         </tr>`;
       }
