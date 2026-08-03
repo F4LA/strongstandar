@@ -985,7 +985,8 @@ function renderCoach() {
   const isMonthlyProduct=(r)=>MONTHLY_PRODUCTS.includes((r[CM.product]||'').trim().toLowerCase());
   const activeClients=raw.cm.filter(r=>{
     const sd=parseDate(r[CM.startDate]),ed=parseDate(r[CM.endDate]),tv=parseAmt(r[CM.tier]);
-    const endOk=ed&&(isMonthlyProduct(r)?ed>=end:ed>end); // mes-a-mes: cuenta si el End Date cae justo en el fin del periodo
+    const edEOD=ed?new Date(ed.getFullYear(),ed.getMonth(),ed.getDate(),23,59,59):null; // fin de dia, para que "31-jul" del cliente empate con el "31-jul 23:59:59" del periodo
+    const endOk=ed&&(isMonthlyProduct(r)?edEOD>=end:ed>end); // mes-a-mes: cuenta si el End Date cae justo en el fin del periodo
     return (r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&sd&&sd<=end&&endOk&&!isTRUE(r[CM.nonQFlag])&&tv>0&&!isTRUE(r[CM.excludeFlag]);
   });
   const retClients=raw.cm.filter(r=>{
