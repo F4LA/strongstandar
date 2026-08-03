@@ -302,6 +302,21 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://strongstandard.com/blog/is-fat-loss-harder-for-women/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/fat-burning-zone-myth-explained/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/dynamic-double-progression-how-to-progress-in-the-gym/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
