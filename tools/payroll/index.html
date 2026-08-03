@@ -981,14 +981,17 @@ function renderCoach() {
   const july2025=new Date(2025,6,1);
   const inR=(d)=>d&&d>=start&&d<=end;
 
+  const MONTHLY_PRODUCTS=['accountability track','strategy track']; // servicios mes-a-mes, sin adelanto de pago
+  const isMonthlyProduct=(r)=>MONTHLY_PRODUCTS.includes((r[CM.product]||'').trim().toLowerCase());
   const activeClients=raw.cm.filter(r=>{
     const sd=parseDate(r[CM.startDate]),ed=parseDate(r[CM.endDate]),tv=parseAmt(r[CM.tier]);
-    return (r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&sd&&sd<=end&&ed&&ed>end&&!isTRUE(r[CM.nonQFlag])&&tv>0&&!isTRUE(r[CM.excludeFlag]);
+    const endOk=ed&&(isMonthlyProduct(r)?ed>=end:ed>end); // mes-a-mes: cuenta si el End Date cae justo en el fin del periodo
+    return (r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&sd&&sd<=end&&endOk&&!isTRUE(r[CM.nonQFlag])&&tv>0&&!isTRUE(r[CM.excludeFlag]);
   });
   const retClients=raw.cm.filter(r=>{
     const sd=parseDate(r[CM.startDate]),ed=parseDate(r[CM.endDate]),sl=parseDate(r[CM.saleDate]);
     const edate=ed?new Date(ed.getFullYear(),ed.getMonth()-1,ed.getDate()):null;
-    return (r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&sd&&sd<=end&&edate&&edate>=start&&(r[CM.status]||'').trim().toLowerCase()==='resign'&&sl&&sl>=july2025;
+    return (r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&sd&&sd<=end&&edate&&edate>=start&&(r[CM.status]||'').trim().toLowerCase()==='resign'&&sl&&sl>=july2025&&!isMonthlyProduct(r); // mes-a-mes se paga como active, no como retention
   });
   const nonQClients=raw.cm.filter(r=>{
     const sl=parseDate(r[CM.saleDate]),tv=parseAmt(r[CM.tier]);
