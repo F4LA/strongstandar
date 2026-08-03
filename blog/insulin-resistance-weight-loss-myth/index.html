@@ -128,6 +128,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 36px 24px; }
   .takeaway-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <!-- REPLACE: update slug, title, description, date, category -->
@@ -246,13 +257,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>What Insulin Actually Does, in Plain Terms</h2>
 
-    <p>Insulin is released by your pancreas when you eat carbohydrates, and its main job is shuttling glucose out of your blood and into your muscle, liver, and fat cells. It does this by signaling a transporter protein called GLUT4 to move to the cell surface and let glucose in. At the same time, insulin slows a process called beta oxidation, which is how your body burns stored fat for energy. That part of the claim is accurate: insulin does suppress fat burning while it's elevated.</p>
+    <p>Insulin is released by your pancreas when you eat carbohydrates, and its main job is shuttling glucose out of your blood and into your muscle, liver, and fat cells. It does this by signaling a transporter <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> called GLUT4 to move to the cell surface and let glucose in. At the same time, insulin slows a process called beta oxidation, which is how your body burns stored fat for energy. That part of the claim is accurate: insulin does suppress fat burning while it's elevated.</p>
 
     <p>Here's the piece the claim skips: insulin resistance doesn't mean insulin's fat-suppressing signal keeps working while everything else about it fails. Insulin resistance is a global reduction in how well your cells respond to insulin. That reduced sensitivity applies to the fat-breakdown suppression too. Your cells become less responsive to insulin telling them to slow fat burning, in the exact same way they become less responsive to insulin telling them to absorb glucose. The claim only accounts for half of what insulin resistance actually changes.</p>
 
     <h2>What Happens When You Actually Test This in People</h2>
 
-    <p>If insulin resistance genuinely blocked weight loss, diabetics and insulin-resistant people on a calorie deficit should lose less weight than insulin-sensitive people on the same deficit. Two studies looked at exactly that.</p>
+    <p>If insulin resistance genuinely blocked weight loss, diabetics and insulin-resistant people on a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a> should lose less weight than insulin-sensitive people on the same deficit. Two studies looked at exactly that.</p>
 
     <div class="math-box">
       <div class="math-box__label">Frontiers in Nutrition, 2022</div>
@@ -296,9 +307,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </ul>
     </div>
 
-    <p>If you're insulin resistant and worried it's blocking your progress, the fix isn't a supplement or a stricter carb rule. It's the same foundation that works for anyone: a sustainable calorie deficit, enough protein and fiber, and resistance training to build muscle. Improve your body composition, and your insulin sensitivity improves alongside it, not the other way around.</p>
+    <p>If you're insulin resistant and worried it's blocking your progress, the fix isn't a supplement or a stricter carb rule. It's the same foundation that works for anyone: a sustainable calorie deficit, enough protein and fiber, and <a href="/blog/how-much-volume-to-build-muscle/">resistance training</a> to build muscle. Improve your body composition, and your insulin sensitivity improves alongside it, not the other way around.</p>
 
     <hr>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/menopause-weight-loss-mistakes/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/menopause-weight-loss-mistakes.png')"></div>
+        <div class="related-post-card__title">These Mistakes Make Menopause Weight Gain Worse</div>
+      </a>
+      <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/what-a-good-day-of-eating-for-fat-loss-looks-like.png')"></div>
+        <div class="related-post-card__title">What a Good Day of Eating for Fat Loss Actually Looks Like</div>
+      </a>
+      <a href="/blog/what-really-matters-for-fat-loss/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a3181040a683b64fe8c940f.png')"></div>
+        <div class="related-post-card__title">What Really Matters for Fat Loss</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Skip the Hacks. Build the Fundamentals.</h3>

@@ -117,6 +117,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 20px 20px 40px; }
   .takeaway-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -286,9 +297,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li>A slightly higher thermic effect of food as overall metabolism rises and you eat a bit more to support it</li>
     </ul>
 
-    <p>Add those together and you are looking at potentially 400 to 700 extra calories burned per week - compounding, permanently, from a one-time investment in building muscle. Not from doing more cardio this week. From having built a body over time that burns more at rest.</p>
+    <p>Add those together and you are looking at potentially 400 to 700 extra calories burned per week - compounding, permanently, from a one-time investment in <a href="/blog/how-much-muscle-can-you-gain-in-a-year/">building muscle</a>. Not from doing more cardio this week. From having built a body over time that burns more at rest.</p>
 
-    <p>Think of it like investing in the stock market versus spending money. Cardio is spending - you burn some calories today, and then the effect is gone. Resistance training with a focus on muscle growth is investing - the returns build slowly, but they compound over years and eventually you are burning significantly more calories just by existing. It's the single biggest reason I put resistance training ahead of cardio for every client whose real goal is long-term fat loss.</p>
+    <p>Think of it like investing in the stock market versus spending money. Cardio is spending - you burn some calories today, and then the effect is gone. <a href="/blog/how-much-volume-to-build-muscle/">Resistance training</a> with a focus on muscle growth is investing - the returns build slowly, but they compound over years and eventually you are burning significantly more calories just by existing. It's the single biggest reason I put resistance training ahead of cardio for every client whose real goal is long-term fat loss.</p>
 
     <h2>The Right Way to Think About Exercise and Fat Loss</h2>
 
@@ -317,6 +328,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <hr>
 
     <p>The scale not moving is not a sign that you need to spend more time on the treadmill. It is almost always a sign that something in the nutrition, the daily movement, or the understanding of how fat loss actually works needs attention first. Fix the foundation - the BMR, the NEAT, the diet - and the results follow without needing to punish yourself into them.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/menopause-weight-loss-mistakes/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/menopause-weight-loss-mistakes.png')"></div>
+        <div class="related-post-card__title">These Mistakes Make Menopause Weight Gain Worse</div>
+      </a>
+      <a href="/blog/weight-loss-after-40/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fda315c172b5cfeb4c44.png')"></div>
+        <div class="related-post-card__title">Why Weight Loss Backfires After 40 (And What to Do Instead)</div>
+      </a>
+      <a href="/blog/lazy-meal-prep-system-fat-loss/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2c3638c53e51acc0bf301d.png')"></div>
+        <div class="related-post-card__title">The Lazy Meal Prep System That Actually Works</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Stop Guessing. Start Building.</h3>

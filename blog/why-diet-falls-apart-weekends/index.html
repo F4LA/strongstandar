@@ -138,6 +138,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .takeaway-box { padding: 24px; }
   .cycle-box { padding: 20px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -234,7 +245,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <p>Monday through Friday you're locked in. Meal prep is ready, lunches are on point, you're passing on dessert, and you're proud of it. Then Friday evening arrives and something shifts. By Sunday night you've eaten everything you said you wouldn't, and the guilt loop starts all over again.</p>
+    <p>Monday through Friday you're locked in. <a href="/blog/lazy-meal-prep-system-fat-loss/">Meal prep</a> is ready, lunches are on point, you're passing on dessert, and you're proud of it. Then Friday evening arrives and something shifts. By Sunday night you've eaten everything you said you wouldn't, and the guilt loop starts all over again.</p>
 
     <p>If that sounds familiar, the first thing I want you to understand is this: it's almost never a discipline problem. When I work with clients who describe this pattern, my first question isn't "what are you eating on the weekends?" It's "what are you eating Monday through Friday?" Because in most cases, that's where the real answer lives.</p>
 
@@ -367,6 +378,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>The version of "healthy eating" that requires you to white-knuckle it through the week is not sustainable, and it's not necessary. When your daily nutrition is something you actually enjoy, the weekend stops being an escape and starts being just another part of a life you're building on your terms.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/why-your-diet-isnt-working/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bda9cf0cead6a3c8ab81d.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Isn't Working (And What's Actually Missing)</div>
+      </a>
+      <a href="/blog/calorie-tracking-is-keeping-you-fat/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a284de377feef7e78c83a06.png')"></div>
+        <div class="related-post-card__title">Calorie Tracking Is Keeping You Fat</div>
+      </a>
+      <a href="/blog/flexible-fuel-method-nutrition-framework/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42ff046f9cd8f350b795ff.png')"></div>
+        <div class="related-post-card__title">The Flexible Fuel Method: A Nutrition Framework That Actually Lasts</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Done Fighting Your Diet Every Weekend?</h3>

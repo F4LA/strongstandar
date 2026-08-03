@@ -144,6 +144,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .math-box { padding: 24px; }
   .landmark-table { font-size: 13px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -287,7 +298,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="answer-box">
       <div class="answer-box__label">Quick Answer</div>
-      <p>Three full body days a week is enough to build real muscle after 40, as long as each session hits around 10 hard sets per muscle group total across the week. Four compound lifts per session, paired into two supersets, gets you there in under an hour, three times a week.</p>
+      <p>Three full body days a week is enough to build real muscle <a href="/blog/how-to-lose-weight-after-40-without-losing-muscle/">after 40</a>, as long as each session hits around 10 hard sets per muscle group total across the week. Four compound lifts per session, paired into two supersets, gets you there in under an hour, three times a week.</p>
     </div>
 
     <p>If you have a full time career and a family to take care of, you already know you don't have 5 or 6 days a week to give to the gym, even if you wanted to. So you either feel guilty for "only" training 3 days, or you convince yourself it isn't enough and stop making progress altogether because you think the whole effort is pointless unless you can commit more time.</p>
@@ -377,7 +388,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>How to Progress Every Week Without Guessing</h2>
 
-    <p>I use a system called dynamic double progression, and it removes the guesswork of whether to add weight this week or not. Instead of a fixed rep target like "3 sets of 8", you work within a range, 6 to 8 for example, and you treat each of your 3 sets independently.</p>
+    <p>I use a system called <a href="/blog/dynamic-double-progression-how-to-progress-in-the-gym/">dynamic double progression</a>, and it removes the guesswork of whether to add weight this week or not. Instead of a fixed rep target like "3 sets of 8", you work within a range, 6 to 8 for example, and you treat each of your 3 sets independently.</p>
 
     <p>Here's how it plays out in practice with a squat where you're working in the 6 to 8 rep range:</p>
 
@@ -444,7 +455,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="faq-item">
       <h3>How long until I see results on a 3-day full body split?</h3>
-      <p>Strength gains from dynamic double progression are usually noticeable within the first few weeks, since you're adding a rep or weight almost every session. Visible muscle growth typically takes 8 to 12 weeks of consistent training and adequate protein intake to become clearly noticeable.</p>
+      <p>Strength gains from dynamic double progression are usually noticeable within the first few weeks, since you're adding a rep or weight almost every session. Visible muscle growth typically takes 8 to 12 weeks of consistent training and adequate <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> intake to become clearly noticeable.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/how-often-train-each-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a395fe37b005295809d50f0.png')"></div>
+        <div class="related-post-card__title">How Often Should You Train Each Muscle Group?</div>
+      </a>
+      <a href="/blog/how-many-days-a-week-should-you-train/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-many-days-a-week-should-you-train.png')"></div>
+        <div class="related-post-card__title">How Many Days a Week Should You Actually Train?</div>
+      </a>
+      <a href="/blog/can-you-lose-fat-and-build-muscle-at-the-same-time/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a317f286dd61c546ad3d72d.png')"></div>
+        <div class="related-post-card__title">Can You Lose Fat and Build Muscle at the Same Time?</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

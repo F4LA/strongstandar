@@ -132,6 +132,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .takeaway-box { padding: 24px; }
   .compare-grid { grid-template-columns: 1fr; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -241,7 +252,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>An Outcome Goal Will Always Lose to Real Life</h2>
 
-    <p>"I want to lose 20 lbs" is not a bad goal, but it's not a why, it's an outcome. And outcome-based goals are inherently self-centered: they're about how you look, not about who you are or what you stand for. When you hit the number, there's nothing left pulling you forward, so you drift.</p>
+    <p>"I want to <a href="/blog/how-to-lose-20-lbs-in-90-days/">lose 20 lbs</a>" is not a bad goal, but it's not a why, it's an outcome. And outcome-based goals are inherently self-centered: they're about how you look, not about who you are or what you stand for. When you hit the number, there's nothing left pulling you forward, so you drift.</p>
 
     <div class="compare-grid">
       <div class="compare-grid__col compare-grid__col--bad">
@@ -300,6 +311,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>Strength isn't the goal here, it's the standard, and it's the vehicle for becoming stronger in every area of your life, not just your body. Get honest and specific about your why, and the plan you already know how to execute finally has something strong enough to hold onto.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/how-to-tell-if-an-online-fitness-coach-is-legit/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-tell-if-an-online-fitness-coach-is-legit.png')"></div>
+        <div class="related-post-card__title">Is Your Online Fitness Coach Actually Legit?</div>
+      </a>
+      <a href="/blog/how-to-end-yo-yo-dieting/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a39629b94d484b9c6a99dd2.png')"></div>
+        <div class="related-post-card__title">How to End Yo-Yo Dieting and Transform Your Body for Life</div>
+      </a>
+      <a href="/blog/why-most-fitness-plans-fail/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/why-most-fitness-plans-fail.png')"></div>
+        <div class="related-post-card__title">Why Most Fitness Plans Fail</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Ready for the Conversations That Actually Change Things?</h3>

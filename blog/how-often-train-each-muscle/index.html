@@ -154,6 +154,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .takeaway-box { padding: 24px; }
   .math-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -336,7 +347,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>The Muscle-Building Window You're Ignoring</h2>
 
-    <p>The second reason is rooted in how your body actually builds muscle at the cellular level, through a process called muscle protein synthesis (MPS). Think of MPS as the on-switch for muscle growth: when you train, you flip it on, your body repairs and builds, and then it returns to baseline.</p>
+    <p>The second reason is rooted in how your body actually builds muscle at the cellular level, through a process called muscle <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> synthesis (MPS). Think of MPS as the on-switch for muscle growth: when you train, you flip it on, your body repairs and builds, and then it returns to baseline.</p>
 
     <p>A landmark 1995 study by McDougall and colleagues measured exactly how long that window stays open. Participants did 12 sets of bicep curls with one arm while the other served as a control. MPS rose 50% at 4 hours after training, doubled (100%) at 24 hours, and then returned to baseline by 36 hours. A day and a half later, the growth signal was essentially gone.</p>
 
@@ -413,6 +424,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>Will splitting my volume into two sessions take more time at the gym?</h3>
       <p>No. The same total sets simply get distributed across two sessions instead of one. Twelve sets of chest split into 6 on Monday and 6 on Thursday takes the same combined time as 12 sets in a single session, with meaningfully better performance and stimulus on each set.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/3-day-workout-to-build-muscle-after-40/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bd7e2f0cead6a3c89b078.png')"></div>
+        <div class="related-post-card__title">The Only 3-Day Workout You Need to Build Muscle After 40</div>
+      </a>
+      <a href="/blog/how-many-days-a-week-should-you-train/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-many-days-a-week-should-you-train.png')"></div>
+        <div class="related-post-card__title">How Many Days a Week Should You Actually Train?</div>
+      </a>
+      <a href="/blog/can-you-lose-fat-and-build-muscle-at-the-same-time/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a317f286dd61c546ad3d72d.png')"></div>
+        <div class="related-post-card__title">Can You Lose Fat and Build Muscle at the Same Time?</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

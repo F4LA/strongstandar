@@ -164,6 +164,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .landmark-table { font-size: 14px; }
   .landmark-table thead th, .landmark-table tbody td { padding: 10px 14px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -304,7 +315,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="answer-box">
       <div class="answer-box__label">Quick Answer</div>
-      <p>The Flexible Fuel Method is a 3-pillar nutrition framework, not a diet: build a foundation of 6 core habits like protein, fiber, and consistent meal timing, calibrate calories to your specific goal, and build in structural 80/20 flexibility permanently. All three pillars have to work together.</p>
+      <p>The Flexible Fuel Method is a 3-pillar nutrition framework, not a diet: build a foundation of 6 core habits like <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a>, fiber, and consistent meal timing, calibrate calories to your specific goal, and build in structural 80/20 flexibility permanently. All three pillars have to work together.</p>
     </div>
 
     <p>Here's what I want you to understand: discipline was never the problem. The structure of diets is. They're built to fail because they create a finish line, rely on rules without understanding, emphasize restriction over addition, and ignore your personal preferences entirely. None of that produces lasting change.</p>
@@ -485,6 +496,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>How much protein and fiber does this framework actually require?</h3>
       <p>Target about 0.8 grams of protein per pound of body weight daily, and 25 to 35 grams of fiber a day. These two targets alone drive a large share of the results, regardless of which specific foods you use to hit them.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/weight-loss-after-40/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fda315c172b5cfeb4c44.png')"></div>
+        <div class="related-post-card__title">Why Weight Loss Backfires After 40 (And What to Do Instead)</div>
+      </a>
+      <a href="/blog/feel-full-calorie-deficit/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/feel-full-calorie-deficit.png')"></div>
+        <div class="related-post-card__title">How to Feel Full on a Calorie Deficit</div>
+      </a>
+      <a href="/blog/how-to-lose-20-lbs-in-90-days/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bdb446a04624f33dd7e46.jpg')"></div>
+        <div class="related-post-card__title">How to Lose 20 Lbs in 90 Days Without Losing Muscle</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

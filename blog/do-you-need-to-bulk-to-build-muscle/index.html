@@ -130,6 +130,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .landmark-table { font-size: 14px; }
   .landmark-table th, .landmark-table td { padding: 12px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -282,7 +293,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <p>You've probably been told you need to eat big to get big. The classic bulking mentality says that a calorie surplus is non-negotiable for building muscle, so you accept the fat gain as part of the deal and plan to cut it off later. Then there's the other camp: eat at maintenance, stay lean year-round, and trust that the muscle will come eventually.</p>
+    <p>You've probably been told you need to eat big to get big. The classic bulking mentality says that a calorie surplus is non-negotiable for <a href="/blog/how-much-muscle-can-you-gain-in-a-year/">building muscle</a>, so you accept the fat gain as part of the deal and plan to cut it off later. Then there's the other camp: eat at maintenance, stay lean year-round, and trust that the muscle will come eventually.</p>
 
     <div class="answer-box">
       <div class="answer-box__label">Quick Answer</div>
@@ -299,7 +310,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>This framing matters because it shifts the question from "how much should I eat to build muscle" to "how much do I need to eat to not limit what my training can produce." Those are very different questions with very different answers depending on where someone is in their training.</p>
 
-    <p>What the research does show clearly is that a calorie deficit has a roughly linear negative effect on muscle growth. The larger the deficit, the harder it becomes for the body to build new tissue, because muscle protein synthesis is energetically expensive and your body has less available fuel to run it. A 500-calorie deficit is roughly the point where, on average, your ability to gain lean mass approaches zero. That doesn't mean a smaller deficit rules out any muscle gain, but it does mean you're working against yourself the deeper you go.</p>
+    <p>What the research does show clearly is that a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a> has a roughly linear negative effect on muscle growth. The larger the deficit, the harder it becomes for the body to build new tissue, because muscle <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> synthesis is energetically expensive and your body has less available fuel to run it. A 500-calorie deficit is roughly the point where, on average, your ability to gain lean mass approaches zero. That doesn't mean a smaller deficit rules out any muscle gain, but it does mean you're working against yourself the deeper you go.</p>
 
     <h2>Beginners and the People Who Think They Are</h2>
 
@@ -391,6 +402,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>Can I build muscle while in a calorie deficit?</h3>
       <p>Yes, especially if you're newer to training or carrying extra body fat. A calorie deficit has a roughly linear negative effect on muscle growth, and by about a 500-calorie deficit, the average person's ability to gain lean mass approaches zero. Smaller deficits still allow for meaningful muscle gain in the right circumstances.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/calorie-deficit-feel-easy/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a302a6f0a683b64fe53e3f2.png')"></div>
+        <div class="related-post-card__title">How to Make a Calorie Deficit Feel Easy</div>
+      </a>
+      <a href="/blog/why-counting-calories-isnt-working/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/why-counting-calories-isnt-working.png')"></div>
+        <div class="related-post-card__title">Why Counting Calories Isn't Working For You</div>
+      </a>
+      <a href="/blog/what-really-matters-for-fat-loss/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a3181040a683b64fe8c940f.png')"></div>
+        <div class="related-post-card__title">What Really Matters for Fat Loss</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

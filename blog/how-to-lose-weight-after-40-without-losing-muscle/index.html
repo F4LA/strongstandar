@@ -147,6 +147,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .stat-grid { grid-template-columns: 1fr; }
   .math-box { padding: 20px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -246,7 +257,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>Why Eat Less, Move More Stops Working</h2>
 
-    <p>Starting in your 30s, hormonal shifts begin working against you. In men, testosterone declines roughly 1 to 2% per year. In women, estrogen drops sharply through peri- and post-menopause, which affects hunger regulation and how your body stores fat. Both shifts accelerate the loss of muscle mass, typically 3 to 8% per decade if you're not actively working against it, and restrictive dieting without the right nutritional strategy makes that loss worse.</p>
+    <p>Starting in your 30s, hormonal shifts begin working against you. In men, testosterone declines roughly 1 to 2% per year. In women, estrogen drops sharply through peri- and post-<a href="/blog/menopause-weight-loss-mistakes/">menopause</a>, which affects hunger regulation and how your body stores fat. Both shifts accelerate the loss of muscle mass, typically 3 to 8% per decade if you're not actively working against it, and restrictive dieting without the right nutritional strategy makes that loss worse.</p>
 
     <p>Here's why that matters so much: muscle is metabolically active tissue. Think of it as the engine size of your car. A bigger engine burns through more fuel. As that engine shrinks with age and muscle loss, you burn less fuel at rest, so the same eating pattern that worked at 30 now leaves you overfed at 45.</p>
 
@@ -288,7 +299,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>The Exact Numbers: Protein and Calorie Targets</h2>
 
-    <p>Once the foundation is in place, my clients tailor two variables to their goal: protein intake and calorie deficit. Protein is non-negotiable, it's the building block your body uses to preserve and build muscle while you're losing fat. The target is 0.8 grams per pound of your ideal body weight, not your current weight.</p>
+    <p>Once the foundation is in place, my clients tailor two variables to their goal: <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> intake and <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a>. Protein is non-negotiable, it's the building block your body uses to preserve and build muscle while you're losing fat. The target is 0.8 grams per pound of your ideal body weight, not your current weight.</p>
 
     <div class="math-box">
       <div class="math-box__label">Protein Target Example</div>
@@ -326,6 +337,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>None of this requires perfection. Stay consistent with these habits and numbers 80 to 90% of the time, allow yourself flexibility the rest of the time, and build your plan around foods you actually enjoy eating. That's what makes it sustainable enough to still be working a year from now, which is the whole point.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/insulin-resistance-weight-loss-myth/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/insulin-resistance-weight-loss-myth.png')"></div>
+        <div class="related-post-card__title">Does Insulin Resistance Stop Weight Loss?</div>
+      </a>
+      <a href="/blog/menopause-weight-loss-mistakes/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/menopause-weight-loss-mistakes.png')"></div>
+        <div class="related-post-card__title">These Mistakes Make Menopause Weight Gain Worse</div>
+      </a>
+      <a href="/blog/feel-full-calorie-deficit/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/feel-full-calorie-deficit.png')"></div>
+        <div class="related-post-card__title">How to Feel Full on a Calorie Deficit</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Build a Plan That Works With Your Body After 40</h3>

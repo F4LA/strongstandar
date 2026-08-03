@@ -265,6 +265,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 36px 24px; }
   .takeaway-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -428,7 +439,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Here is the cycle I see constantly with clients who come to us: they track, lose weight, get tired of logging every meal, stop tracking - and within weeks, without any other system in place, the weight starts coming back. So they go back to tracking. And the loop repeats, sometimes for years.</p>
 
-    <p>The reason this happens is that tracking is doing two jobs at once. It is creating a calorie deficit, and it is also acting as the only guardrail between the person and overeating. When tracking disappears, both jobs disappear at the same time. There is nothing left holding things in place.</p>
+    <p>The reason this happens is that tracking is doing two jobs at once. It is creating a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a>, and it is also acting as the only guardrail between the person and overeating. When tracking disappears, both jobs disappear at the same time. There is nothing left holding things in place.</p>
 
     <blockquote>The app is not teaching you how to eat. It is making the decisions for you. And the moment it is gone, you are back to square one.</blockquote>
 
@@ -448,7 +459,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Think of it the way you would think about a personal budget. When you first want to take control of your finances, you track every dollar. That exercise teaches you where money is leaking, what your real spending looks like, what you actually need vs. what you are spending on habit. After a few months of that, you do not need to log every coffee anymore - you have internalized the patterns. The budget did its job. Now the awareness runs in the background automatically.</p>
 
-    <p>Calorie tracking works the same way. Done consistently for 4 to 6 months, it teaches you what portions actually look like, how to structure meals around protein and fiber, how to make decent choices when eating out. That education is the real value. The app is just the tool that delivers it.</p>
+    <p>Calorie tracking works the same way. Done consistently for 4 to 6 months, it teaches you what portions actually look like, how to structure meals around <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> and fiber, how to make decent choices when eating out. That education is the real value. The app is just the tool that delivers it.</p>
 
     <p>What has to run alongside tracking - and eventually replace it - are the behavioral habits that keep your body where you want it regardless of whether you are logging anything. These are what we focus on in the first 8 weeks with every client at Strong Standard, before we ever introduce calorie targets:</p>
 
@@ -538,6 +549,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>How long should the transition off tracking take?</h3>
       <p>Step down gradually over several weeks: from daily tracking to 5 days a week, then 3 to 4, then 1 to 2, confirming your weight stays stable for 3 to 4 weeks at each stage before removing more support. Going from daily tracking to none overnight is the most common reason the habits don't hold.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/is-fat-loss-harder-for-women/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/is-fat-loss-harder-for-women.png')"></div>
+        <div class="related-post-card__title">Is Fat Loss Actually Harder for Women, or Just Different?</div>
+      </a>
+      <a href="/blog/how-to-stop-late-night-snacking/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a39635b18f53fe5a68b64d6.png')"></div>
+        <div class="related-post-card__title">How to Stop Late Night Snacking: 3 Science-Backed Strategies</div>
+      </a>
+      <a href="/blog/feel-full-calorie-deficit/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/feel-full-calorie-deficit.png')"></div>
+        <div class="related-post-card__title">How to Feel Full on a Calorie Deficit</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

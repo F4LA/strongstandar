@@ -143,6 +143,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .landmark-table { font-size: 13px; }
   .landmark-table td, .landmark-table th { padding: 10px 12px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -261,11 +272,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main class="post-wrap">
   <article class="post-body">
 
-    <p>I talk to a lot of people who have been putting in the work for months. The scale isn't moving the way they want, and when they look in the mirror, they're still not sure if they're actually building muscle or just spinning their wheels. Someone at the gym told them to pick a goal: bulk or cut. Not both. Never both.</p>
+    <p>I talk to a lot of people who have been putting in the work for months. The scale isn't moving the way they want, and when they look in the mirror, they're still not sure if they're actually <a href="/blog/how-much-muscle-can-you-gain-in-a-year/">building muscle</a> or just spinning their wheels. Someone at the gym told them to pick a goal: bulk or cut. Not both. Never both.</p>
 
     <div class="answer-box">
       <div class="answer-box__label">Quick Answer</div>
-      <p>Yes, most people can lose fat and build muscle at the same time, not just beginners. It requires training close to failure, keeping calories within a small window of maintenance rather than a large deficit or surplus, hitting 1 gram of protein per pound of body weight, and protecting sleep.</p>
+      <p>Yes, most people can lose fat and build muscle at the same time, not just beginners. It requires training close to failure, keeping calories within a small window of maintenance rather than a large deficit or surplus, hitting 1 gram of <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> per pound of body weight, and protecting sleep.</p>
     </div>
 
     <p>That advice is wrong. And it's been holding a lot of people back from the results they're actually capable of getting.</p>
@@ -286,7 +297,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>Why Most People Think It's Impossible</h2>
 
-    <p>The traditional logic goes like this: to lose fat, you need to be in a calorie deficit. To build muscle, you need a calorie surplus. Since you can't be in a deficit and a surplus at the same time, you can't do both. Simple math, right?</p>
+    <p>The traditional logic goes like this: to lose fat, you need to be in a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a>. To build muscle, you need a calorie surplus. Since you can't be in a deficit and a surplus at the same time, you can't do both. Simple math, right?</p>
 
     <p>The problem is that this framing treats the body like a simple energy equation and ignores every other variable that influences how it actually changes. Training quality, protein intake, sleep, stress, recovery: all of these shape body composition independently of whether someone is eating slightly more or slightly less than maintenance calories.</p>
 
@@ -404,6 +415,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>How do I know if my training intensity is high enough for recomp?</h3>
       <p>Film your sets. The last rep of a true working set should look noticeably slower than the first, and if you're training close to failure, your reps should drop from set to set, for example 10, then 8 or 9, then 7 or 8. Hitting the same rep count on every set with the same weight usually means there was more left in the tank.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/how-often-to-train-each-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a302a99e5b9322bdde396bc.png')"></div>
+        <div class="related-post-card__title">How Often Should You Train Each Muscle to Build Muscle?</div>
+      </a>
+      <a href="/blog/how-much-muscle-can-you-gain-in-a-year/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bdd4ea97402b00ba7dbd2.png')"></div>
+        <div class="related-post-card__title">How Much Muscle Can You Actually Gain in a Year?</div>
+      </a>
+      <a href="/blog/how-much-volume-to-build-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a28570c2f56d3ac846693db.png')"></div>
+        <div class="related-post-card__title">How Much Volume Do You Actually Need to Build Muscle?</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

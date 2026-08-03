@@ -153,6 +153,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 36px 24px; }
   .takeaway-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -254,7 +265,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>When most people decide to eat healthier, they do two things at once: they cut calories and they ban the foods they enjoy. Both of those things happening simultaneously is a setup for failure.</p>
 
-    <p>A calorie deficit already makes you hungrier. Add a hard rule about forbidden foods on top of that, and your brain starts fixating on exactly what you're not supposed to have. This isn't weakness. It's how human psychology works. Tell a kid not to touch something and watch what happens. The same ironic mechanism operates in adults.</p>
+    <p>A <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a> already makes you hungrier. Add a hard rule about forbidden foods on top of that, and your brain starts fixating on exactly what you're not supposed to have. This isn't weakness. It's how human psychology works. Tell a kid not to touch something and watch what happens. The same ironic mechanism operates in adults.</p>
 
     <div class="claim-box">
       <div class="claim-box__label">The approach that doesn't work</div>
@@ -277,7 +288,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>The big-breakfast group lost twice as much weight (around 17 lbs vs. 7 lbs over 12 weeks), had better blood glucose and insulin markers, and, most relevant here: reported lower hunger scores across the full day, fewer cravings for sweets and calorie-dense foods, and greater feelings of fullness.</p>
 
-    <p>Your breakfast doesn't need to be three times the size of your dinner. That's not realistic. But shifting toward more food earlier and less food later, especially with protein and fiber at breakfast, will meaningfully reduce how hard the evenings feel.</p>
+    <p>Your breakfast doesn't need to be three times the size of your dinner. That's not realistic. But shifting toward more food earlier and less food later, especially with <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> and fiber at breakfast, will meaningfully reduce how hard the evenings feel.</p>
 
     <div class="compare-grid">
       <div class="compare-card compare-card--bad">
@@ -389,6 +400,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>You don't need more discipline. You need a better system. None of these three strategies ask you to stop enjoying food at night. They ask you to do it in a way that actually supports where you're trying to go.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/flexible-fuel-method-nutrition-framework/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42ff046f9cd8f350b795ff.png')"></div>
+        <div class="related-post-card__title">The Flexible Fuel Method: A Nutrition Framework That Actually Lasts</div>
+      </a>
+      <a href="/blog/lazy-meal-prep-system-fat-loss/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2c3638c53e51acc0bf301d.png')"></div>
+        <div class="related-post-card__title">The Lazy Meal Prep System That Actually Works</div>
+      </a>
+      <a href="/blog/why-diet-falls-apart-weekends/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fc003a7f0c54689e60c0.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Falls Apart on Weekends (And How to Fix It)</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Habits That Work With Your Life</h3>

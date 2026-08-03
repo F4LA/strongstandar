@@ -134,6 +134,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .landmark-table { font-size: 13px; }
   .guest-box { flex-direction: column; gap: 12px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -340,7 +351,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Before worrying about total weekly sets, there is a higher-leverage change most people could make: training each muscle group more than once per week. The research here is remarkably consistent - twice a week produces better results than once a week at the same total volume.</p>
 
-    <p>The reason comes down to muscle protein synthesis. After you train a muscle, the process that actually builds new tissue spikes and then returns to baseline within about 48 to 72 hours. If you train a muscle once per week, you trigger that process once. Twice per week, you trigger it twice. Same total work, double the growth signal per week.</p>
+    <p>The reason comes down to muscle <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> synthesis. After you train a muscle, the process that actually builds new tissue spikes and then returns to baseline within about 48 to 72 hours. If you train a muscle once per week, you trigger that process once. Twice per week, you trigger it twice. Same total work, double the growth signal per week.</p>
 
     <p>For most people with a busy schedule, this does not mean adding gym days. It means redistributing what you are already doing. If you do 12 sets of chest on one day, split it into two sessions of 6 sets each. Total workload is identical. The weekly stimulus is twice as high. That single change often produces noticeable improvement without adding a minute of extra training time.</p>
 
@@ -395,6 +406,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>Should I train to failure on every set?</h3>
       <p>No. Stopping 1 to 3 reps short of failure on most working sets drives growth while keeping recovery manageable across a full week. Training to true failure has a place on isolation movements or the final week before a deload, but treating every set as maximal effort adds fatigue faster than it adds results.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/can-you-lose-fat-and-build-muscle-at-the-same-time/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a317f286dd61c546ad3d72d.png')"></div>
+        <div class="related-post-card__title">Can You Lose Fat and Build Muscle at the Same Time?</div>
+      </a>
+      <a href="/blog/how-much-muscle-can-you-gain-in-a-year/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bdd4ea97402b00ba7dbd2.png')"></div>
+        <div class="related-post-card__title">How Much Muscle Can You Actually Gain in a Year?</div>
+      </a>
+      <a href="/blog/how-often-train-each-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a395fe37b005295809d50f0.png')"></div>
+        <div class="related-post-card__title">How Often Should You Train Each Muscle Group?</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

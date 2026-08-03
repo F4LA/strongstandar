@@ -133,6 +133,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .compare-grid { grid-template-columns: 1fr; }
   .landmark-table thead th, .landmark-table tbody td { padding: 10px 14px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -261,7 +272,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>The One Rule Behind Every Meal</h2>
 
-    <p>Every meal in this system has three components: a protein, a carb, and a vegetable. That's it. No recipe needed. No measuring at this stage. If your plate has all three, you have a complete, fat-loss-supporting meal.</p>
+    <p>Every meal in this system has three components: a <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a>, a carb, and a vegetable. That's it. No recipe needed. No measuring at this stage. If your plate has all three, you have a complete, fat-loss-supporting meal.</p>
 
     <p>Protein keeps you full and, critically, preserves muscle while you're in a caloric deficit. That matters more than most people realize: losing fat while holding onto muscle is what makes you look and feel different, not just weigh less. Whole food carbs like rice, potatoes, and beans are high in fiber and low in caloric density, which means they help control hunger without adding a ton of calories. Vegetables add volume, micronutrients, and fiber for almost no caloric cost.</p>
 
@@ -432,6 +443,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>Consistency is what drives fat loss, not perfection. A system you actually follow every week will outperform the perfect diet you abandon by Wednesday. Two hours on Sunday, six simple ingredients, and a few sauces is all the infrastructure you need to stay on track without food prep consuming your life.</p>
 
     <hr>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/why-counting-calories-isnt-working/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/why-counting-calories-isnt-working.png')"></div>
+        <div class="related-post-card__title">Why Counting Calories Isn't Working For You</div>
+      </a>
+      <a href="/blog/is-fat-loss-harder-for-women/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/is-fat-loss-harder-for-women.png')"></div>
+        <div class="related-post-card__title">Is Fat Loss Actually Harder for Women, or Just Different?</div>
+      </a>
+      <a href="/blog/weight-loss-after-40/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fda315c172b5cfeb4c44.png')"></div>
+        <div class="related-post-card__title">Why Weight Loss Backfires After 40 (And What to Do Instead)</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Stop Guessing. Start Losing.</h3>

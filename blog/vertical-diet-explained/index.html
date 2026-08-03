@@ -126,6 +126,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .takeaway-box { padding: 24px; }
   .guest-box { flex-direction: column; gap: 12px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -237,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>If you've spent any time in serious fitness circles, you've probably heard the name Stan Efferding and seen the phrase "Vertical Diet" attached to it. You might wonder what it actually is, whether it is just another branded diet plan, and whether any of it applies to someone who is not a 300-pound powerlifter eating 10,000 calories a day.</p>
 
-    <p>The short answer is that the Vertical Diet is not really a diet in the way most people think of one. It is a framework for eating in a way that maximizes digestion, recovery, and performance while keeping things as simple as possible. Most of its principles are grounded in straightforward nutrition science, and a significant portion of them apply directly to the goals that most people reading this have: building muscle, losing fat, and staying healthy long-term.</p>
+    <p>The short answer is that the Vertical Diet is not really a diet in the way most people think of one. It is a framework for eating in a way that maximizes digestion, recovery, and performance while keeping things as simple as possible. Most of its principles are grounded in straightforward nutrition science, and a significant portion of them apply directly to the goals that most people reading this have: <a href="/blog/how-much-muscle-can-you-gain-in-a-year/">building muscle</a>, losing fat, and staying healthy long-term.</p>
 
     <p>I sat down with Stan to go deep on the Vertical Diet, where it came from, what it actually recommends, and where the nuance lives between applying it to elite athletes versus everyday people.</p>
 
@@ -257,7 +268,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p><strong>White rice over brown rice.</strong> This is one of the most counterintuitive recommendations and one of the most defensible. Brown rice contains more fiber, which sounds like an advantage, but that fiber comes with a significant digestive cost. For someone eating very high volumes of food, the added digestive burden of brown rice compounds across multiple meals per day. White rice is easier to digest, absorbs quickly, and delivers carbohydrates efficiently. When your goal is fueling performance and recovery, fast-absorbing carbohydrates after training are not a problem - they are the point.</p>
 
-    <p><strong>Red meat as the primary protein source.</strong> Red meat - particularly ground beef and bison - delivers a complete amino acid profile alongside iron, zinc, B12, and creatine in forms that are highly bioavailable. Stan argues, and the research supports, that the bioavailability of micronutrients from red meat is significantly higher than from most plant sources or even some other animal proteins. For someone trying to maximize recovery and muscle retention, the nutrient density per calorie of red meat is difficult to match.</p>
+    <p><strong>Red meat as the primary <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> source.</strong> Red meat - particularly ground beef and bison - delivers a complete amino acid profile alongside iron, zinc, B12, and creatine in forms that are highly bioavailable. Stan argues, and the research supports, that the bioavailability of micronutrients from red meat is significantly higher than from most plant sources or even some other animal proteins. For someone trying to maximize recovery and muscle retention, the nutrient density per calorie of red meat is difficult to match.</p>
 
     <p>Alongside these two anchor foods, the Vertical Diet fills in micronutrient gaps with a targeted set of additions:</p>
 
@@ -314,7 +325,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>Where the Nuance Lives</h2>
 
-    <p>One of the things I appreciated about this conversation was Stan's willingness to acknowledge where his recommendations have evolved and where context matters. The Vertical Diet was designed for performance athletes at extreme calorie intakes. Applying it rigidly to someone eating in a calorie deficit for fat loss requires adjustment.</p>
+    <p>One of the things I appreciated about this conversation was Stan's willingness to acknowledge where his recommendations have evolved and where context matters. The Vertical Diet was designed for performance athletes at extreme calorie intakes. Applying it rigidly to someone eating in a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a> for fat loss requires adjustment.</p>
 
     <p>A few specific areas worth thinking through:</p>
 
@@ -350,6 +361,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <hr>
 
     <p>The most important thing Stan said in this conversation was also the simplest: he has been repeating the same advice for 30 years because the basics keep working. Not because he has not looked for something better, but because the evidence keeps pointing back to the same foundation. Consistent, nutrient-dense, digestible food. Adequate protein. Enough sleep. Progressive training. The difference between people who get results and people who do not is rarely the sophistication of the plan. It is whether they actually execute the basics, consistently, over time.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/celsius-cyanide-claim-debunked/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2994ff2719d8cb18a83757.png')"></div>
+        <div class="related-post-card__title">Does Celsius Have Cyanide? Gary Brecka's Claim, Debunked</div>
+      </a>
+      <a href="/blog/feel-full-calorie-deficit/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/feel-full-calorie-deficit.png')"></div>
+        <div class="related-post-card__title">How to Feel Full on a Calorie Deficit</div>
+      </a>
+      <a href="/blog/calorie-tracking-is-keeping-you-fat/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a284de377feef7e78c83a06.png')"></div>
+        <div class="related-post-card__title">Calorie Tracking Is Keeping You Fat</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Want a Plan That Actually Works Long Term?</h3>

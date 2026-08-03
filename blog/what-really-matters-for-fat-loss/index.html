@@ -148,6 +148,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .compare-grid__cell:nth-child(3) { border-radius: 0; }
   .compare-grid__cell:nth-child(4) { border-radius: 0 0 var(--r-md) var(--r-md); }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -267,7 +278,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="claim-box__text">"I eat 1,200 calories and I can't lose weight. Calories in vs. calories out is a myth."</p>
     </div>
 
-    <p>Energy balance doesn't fail here. In my experience, there are three things actually going on. First, the person may have unusually low energy expenditure, meaning their body burns less than average at rest. This can happen due to body size, inactivity, or certain medical conditions. Second, even if they're not eating much food by volume, what they're eating may be very energy-dense, so 1,200 calories of processed food takes up far less space on a plate than 1,200 calories of vegetables and protein. Third, and most likely, they're not tracking accurately. Research consistently shows that people underestimate their caloric intake by 20 to 40%, often without realizing it.</p>
+    <p>Energy balance doesn't fail here. In my experience, there are three things actually going on. First, the person may have unusually low energy expenditure, meaning their body burns less than average at rest. This can happen due to body size, inactivity, or certain medical conditions. Second, even if they're not eating much food by volume, what they're eating may be very energy-dense, so 1,200 calories of processed food takes up far less space on a plate than 1,200 calories of vegetables and <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a>. Third, and most likely, they're not tracking accurately. Research consistently shows that people underestimate their caloric intake by 20 to 40%, often without realizing it.</p>
 
     <p>None of these scenarios mean energy balance is wrong. They mean the intake or expenditure side of the equation isn't what the person thinks it is. If someone genuinely consumed fewer calories than they burned, they would lose weight. Every time, without exception.</p>
 
@@ -277,7 +288,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Understanding that energy balance drives fat loss doesn't mean food quality doesn't matter. It means food quality matters for a different reason than most people assume.</p>
 
-    <p>Whole, minimally processed foods like vegetables, fruits, and lean proteins are more filling per calorie than processed foods. They take up more space in the stomach, slow digestion, and keep hunger at bay longer. That makes it easier to stay in a calorie deficit without constantly fighting cravings.</p>
+    <p>Whole, minimally processed foods like vegetables, fruits, and lean proteins are more filling per calorie than processed foods. They take up more space in the stomach, slow digestion, and keep hunger at bay longer. That makes it easier to stay in a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a> without constantly fighting cravings.</p>
 
     <div class="compare-grid">
       <div class="compare-grid__cell">
@@ -328,6 +339,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>Fat loss isn't complicated once you stop looking for the magic food to add or the villain ingredient to eliminate. The body runs on energy balance. Create a deficit, sustain it long enough, and the fat comes off. Everything else, the food choices, the diet plan, the activity level, is just a strategy for making that deficit easier to live with.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/is-fat-loss-harder-for-women/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/is-fat-loss-harder-for-women.png')"></div>
+        <div class="related-post-card__title">Is Fat Loss Actually Harder for Women, or Just Different?</div>
+      </a>
+      <a href="/blog/do-you-need-to-bulk-to-build-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a302a70e7e4db6afb966fd7.png')"></div>
+        <div class="related-post-card__title">Do You Need to Bulk to Build Muscle?</div>
+      </a>
+      <a href="/blog/calorie-tracking-is-keeping-you-fat/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a284de377feef7e78c83a06.png')"></div>
+        <div class="related-post-card__title">Calorie Tracking Is Keeping You Fat</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Know the Principles. Apply Them Right.</h3>

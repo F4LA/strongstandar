@@ -146,6 +146,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .compare-grid { grid-template-columns: 1fr; }
   .tdee-grid { grid-template-columns: 1fr; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -301,9 +312,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>What the Research Says About Training Frequency</h2>
 
-    <p>A 2016 meta-analysis by Brad Schoenfeld compiled data from over ten resistance training studies that directly compared the effects of different training frequencies on muscle growth. The finding was direct: training each muscle at least twice per week produced significantly greater muscle growth than training it once per week. Studies comparing twice versus three or more times per week, on the other hand, showed no meaningful additional benefit beyond twice.</p>
+    <p>A 2016 meta-analysis by Brad Schoenfeld compiled data from over ten <a href="/blog/how-much-volume-to-build-muscle/">resistance training</a> studies that directly compared the effects of different training frequencies on muscle growth. The finding was direct: training each muscle at least twice per week produced significantly greater muscle growth than training it once per week. Studies comparing twice versus three or more times per week, on the other hand, showed no meaningful additional benefit beyond twice.</p>
 
-    <p>That means the traditional bodybuilding split where each muscle is hit once a week isn't just suboptimal. According to this body of research, it's the worst approach for building muscle of all the common training structures. I show clients this exact meta-analysis all the time, because it's usually the moment they realize their Monday chest day has been quietly capping their progress for years.</p>
+    <p>That means the traditional bodybuilding split where each muscle is hit once a week isn't just suboptimal. According to this body of research, it's the worst approach for <a href="/blog/how-much-muscle-can-you-gain-in-a-year/">building muscle</a> of all the common training structures. I show clients this exact meta-analysis all the time, because it's usually the moment they realize their Monday chest day has been quietly capping their progress for years.</p>
 
     <blockquote>Training a muscle twice per week is not about doing more work on any given day. It's about being able to do more total quality work across the week, which is what actually drives growth.</blockquote>
 
@@ -440,6 +451,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>How many sets per session should I do when training a muscle twice a week?</h3>
       <p>Around 7 to 8 hard sets per session is where diminishing returns begin for most experienced lifters. That puts a twice-per-week schedule at roughly 14 to 16 total weekly sets, which sits in the optimal range for most people without sacrificing set quality.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/how-many-days-a-week-should-you-train/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-many-days-a-week-should-you-train.png')"></div>
+        <div class="related-post-card__title">How Many Days a Week Should You Actually Train?</div>
+      </a>
+      <a href="/blog/how-much-muscle-can-you-gain-in-a-year/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bdd4ea97402b00ba7dbd2.png')"></div>
+        <div class="related-post-card__title">How Much Muscle Can You Actually Gain in a Year?</div>
+      </a>
+      <a href="/blog/dynamic-double-progression-how-to-progress-in-the-gym/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/dynamic-double-progression-how-to-progress-in-the-gym.png')"></div>
+        <div class="related-post-card__title">The Simplest Way to Know When to Add Weight</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

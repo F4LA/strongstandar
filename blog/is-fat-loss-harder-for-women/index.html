@@ -146,6 +146,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .takeaway-box { padding: 24px; }
   .compare-grid { grid-template-columns: 1fr; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -290,7 +301,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="answer-box">
       <div class="answer-box__label">Quick Answer</div>
-      <p>Fat loss follows the same rule for everyone: you need a calorie deficit. But for women, that deficit is harder to sustain because it represents a bigger percentage of your total intake, your hunger and cravings fluctuate with your menstrual cycle, and your healthy body fat range sits naturally higher than a man's. The fix isn't eating less, it's building a plan around those differences instead of ignoring them.</p>
+      <p>Fat loss follows the same rule for everyone: you need a <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a>. But for women, that deficit is harder to sustain because it represents a bigger percentage of your total intake, your hunger and cravings fluctuate with your menstrual cycle, and your healthy body fat range sits naturally higher than a man's. The fix isn't eating less, it's building a plan around those differences instead of ignoring them.</p>
     </div>
 
     <p>You've probably had this thought: your husband, your brother, your male coworker seems to lose weight just by deciding to. He skips a few beers for two weeks and drops five pounds. You cut out sugar, add a daily walk, track your food for a month, and the scale barely moves. It feels unfair, and honestly, in some very specific ways, it is.</p>
@@ -421,6 +432,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <hr>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/why-your-diet-isnt-working/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bda9cf0cead6a3c8ab81d.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Isn't Working (And What's Actually Missing)</div>
+      </a>
+      <a href="/blog/do-you-need-to-bulk-to-build-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a302a70e7e4db6afb966fd7.png')"></div>
+        <div class="related-post-card__title">Do You Need to Bulk to Build Muscle?</div>
+      </a>
+      <a href="/blog/how-to-lose-20-lbs-in-90-days/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bdb446a04624f33dd7e46.jpg')"></div>
+        <div class="related-post-card__title">How to Lose 20 Lbs in 90 Days Without Losing Muscle</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Ready to Build a Body That Lasts?</h3>

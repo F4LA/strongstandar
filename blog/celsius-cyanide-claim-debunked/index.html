@@ -136,6 +136,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 20px 20px 40px; }
   .takeaway-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -347,7 +358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>Why These Claims Are More Dangerous Than the Drink</h2>
 
-    <p>Debunking the Celsius cyanide claim matters for a reason that goes beyond Celsius. Gary Brecka has tens of millions of followers. He makes claims like this regularly - about protein supplements, fat loss, water, sunlight, and dozens of other topics - using the same formula: take a real compound name that sounds scary, strip it of all context, and present it as an imminent threat.</p>
+    <p>Debunking the Celsius cyanide claim matters for a reason that goes beyond Celsius. Gary Brecka has tens of millions of followers. He makes claims like this regularly - about <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> supplements, fat loss, water, sunlight, and dozens of other topics - using the same formula: take a real compound name that sounds scary, strip it of all context, and present it as an imminent threat.</p>
 
     <p>This pattern is effective because most people do not have a chemistry background and have no framework for evaluating whether a compound name in a scary sentence actually represents a real risk. It triggers the amygdala, it gets shared, and it becomes "something someone heard" that eventually hardens into received wisdom. The fact that it is wrong rarely catches up to the original claim.</p>
 
@@ -402,6 +413,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>How can I spot this kind of health misinformation in the future?</h3>
       <p>Watch for claims that name a scary-sounding compound without stating the actual dose, that conveniently redirect you to a specific alternative product, or that come from someone without verifiable credentials in the field. Real health risks show up in regulatory guidance and peer-reviewed research, not just a viral clip.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/calorie-deficit-feel-easy/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a302a6f0a683b64fe53e3f2.png')"></div>
+        <div class="related-post-card__title">How to Make a Calorie Deficit Feel Easy</div>
+      </a>
+      <a href="/blog/why-diet-falls-apart-weekends/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fc003a7f0c54689e60c0.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Falls Apart on Weekends (And How to Fix It)</div>
+      </a>
+      <a href="/blog/flexible-fuel-method-nutrition-framework/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42ff046f9cd8f350b795ff.png')"></div>
+        <div class="related-post-card__title">The Flexible Fuel Method: A Nutrition Framework That Actually Lasts</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

@@ -146,6 +146,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .compare-grid { grid-template-columns: 1fr; }
   .math-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -313,7 +324,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>The simplest change you can make, and the one with the highest immediate return, is removing calories you drink. Juice, sweetened coffee drinks, soda, alcohol. These add a significant amount of calories to your day while doing almost nothing to reduce hunger.</p>
 
-    <p>The reason is straightforward. Satiety, the feeling of fullness that makes you stop eating, comes largely from physical volume in your stomach, from chewing, and from the fiber and protein content of food. Liquid calories deliver none of that. A large glass of orange juice can have 200 to 300 calories and leave you exactly as hungry as a glass of water.</p>
+    <p>The reason is straightforward. Satiety, the feeling of fullness that makes you stop eating, comes largely from physical volume in your stomach, from chewing, and from the fiber and <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> content of food. Liquid calories deliver none of that. A large glass of orange juice can have 200 to 300 calories and leave you exactly as hungry as a glass of water.</p>
 
     <div class="compare-grid">
       <div class="compare-grid__col compare-grid__col--bad">
@@ -404,6 +415,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>Which should I fix first: liquid calories, food quality, or sleep?</h3>
       <p>Start with liquid calories since it's the fastest, lowest-effort change with an immediate return. Whole food swaps and sleep habits take longer to build but compound with that first change rather than replacing it.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/vertical-diet-explained/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2994b5b06ac3856e950689.png')"></div>
+        <div class="related-post-card__title">What Is the Vertical Diet and Does It Actually Work?</div>
+      </a>
+      <a href="/blog/menopause-weight-loss-mistakes/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/menopause-weight-loss-mistakes.png')"></div>
+        <div class="related-post-card__title">These Mistakes Make Menopause Weight Gain Worse</div>
+      </a>
+      <a href="/blog/why-your-diet-isnt-working/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bda9cf0cead6a3c8ab81d.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Isn't Working (And What's Actually Missing)</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">

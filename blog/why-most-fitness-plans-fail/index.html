@@ -149,6 +149,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .guest-box { flex-direction: column; gap: 12px; }
   .compare-grid { grid-template-columns: 1fr; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -311,11 +322,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h3>The Assumption Most People Make</h3>
 
-    <p>The default approach to almost any health goal is subtraction. Stop eating the coffee shop muffin. Stop the seed oils. Stop the late night snacking. It feels responsible, and it feels like the obvious first move.</p>
+    <p>The default approach to almost any health goal is subtraction. Stop eating the coffee shop muffin. Stop the seed oils. Stop the <a href="/blog/how-to-stop-late-night-snacking/">late night snacking</a>. It feels responsible, and it feels like the obvious first move.</p>
 
     <h3>What Actually Happens Instead</h3>
 
-    <p>Subtraction on its own leaves what Morrison calls a behavioral gap. You remove a habit and replace it with nothing, and nothing is very hard to sustain. His approach with new clients does the opposite: an eight week foundational phase focused entirely on what to add, never on what to avoid. Week one might just be hitting a protein target at every meal, regardless of what else is on the plate. Week two adds a vegetable serving. Week three adds a daily step goal. Clients routinely lose 15 to 20 pounds during this phase without ever being told a single food is off limits, because the bad habits naturally get crowded out instead of leaving a gap.</p>
+    <p>Subtraction on its own leaves what Morrison calls a behavioral gap. You remove a habit and replace it with nothing, and nothing is very hard to sustain. His approach with new clients does the opposite: an eight week foundational phase focused entirely on what to add, never on what to avoid. Week one might just be hitting a <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> target at every meal, regardless of what else is on the plate. Week two adds a vegetable serving. Week three adds a daily step goal. Clients routinely lose 15 to 20 pounds during this phase without ever being told a single food is off limits, because the bad habits naturally get crowded out instead of leaving a gap.</p>
 
     <h2>The Hierarchy That Cuts Through the Noise</h2>
 
@@ -398,6 +409,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <hr>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/why-you-cant-keep-the-weight-off/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/why-you-cant-keep-the-weight-off.png')"></div>
+        <div class="related-post-card__title">Why You Can't Keep the Weight Off</div>
+      </a>
+      <a href="/blog/how-to-tell-if-an-online-fitness-coach-is-legit/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-tell-if-an-online-fitness-coach-is-legit.png')"></div>
+        <div class="related-post-card__title">Is Your Online Fitness Coach Actually Legit?</div>
+      </a>
+      <a href="/blog/why-you-keep-failing-to-change-your-habits/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/why-you-keep-failing-to-change-your-habits.png')"></div>
+        <div class="related-post-card__title">Why You Keep Failing to Change Your Habits</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Ready to Build a Body That Lasts?</h3>

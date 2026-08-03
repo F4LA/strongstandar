@@ -139,6 +139,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .compare-grid { grid-template-columns: 1fr; }
   .stat-grid { grid-template-columns: 1fr; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -234,7 +245,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>You know that calorie balance matters. You've tracked consistently, sometimes for months at a time. And yet food still feels like a source of stress rather than something you've mastered. Going to a restaurant makes you anxious because you can't weigh the plate. A day without logging feels like it's spiraling out of control.</p>
 
-    <p>I want to be honest with you here, even though I'm someone who actively recommends calorie tracking to clients: the tool itself might be the reason you feel stuck, not because tracking is flawed, but because of what it does to your relationship with food when it becomes the only strategy you have.</p>
+    <p>I want to be honest with you here, even though I'm someone who actively recommends <a href="/blog/calorie-tracking-is-keeping-you-fat/">calorie tracking</a> to clients: the tool itself might be the reason you feel stuck, not because tracking is flawed, but because of what it does to your relationship with food when it becomes the only strategy you have.</p>
 
     <h2>Tracking Was Never Supposed to Make You Anxious</h2>
 
@@ -296,6 +307,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>If tracking currently feels like the only thing standing between you and regaining weight, that's not a sign you need to track harder. It's a sign the habits underneath were never built. Fix that, and the number in the app becomes information you're glad to have, not something you're afraid to live without.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/glp1-muscle-loss/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a43006215c172b5cfeb7223.png')"></div>
+        <div class="related-post-card__title">GLP-1s and Muscle Loss: What the Research Actually Shows</div>
+      </a>
+      <a href="/blog/is-fat-loss-harder-for-women/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/is-fat-loss-harder-for-women.png')"></div>
+        <div class="related-post-card__title">Is Fat Loss Actually Harder for Women, or Just Different?</div>
+      </a>
+      <a href="/blog/should-you-focus-on-fat-loss-or-muscle-first/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a318757dd7879239a420310.png')"></div>
+        <div class="related-post-card__title">Should You Focus on Fat Loss or Building Muscle First?</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Build the Habits That Make Tracking Optional</h3>

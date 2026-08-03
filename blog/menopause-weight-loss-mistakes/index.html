@@ -139,6 +139,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .post-cta { padding: 36px 24px; }
   .takeaway-box { padding: 24px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <!-- REPLACE: update slug, title, description, date, category -->
@@ -250,7 +261,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Estrogen plays a direct role in how your body stores fat. Before menopause, women tend to store fat around the hips and thighs. As estrogen drops, that storage pattern shifts toward the abdomen, which is why you can see more belly fat with a body weight that hasn't changed dramatically. That's a redistribution, not necessarily a net gain, though both are common.</p>
 
-    <p>Underneath that shift, you're also losing muscle mass at an accelerating rate, roughly 1 to 3% per decade starting in your 40s, faster after 50 if you're not resistance training. Muscle is a major driver of your resting metabolic rate, so less muscle means fewer calories burned at rest, which makes fat easier to gain even without eating more. Add in possible thyroid changes, lower estrogen reducing satiety signals so you feel hungrier on the same food, and disrupted sleep from hot flashes and night sweats, and you have several physiological factors working against you at once, before you've made a single dietary choice.</p>
+    <p>Underneath that shift, you're also losing muscle mass at an accelerating rate, roughly 1 to 3% per decade starting in your 40s, faster after 50 if you're not <a href="/blog/how-much-volume-to-build-muscle/">resistance training</a>. Muscle is a major driver of your resting metabolic rate, so less muscle means fewer calories burned at rest, which makes fat easier to gain even without eating more. Add in possible thyroid changes, lower estrogen reducing satiety signals so you feel hungrier on the same food, and disrupted sleep from hot flashes and night sweats, and you have several physiological factors working against you at once, before you've made a single dietary choice.</p>
 
     <blockquote>The weight on the scale might barely move while you lose muscle and gain fat at the same time. Your body composition changes even when the number doesn't.</blockquote>
 
@@ -283,7 +294,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>Pillar One: Fuel Your Body Instead of Starving It</h2>
 
-    <p>The shift here is fundamental: stop asking how little you can eat, and start asking how much your body needs to build muscle and function well. I set every menopausal client's protein target at a minimum of 0.8 grams per pound of goal body weight, spread across roughly 35 to 40 grams per meal.</p>
+    <p>The shift here is fundamental: stop asking how little you can eat, and start asking how much your body needs to build muscle and function well. I set every menopausal client's <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> target at a minimum of 0.8 grams per pound of goal body weight, spread across roughly 35 to 40 grams per meal.</p>
 
     <div class="math-box">
       <div class="math-box__label">Example: 180 lb Woman, 150 lb Goal</div>
@@ -333,6 +344,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>I've watched clients in their 50s and 60s go through this exact shift: away from restriction and endless cardio, toward fueling, lifting, and protecting sleep, and come out stronger, leaner, and more confident than they were years before menopause started. The transition is real and the changes in your body are real, but the outcome isn't fixed. It responds to the right inputs the same way it always has.</p>
 
     <hr>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/weight-loss-after-40/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fda315c172b5cfeb4c44.png')"></div>
+        <div class="related-post-card__title">Why Weight Loss Backfires After 40 (And What to Do Instead)</div>
+      </a>
+      <a href="/blog/lazy-meal-prep-system-fat-loss/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2c3638c53e51acc0bf301d.png')"></div>
+        <div class="related-post-card__title">The Lazy Meal Prep System That Actually Works</div>
+      </a>
+      <a href="/blog/how-to-stop-late-night-snacking/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a39635b18f53fe5a68b64d6.png')"></div>
+        <div class="related-post-card__title">How to Stop Late Night Snacking: 3 Science-Backed Strategies</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Ready to Work With Your New Physiology, Not Against It?</h3>

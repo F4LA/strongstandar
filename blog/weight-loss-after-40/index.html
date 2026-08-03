@@ -153,6 +153,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .stat-grid { grid-template-columns: 1fr; }
   .math-box { padding: 20px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -251,7 +262,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>You're over 40, you've been eating less and moving more, and the scale still isn't cooperating. Maybe you lose a few pounds, then stall. Maybe you lose them and gain them back within months. Maybe you're doing everything you were told and feel like your body is working against you.</p>
 
-    <p>Here's what I tell every client in this situation: stop trying to lose weight. That's not a joke. Weight loss is the wrong goal, and chasing it with conventional methods after 40 is one of the main reasons people stay stuck. Let me explain exactly what's happening and what to do instead.</p>
+    <p>Here's what I tell every client in this situation: stop trying to lose weight. That's not a joke. Weight loss is the wrong goal, and chasing it with conventional methods <a href="/blog/how-to-lose-weight-after-40-without-losing-muscle/">after 40</a> is one of the main reasons people stay stuck. Let me explain exactly what's happening and what to do instead.</p>
 
     <h2>The Scale Is Lying to You</h2>
 
@@ -276,7 +287,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>What's Actually Happening in Your Body After 40</h2>
 
-    <p>Starting around age 30, the body begins losing muscle at a rate of roughly 3 to 8% per decade. That sounds modest, but if you're in your 40s or 50s and haven't been actively building muscle, you've likely lost 10 to 25% of your muscle mass compared to your peak. That loss has a direct effect on your metabolism.</p>
+    <p>Starting around age 30, the body begins losing muscle at a rate of roughly 3 to 8% per decade. That sounds modest, but if you're in your 40s or 50s and haven't been actively <a href="/blog/how-much-muscle-can-you-gain-in-a-year/">building muscle</a>, you've likely lost 10 to 25% of your muscle mass compared to your peak. That loss has a direct effect on your metabolism.</p>
 
     <p>Muscle is metabolically active tissue, meaning it burns calories at rest. More muscle means a higher resting metabolic rate. Two people who weigh the same can have very different metabolisms depending on how much of that weight is muscle versus fat. The leaner person burns more calories doing nothing, which means they can eat more food to maintain their physique over time.</p>
 
@@ -301,7 +312,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>Standard weight loss advice is: cut more calories, do more cardio. And technically, yes, you'll lose weight. But here's what actually happens when you do this after 40.</p>
 
-    <p>First, large calorie deficits accelerate muscle loss. The bigger the deficit, the higher the proportion of weight you lose that comes from muscle rather than fat. Losing 10 lbs at a moderate deficit looks very different in terms of body composition than losing 10 lbs through aggressive restriction.</p>
+    <p>First, large <a href="/blog/calorie-deficit-feel-easy/">calorie deficit</a>s accelerate muscle loss. The bigger the deficit, the higher the proportion of weight you lose that comes from muscle rather than fat. Losing 10 lbs at a moderate deficit looks very different in terms of body composition than losing 10 lbs through aggressive restriction.</p>
 
     <p>Second, chronic undereating makes it nearly impossible to hit adequate protein and micronutrient intake. Protein is the primary dietary signal for muscle retention and growth. Vitamins and minerals like magnesium and vitamin D play critical roles in hormone function and how your body responds to training. Cut too aggressively, and both suffer.</p>
 
@@ -380,6 +391,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <p>The shift from "lose weight" to "improve body composition" isn't just semantic. It changes every decision you make about how you train and eat, and it's the difference between a strategy that produces lasting results and one that keeps you stuck in the same cycle. After 40, the margin for doing it wrong gets smaller. But doing it right is absolutely achievable, and the results compound over time in a way that makes you look and feel better every year, not worse.</p>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/vertical-diet-explained/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a2994b5b06ac3856e950689.png')"></div>
+        <div class="related-post-card__title">What Is the Vertical Diet and Does It Actually Work?</div>
+      </a>
+      <a href="/blog/why-your-diet-isnt-working/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a4bda9cf0cead6a3c8ab81d.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Isn't Working (And What's Actually Missing)</div>
+      </a>
+      <a href="/blog/why-diet-falls-apart-weekends/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a42fc003a7f0c54689e60c0.png')"></div>
+        <div class="related-post-card__title">Why Your Diet Falls Apart on Weekends (And How to Fix It)</div>
+      </a>
+      </div>
+    </div>
 
     <div class="post-cta">
       <h3>Build the Body You Want After 40</h3>

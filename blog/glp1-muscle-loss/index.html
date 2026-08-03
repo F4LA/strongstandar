@@ -156,6 +156,17 @@ footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); p
   .landmark-table { font-size: 14px; }
   .landmark-table thead th, .landmark-table tbody td { padding: 10px 14px; }
 }
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -296,7 +307,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="answer-box">
       <div class="answer-box__label">Quick Answer</div>
-      <p>About 25 to 40% of weight lost on GLP-1 medications is lean mass, mostly muscle, a similar ratio to regular dieting but much larger in absolute terms because total weight loss is bigger. Resistance training at least 3 times a week, hitting 0.8g of protein per pound of body weight, and capping your deficit protects muscle and helps prevent the rapid weight regain seen after stopping.</p>
+      <p>About 25 to 40% of weight lost on GLP-1 medications is lean mass, mostly muscle, a similar ratio to regular dieting but much larger in absolute terms because total weight loss is bigger. <a href="/blog/how-much-volume-to-build-muscle/">Resistance training</a> at least 3 times a week, hitting 0.8g of <a href="/blog/what-a-good-day-of-eating-for-fat-loss-looks-like/">protein</a> per pound of body weight, and capping your deficit protects muscle and helps prevent the rapid weight regain seen after stopping.</p>
     </div>
 
     <p>I want to be clear upfront: I have nothing against GLP-1s. They're legitimate, powerful tools. But tools only work well when you understand them fully, and right now most people starting on Ozempic or Mounjaro have no plan for what they're losing or what happens when they stop. This post is about closing that gap.</p>
@@ -443,6 +454,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq-item">
       <h3>Can I prevent muscle loss while losing weight on Ozempic or Mounjaro?</h3>
       <p>Yes, though not entirely. Resistance training at least 3 times a week is the single most evidence-based way to preserve muscle during a deficit. Combined with adequate protein and a capped, more moderate rate of weight loss, most people can significantly limit how much lean mass they lose.</p>
+    </div>
+
+        <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+      <a href="/blog/calorie-deficit-feel-easy/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a302a6f0a683b64fe53e3f2.png')"></div>
+        <div class="related-post-card__title">How to Make a Calorie Deficit Feel Easy</div>
+      </a>
+      <a href="/blog/how-to-stop-late-night-snacking/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a39635b18f53fe5a68b64d6.png')"></div>
+        <div class="related-post-card__title">How to Stop Late Night Snacking: 3 Science-Backed Strategies</div>
+      </a>
+      <a href="/blog/how-to-lose-weight-after-40-without-losing-muscle/" class="related-post-card">
+        <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-lose-weight-after-40-without-losing-muscle.png')"></div>
+        <div class="related-post-card__title">How to Lose Weight After 40 Without Losing Muscle</div>
+      </a>
+      </div>
     </div>
 
     <div class="post-cta">
