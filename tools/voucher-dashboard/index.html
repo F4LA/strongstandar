@@ -173,7 +173,23 @@
   .detail-block .detail-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
   .detail-block .detail-text { font-size: 13px; color: var(--text); white-space: normal; }
   .detail-contact { font-family: var(--font-mono); color: var(--text-muted); font-size: 12px; }
-  .detail-caption { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.4; max-width: 220px; }
+
+  .info-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; border-radius: 50%; background: var(--navy-light);
+    border: 1px solid var(--border-bright); color: var(--text-muted);
+    font-size: 10px; font-weight: 700; cursor: help; position: relative;
+    vertical-align: middle; margin-left: 2px;
+  }
+  .info-icon::after {
+    content: attr(data-tooltip);
+    position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    width: 200px; background: var(--navy); color: var(--text); border: 1px solid var(--border-bright);
+    border-radius: 8px; padding: 8px 10px; font-size: 11px; font-weight: 400; line-height: 1.4;
+    text-align: left; box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    opacity: 0; visibility: hidden; transition: opacity 0.15s; z-index: 50; pointer-events: none;
+  }
+  .info-icon:hover::after { opacity: 1; visibility: visible; }
 
   .top10-divider td { padding: 0; border-bottom: none; }
   .top10-divider-inner {
@@ -606,8 +622,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="detail-section">
               <div class="detail-section-title">Score Breakdown</div>
               <div class="detail-grid two-col">
-                <div class="detail-block"><div class="detail-label">Commitment Score</div><div class="detail-text">${scoreBadge(commitment)}</div><div class="detail-caption">Has the client already talked to them, and do they genuinely want help now?</div></div>
-                <div class="detail-block"><div class="detail-label">Goal Fit Score</div><div class="detail-text">${scoreBadge(goal)}</div><div class="detail-caption">Is a specific, defined goal mentioned — not vague or absent?</div></div>
+                <div class="detail-block"><div class="detail-label">Commitment Score <span class="info-icon" data-tooltip="Has the client already talked to them, and do they genuinely want help now?">?</span></div><div class="detail-text">${scoreBadge(commitment)}</div></div>
+                <div class="detail-block"><div class="detail-label">Goal Fit Score <span class="info-icon" data-tooltip="Is a specific, defined goal mentioned — not vague or absent?">?</span></div><div class="detail-text">${scoreBadge(goal)}</div></div>
               </div>
               ${excluded ? `<div class="detail-block" style="margin-top:14px;"><div class="detail-label">Reviewer Override Reason</div><div class="detail-text">${overrideReason || '—'}</div></div>` : ''}
             </div>
