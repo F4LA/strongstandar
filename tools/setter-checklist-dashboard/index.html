@@ -439,7 +439,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return res.json();
   }
 
-  function switchRole(role, btn){
+  async function switchRole(role, btn){
     if(role === CURRENT_ROLE) return;
     CURRENT_ROLE = role;
     document.querySelectorAll('.role-tab-btn').forEach(b => b.classList.remove('active'));
@@ -453,7 +453,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('add-item-form').classList.remove('open');
     EXPANDED_CARDS.clear();
     EDITING_CARDS.clear();
-    loadAllData(false);
+    showLoading(`Loading ${label}s…`);
+    await loadAllData(false);
+    hideLoading();
   }
 
   async function loadAllData(isManualRefresh){
