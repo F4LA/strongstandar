@@ -123,9 +123,17 @@
   /* ── MAIN ── */
   .main { max-width: 1200px; margin: 0 auto; padding: 32px 40px 80px; }
 
-  .page-hero { margin-bottom: 28px; }
+  .page-hero { margin-bottom: 20px; }
   .page-title { font-family: var(--font-display); font-size: 44px; letter-spacing: 3px; color: var(--text); line-height: 1; }
   .page-sub { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 6px; }
+
+  .role-tabs { display: flex; gap: 8px; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .role-tab-btn {
+    padding: 0 4px 12px; margin-right: 24px; background: none; border: none; border-bottom: 2px solid transparent;
+    font-family: var(--font-display); font-size: 16px; letter-spacing: 1.5px; color: var(--text-muted); transition: all 0.2s;
+  }
+  .role-tab-btn:hover { color: var(--text); }
+  .role-tab-btn.active { color: var(--steel-light); border-bottom-color: var(--steel-light); }
 
   .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px; }
   @media (max-width: 760px) { .stats-grid { grid-template-columns: 1fr; } }
@@ -261,13 +269,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="main">
     <div class="page-hero">
-      <div class="page-title">SETTER SETUP</div>
-      <div class="page-sub">Onboarding checklist &amp; access tracking for new setters</div>
+      <div class="page-title">SETUP CHECKLIST</div>
+      <div class="page-sub" id="page-sub">Onboarding checklist &amp; access tracking for new setters</div>
+    </div>
+
+    <div class="role-tabs">
+      <button class="role-tab-btn active" data-role="Setters" onclick="switchRole('Setters', this)">Setter</button>
+      <button class="role-tab-btn" data-role="Closers" onclick="switchRole('Closers', this)">Closer</button>
+      <button class="role-tab-btn" data-role="Coaches" onclick="switchRole('Coaches', this)">Coach</button>
     </div>
 
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-label">Active Setters</div>
+        <div class="stat-label" id="stat-total-label">Active Setters</div>
         <div class="stat-value" id="stat-total">—</div>
         <div class="stat-sub">Currently on the roster</div>
       </div>
@@ -285,7 +299,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="panel">
       <div class="panel-head">
-        <h3>Setters</h3>
+        <h3 id="roster-title">Setters</h3>
         <button class="action-btn" onclick="toggleAddForm()" id="add-setter-toggle">+ Add Setter</button>
       </div>
       <div class="panel-sub">Tap a checkbox to mark an access item as done. Changes save straight to the sheet.</div>
@@ -359,20 +373,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   let STATE = { setters: [], items: [], status: [] };
+  let CURRENT_ROLE = 'Setters';
+  const ROLE_LABELS = { Setters: 'Setter', Closers: 'Closer', Coaches: 'Coach' };
 
   async function callScript(action, params){
     params = params || {};
     if(action === 'getData'){
-      const url = `${APPS_SCRIPT_URL}?action=getData`;
+      const url = `${APPS_SCRIPT_URL}?action=getData&role=${encodeURIComponent(CURRENT_ROLE)}`;
       const res = await fetch(url);
       return res.json();
     }
     const res = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight against Apps Script
-      body: JSON.stringify(Object.assign({ action }, params))
+      body: JSON.stringify(Object.assign({ action, role: CURRENT_ROLE }, params))
     });
     return res.json();
+  }
+
+  function switchRole(role, btn){
+    if(role === CURRENT_ROLE) return;
+    CURRENT_ROLE = role;
+    document.querySelectorAll('.role-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const label = ROLE_LABELS[role];
+    document.getElementById('page-sub').textContent = `Onboarding checklist & access tracking for new ${label.toLowerCase()}s`;
+    document.getElementById('stat-total-label').textContent = `Active ${label}s`;
+    document.getElementById('roster-title').textContent = `${label}s`;
+    document.getElementById('add-setter-toggle').textContent = `+ Add ${label}`;
+    document.getElementById('add-setter-form').classList.remove('open');
+    document.getElementById('add-item-form').classList.remove('open');
+    loadAllData(false);
   }
 
   async function loadAllData(isManualRefresh){
