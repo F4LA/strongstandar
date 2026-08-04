@@ -305,8 +305,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="panel-sub">Tap a checkbox to mark an access item as done. Changes save straight to the sheet.</div>
 
       <div class="form-grid" id="add-setter-form">
-        <div class="form-field"><label>Name</label><input type="text" id="new-name" placeholder="Jane Doe"></div>
-        <div class="form-field"><label>Email</label><input type="email" id="new-email" placeholder="jane@strongstandard.com"></div>
+        <div class="form-field"><label>First Name</label><input type="text" id="new-first-name" placeholder="Jane"></div>
+        <div class="form-field"><label>Last Name</label><input type="text" id="new-last-name" placeholder="Doe"></div>
+        <div class="form-field"><label>Personal Email</label><input type="email" id="new-personal-email" placeholder="jane@gmail.com"></div>
+        <div class="form-field"><label>Business Email <span style="text-transform:none;color:var(--text-dim);">(optional)</span></label><input type="email" id="new-business-email" placeholder="jane@strongstandard.com"></div>
         <div class="form-field"><label>Start Date</label><input type="date" id="new-start-date"></div>
         <div class="form-field"><label>Lead %</label><input type="number" id="new-pct" placeholder="0" min="0" max="100"></div>
         <div class="form-error" id="add-setter-error"></div>
@@ -427,7 +429,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   function isChecked(email, itemId){
-    const row = STATE.status.find(s => s.setter_email === email && s.item_id === itemId);
+    const row = STATE.status.find(s => s.person_email === email && s.item_id === itemId);
     return !!(row && (row.checked === true || row.checked === 'TRUE' || row.checked === 'true'));
   }
 
@@ -437,7 +439,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     let pctSum = 0;
     STATE.setters.forEach(s => {
       pctSum += Number(s.lead_percentage) || 0;
-      const allDone = STATE.items.every(item => isChecked(s.email, item.item_id));
+      const allDone = STATE.items.every(item => isChecked(s.personal_email, item.item_id));
       if(allDone && STATE.items.length > 0) complete++;
     });
     document.getElementById('stat-total').textContent = total;
@@ -469,17 +471,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
     const categories = [...new Set(STATE.items.map(i => i.category))];
     container.innerHTML = STATE.setters.map(s => {
-      const doneCount = STATE.items.filter(item => isChecked(s.email, item.item_id)).length;
+      const fullName = [s.first_name, s.last_name].filter(Boolean).join(' ') || s.personal_email;
+      const doneCount = STATE.items.filter(item => isChecked(s.personal_email, item.item_id)).length;
       const totalCount = STATE.items.length;
       const complete = totalCount > 0 && doneCount === totalCount;
       const groupsHtml = categories.map(cat => {
         const catItems = STATE.items.filter(i => i.category === cat);
         const rows = catItems.map(item => {
-          const checked = isChecked(s.email, item.item_id);
+          const checked = isChecked(s.personal_email, item.item_id);
           return `
             <div class="item-row">
               <input type="checkbox" class="item-check" ${checked ? 'checked' : ''}
-                onchange="onToggle('${escapeAttr(s.email)}','${escapeAttr(item.item_id)}', this.checked, this)">
+                onchange="onToggle('${escapeAttr(s.personal_email)}','${escapeAttr(item.item_id)}', this.checked, this)">
               <div class="item-text">
                 <div class="item-name ${checked ? 'done' : ''}">${escapeHtml(item.name)}</div>
                 ${item.description ? `<div class="item-desc">${escapeHtml(item.description)}</div>` : ''}
@@ -493,13 +496,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="setter-card">
           <div class="setter-head">
             <div class="setter-id">
-              <div class="setter-name">${escapeHtml(s.name || s.email)}</div>
-              <div class="setter-email">${escapeHtml(s.email)}</div>
+              <div class="setter-name">${escapeHtml(fullName)}</div>
+              <div class="setter-email">${escapeHtml(s.personal_email)}${s.business_email ? ' · ' + escapeHtml(s.business_email) : ''}</div>
               <div class="setter-pct">${Number(s.lead_percentage) || 0}% leads</div>
             </div>
             <div class="setter-meta">
               <span class="progress-badge ${complete ? 'complete' : ''}">${doneCount}/${totalCount}</span>
-              <button class="action-btn danger" onclick="removeSetter('${escapeAttr(s.email)}', '${escapeAttr(s.name || s.email)}')">Remove</button>
+              <button class="action-btn danger" onclick="removeSetter('${escapeAttr(s.personal_email)}', '${escapeAttr(fullName)}')">Remove</button>
             </div>
           </div>
           <div class="checklist-body">${groupsHtml || '<div class="empty-note">No checklist items configured yet.</div>'}</div>
@@ -526,10 +529,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   async function onToggle(email, itemId, checked, checkboxEl){
     checkboxEl.disabled = true;
     try {
-      await callScript('toggleAccess', { setter_email: email, item_id: itemId, checked: checked, checked_by: 'dashboard' });
-      let row = STATE.status.find(s => s.setter_email === email && s.item_id === itemId);
+      await callScript('toggleAccess', { person_email: email, item_id: itemId, checked: checked, checked_by: 'dashboard' });
+      let row = STATE.status.find(s => s.person_email === email && s.item_id === itemId);
       if(row){ row.checked = checked; }
-      else { STATE.status.push({ setter_email: email, item_id: itemId, checked: checked }); }
+      else { STATE.status.push({ person_email: email, item_id: itemId, checked: checked }); }
       renderStats();
       renderSetters();
     } catch(e){
@@ -544,20 +547,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   async function submitAddSetter(){
-    const name = document.getElementById('new-name').value.trim();
-    const email = document.getElementById('new-email').value.trim().toLowerCase();
+    const firstName = document.getElementById('new-first-name').value.trim();
+    const lastName = document.getElementById('new-last-name').value.trim();
+    const personalEmail = document.getElementById('new-personal-email').value.trim().toLowerCase();
+    const businessEmail = document.getElementById('new-business-email').value.trim().toLowerCase();
     const startDate = document.getElementById('new-start-date').value;
     const pct = document.getElementById('new-pct').value;
     const errEl = document.getElementById('add-setter-error');
     errEl.style.display = 'none';
 
-    if(!name || !email){
-      errEl.textContent = 'Name and email are required.';
+    if(!firstName || !lastName || !personalEmail){
+      errEl.textContent = 'First name, last name, and personal email are required.';
       errEl.style.display = 'block';
       return;
     }
-    if(STATE.setters.some(s => s.email.toLowerCase() === email)){
-      errEl.textContent = 'A setter with that email already exists.';
+    if(STATE.setters.some(s => (s.personal_email || '').toLowerCase() === personalEmail)){
+      errEl.textContent = 'Someone with that personal email already exists.';
       errEl.style.display = 'block';
       return;
     }
@@ -565,16 +570,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const btn = document.getElementById('add-setter-submit');
     btn.disabled = true; btn.textContent = 'Adding…';
     try {
-      await callScript('addSetter', { name, email, start_date: startDate, lead_percentage: Number(pct) || 0 });
-      document.getElementById('new-name').value = '';
-      document.getElementById('new-email').value = '';
+      await callScript('addSetter', {
+        first_name: firstName, last_name: lastName,
+        personal_email: personalEmail, business_email: businessEmail,
+        start_date: startDate, lead_percentage: Number(pct) || 0
+      });
+      document.getElementById('new-first-name').value = '';
+      document.getElementById('new-last-name').value = '';
+      document.getElementById('new-personal-email').value = '';
+      document.getElementById('new-business-email').value = '';
       document.getElementById('new-start-date').value = '';
       document.getElementById('new-pct').value = '';
       toggleAddForm();
       await loadAllData(false);
     } catch(e){
       console.error(e);
-      errEl.textContent = 'Could not add the setter. Try again in a moment.';
+      errEl.textContent = 'Could not add this person. Try again in a moment.';
       errEl.style.display = 'block';
     }
     btn.disabled = false; btn.textContent = 'Add Setter';
@@ -583,7 +594,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   async function removeSetter(email, name){
     if(!confirm(`Remove ${name} from the roster? This deletes their record and access history permanently.`)) return;
     try {
-      await callScript('removeSetter', { email });
+      await callScript('removeSetter', { personal_email: email });
       await loadAllData(false);
     } catch(e){
       console.error(e);
