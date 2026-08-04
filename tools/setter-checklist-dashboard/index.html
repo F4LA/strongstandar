@@ -533,7 +533,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 onchange="onToggle('${escapeAttr(s.personal_email)}','${escapeAttr(item.item_id)}', this.checked, this)">
               <div class="item-text">
                 <div class="item-name ${checked ? 'done' : ''}">${escapeHtml(item.name)}</div>
-                ${item.description ? `<div class="item-desc">${escapeHtml(item.description)}</div>` : ''}
+                ${item.description ? `<div class="item-desc">${linkify(escapeHtml(item.description))}</div>` : ''}
               </div>
             </div>`;
         }).join('');
@@ -794,6 +794,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return String(str == null ? '' : str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
   function escapeAttr(str){ return escapeHtml(str).replace(/'/g, '&#39;'); }
+  function linkify(escapedText){
+    return escapedText.replace(/(https?:\/\/[^\s<]+)/g, url =>
+      `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color:var(--steel-light);text-decoration:underline;" onclick="event.stopPropagation()">${url}</a>`);
+  }
 
   function toggleTheme(){
     const html = document.documentElement;
