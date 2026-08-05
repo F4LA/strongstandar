@@ -978,23 +978,35 @@
   // ── DB HELPERS ────────────────────────────────────────────
   async function writeField(key, value) {
     try {
-      await fetch(APPS_SCRIPT_URL, {
+      const res = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight against Apps Script
         body: JSON.stringify({ token: GS_TOKEN, action: 'setField', key, value })
       });
-    } catch(e) { console.warn('Sheet write error:', e); }
+      const json = await res.json().catch(() => null);
+      if (!json || json.ok !== true) {
+        console.error('Sheet write failed (setField):', key, json);
+        return false;
+      }
+      return true;
+    } catch(e) { console.error('Sheet write error (setField):', e); return false; }
   }
 
   async function writeTasks(updates) { // [{task_id, done}, ...]
-    if (!updates.length) return;
+    if (!updates.length) return true;
     try {
-      await fetch(APPS_SCRIPT_URL, {
+      const res = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ token: GS_TOKEN, action: 'setTasks', updates })
       });
-    } catch(e) { console.warn('Sheet write error:', e); }
+      const json = await res.json().catch(() => null);
+      if (!json || json.ok !== true) {
+        console.error('Sheet write failed (setTasks):', json);
+        return false;
+      }
+      return true;
+    } catch(e) { console.error('Sheet write error (setTasks):', e); return false; }
   }
 
   // Applies done/not-done from the sheet onto elements matched by data-task-id, for a given group.
@@ -1743,7 +1755,8 @@
       const val = key === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
       await writeField(key, val);
     }
-    await writeTasks(taskUpdates);
+    const ok = await writeTasks(taskUpdates);
+    if (!ok) alert('⚠️ Hubo un error guardando el reset en Google Sheets. Revisa la consola (F12) y vuelve a intentar — las tareas podrían seguir marcadas al refrescar.');
   }
 
   async function confirmBReset() {
@@ -1755,7 +1768,8 @@
       if (id) taskUpdates.push({ task_id: id, done: false });
     });
     updateBProgress();
-    await writeTasks(taskUpdates);
+    const ok = await writeTasks(taskUpdates);
+    if (!ok) alert('⚠️ Hubo un error guardando el reset en Google Sheets. Revisa la consola (F12) y vuelve a intentar.');
   }
 
 // ─── BERNARDO AUTOMATION ENGINE ──────────────────────────────────────────────
