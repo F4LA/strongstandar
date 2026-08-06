@@ -317,6 +317,21 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://strongstandard.com/blog/best-workout-split-for-busy-people/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/how-strict-should-your-diet-be/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/enjoy-holiday-food-without-gaining-weight/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
