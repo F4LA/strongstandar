@@ -602,7 +602,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           ? `<button class="action-btn undo" onclick="event.stopPropagation(); handleUndo(${i}, this)">↺ Undo Exclusion</button>`
           : isAccessGranted
           ? `<span class="cell-muted">✓ Access already granted to this referral.</span>
-             <button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i}, this)">↻ Resend Access</button>`
+             <button class="action-btn winner" onclick="event.stopPropagation(); handleResendAccess(${i}, this)">↻ Resend Access</button>
+             <button class="action-btn winner" onclick="event.stopPropagation(); handleResendNotify(${i}, this)">✉ Resend Notifications</button>`
           : isWinner
           ? `<button class="action-btn winner" onclick="event.stopPropagation(); handleGiveAccess(${i}, this)">→ Give Access</button>
              <button class="action-btn exclude" onclick="event.stopPropagation(); openExcludeModal(${i})">✕ Exclude / Not a Fit</button>`
@@ -694,7 +695,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const payload = { action, rowIndex };
     if (reason !== undefined) payload.reason = reason;
 
-    const labels = { markWinner: 'Marking as winner…', giveAccess: 'Sending access…', exclude: 'Excluding nomination…', undoExclude: 'Undoing exclusion…' };
+    const labels = { markWinner: 'Marking as winner…', giveAccess: 'Sending access…', resendAccess: 'Resending access…', resendNotify: 'Resending notifications…', exclude: 'Excluding nomination…', undoExclude: 'Undoing exclusion…' };
     showGlobalLoading(labels[action] || 'Working on it…');
 
     try {
@@ -745,6 +746,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   async function handleGiveAccess(rowIndexInArray, btnEl){
     const original = setButtonLoading(btnEl, 'Sending…');
     const ok = await postAction('giveAccess', rowIndexInArray);
+    if (ok) loadData(true);
+    else if (btnEl){ btnEl.disabled = false; btnEl.innerHTML = original; }
+  }
+
+  async function handleResendAccess(rowIndexInArray, btnEl){
+    const original = setButtonLoading(btnEl, 'Resending…');
+    const ok = await postAction('resendAccess', rowIndexInArray);
+    if (ok) loadData(true);
+    else if (btnEl){ btnEl.disabled = false; btnEl.innerHTML = original; }
+  }
+
+  async function handleResendNotify(rowIndexInArray, btnEl){
+    const original = setButtonLoading(btnEl, 'Resending…');
+    const ok = await postAction('resendNotify', rowIndexInArray);
     if (ok) loadData(true);
     else if (btnEl){ btnEl.disabled = false; btnEl.innerHTML = original; }
   }
