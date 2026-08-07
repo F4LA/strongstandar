@@ -102,6 +102,55 @@ nav.scrolled {
 /* ── MAIN LAYOUT ── */
 .blog-main { max-width: 1200px; margin: 0 auto; padding: 72px 5% 100px; }
 
+/* ── SEARCH ── */
+.blog-search {
+  position: relative; margin-bottom: 28px; max-width: 560px;
+}
+.blog-search__input-wrap {
+  position: relative; display: flex; align-items: center;
+}
+.blog-search__icon {
+  position: absolute; left: 18px; color: var(--muted); pointer-events: none;
+}
+.blog-search__input {
+  width: 100%; padding: 15px 44px 15px 46px;
+  background: var(--navy-2); border: 1px solid rgba(34,120,172,0.25);
+  border-radius: var(--r-full); color: var(--white);
+  font-family: var(--font-body); font-size: 15px;
+  transition: border-color 0.2s;
+}
+.blog-search__input::placeholder { color: var(--faint); }
+.blog-search__input:focus { outline: none; border-color: var(--steel-mid); }
+.blog-search__clear {
+  position: absolute; right: 14px; width: 22px; height: 22px;
+  display: none; align-items: center; justify-content: center;
+  border-radius: 50%; background: rgba(34,120,172,0.15); color: var(--muted);
+  cursor: pointer; border: none; font-size: 14px;
+}
+.blog-search__clear:hover { background: rgba(34,120,172,0.3); color: var(--white); }
+.blog-search__input-wrap.has-query .blog-search__clear { display: flex; }
+.blog-search__suggestions {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 50;
+  background: var(--navy-2); border: 1px solid rgba(34,120,172,0.25);
+  border-radius: var(--r-md); overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  display: none;
+}
+.blog-search__suggestions.open { display: block; }
+.blog-search__suggestion {
+  display: block; padding: 12px 16px; border-bottom: 1px solid rgba(34,120,172,0.1);
+  transition: background 0.15s;
+}
+.blog-search__suggestion:last-child { border-bottom: none; }
+.blog-search__suggestion:hover { background: rgba(34,120,172,0.12); }
+.blog-search__suggestion-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+.blog-search__suggestion-cat { font-size: 11px; color: var(--steel-light); text-transform: uppercase; letter-spacing: 0.05em; }
+.blog-search__suggestion-empty { padding: 16px; font-size: 13px; color: var(--muted); text-align: center; }
+.blog-search__results-label {
+  font-size: 13px; color: var(--muted); margin-bottom: 20px;
+}
+.blog-search__results-label strong { color: var(--white); }
+
 /* ── FILTERS ── */
 .blog-filters {
   display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px;
@@ -297,6 +346,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- MAIN -->
 <main class="blog-main">
+
+  <!-- SEARCH -->
+  <div class="blog-search">
+    <div class="blog-search__input-wrap" id="search-input-wrap">
+      <svg class="blog-search__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input
+        type="text"
+        class="blog-search__input"
+        id="search-input"
+        placeholder="Search or ask a question, e.g. &quot;should I take creatine every day&quot;"
+        autocomplete="off"
+        aria-label="Search blog posts">
+      <button class="blog-search__clear" id="search-clear" aria-label="Clear search" type="button">&times;</button>
+    </div>
+    <div class="blog-search__suggestions" id="search-suggestions"></div>
+  </div>
 
   <!-- FILTERS -->
   <div class="blog-filters" role="group" aria-label="Filter posts by category">
@@ -794,9 +859,55 @@ const POSTS = [
   },
 ];
 
+// ── Search engine (no API calls, pure keyword matching) ────────────────────
+// Works for plain keywords ("creatine dosage") and full questions
+// ("should I take creatine every day") by stripping common filler words
+// and scoring posts by where the remaining words match.
+const STOPWORDS = new Set([
+  'a','an','the','is','are','was','were','do','does','did','doing','should','shall',
+  'how','what','why','when','where','who','which','can','could','would','will',
+  'you','your','yours','i','im','me','my','mine','to','of','for','on','in','at',
+  'and','or','but','with','it','its','this','that','these','those','be','been','being',
+  'if','so','not','no','yes','get','getting','got','have','has','had','about','into',
+  'up','down','out','over','under','again','then','than','there','here','just','also',
+  'really','actually','some','any','all','more','most','much','many','vs','versus'
+]);
+
+function tokenize(str) {
+  return (str || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+}
+
+function meaningfulWords(str) {
+  return tokenize(str).filter(w => !STOPWORDS.has(w) && w.length > 1);
+}
+
+function scorePost(queryWords, post) {
+  const titleWords = tokenize(post.title);
+  const excerptWords = tokenize(post.excerpt);
+  let score = 0;
+  queryWords.forEach(qw => {
+    if (titleWords.includes(qw)) score += 4;
+    else if (titleWords.some(tw => tw.length > 3 && (tw.startsWith(qw) || qw.startsWith(tw)))) score += 2;
+    if (excerptWords.includes(qw)) score += 1;
+    if (post.category === qw) score += 3;
+  });
+  return score;
+}
+
+function searchPosts(query) {
+  const qWords = meaningfulWords(query);
+  if (qWords.length === 0) return null; // no active search
+  return POSTS
+    .map(p => ({ post: p, score: scorePost(qWords, p) }))
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(x => x.post);
+}
+
 // ── Render ────────────────────────────────────────────────────────────────────
 const container = document.getElementById('blog-content');
 let activeFilter = 'all';
+let searchQuery = '';
 
 function categoryLabel(cat) {
   return { nutrition: 'Nutrition', training: 'Training', mindset: 'Mindset', podcast: 'Podcast' }[cat] || cat;
@@ -849,6 +960,24 @@ function renderCard(post) {
 }
 
 function render() {
+  const searchResults = searchQuery ? searchPosts(searchQuery) : null;
+
+  // Search mode: relevance-ranked flat grid, no featured hero, ignores category filter
+  if (searchResults !== null) {
+    if (searchResults.length === 0) {
+      container.innerHTML = `
+        <div class="blog-empty">
+          <h3>No matches found</h3>
+          <p>Try different words, or clear the search to browse all posts.</p>
+        </div>`;
+      return;
+    }
+    const label = `<p class="blog-search__results-label"><strong>${searchResults.length}</strong> result${searchResults.length === 1 ? '' : 's'} for "${searchQuery.replace(/</g,'&lt;')}"</p>`;
+    container.innerHTML = label + `<div class="post-grid">${searchResults.map(renderCard).join('')}</div>`;
+    return;
+  }
+
+  // Normal mode: category filter + featured hero
   const filtered = activeFilter === 'all' ? POSTS : POSTS.filter(p => p.category === activeFilter);
 
   if (filtered.length === 0) {
@@ -879,6 +1008,71 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     activeFilter = btn.dataset.filter;
     render();
   });
+});
+
+// ── Search input: live suggestions dropdown + live-filtered grid ───────────
+const searchInput = document.getElementById('search-input');
+const searchInputWrap = document.getElementById('search-input-wrap');
+const searchSuggestions = document.getElementById('search-suggestions');
+const searchClear = document.getElementById('search-clear');
+
+function renderSuggestions(query) {
+  const results = searchPosts(query);
+  if (results === null) {
+    searchSuggestions.classList.remove('open');
+    searchSuggestions.innerHTML = '';
+    return;
+  }
+  if (results.length === 0) {
+    searchSuggestions.innerHTML = `<div class="blog-search__suggestion-empty">No matches. Try different words.</div>`;
+    searchSuggestions.classList.add('open');
+    return;
+  }
+  const top = results.slice(0, 5);
+  searchSuggestions.innerHTML = top.map(p => `
+    <a href="/blog/${p.slug}/" class="blog-search__suggestion">
+      <div class="blog-search__suggestion-title">${p.title}</div>
+      <div class="blog-search__suggestion-cat">${categoryLabel(p.category)}</div>
+    </a>`).join('');
+  searchSuggestions.classList.add('open');
+}
+
+searchInput.addEventListener('input', () => {
+  const val = searchInput.value;
+  searchQuery = val.trim();
+  searchInputWrap.classList.toggle('has-query', searchQuery.length > 0);
+  renderSuggestions(searchQuery);
+  render();
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchQuery) renderSuggestions(searchQuery);
+});
+
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    searchSuggestions.classList.remove('open');
+    searchInput.blur();
+  }
+  if (e.key === 'Escape') {
+    searchSuggestions.classList.remove('open');
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!searchInputWrap.contains(e.target) && !searchSuggestions.contains(e.target)) {
+    searchSuggestions.classList.remove('open');
+  }
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchQuery = '';
+  searchInputWrap.classList.remove('has-query');
+  searchSuggestions.classList.remove('open');
+  searchSuggestions.innerHTML = '';
+  render();
+  searchInput.focus();
 });
 
 // ── Nav scroll ─────────────────────────────────────────────────────────────
