@@ -573,7 +573,15 @@
 
       <div class="section">
         <div class="section-title">6.6 — Voucher Program</div>
-        <div class="task" data-task-id="joey-044" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Set up voucher program for this cohort</div></div>
+        <div class="task" data-task-id="joey-051" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update the challenge date in the Voucher Program automation — <a onclick="event.stopPropagation()" href="https://app.gohighlevel.com/v2/location/cZF68TO3vzxTOnAdACdK/automation/workflow/6ab332aa-15c6-4c3d-a35d-cc77494f568b" target="_blank" style="color:#a78bfa;font-weight:600;text-decoration:underline;">Open Workflow ↗</a></div></div>
+        <div class="task" data-task-id="joey-052" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Promote the Voucher Program — only 10 spots, submissions must close 3 days before Kickoff Call</div></div>
+        <div class="subtasks">
+          <div class="subtask" data-task-id="joey-053" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Send promo email to the client list</div></div>
+          <div class="subtask" data-task-id="joey-054" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Post about the Voucher Program in the Everfit community</div></div>
+          <div class="subtask" data-task-id="joey-055" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Send Everfit broadcast message about the Voucher Program</div></div>
+          <div class="subtask" data-task-id="joey-056" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Add Voucher Program banner to the Everfit app news feed</div></div>
+        </div>
+        <div class="task" data-task-id="joey-057" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Analyze Voucher Program submissions and grant access to selected participants</div></div>
       </div>
     </div>
   </div>
@@ -1083,18 +1091,22 @@
   }
 
   // ── TOGGLES ───────────────────────────────────────────────
+  function _taskMeta(el, group, type) {
+    const label = el.querySelector('.task-text, .subtask-text')?.textContent.trim() || '';
+    return { group, type, label };
+  }
   function toggle(el) {
     const isDone = !el.classList.contains('done');
     el.classList.toggle('done');
     const updates = [];
     const id = el.getAttribute('data-task-id');
-    if (id) updates.push({ task_id: id, done: isDone });
+    if (id) updates.push({ task_id: id, done: isDone, ..._taskMeta(el, 'joey', 'task') });
     let next = el.nextElementSibling;
     while (next && next.classList.contains('subtasks')) {
       next.querySelectorAll('.subtask').forEach(sub => {
         isDone ? sub.classList.add('done') : sub.classList.remove('done');
         const subId = sub.getAttribute('data-task-id');
-        if (subId) updates.push({ task_id: subId, done: isDone });
+        if (subId) updates.push({ task_id: subId, done: isDone, ..._taskMeta(sub, 'joey', 'subtask') });
       });
       next = next.nextElementSibling;
     }
@@ -1103,7 +1115,7 @@
   function toggleSub(el) {
     el.classList.toggle('done');
     const id = el.getAttribute('data-task-id');
-    if (id) saveTaskStates([{ task_id: id, done: el.classList.contains('done') }]);
+    if (id) saveTaskStates([{ task_id: id, done: el.classList.contains('done'), ..._taskMeta(el, 'joey', 'subtask') }]);
     updateProgress();
   }
   function togglePhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
@@ -1658,14 +1670,14 @@
   function btoggle(el) {
     el.classList.toggle('done');
     const id = el.getAttribute('data-task-id');
-    if (id) saveTaskStates([{ task_id: id, done: el.classList.contains('done') }]);
+    if (id) saveTaskStates([{ task_id: id, done: el.classList.contains('done'), ..._taskMeta(el, 'bernardo', 'task') }]);
     updateBProgress();
   }
   function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
   function etoggle(el) {
     el.classList.toggle('done');
     const id = el.getAttribute('data-task-id');
-    if (id) saveTaskStates([{ task_id: id, done: el.classList.contains('done') }]);
+    if (id) saveTaskStates([{ task_id: id, done: el.classList.contains('done'), ..._taskMeta(el, 'especificos', 'task') }]);
     updateEProgress();
   }
   function toggleEPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
