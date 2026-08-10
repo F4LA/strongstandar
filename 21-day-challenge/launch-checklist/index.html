@@ -676,8 +676,55 @@
         <div class="b-task" data-task-id="bernardo-004" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Schedule Bernardo's posts in Everfit for the full challenge window</div></div>
         <div class="b-task" data-task-id="bernardo-005" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Guide with new challenge dates (PDF)</div></div>
         <div class="b-task" data-task-id="bernardo-007" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Voucher Program — post about it in the Everfit community</div></div>
+        <details style="margin:2px 0 12px 32px;">
+          <summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);user-select:none;">📋 Show message template</summary>
+          <div style="margin-top:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;max-width:560px;">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">TITLE</div>
+            <pre id="tmplCommunityTitle" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 12px 0;">Bring Someone You Love Into Our Next Challenge, On Us 🎉</pre>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">BODY</div>
+            <pre id="tmplCommunityBody" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 12px 0;">Our next 21-Day Challenge is right around the corner, and we want to make it bigger and better by having YOU bring someone along.
+
+Know a friend or family member who's been wanting to get healthier, get stronger, or just needs a little push to start? Nominate them, and if selected, they get a 100% free spot in the challenge.
+
+It's simple:
+1. Fill out the quick nomination form.
+2. Tell us a bit about them and why now is the right time.
+3. If they're selected, we'll take care of the rest.
+
+👉 Nominate them here: {{nomination_form_link}}
+
+Let's grow this community together. Tag someone below who deserves a shot! 👇</pre>
+            <button onclick="copyTemplate(['tmplCommunityTitle','tmplCommunityBody'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Copy title + body</button>
+          </div>
+        </details>
         <div class="b-task" data-task-id="bernardo-008" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Voucher Program — send Everfit broadcast message</div></div>
+        <details style="margin:2px 0 12px 32px;">
+          <summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);user-select:none;">📋 Show message template</summary>
+          <div style="margin-top:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;max-width:560px;">
+            <pre id="tmplBroadcast" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 12px 0;">Hey {{contact.first_name}}, our next 21-Day Challenge is coming up soon and I wanted to reach out personally.
+
+You can nominate a friend or family member you care about, and if they're selected, they get a completely free spot in the challenge. No catch, just our way of saying thanks for being part of this community.
+
+If someone came to mind while reading this, that's probably a sign 😉
+
+👉 Nominate Them Here: {{nomination_form_link}}
+
+Let me know if you have any questions, I'm always around.</pre>
+            <button onclick="copyTemplate(['tmplBroadcast'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Copy</button>
+          </div>
+        </details>
         <div class="b-task" data-task-id="bernardo-009" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Voucher Program — add banner to the Everfit app news feed</div></div>
+        <details style="margin:2px 0 12px 32px;">
+          <summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);user-select:none;">📋 Show message template</summary>
+          <div style="margin-top:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;max-width:560px;">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">FULL VERSION</div>
+            <pre id="tmplBannerFull" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 8px 0;">🎉 New Challenge dropping soon, nominate a friend for a FREE spot →</pre>
+            <button onclick="copyTemplate(['tmplBannerFull'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;margin-bottom:14px;">Copy full version</button>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">SHORT VERSION (if space is limited)</div>
+            <pre id="tmplBannerShort" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 8px 0;">🎉 Next Challenge is coming, nominate a friend, free spot →</pre>
+            <button onclick="copyTemplate(['tmplBannerShort'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Copy short version</button>
+          </div>
+        </details>
       </div></div>
     </div>
 
@@ -1675,6 +1722,17 @@
     updateBProgress();
   }
   function toggleBPhase(id) { document.getElementById(id).classList.toggle('collapsed'); }
+
+  // Copies one or more <pre> blocks (by id) to the clipboard, joined by a blank line.
+  function copyTemplate(ids, btn) {
+    const text = ids.map(id => document.getElementById(id)?.textContent || '').join('\n\n');
+    navigator.clipboard.writeText(text).then(() => {
+      const original = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      btn.style.background = 'var(--check-done)';
+      setTimeout(() => { btn.textContent = original; btn.style.background = 'var(--accent)'; }, 1500);
+    }).catch(() => { alert('Could not copy automatically — select the text manually.'); });
+  }
   function etoggle(el) {
     el.classList.toggle('done');
     const id = el.getAttribute('data-task-id');
