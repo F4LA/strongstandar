@@ -288,7 +288,7 @@
       <div class="cohort-grid">
         <div class="cohort-card">
           <div class="cohort-card__label"><span class="cohort-dot cohort-dot--blue"></span>Kickoff Call</div>
-          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date');updateLiveCallPreview()"></div>
+          <div class="cohort-field"><label>Date &amp; Time</label><input type="datetime-local" id="kickoff_date" oninput="saveField('kickoff_date');updateLiveCallPreview();updateVoucherDeadline()"></div>
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
             <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
@@ -680,9 +680,11 @@
           <summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);user-select:none;">📋 Show message template</summary>
           <div style="margin-top:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;max-width:560px;">
             <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">TITLE</div>
-            <pre id="tmplCommunityTitle" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 12px 0;">Bring Someone You Love Into Our Next Challenge, On Us 🎉</pre>
+            <pre id="tmplCommunityTitle" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 12px 0;">Only 10 Spots: Bring Someone You Love Into Our Next Challenge, On Us 🎉</pre>
             <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">BODY</div>
             <pre id="tmplCommunityBody" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 12px 0;">Our next 21-Day Challenge is right around the corner, and we want to make it bigger and better by having YOU bring someone along.
+
+🚨 Only 10 spots available — nominations close <span class="voucherDeadline">[set Kickoff Call date above]</span>.
 
 Know a friend or family member who's been wanting to get healthier, get stronger, or just needs a little push to start? Nominate them, and if selected, they get a 100% free spot in the challenge.
 
@@ -691,9 +693,9 @@ It's simple:
 2. Tell us a bit about them and why now is the right time.
 3. If they're selected, we'll take care of the rest.
 
-👉 Nominate them here: {{nomination_form_link}}
+👉 Nominate them here: https://api.leadconnectorhq.com/widget/survey/TAjHVYFVDQIIdRPp4M0D
 
-Let's grow this community together. Tag someone below who deserves a shot! 👇</pre>
+Spots are limited and go fast — don't wait. Tag someone below who deserves a shot! 👇</pre>
             <button onclick="copyTemplate(['tmplCommunityTitle','tmplCommunityBody'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Copy title + body</button>
           </div>
         </details>
@@ -705,11 +707,11 @@ Let's grow this community together. Tag someone below who deserves a shot! 👇<
 
 You can nominate a friend or family member you care about, and if they're selected, they get a completely free spot in the challenge. No catch, just our way of saying thanks for being part of this community.
 
-If someone came to mind while reading this, that's probably a sign 😉
+🚨 Heads up — there are only 10 spots, and nominations close <span class="voucherDeadline">[set Kickoff Call date above]</span>. If someone came to mind while reading this, that's probably a sign 😉
 
-👉 Nominate Them Here: {{nomination_form_link}}
+👉 Nominate Them Here: https://api.leadconnectorhq.com/widget/survey/TAjHVYFVDQIIdRPp4M0D
 
-Let me know if you have any questions, I'm always around.</pre>
+Don't wait too long, these spots fill up fast. Let me know if you have any questions, I'm always around.</pre>
             <button onclick="copyTemplate(['tmplBroadcast'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Copy</button>
           </div>
         </details>
@@ -718,10 +720,10 @@ Let me know if you have any questions, I'm always around.</pre>
           <summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);user-select:none;">📋 Show message template</summary>
           <div style="margin-top:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;max-width:560px;">
             <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">FULL VERSION</div>
-            <pre id="tmplBannerFull" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 8px 0;">🎉 New Challenge dropping soon, nominate a friend for a FREE spot →</pre>
+            <pre id="tmplBannerFull" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 8px 0;">🚨 Only 10 spots — nominate a friend for a FREE spot, closes <span class="voucherDeadlineShort">[TBD]</span> →</pre>
             <button onclick="copyTemplate(['tmplBannerFull'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;margin-bottom:14px;">Copy full version</button>
             <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;">SHORT VERSION (if space is limited)</div>
-            <pre id="tmplBannerShort" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 8px 0;">🎉 Next Challenge is coming, nominate a friend, free spot →</pre>
+            <pre id="tmplBannerShort" style="white-space:pre-wrap;font-family:'DM Sans',sans-serif;font-size:12.5px;line-height:1.6;color:var(--text);margin:0 0 8px 0;">🚨 10 spots left, closes <span class="voucherDeadlineShort">[TBD]</span> — nominate a friend, free spot →</pre>
             <button onclick="copyTemplate(['tmplBannerShort'], this)" style="font-size:11px;font-weight:700;color:white;background:var(--accent);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Copy short version</button>
           </div>
         </details>
@@ -1085,6 +1087,7 @@ Let me know if you have any questions, I'm always around.</pre>
         if (el && map[id] !== undefined && map[id] !== '') el.value = map[id];
       });
       updateLiveCallPreview();
+      updateVoucherDeadline();
       updateWeek2Preview();
       if (map.affiliates_data) loadAffiliates(map.affiliates_data);
       if (map.closing_page_status) {
@@ -1234,6 +1237,26 @@ Let me know if you have any questions, I'm always around.</pre>
       current.setDate(current.getDate() + 1);
     }
     return dates;
+  }
+
+  // Nominations for the Voucher Program close 3 days before Kickoff Call.
+  // Fills in every .voucherDeadline / .voucherDeadlineShort span across the templates.
+  function updateVoucherDeadline() {
+    const kickoffVal = document.getElementById('kickoff_date')?.value;
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    let full = '[set Kickoff Call date above]';
+    let short = '[TBD]';
+    if (kickoffVal) {
+      const kickoff = new Date(kickoffVal);
+      if (!isNaN(kickoff.getTime())) {
+        const deadline = new Date(kickoff.getTime() - 3 * 24 * 60 * 60 * 1000);
+        full = `${days[deadline.getDay()]}, ${months[deadline.getMonth()]} ${deadline.getDate()}`;
+        short = `${days[deadline.getDay()].slice(0,3)} ${deadline.getMonth()+1}/${deadline.getDate()}`;
+      }
+    }
+    document.querySelectorAll('.voucherDeadline').forEach(el => el.textContent = full);
+    document.querySelectorAll('.voucherDeadlineShort').forEach(el => el.textContent = short);
   }
 
   function updateLiveCallPreview() {
@@ -1822,6 +1845,7 @@ Let me know if you have any questions, I'm always around.</pre>
     });
     document.getElementById('cohortPanel').classList.remove('collapsed');
     updateProgress();
+    updateVoucherDeadline();
     for (const key of fields) {
       const val = key === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
       await writeField(key, val);
