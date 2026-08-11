@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D1A">
+<title>What Happens When You Cut Calories Too Fast | Strong Standard</title>
+<meta name="description" content="Dr. Joey breaks down what actually happens in your body when you cut calories too aggressively, and why it backfires on hunger, muscle, and metabolism.">
+<link rel="canonical" href="https://strongstandard.com/blog/what-happens-when-you-cut-calories-too-fast/">
+<meta name="robots" content="index, follow">
+<script src="/scripts/utm-persist.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --ice:         #A8CDE0;
+  --page-bg:     #F7F5F0;
+  --surface:     #FFFFFF;
+  --ink:         #1A1A1A;
+  --ink-2:       #3A3A3A;
+  --ink-muted:   #6B6B6B;
+  --rule:        #E4E0D8;
+  --accent:      #2278AC;
+  --accent-soft: #EBF4FB;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-serif:  'DM Serif Display', serif;
+  --font-body:   'DM Sans', sans-serif;
+  --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+  --content-width: 920px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); font-size: 18px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: var(--navy); }
+nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: var(--r-full); transition: all 0.2s; border: none; }
+.btn-primary { background: var(--steel-mid); color: #fff; padding: 11px 26px; font-size: 13px; }
+.btn-primary:hover { background: var(--steel-light); }
+
+.post-banner { background: var(--navy); padding: 112px 5% 72px; border-bottom: 3px solid var(--accent); }
+.post-banner__inner { max-width: var(--content-width); margin: 0 auto; }
+.post-banner__back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 36px; transition: color 0.2s; font-family: var(--font-body); }
+.post-banner__back:hover { color: var(--ice); }
+.post-banner__tag { display: inline-block; padding: 4px 12px; border-radius: var(--r-full); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(34,120,172,0.2); color: var(--ice); margin-bottom: 24px; }
+.post-banner h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1; letter-spacing: 0.02em; color: #fff; margin-bottom: 28px; }
+.post-banner h1 em { color: var(--ice); font-style: normal; }
+.post-banner__excerpt { font-size: 20px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 36px; max-width: 680px; font-weight: 300; }
+.post-banner__meta { display: flex; align-items: center; gap: 14px; font-size: 13px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+.post-banner__author { display: flex; align-items: center; gap: 10px; }
+.post-banner__avatar { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(56,153,204,0.4); }
+.post-banner__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.post-banner__name { color: rgba(255,255,255,0.8); font-weight: 500; }
+.dot { color: rgba(255,255,255,0.2); }
+
+.post-wrap { max-width: var(--content-width); margin: 0 auto; padding: 64px 5% 100px; }
+.post-body { font-size: 18px; line-height: 1.8; color: var(--ink-2); }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.05; letter-spacing: 0.02em; color: var(--ink); margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid var(--accent); display: block; }
+.post-body h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.15; letter-spacing: 0.02em; color: var(--ink); margin: 32px 0 10px; }
+.post-body ul, .post-body ol { margin: 0 0 24px 0; padding-left: 0; list-style: none; }
+.post-body li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.post-body li:last-child { border-bottom: none; }
+.post-body li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.post-body strong { color: var(--ink); font-weight: 600; }
+.post-body em { color: var(--ink-muted); font-style: italic; }
+.post-body a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(34,120,172,0.3); }
+.post-body a:hover { text-decoration-color: var(--accent); }
+.post-body blockquote { border-left: 4px solid var(--accent); padding: 20px 28px; margin: 40px 0; background: var(--accent-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--ink); line-height: 1.6; }
+.post-body hr { border: none; border-top: 1px solid var(--rule); margin: 48px 0; }
+
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
+.tdee-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px 0 36px; }
+.tdee-item { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); padding: 20px 18px; text-align: center; }
+.tdee-item__value { font-family: var(--font-display); font-size: 2.2rem; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.tdee-item__label { font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
+@media (max-width: 640px) { .tdee-grid { grid-template-columns: 1fr; } }
+
+.takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
+.takeaway-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); margin-bottom: 16px; }
+.takeaway-box ul { margin: 0; padding: 0; list-style: none; }
+.takeaway-box li { padding: 10px 0 10px 24px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.5; }
+.takeaway-box li:last-child { border-bottom: none; }
+.takeaway-box li::before { content: ''; position: absolute; left: 0; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: var(--steel-light); }
+
+.post-cta { background: var(--navy); border-radius: var(--r-lg); padding: 20px 40px 50px; text-align: center; margin: 28px 0 0; }
+.post-cta h3 { font-family: var(--font-display); font-size: 2.4rem; color: #fff; margin-bottom: 12px; letter-spacing: 0.02em; line-height: 1; }
+.post-cta p { color: rgba(255,255,255,0.55); margin-bottom: 20px; font-size: 15px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
+.footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; }
+.footer-brand__tagline { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: var(--ice); }
+.footer-socials { display: flex; gap: 12px; }
+.social-icon { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(34,120,172,0.25); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); transition: all 0.2s; }
+.social-icon:hover { border-color: var(--ice); color: var(--ice); }
+.footer__bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+.footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+@media (max-width: 640px) {
+  .post-banner { padding: 100px 5% 56px; }
+  .post-banner__excerpt { font-size: 17px; }
+  .post-cta { padding: 20px 20px 40px; }
+  .takeaway-box { padding: 24px; }
+}
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "What Happens When You Cut Calories Too Fast",
+  "description": "Dr. Joey breaks down what actually happens in your body when you cut calories too aggressively, and why it backfires on hunger, muscle, and metabolism.",
+  "url": "https://strongstandard.com/blog/what-happens-when-you-cut-calories-too-fast/",
+  "datePublished": "2026-08-11",
+  "author": {
+    "@type": "Person",
+    "@id": "https://strongstandard.com/#joey-munoz",
+    "name": "Dr. Joey Munoz"
+  },
+  "publisher": {
+    "@id": "https://strongstandard.com/#organization",
+    "@type": "Organization",
+    "name": "Strong Standard Coaching"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://strongstandard.com/blog/what-happens-when-you-cut-calories-too-fast/"
+  },
+  "keywords": "what happens when you cut calories too fast, extreme calorie deficit side effects, aggressive dieting metabolism, why crash diets fail"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What happens to your body when you cut calories too fast?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cutting calories too aggressively raises hunger hormones like ghrelin, lowers satiety hormones like leptin, and increases the odds of losing muscle mass instead of just fat. This combination makes the diet feel worse and harder to sustain, which increases the risk of regaining the weight."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do extreme diets cause you to gain the weight back?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Extreme calorie cuts trigger stronger hunger signals and lower energy, which most people can't sustain for long. When willpower runs out, eating returns to normal or overshoots it, while any muscle lost during the crash diet lowers your metabolic rate, making it easier to regain fat."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much of a calorie deficit is too aggressive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A deficit beyond roughly 20 to 25% below your maintenance calories starts to significantly increase hunger and risk of muscle loss for most people. A moderate deficit in the 10 to 20% range is generally far more sustainable and easier on your hormones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does eating less always mean losing more fat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Beyond a certain point, eating drastically less increases the odds that some of the weight lost comes from muscle rather than fat, which lowers your metabolic rate over time and works against long-term fat loss."
+      }
+    }
+  ]
+}
+</script>
+<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="/">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="120" height="24" style="height:24px;width:auto;display:block;">
+  </a>
+  <a href="/schedule-call/?utm_source=blog&utm_medium=nav&utm_campaign=blog_post" class="btn btn-primary">
+    Apply Now
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<header class="post-banner">
+  <div class="post-banner__inner">
+    <a href="/blog/" class="post-banner__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+    <div><span class="post-banner__tag">Nutrition</span></div>
+    <h1>What Happens When You Cut Calories <em>Too Fast</em></h1>
+    <p class="post-banner__excerpt">You dropped your calories hard to speed up results, and now you're exhausted, starving, and stuck. Dr. Joey breaks down exactly what happens inside your body when a calorie cut goes too far, too fast.</p>
+    <div class="post-banner__meta">
+      <div class="post-banner__author">
+        <div class="post-banner__avatar">
+          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz">
+        </div>
+        <span class="post-banner__name">Dr. Joey Munoz, PhD</span>
+      </div>
+      <span class="dot">·</span>
+      <span>August 11, 2026</span>
+      <span class="dot">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</header>
+
+<main class="post-wrap">
+  <article class="post-body">
+
+    <div id="yt-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin-bottom:40px;cursor:pointer;background:#000;" onclick="loadYT()">
+      <img src="https://i.ytimg.com/vi/8ncJQPDqj0A/maxresdefault.jpg" alt="How Cutting Calories Sabotages Your Weight Loss" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:12px;opacity:0.85;">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      </div>
+    </div>
+    <script>
+    function loadYT() {
+      var d = document.getElementById('yt-embed');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/8ncJQPDqj0A?autoplay=1';
+      iframe.title = 'How Cutting Calories Sabotages Your Weight Loss';
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;';
+      d.innerHTML = '';
+      d.appendChild(iframe);
+    }
+    </script>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Cutting calories too aggressively raises hunger hormones, lowers the hormones that make you feel satisfied, and increases the risk that some of the weight you lose comes from muscle instead of fat. That combination is why extreme deficits tend to backfire and end in regained weight.</p>
+    </div>
+
+    <p>You cut your calories hard because you wanted faster results. Fewer calories, faster fat loss, that's the logic. But a few weeks in, you're exhausted, distracted by food all day, and the scale has stalled anyway. This isn't a willpower problem. It's a predictable physiological response.</p>
+
+    <p>I'm Dr. Joey Munoz, and I want to walk you through exactly what happens inside your body when a calorie deficit gets too extreme, so you can understand why it backfires and what a smarter deficit actually looks like.</p>
+
+    <h2>Your Hunger Hormones Turn Against You</h2>
+
+    <p>When you drop calories dramatically, your body responds by increasing hunger-signaling hormones like ghrelin, while reducing hormones like leptin that help you feel satisfied after eating. This isn't a mystery or a personal weakness. It's a built-in survival response to what your body perceives as a food shortage.</p>
+
+    <p>The practical result is that you feel hungrier, think about food more, and experience stronger cravings, all while trying to rely on willpower to override those signals. Willpower can win in the short term. It's a poor long-term strategy against hormones that are actively working to get you to eat more.</p>
+
+    <h2>You Start Reaching for Extreme Methods</h2>
+
+    <p>Once fat loss becomes the only thing you're optimizing for, the door opens to increasingly extreme approaches: near-starvation eating, excessive cardio on top of an already large deficit, cutting out entire food groups to force the number down faster.</p>
+
+    <blockquote>When you're just focused on your weight loss and nothing else, you're encouraging these restrictive approaches because they help you lose weight, temporarily.</blockquote>
+
+    <p>These methods can absolutely produce a lower number on the scale in the short term. What they don't do is build a foundation you can sustain, which is exactly why the weight tends to come back once the extreme approach becomes impossible to maintain.</p>
+
+    <h2>Some of What You're Losing Isn't Fat</h2>
+
+    <p>This is the part that gets overlooked the most. A large, aggressive calorie deficit increases the likelihood that some of the weight you're losing is muscle, not just fat. That matters more than it sounds, because muscle tissue is one of the biggest drivers of your metabolic rate.</p>
+
+    <p>Losing muscle means your body burns fewer calories at rest going forward. So even if the scale drops faster in the short term, you're quietly making future fat loss and future weight maintenance harder, not easier.</p>
+
+    <h2>What This Actually Costs You Long Term</h2>
+
+    <div class="tdee-grid">
+      <div class="tdee-item">
+        <div class="tdee-item__value">&darr; Leptin</div>
+        <div class="tdee-item__label">Lower satiety, harder to feel full</div>
+      </div>
+      <div class="tdee-item">
+        <div class="tdee-item__value">&uarr; Ghrelin</div>
+        <div class="tdee-item__label">Higher hunger and food cravings</div>
+      </div>
+      <div class="tdee-item">
+        <div class="tdee-item__value">&darr; Muscle</div>
+        <div class="tdee-item__label">Lower resting metabolic rate</div>
+      </div>
+    </div>
+
+    <p>Put together, this is the exact combination that explains why so many people can lose weight quickly but can't keep it off. The deficit that felt fastest at the time is often the one that made the rebound most likely.</p>
+
+    <h2>What a Smarter Deficit Looks Like Instead</h2>
+
+    <p>A moderate deficit, generally somewhere around 10 to 20% below your maintenance calories, gives you most of the fat loss speed without triggering the same hormonal backlash. Combine that with a daily protein target to protect muscle, and getting the majority of your food from whole, fiber-rich sources to support satiety, and the entire experience feels fundamentally different.</p>
+
+    <p>It's slower on paper than an extreme cut. It's also the version that's still working for you three months from now, which is the only version that actually matters.</p>
+
+    <div class="takeaway-box">
+      <div class="takeaway-box__label">Key Takeaways</div>
+      <ul>
+        <li>Aggressive calorie cuts raise hunger hormones like ghrelin and lower satiety hormones like leptin.</li>
+        <li>Extreme deficits push people toward restrictive extremes like near-starvation eating or excessive cardio.</li>
+        <li>A large deficit increases the risk of losing muscle along with fat, which lowers your metabolic rate.</li>
+        <li>Lower muscle mass makes both fat loss and weight maintenance harder going forward.</li>
+        <li>A moderate deficit of roughly 10 to 20% below maintenance, with adequate protein, is more sustainable and protects your results.</li>
+      </ul>
+    </div>
+
+    <p>The fastest deficit isn't the smartest one. Your hunger hormones and your muscle mass are both quietly keeping score, and an approach that ignores either one tends to cost you the results eventually anyway.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>What happens to your body when you cut calories too fast?</h3>
+      <p>Cutting calories too aggressively raises hunger hormones like ghrelin, lowers satiety hormones like leptin, and increases the odds of losing muscle mass instead of just fat. This combination makes the diet feel worse and harder to sustain, which increases the risk of regaining the weight.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why do extreme diets cause you to gain the weight back?</h3>
+      <p>Extreme calorie cuts trigger stronger hunger signals and lower energy, which most people can't sustain for long. When willpower runs out, eating returns to normal or overshoots it, while any muscle lost during the crash diet lowers your metabolic rate, making it easier to regain fat.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How much of a calorie deficit is too aggressive?</h3>
+      <p>A deficit beyond roughly 20 to 25% below your maintenance calories starts to significantly increase hunger and risk of muscle loss for most people. A moderate deficit in the 10 to 20% range is generally far more sustainable and easier on your hormones.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Does eating less always mean losing more fat?</h3>
+      <p>No. Beyond a certain point, eating drastically less increases the odds that some of the weight lost comes from muscle rather than fat, which lowers your metabolic rate over time and works against long-term fat loss.</p>
+    </div>
+
+    <hr>
+
+    <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+        <a href="/blog/calorie-tracking-is-keeping-you-fat/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a284de377feef7e78c83a06.png')"></div>
+          <div class="related-post-card__title">Calorie Tracking Is Keeping You Fat</div>
+        </a>
+        <a href="/blog/feel-full-calorie-deficit/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/feel-full-calorie-deficit.png')"></div>
+          <div class="related-post-card__title">How to Feel Full on a Calorie Deficit</div>
+        </a>
+        <a href="/blog/how-to-lose-weight-after-40-without-losing-muscle/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-lose-weight-after-40-without-losing-muscle.png')"></div>
+          <div class="related-post-card__title">How to Lose Weight After 40 Without Losing Muscle</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="post-cta">
+      <h3>Ready to Build a Body That Lasts?</h3>
+      <p>Science-backed coaching for busy professionals over 40. Apply today for a fat loss plan built around a sustainable deficit, not a punishing one.</p>
+      <a href="/schedule-call/?utm_source=blog&utm_medium=cta&utm_content=what-happens-when-you-cut-calories-too-fast" style="display:inline-flex;align-items:center;gap:10px;background:#2278AC;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;padding:16px 40px;border-radius:9999px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3899CC'" onmouseout="this.style.background='#2278AC'">
+        Apply Now &rarr;
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="110" height="22" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+      <a href="mailto:drjoey@strongstandard.com">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/dr.joeymunoz/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+</script>
+</body>
+</html>
