@@ -94,7 +94,7 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 680px;
+  max-width: 780px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,14 +116,14 @@ a { text-decoration: none; color: inherit; }
 
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 4.9vw, 3.85rem);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
   color: var(--white);
   letter-spacing: 0.02em;
-  line-height: 1;
+  line-height: 1.06;
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
-h1 .accent { color: var(--steel-light); display: block; }
+h1 .accent { color: var(--steel-light); }
 
 .subheadline {
   font-size: 18px;
@@ -544,7 +544,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <script>
-const WEBHOOK_URL  = 'REPLACE_WITH_NEW_GHL_WEBHOOK_TRIGGER_URL'; // TODO: create a new webhook-trigger in GHL for this freebie (same pattern as Blueprint/Meal Prep)
+const WEBHOOK_URL  = 'https://services.leadconnectorhq.com/hooks/cZF68TO3vzxTOnAdACdK/webhook-trigger/BrTxoaxve1hrNWXe9207';
 const REDIRECT_URL = 'https://strongstandard.com/freebies/3-keys/thank-you/';
 
 const form      = document.getElementById('workshopForm');
