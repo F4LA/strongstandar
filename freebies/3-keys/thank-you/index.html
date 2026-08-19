@@ -981,7 +981,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="confirm-banner">
   <div class="confirm-banner__inner">
     <span class="confirm-banner__dot"></span>
-    <strong>CONFIRMED:</strong>&nbsp; You're all set. Watch the free workshop below — no need to check your email first.
+    <strong>CONFIRMED:</strong>&nbsp; You're all set. Watch the free workshop below.
   </div>
 </div>
 
@@ -1001,7 +1001,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="video-frame reveal" style="transition-delay:0.1s">
         <div class="video-frame__embed">
-          <wistia-player media-id="1a3piacw9p" aspect="1.7777777777777777"></wistia-player>
+          <wistia-player id="workshop-player" media-id="1a3piacw9p" aspect="1.7777777777777777"></wistia-player>
         </div>
         <div class="video-frame__caption">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -1009,10 +1009,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
-      <div class="video-cta-arrow reveal" style="transition-delay:0.2s">
+      <div class="video-cta-arrow reveal" id="unlock-notice" style="transition-delay:0.2s">
         <div class="video-cta-arrow__peek">
-          <span class="video-cta-arrow__label">After watching, scroll down</span>
-          <div class="video-cta-arrow__heading">Book Your Free Discovery Call Below</div>
+          <span class="video-cta-arrow__label">🔒 Unlocks as you watch</span>
+          <div class="video-cta-arrow__heading" id="unlock-heading">Keep watching to unlock your free session &amp; more stories</div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
       </div>
@@ -1043,6 +1043,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════
+     GATED CONTENT — unlocks once 15 min of
+     actual playback (player.secondsWatched)
+     have been watched, via Wistia's Player API
+═══════════════════════════════════════ -->
+<div id="gated-content" style="display:none;">
 
 <div class="divider"></div>
 
@@ -1274,6 +1281,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+</div>
+<!-- /gated-content -->
+
 <!-- ═══════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════ -->
@@ -1331,6 +1341,50 @@ function playVideo(wrapper) {
   video.controls = true;
   video.play();
 }
+
+// Gate booking + testimonials behind 15 min of ACTUAL watch time
+// (player.secondsWatched only counts unique seconds actually played,
+// so skipping ahead doesn't unlock it early — via Wistia's Player API)
+(function() {
+  const player = document.getElementById('workshop-player');
+  const gate = document.getElementById('gated-content');
+  const notice = document.getElementById('unlock-notice');
+  const heading = document.getElementById('unlock-heading');
+  if (!player || !gate) return;
+
+  const THRESHOLD_SECONDS = 900; // 15 minutes
+  let threshold = THRESHOLD_SECONDS;
+  let unlocked = false;
+
+  function unlockContent() {
+    if (unlocked) return;
+    unlocked = true;
+    gate.style.display = '';
+    gate.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    if (notice) notice.style.display = 'none';
+  }
+
+  // If the recording is shorter than 15 min, require a full watch instead
+  player.addEventListener('loaded-metadata', () => {
+    if (player.duration && player.duration < THRESHOLD_SECONDS) {
+      threshold = Math.floor(player.duration);
+    }
+  });
+
+  player.addEventListener('second-change', () => {
+    if (unlocked) return;
+    const watched = player.secondsWatched || 0;
+    const remainingMin = Math.max(0, Math.ceil((threshold - watched) / 60));
+    if (heading) {
+      heading.textContent = remainingMin > 0
+        ? `Keep watching — unlocks in about ${remainingMin} more minute${remainingMin === 1 ? '' : 's'}`
+        : 'Unlocking now\u2026';
+    }
+    if (watched >= threshold) unlockContent();
+  });
+
+  player.addEventListener('ended', unlockContent);
+})();
 </script>
 
 <!-- GHL Calendar script -->
