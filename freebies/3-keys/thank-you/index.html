@@ -29,6 +29,7 @@
   --gold:        #C8A96E;
   --success:     #3DD68C;
   --warning:     #E05555;
+  --yellow:      #FFCF40;
 
   --font-display: 'Bebas Neue', sans-serif;
   --font-serif:   'DM Serif Display', serif;
@@ -455,6 +456,15 @@ h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
   color: var(--warning);
 }
 .booking__urgency svg { flex-shrink: 0; }
+
+.lock-countdown {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 8vw, 5.5rem);
+  letter-spacing: 0.04em;
+  color: var(--yellow, #FFCF40);
+  line-height: 1;
+  margin: 8px 0 20px;
+}
 
 /* Booking embed */
 .booking__embed-wrapper {
@@ -1011,8 +1021,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="video-cta-arrow reveal" id="unlock-notice" style="transition-delay:0.2s">
         <div class="video-cta-arrow__peek">
-          <span class="video-cta-arrow__label">🔒 Unlocks as you watch</span>
-          <div class="video-cta-arrow__heading" id="unlock-heading">Keep watching to unlock your free session &amp; more stories</div>
+          <span class="video-cta-arrow__label">🔒 Your Application</span>
+          <div class="video-cta-arrow__heading">Application opens up in: <span class="unlock-countdown">15:00</span></div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
       </div>
@@ -1044,38 +1054,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     GATED CONTENT — unlocks once 15 min of
-     actual playback (player.secondsWatched)
-     have been watched, via Wistia's Player API
-═══════════════════════════════════════ -->
-<div id="gated-content" style="display:none;">
-
 <div class="divider"></div>
 
 <!-- ═══════════════════════════════════════
-     BOOKING SECTION
+     BOOKING SECTION — the "application".
+     Unlocks once 15 min of ACTUAL playback
+     (player.secondsWatched) have been watched,
+     via Wistia's Player API.
 ═══════════════════════════════════════ -->
 <section class="booking" id="book">
   <div class="container container--narrow">
-    <div class="booking__header reveal">
-      <span class="label">Next Step</span>
-      <h2>Book Your Free 60-Minute<br>Discovery Call</h2>
-      <div class="booking__urgency">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        We accept a limited number of new clients each month
+
+    <!-- Locked state (default) -->
+    <div id="application-locked" class="reveal">
+      <div class="booking__header">
+        <span class="label">Next Step</span>
+        <h2>Application Opens<br>Up In:</h2>
+        <div class="lock-countdown"><span class="unlock-countdown">15:00</span></div>
+        <p>Keep the workshop playing above — your application unlocks automatically as you watch.</p>
       </div>
     </div>
 
-    <div class="booking__embed-wrapper reveal" style="transition-delay:0.1s">
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/booking/73Jm15h9TfIGIPS4k3Om"
-        style="width:100%;border:none;overflow:hidden;display:block;"
-        scrolling="no"
-        id="5GYbygy8z9LTMhiy5hES_1776277763817"
-        title="Book Your 60-Minute Strategy Call">
-      </iframe>
+    <!-- Unlocked state -->
+    <div id="application-unlocked" style="display:none;">
+      <div class="booking__header reveal">
+        <span class="label">Next Step</span>
+        <h2>Book Your Free 60-Minute<br>Discovery Call</h2>
+        <div class="booking__urgency">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          We accept a limited number of new clients each month
+        </div>
+      </div>
+
+      <div class="booking__embed-wrapper reveal" style="transition-delay:0.1s">
+        <iframe
+          src="https://api.leadconnectorhq.com/widget/booking/73Jm15h9TfIGIPS4k3Om"
+          style="width:100%;border:none;overflow:hidden;display:block;"
+          scrolling="no"
+          id="5GYbygy8z9LTMhiy5hES_1776277763817"
+          title="Book Your 60-Minute Strategy Call">
+        </iframe>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -1281,9 +1302,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-</div>
-<!-- /gated-content -->
-
 <!-- ═══════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════ -->
@@ -1342,48 +1360,61 @@ function playVideo(wrapper) {
   video.play();
 }
 
-// Gate booking + testimonials behind 15 min of ACTUAL watch time
-// (player.secondsWatched only counts unique seconds actually played,
-// so skipping ahead doesn't unlock it early — via Wistia's Player API)
+// Gate the application (booking widget) behind 15 min of ACTUAL watch time.
+// Case studies / testimonials stay visible the whole time.
+// player.secondsWatched only counts unique seconds actually played,
+// so skipping ahead with the scrubber doesn't unlock it early — via Wistia's Player API.
 (function() {
   const player = document.getElementById('workshop-player');
-  const gate = document.getElementById('gated-content');
-  const notice = document.getElementById('unlock-notice');
-  const heading = document.getElementById('unlock-heading');
-  if (!player || !gate) return;
+  const lockedEl = document.getElementById('application-locked');
+  const unlockedEl = document.getElementById('application-unlocked');
+  const countdownEls = document.querySelectorAll('.unlock-countdown');
+  if (!player || !lockedEl || !unlockedEl) return;
 
   const THRESHOLD_SECONDS = 900; // 15 minutes
   let threshold = THRESHOLD_SECONDS;
   let unlocked = false;
 
-  function unlockContent() {
+  function formatMMSS(totalSeconds) {
+    const s = Math.max(0, Math.round(totalSeconds));
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  function updateCountdown(remainingSeconds) {
+    const text = formatMMSS(remainingSeconds);
+    countdownEls.forEach(el => { el.textContent = text; });
+  }
+
+  function unlockApplication() {
     if (unlocked) return;
     unlocked = true;
-    gate.style.display = '';
-    gate.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    lockedEl.style.display = 'none';
+    unlockedEl.style.display = '';
+    unlockedEl.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    const notice = document.getElementById('unlock-notice');
     if (notice) notice.style.display = 'none';
   }
+
+  updateCountdown(threshold);
 
   // If the recording is shorter than 15 min, require a full watch instead
   player.addEventListener('loaded-metadata', () => {
     if (player.duration && player.duration < THRESHOLD_SECONDS) {
       threshold = Math.floor(player.duration);
+      updateCountdown(threshold);
     }
   });
 
   player.addEventListener('second-change', () => {
     if (unlocked) return;
     const watched = player.secondsWatched || 0;
-    const remainingMin = Math.max(0, Math.ceil((threshold - watched) / 60));
-    if (heading) {
-      heading.textContent = remainingMin > 0
-        ? `Keep watching — unlocks in about ${remainingMin} more minute${remainingMin === 1 ? '' : 's'}`
-        : 'Unlocking now\u2026';
-    }
-    if (watched >= threshold) unlockContent();
+    updateCountdown(threshold - watched);
+    if (watched >= threshold) unlockApplication();
   });
 
-  player.addEventListener('ended', unlockContent);
+  player.addEventListener('ended', unlockApplication);
 })();
 </script>
 
