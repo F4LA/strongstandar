@@ -587,16 +587,22 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(payload),
     });
 
-    // Also fire the Zapier webhook. Content-Type is text/plain (not
-    // application/json) to avoid a CORS preflight that Zapier's catch
-    // hook doesn't always handle — otherwise the browser silently blocks
-    // the whole request before it's ever sent. Zapier still parses the
-    // JSON body fine on their end. Fire-and-forget so a hiccup here
-    // doesn't block the opt-in flow or the redirect.
+    // Also fire the Zapier webhook. Sent as application/x-www-form-urlencoded
+    // (not application/json) so it: (a) stays a CORS "simple request" and
+    // never triggers a preflight the browser could get blocked on, and
+    // (b) Zapier parses it into separate fields (firstName, email, phone,
+    // freebie) instead of one raw-body blob. Fire-and-forget so a hiccup
+    // here doesn't block the opt-in flow or the redirect.
+    const zapierParams = new URLSearchParams();
+    zapierParams.append('firstName', firstName);
+    zapierParams.append('email', email);
+    zapierParams.append('phone', phone || '');
+    zapierParams.append('freebie', '3 Keys Workshop');
+
     fetch(ZAPIER_WEBHOOK_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: zapierParams.toString(),
     }).catch(err => console.error('Zapier webhook failed:', err));
 
     success.style.display = 'block';
