@@ -1075,28 +1075,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <!-- Unlocked state -->
+    <!-- Unlocked state: send to the application first, calendar comes after -->
     <div id="application-unlocked" style="display:none;">
       <div class="booking__header reveal">
         <span class="label">Next Step</span>
-        <h2>Book Your Free 60-Minute<br>Discovery Call</h2>
+        <h2>Apply for Your Free 60-Minute<br>Discovery Call</h2>
         <div class="booking__urgency">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           We accept a limited number of new clients each month
         </div>
-      </div>
-
-      <div class="booking__embed-wrapper reveal" style="transition-delay:0.1s">
-        <iframe
-          src="https://api.leadconnectorhq.com/widget/booking/73Jm15h9TfIGIPS4k3Om"
-          style="width:100%;border:none;overflow:hidden;display:block;"
-          scrolling="no"
-          id="5GYbygy8z9LTMhiy5hES_1776277763817"
-          title="Book Your 60-Minute Strategy Call">
-        </iframe>
+        <p style="margin-top:16px;color:var(--muted);">Taking you to the application now&hellip;</p>
+        <a href="/schedule-call/" id="applicationLink" class="btn-submit" style="display:inline-flex;margin-top:16px;text-decoration:none;">
+          Continue to Application
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -1391,6 +1385,15 @@ function playVideo(wrapper) {
     countdownEls.forEach(el => { el.textContent = text; });
   }
 
+  function withUTMs(url) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('ss_utms') || '{}');
+      const u = new URL(url, window.location.origin);
+      Object.keys(saved).forEach(k => { if (saved[k]) u.searchParams.set(k, saved[k]); });
+      return u.toString();
+    } catch (e) { return url; }
+  }
+
   function unlockApplication() {
     if (unlocked) return;
     unlocked = true;
@@ -1399,6 +1402,11 @@ function playVideo(wrapper) {
     unlockedEl.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
     const notice = document.getElementById('unlock-notice');
     if (notice) notice.style.display = 'none';
+
+    const appLink = document.getElementById('applicationLink');
+    const target = withUTMs('/schedule-call/');
+    if (appLink) appLink.setAttribute('href', target);
+    setTimeout(() => { window.location.href = target; }, 2500);
   }
 
   updateCountdown(threshold);

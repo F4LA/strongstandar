@@ -1255,6 +1255,32 @@ function playVideo(wrapper) {
   video.controls = true;
   video.play();
 }
+
+// After the application (form HYx1ddFptmoQovx2U5Y1) is submitted inside the
+// iframe, send the visitor on to the calendar step — keeping their UTMs.
+// GHL's form_embed.js posts submission data to the parent window as an array
+// message, with the submitted fields as a JSON string in data[2].
+(function() {
+  function withUTMs(url) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('ss_utms') || '{}');
+      const u = new URL(url, window.location.origin);
+      Object.keys(saved).forEach(k => { if (saved[k]) u.searchParams.set(k, saved[k]); });
+      return u.toString();
+    } catch (e) { return url; }
+  }
+
+  let redirected = false;
+  window.addEventListener('message', function(event) {
+    if (redirected) return;
+    if (Object.prototype.toString.call(event.data) !== '[object Array]') return;
+    const payload = event.data[2];
+    if (typeof payload === 'string' && payload.includes('email')) {
+      redirected = true;
+      window.location.href = withUTMs('/schedule-call/calendar/');
+    }
+  });
+})();
 </script>
 
 <!-- GHL Form script -->
