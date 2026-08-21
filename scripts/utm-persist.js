@@ -59,15 +59,41 @@
     });
   }
 
-  // Run on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', patchLinks);
-  } else {
-    patchLinks();
+  // 5b. Patch GoHighLevel iframe form embeds — an iframe never sees the parent
+  // page's URL params on its own, so UTMs must be appended to the iframe src
+  // directly for GHL to have any chance of writing them to hidden form fields.
+  function patchGHLIframes() {
+    document.querySelectorAll('iframe[src*="leadconnectorhq.com/widget/form"]').forEach(f => {
+      const original = f.getAttribute('src');
+      if (!original) return;
+      try {
+        const url = new URL(original, window.location.origin);
+        let changed = false;
+        UTM_KEYS.forEach(k => {
+          if (!url.searchParams.get(k) && saved[k]) {
+            url.searchParams.set(k, saved[k]);
+            changed = true;
+          }
+        });
+        if (changed) f.setAttribute('src', url.toString());
+      } catch (e) {}
+    });
   }
 
-  // 6. Watch for dynamically added links
-  const observer = new MutationObserver(patchLinks);
+  function patchAll() {
+    patchLinks();
+    patchGHLIframes();
+  }
+
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', patchAll);
+  } else {
+    patchAll();
+  }
+
+  // 6. Watch for dynamically added links/iframes
+  const observer = new MutationObserver(patchAll);
   observer.observe(document.body, { childList: true, subtree: true });
 
 })();

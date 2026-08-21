@@ -506,6 +506,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 const WEBHOOK_URL  = 'https://services.leadconnectorhq.com/hooks/cZF68TO3vzxTOnAdACdK/webhook-trigger/RQ7RyIT15AxnGK0MzUPA';
 const REDIRECT_URL = 'https://strongstandard.com/freebies/21dc-offer/';
 
+// Always carry UTMs forward on redirect (reads what utm-persist.js saved to sessionStorage).
+function withUTMs(url) {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem('ss_utms') || '{}');
+    const u = new URL(url, window.location.origin);
+    Object.keys(saved).forEach(k => { if (saved[k]) u.searchParams.set(k, saved[k]); });
+    return u.toString();
+  } catch (e) { return url; }
+}
+
 const form      = document.getElementById('blueprintForm');
 const submitBtn = document.getElementById('submitBtn');
 const success   = document.getElementById('formSuccess');
@@ -552,7 +562,7 @@ form.addEventListener('submit', async (e) => {
 
     success.style.display = 'block';
     form.querySelectorAll('input:not([type=checkbox])').forEach(i => i.value = '');
-    setTimeout(() => { window.location.href = REDIRECT_URL; }, 2000);
+    setTimeout(() => { window.location.href = withUTMs(REDIRECT_URL); }, 2000);
 
   } catch (err) {
     console.error(err);
