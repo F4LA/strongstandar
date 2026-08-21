@@ -1375,6 +1375,10 @@ function playVideo(wrapper) {
   let threshold = THRESHOLD_SECONDS;
   let unlocked = false;
 
+  // QA bypass: add ?unlock=now to the URL to skip the 15-min wait while testing.
+  // Does not affect real visitors — the gate stays on by default.
+  const testBypass = new URLSearchParams(window.location.search).get('unlock') === 'now';
+
   function formatMMSS(totalSeconds) {
     const s = Math.max(0, Math.round(totalSeconds));
     const m = Math.floor(s / 60);
@@ -1398,6 +1402,8 @@ function playVideo(wrapper) {
   }
 
   updateCountdown(threshold);
+
+  if (testBypass) unlockApplication();
 
   // If the recording is shorter than 15 min, require a full watch instead
   player.addEventListener('loaded-metadata', () => {
