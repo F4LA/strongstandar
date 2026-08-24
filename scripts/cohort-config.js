@@ -12,7 +12,7 @@ window.SS_COHORT = {
 
   // Date literal matching the "Challenge Month" column (AJ) for the CURRENT cohort.
   // Format must stay 'YYYY-MM-01' to match the gviz date type.
-  CHALLENGE_MONTH_DATE: '2026-08-01',
+  CHALLENGE_MONTH_DATE: '2026-09-01',
 
   // Spot counts / pricing tiers
   TOTAL_SPOTS: 60,
