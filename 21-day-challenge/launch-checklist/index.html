@@ -1399,6 +1399,13 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     return `${utc.getFullYear()}-${pad(utc.getMonth()+1)}-${pad(utc.getDate())}T${pad(utc.getHours())}:${pad(utc.getMinutes())}:00Z`;
   }
 
+  function formatChallengeMonthDate(dt) {
+    // e.g. "2026-09-01" — matches the Client Mastersheet "Challenge Month" (col AJ) literal format
+    const d = new Date(dt);
+    const pad = n => String(n).padStart(2,'0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-01`;
+  }
+
   async function updateLandingPages(kickoffVal, closingVal) {
     const results = [];
 
@@ -1455,6 +1462,29 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       results.push({ file: 'Kickoff Registration', status: '✅' });
     } catch(e) {
       results.push({ file: 'Kickoff Registration', status: '❌ ' + e.message });
+    }
+
+    // ── 3. scripts/cohort-config.js — spots counter cohort month ─
+    try {
+      const { sha, content } = await githubGetSha('scripts/cohort-config.js');
+      const newMonthDate = formatChallengeMonthDate(kickoffVal);
+      const updated = content.replace(
+        /CHALLENGE_MONTH_DATE:\s*'[^']+'/,
+        `CHALLENGE_MONTH_DATE: '${newMonthDate}'`
+      );
+
+      if (updated === content) {
+        results.push({ file: 'Cohort Config (spots counter)', status: 'ℹ️ Ya estaba en ' + newMonthDate });
+      } else {
+        await githubUpdateFile(
+          'scripts/cohort-config.js',
+          updated, sha,
+          `Update cohort month for spots counter to ${newMonthDate}`
+        );
+        results.push({ file: 'Cohort Config (spots counter)', status: `✅ → ${newMonthDate}` });
+      }
+    } catch(e) {
+      results.push({ file: 'Cohort Config (spots counter)', status: '❌ ' + e.message });
     }
 
     return results;
