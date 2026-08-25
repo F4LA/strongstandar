@@ -509,7 +509,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="spots-counter">
           <span class="spots-counter__dot"></span>
-          Only <span id="spots-count">60</span> of 60 spots remaining at <span id="spots-price">$97</span>
+          Only <span id="spots-count">60</span> of <span id="spots-total">60</span> spots remaining at <span id="spots-price">$97</span>
         </div>
 
         <h3>Lean &amp; Strong<br><span class="accent">21-Day Challenge</span></h3>
@@ -677,6 +677,9 @@ function updateUI(purchaseCount) {
   // Spots counter
   const sc = document.getElementById('spots-count');
   if (sc) sc.textContent = currentSpots;
+
+  const st = document.getElementById('spots-total');
+  if (st) st.textContent = TOTAL_SPOTS;
 
   const sp = document.getElementById('spots-price');
   if (sp) sp.textContent = priceStr;

@@ -2261,7 +2261,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <div class="sticky-banner__spots">
     <span class="spots-dot"></span>
-    <span><strong id="spots-banner-count">60</strong> of 60 Spots Left</span>
+    <span><strong id="spots-banner-count">60</strong> of <span id="spots-banner-total">60</span> Spots Left</span>
   </div>
 </div>
 
@@ -2984,7 +2984,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="offer__spots-text">
           <span class="spots-dot spots-dot--accent"></span>
-          <strong id="offer-spots-count">60</strong> of 60 spots remaining
+          <strong id="offer-spots-count">60</strong> of <span id="offer-spots-total">60</span> spots remaining
         </div>
       </div>
 
@@ -3150,7 +3150,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p style="font-size:13px;color:#FFFFFF;margin-top:12px;">Try the full 21 days. If you're not thrilled with your progress, email us on day 21 and we'll refund every penny.</p>
       <div class="final-cta__spots">
         <span class="spots-dot spots-dot--white"></span>
-        <strong id="final-spots-count">60</strong> of 60 spots remaining
+        <strong id="final-spots-count">60</strong> of <span id="final-spots-total">60</span> spots remaining
       </div>
     </div>
   </div>
@@ -3251,6 +3251,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     ['spots-banner-count','hero-spots-count','offer-spots-count','final-spots-count','floating-spots-count'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = currentSpots;
+    });
+
+    ['spots-banner-total','offer-spots-total','final-spots-total'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = TOTAL_SPOTS;
     });
 
     document.querySelectorAll('.dynamic-price').forEach(el => { el.textContent = priceStr; });
