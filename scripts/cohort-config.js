@@ -15,7 +15,7 @@ window.SS_COHORT = {
   CHALLENGE_MONTH_DATE: '2026-09-01',
 
   // Spot counts / pricing tiers
-  TOTAL_SPOTS: 75,
+  TOTAL_SPOTS: 60,
   TIER_1_LIMIT: 30,
   PRICE_TIER_1: 97,
   PRICE_TIER_2: 147,
