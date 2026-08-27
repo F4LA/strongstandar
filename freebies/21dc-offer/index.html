@@ -198,21 +198,27 @@ h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.25; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(224,85,85,0.08);
-  border: 1px solid rgba(224,85,85,0.25);
+  background: rgba(61,214,140,0.08);
+  border: 1px solid rgba(61,214,140,0.25);
   border-radius: var(--r-full);
   padding: 8px 18px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--warning);
+  color: var(--success);
   margin-bottom: 28px;
 }
 .spots-counter__dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--warning);
+  background: var(--success);
   animation: pulse-dot 1.6s infinite;
 }
+.spots-counter--urgent {
+  background: rgba(224,85,85,0.08);
+  border-color: rgba(224,85,85,0.25);
+  color: var(--warning);
+}
+.spots-counter--urgent .spots-counter__dot { background: var(--warning); }
 
 .challenge-card h3 {
   font-family: var(--font-display);
@@ -507,7 +513,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="challenge-card reveal" style="transition-delay:0.1s">
       <div class="challenge-card__body">
 
-        <div class="spots-counter">
+        <div class="spots-counter" id="spots-counter">
           <span class="spots-counter__dot"></span>
           Only <span id="spots-count">60</span> of <span id="spots-total">60</span> spots remaining at <span id="spots-price">$97</span>
         </div>
@@ -680,6 +686,9 @@ function updateUI(purchaseCount) {
 
   const st = document.getElementById('spots-total');
   if (st) st.textContent = TOTAL_SPOTS;
+
+  const scEl = document.getElementById('spots-counter');
+  if (scEl) scEl.classList.toggle('spots-counter--urgent', currentSpots <= 10);
 
   const sp = document.getElementById('spots-price');
   if (sp) sp.textContent = priceStr;
