@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D1A">
+<title>Why You Keep Regaining Weight | Strong Standard</title>
+<meta name="description" content="Dr. Joey explains why 97% of people who lose significant weight regain it within 5 years, and why the speed of your weight loss matters more than you think.">
+<link rel="canonical" href="https://strongstandard.com/blog/why-you-keep-regaining-weight/">
+<meta name="robots" content="index, follow">
+<script src="/scripts/utm-persist.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --ice:         #A8CDE0;
+  --page-bg:     #F7F5F0;
+  --surface:     #FFFFFF;
+  --ink:         #1A1A1A;
+  --ink-2:       #3A3A3A;
+  --ink-muted:   #6B6B6B;
+  --rule:        #E4E0D8;
+  --accent:      #2278AC;
+  --accent-soft: #EBF4FB;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-serif:  'DM Serif Display', serif;
+  --font-body:   'DM Sans', sans-serif;
+  --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+  --content-width: 920px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); font-size: 18px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: var(--navy); }
+nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: var(--r-full); transition: all 0.2s; border: none; }
+.btn-primary { background: var(--steel-mid); color: #fff; padding: 11px 26px; font-size: 13px; }
+.btn-primary:hover { background: var(--steel-light); }
+
+.post-banner { background: var(--navy); padding: 112px 5% 72px; border-bottom: 3px solid var(--accent); }
+.post-banner__inner { max-width: var(--content-width); margin: 0 auto; }
+.post-banner__back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 36px; transition: color 0.2s; font-family: var(--font-body); }
+.post-banner__back:hover { color: var(--ice); }
+.post-banner__tag { display: inline-block; padding: 4px 12px; border-radius: var(--r-full); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(34,120,172,0.2); color: var(--ice); margin-bottom: 24px; }
+.post-banner h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1; letter-spacing: 0.02em; color: #fff; margin-bottom: 28px; }
+.post-banner h1 em { color: var(--ice); font-style: normal; }
+.post-banner__excerpt { font-size: 20px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 36px; max-width: 680px; font-weight: 300; }
+.post-banner__meta { display: flex; align-items: center; gap: 14px; font-size: 13px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+.post-banner__author { display: flex; align-items: center; gap: 10px; }
+.post-banner__avatar { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(56,153,204,0.4); }
+.post-banner__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.post-banner__name { color: rgba(255,255,255,0.8); font-weight: 500; }
+.dot { color: rgba(255,255,255,0.2); }
+
+.post-wrap { max-width: var(--content-width); margin: 0 auto; padding: 64px 5% 100px; }
+.post-body { font-size: 18px; line-height: 1.8; color: var(--ink-2); }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.05; letter-spacing: 0.02em; color: var(--ink); margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid var(--accent); display: block; }
+.post-body h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.15; letter-spacing: 0.02em; color: var(--ink); margin: 32px 0 10px; }
+.post-body ul, .post-body ol { margin: 0 0 24px 0; padding-left: 0; list-style: none; }
+.post-body li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.post-body li:last-child { border-bottom: none; }
+.post-body li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.post-body strong { color: var(--ink); font-weight: 600; }
+.post-body em { color: var(--ink-muted); font-style: italic; }
+.post-body a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(34,120,172,0.3); }
+.post-body a:hover { text-decoration-color: var(--accent); }
+.post-body blockquote { border-left: 4px solid var(--accent); padding: 20px 28px; margin: 40px 0; background: var(--accent-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--ink); line-height: 1.6; }
+.post-body hr { border: none; border-top: 1px solid var(--rule); margin: 48px 0; }
+
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
+.tdee-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 28px 0 36px; }
+.tdee-item { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); padding: 20px 18px; text-align: center; }
+.tdee-item__value { font-family: var(--font-display); font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.tdee-item__label { font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
+@media (max-width: 640px) { .tdee-grid { grid-template-columns: 1fr; } }
+
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0 36px; }
+.compare-item { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); padding: 22px 24px; }
+.compare-item__label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
+.compare-item p { font-size: 15px; color: var(--ink-2); margin-bottom: 0; }
+@media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+
+.takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
+.takeaway-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); margin-bottom: 16px; }
+.takeaway-box ul { margin: 0; padding: 0; list-style: none; }
+.takeaway-box li { padding: 10px 0 10px 24px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.5; }
+.takeaway-box li:last-child { border-bottom: none; }
+.takeaway-box li::before { content: ''; position: absolute; left: 0; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: var(--steel-light); }
+
+.post-cta { background: var(--navy); border-radius: var(--r-lg); padding: 20px 40px 50px; text-align: center; margin: 28px 0 0; }
+.post-cta h3 { font-family: var(--font-display); font-size: 2.4rem; color: #fff; margin-bottom: 12px; letter-spacing: 0.02em; line-height: 1; }
+.post-cta p { color: rgba(255,255,255,0.55); margin-bottom: 20px; font-size: 15px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
+.footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; }
+.footer-brand__tagline { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: var(--ice); }
+.footer-socials { display: flex; gap: 12px; }
+.social-icon { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(34,120,172,0.25); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); transition: all 0.2s; }
+.social-icon:hover { border-color: var(--ice); color: var(--ice); }
+.footer__bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+.footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+@media (max-width: 640px) {
+  .post-banner { padding: 100px 5% 56px; }
+  .post-banner__excerpt { font-size: 17px; }
+  .post-cta { padding: 20px 20px 40px; }
+  .takeaway-box { padding: 24px; }
+}
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Why You Keep Regaining Weight",
+  "description": "Dr. Joey explains why 97% of people who lose significant weight regain it within 5 years, and why the speed of your weight loss matters more than you think.",
+  "url": "https://strongstandard.com/blog/why-you-keep-regaining-weight/",
+  "datePublished": "2026-08-26",
+  "author": {
+    "@type": "Person",
+    "@id": "https://strongstandard.com/#joey-munoz",
+    "name": "Dr. Joey Munoz"
+  },
+  "publisher": {
+    "@id": "https://strongstandard.com/#organization",
+    "@type": "Organization",
+    "name": "Strong Standard Coaching"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://strongstandard.com/blog/why-you-keep-regaining-weight/"
+  },
+  "keywords": "why do I keep regaining weight, rate of weight loss and muscle loss, why extreme diets fail, muscle mass and metabolism weight maintenance"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do most people regain the weight they lose?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Extreme, fast diets tend to produce more muscle loss relative to fat loss, which lowers metabolic rate and makes weight maintenance harder afterward. When the diet inevitably ends, eating returns to previous habits that were never actually addressed, and weight comes back."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the speed of weight loss actually affect how much muscle you lose?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Research shows that losing weight quickly results in a higher proportion of muscle loss relative to fat loss compared to losing weight slowly and consistently, even for the same total number of pounds lost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does losing muscle make it harder to keep weight off?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Muscle is metabolically active tissue that burns calories at rest. Losing muscle lowers your resting metabolic rate, meaning you have to eat less just to maintain the same weight, which makes long-term maintenance significantly harder."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes yo-yo dieting worse over time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each cycle of rapid weight loss followed by regain tends to lose a meaningful amount of muscle and regain mostly fat, leaving you with a worse body composition and a lower metabolism than when you started, even if the scale number looks similar."
+      }
+    }
+  ]
+}
+</script>
+<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="/">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="120" height="24" style="height:24px;width:auto;display:block;">
+  </a>
+  <a href="/schedule-call/?utm_source=blog&utm_medium=nav&utm_campaign=blog_post" class="btn btn-primary">
+    Apply Now
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<header class="post-banner">
+  <div class="post-banner__inner">
+    <a href="/blog/" class="post-banner__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+    <div><span class="post-banner__tag">Nutrition</span></div>
+    <h1>Why You Keep <em>Regaining</em> Weight</h1>
+    <p class="post-banner__excerpt">97% of people who lose significant weight regain it within 5 years. Dr. Joey explains why keeping weight off is the real challenge, and why the speed of your weight loss matters more than you'd think.</p>
+    <div class="post-banner__meta">
+      <div class="post-banner__author">
+        <div class="post-banner__avatar">
+          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz">
+        </div>
+        <span class="post-banner__name">Dr. Joey Munoz, PhD</span>
+      </div>
+      <span class="dot">·</span>
+      <span>August 26, 2026</span>
+      <span class="dot">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</header>
+
+<main class="post-wrap">
+  <article class="post-body">
+
+    <div id="yt-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin-bottom:40px;cursor:pointer;background:#000;" onclick="loadYT()">
+      <img src="https://i.ytimg.com/vi/oCowFdPwqkk/maxresdefault.jpg" alt="The REAL reason you keep regaining weight and how to fix it!" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:12px;opacity:0.85;">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      </div>
+    </div>
+    <script>
+    function loadYT() {
+      var d = document.getElementById('yt-embed');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/oCowFdPwqkk?autoplay=1';
+      iframe.title = 'The REAL reason you keep regaining weight and how to fix it';
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;';
+      d.innerHTML = '';
+      d.appendChild(iframe);
+    }
+    </script>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Most people regain weight because rapid, extreme weight loss causes disproportionate muscle loss, which lowers your metabolism and makes maintenance harder. Losing weight slowly and prioritizing protein, sleep, and resistance training preserves more muscle, protects your metabolic rate, and makes keeping the weight off far more achievable.</p>
+    </div>
+
+    <p>97% of people who lose a considerable amount of weight regain it within just 5 years. That statistic alone tells you something important: losing weight isn't the real challenge, keeping it off is. And it's not because you lack willpower or motivation, it's because most people are using the wrong strategy from the start.</p>
+
+    <h2>The Extreme Diet Cycle You've Probably Lived Through</h2>
+
+    <p>Here's a familiar pattern: you weren't focused on your nutrition, you overate for months or years, gained weight, and eventually decided to fix it fast. So you cut calories drastically, maybe down to 1,200 a day, and eliminated entire categories of food because someone online told you they were bad for you.</p>
+
+    <p>You stuck with it, motivated despite how hard it felt, and saw results. But over time you got exhausted, moody, and hungry, with constant cravings for everything you'd told yourself you could never eat. Eventually you quit, binged on everything you'd restricted, and slowly drifted back to your old habits, because the habits themselves were never actually addressed.</p>
+
+    <h2>Why Speed of Weight Loss Changes Everything</h2>
+
+    <p>Research is clear on this: quicker weight loss results in more muscle loss relative to fat loss, compared to losing weight slowly and consistently. Two people can each lose 30 pounds and end up with completely different body compositions depending on how they got there.</p>
+
+    <div class="tdee-grid">
+      <div class="tdee-item">
+        <div class="tdee-item__value">25 / 5</div>
+        <div class="tdee-item__label">Slow approach: 25 lbs fat, 5 lbs muscle lost of a 30 lb loss</div>
+      </div>
+      <div class="tdee-item">
+        <div class="tdee-item__value">15 / 15</div>
+        <div class="tdee-item__label">Fast, extreme approach: 15 lbs fat, 15 lbs muscle lost of the same 30 lb loss</div>
+      </div>
+    </div>
+
+    <p>When you eat as little as possible to lose weight quickly, you typically also neglect the other variables that protect muscle: adequate protein, sufficient sleep, and resistance training. Hunger disrupts sleep quality, and undereating leaves little energy or motivation for lifting, so extreme dieters often end up doing more cardio and less strength work, compounding the muscle loss.</p>
+
+    <h2>Why Losing Muscle Makes Everything Harder Afterward</h2>
+
+    <blockquote>Muscle is metabolically active tissue. If you lose muscle mass, you're going to be burning fewer calories at rest, which means you have to eat less to maintain your weight loss.</blockquote>
+
+    <p>This is the mechanism that quietly sabotages long-term success. Lower muscle mass means a lower resting metabolic rate, which means less food is needed to maintain the same weight. That makes maintenance feel like a constant fight rather than something sustainable.</p>
+
+    <div class="compare-grid">
+      <div class="compare-item">
+        <div class="compare-item__label">Yo-Yo Cycle</div>
+        <p>Lose 30 lbs, 15 of it muscle. Regain 30 lbs, 25 of it fat. Each cycle leaves you worse off than before you started.</p>
+      </div>
+      <div class="compare-item">
+        <div class="compare-item__label">Muscle-Preserving Approach</div>
+        <p>Lose weight slowly, protect muscle through protein and training. Metabolic rate stays higher, making maintenance genuinely achievable.</p>
+      </div>
+    </div>
+
+    <h2>What Actually Protects Your Results</h2>
+
+    <p>Prioritizing strength training over cardio during a diet, eating adequate protein, roughly 0.7 to 0.8 grams per pound of ideal body weight, and losing weight at a rate of about half a percent to 1% of body weight per week all work together to protect muscle mass while you lose fat.</p>
+
+    <p>Building muscle during weight loss, rather than just avoiding losing it, can actually increase your metabolic rate during the process, letting you eat more food while still making progress. It also means you carry more fat while still looking leaner, since leanness is relative to how much muscle you have.</p>
+
+    <div class="takeaway-box">
+      <div class="takeaway-box__label">Key Takeaways</div>
+      <ul>
+        <li>97% of people who lose significant weight regain it within 5 years, making maintenance the real challenge, not the initial loss.</li>
+        <li>Rapid, extreme weight loss causes a higher proportion of muscle loss relative to fat loss than a slower approach.</li>
+        <li>Losing muscle lowers your resting metabolic rate, making it harder to maintain weight loss long term.</li>
+        <li>Repeated yo-yo dieting cycles tend to lose muscle and regain fat, leaving worse body composition each time.</li>
+        <li>Slow weight loss, adequate protein, and prioritizing strength training protect muscle and support lasting results.</li>
+      </ul>
+    </div>
+
+    <p>The goal was never just losing weight quickly. It's protecting the muscle that keeps your metabolism working for you, so that once you reach your goal, staying there doesn't feel like a constant uphill battle.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Why do most people regain the weight they lose?</h3>
+      <p>Extreme, fast diets tend to produce more muscle loss relative to fat loss, which lowers metabolic rate and makes weight maintenance harder afterward. When the diet inevitably ends, eating returns to previous habits that were never actually addressed, and weight comes back.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Does the speed of weight loss actually affect how much muscle you lose?</h3>
+      <p>Yes. Research shows that losing weight quickly results in a higher proportion of muscle loss relative to fat loss compared to losing weight slowly and consistently, even for the same total number of pounds lost.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why does losing muscle make it harder to keep weight off?</h3>
+      <p>Muscle is metabolically active tissue that burns calories at rest. Losing muscle lowers your resting metabolic rate, meaning you have to eat less just to maintain the same weight, which makes long-term maintenance significantly harder.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What makes yo-yo dieting worse over time?</h3>
+      <p>Each cycle of rapid weight loss followed by regain tends to lose a meaningful amount of muscle and regain mostly fat, leaving you with a worse body composition and a lower metabolism than when you started, even if the scale number looks similar.</p>
+    </div>
+
+    <hr>
+
+    <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+        <a href="/blog/what-happens-when-you-cut-calories-too-fast/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/what-happens-when-you-cut-calories-too-fast.png')"></div>
+          <div class="related-post-card__title">What Happens When You Cut Calories Too Fast</div>
+        </a>
+        <a href="/blog/how-to-calculate-your-calorie-deficit/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-calculate-your-calorie-deficit.png')"></div>
+          <div class="related-post-card__title">How to Calculate Your Calorie Deficit</div>
+        </a>
+        <a href="/blog/nate-fixed-his-relationship-with-food/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/nate-fixed-his-relationship-with-food.png')"></div>
+          <div class="related-post-card__title">Nate Fixed His Relationship With Food</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="post-cta">
+      <h3>Ready to Build a Body That Lasts?</h3>
+      <p>Science-backed coaching for busy professionals over 40. Apply today for a plan built to protect your results, not just get you there fast.</p>
+      <a href="/schedule-call/?utm_source=blog&utm_medium=cta&utm_content=why-you-keep-regaining-weight" style="display:inline-flex;align-items:center;gap:10px;background:#2278AC;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;padding:16px 40px;border-radius:9999px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3899CC'" onmouseout="this.style.background='#2278AC'">
+        Apply Now &rarr;
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="110" height="22" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+      <a href="mailto:drjoey@strongstandard.com">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/dr.joeymunoz/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+</script>
+</body>
+</html>
