@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Strong Standard — Setter Setup Checklist</title>
+<title>Strong Standard — Onboarding Checklist</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -266,7 +266,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="pw-card">
     <div class="pw-lock">🔒</div>
     <div class="pw-logo">STRONG STANDARD</div>
-    <div class="pw-sub">Setter Setup Checklist</div>
+    <div class="pw-sub">Onboarding Checklist</div>
     <input type="password" class="pw-input" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter') checkPassword()">
     <button class="pw-btn" id="pw-btn" onclick="checkPassword()">Enter</button>
     <div class="pw-error" id="pw-error">Incorrect password. Try again.</div>
@@ -285,7 +285,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="app" style="display:none">
   <div class="header">
     <div class="header-left">
-      <div class="logo">STRONG STANDARD<span>SETTER SETUP CHECKLIST</span></div>
+      <div class="logo">STRONG STANDARD<span>ONBOARDING CHECKLIST</span></div>
       <div class="header-divider"></div>
       <div class="last-updated" id="last-updated">—</div>
     </div>
@@ -349,7 +349,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div id="setters-list" style="margin-top:18px;">
-        <div class="loading-note">Loading setters…</div>
+        <div class="loading-note">Loading…</div>
       </div>
     </div>
 
@@ -358,7 +358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>Manage Checklist Items</h3>
         <button class="action-btn ghost" onclick="toggleItemsForm()" id="add-item-toggle">+ Add Item</button>
       </div>
-      <div class="panel-sub">These are the access items required for every setter. Add or remove as the setup process changes.</div>
+      <div class="panel-sub">These are the access items required for every team member. Add or remove as the setup process changes.</div>
 
       <div class="form-grid" id="add-item-form">
         <div class="form-field"><label>Category</label><input type="text" id="new-item-category" placeholder="Accounts & Access"></div>
@@ -379,7 +379,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script>
-  // Live data source: Setter Setup Checklist Google Sheet, backed by an Apps Script Web App
+  // Live data source: Onboarding Checklist Google Sheet, backed by an Apps Script Web App
   // Sheet: https://docs.google.com/spreadsheets/d/1QwJgwHq-rEFyMzdpKe5nRqz9VJHSmkT6Hi1pzUS0Q5Q/edit
   // The Sheet itself is never edited by hand — every read/write goes through this Web App.
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVYGb2VcpUsH73EZo-bceELCk5OLmKi3uhxmhTP0-k6hFVvcar-kimrBt4-ycvkcBxSA/exec';
@@ -390,7 +390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function checkPassword(){
     const val = document.getElementById('pw-input').value;
     if(val === DASHBOARD_PASSWORD){
-      sessionStorage.setItem('ss_setter_checklist_auth', btoa(DASHBOARD_PASSWORD));
+      sessionStorage.setItem('ss_onboarding_checklist_auth', btoa(DASHBOARD_PASSWORD));
       document.getElementById('password-screen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
       loadAllData(false);
@@ -401,7 +401,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   }
   function isAuthed(){
-    try { return sessionStorage.getItem('ss_setter_checklist_auth') === btoa(DASHBOARD_PASSWORD); } catch(e){ return false; }
+    try { return sessionStorage.getItem('ss_onboarding_checklist_auth') === btoa(DASHBOARD_PASSWORD); } catch(e){ return false; }
   }
 
   function showLoading(text){
@@ -516,7 +516,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function renderSetters(){
     const container = document.getElementById('setters-list');
     if(STATE.setters.length === 0){
-      container.innerHTML = '<div class="empty-note">No setters on the roster yet. Add one above.</div>';
+      container.innerHTML = `<div class="empty-note">No ${ROLE_LABELS[CURRENT_ROLE].toLowerCase()}s on the roster yet. Add one above.</div>`;
       return;
     }
     const categories = [...new Set(STATE.items.map(i => i.category))];
@@ -736,7 +736,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       await loadAllData(false);
     } catch(e){
       console.error(e);
-      alert('Could not remove that setter. Try again in a moment.');
+      alert('Could not remove that person. Try again in a moment.');
     }
     hideLoading();
   }
@@ -780,7 +780,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   async function removeItem(itemId, name){
-    if(!confirm(`Remove "${name}" from the checklist? This won't be checkable for any setter anymore.`)) return;
+    if(!confirm(`Remove "${name}" from the checklist? This won't be checkable for anyone anymore.`)) return;
     showLoading('Removing…');
     try {
       await callScript('removeItem', { item_id: itemId });
@@ -808,11 +808,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     html.setAttribute('data-theme', next);
     document.getElementById('theme-icon').textContent = isDark ? '🌙' : '☀️';
     document.getElementById('theme-label').textContent = isDark ? 'Dark' : 'Light';
-    localStorage.setItem('ss_setter_checklist_theme', next);
+    localStorage.setItem('ss_onboarding_checklist_theme', next);
   }
 
   (function(){
-    const savedTheme = localStorage.getItem('ss_setter_checklist_theme');
+    const savedTheme = localStorage.getItem('ss_onboarding_checklist_theme');
     if(savedTheme){
       document.documentElement.setAttribute('data-theme', savedTheme);
       document.getElementById('theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
