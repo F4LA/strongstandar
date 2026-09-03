@@ -507,6 +507,21 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://strongstandard.com/blog/lifting-weights-during-pregnancy/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/animal-vs-plant-protein-for-muscle-growth/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/lowell-21-day-challenge-transformation/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
