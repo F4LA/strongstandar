@@ -1148,11 +1148,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (email) leadsMap[email] = r;
     });
 
-    // New clients this week (exclude resigns)
+    // New clients this week (exclude resigns and manually-excluded rows)
     const newClients = clientRows.slice(1).filter(r => {
-      const d        = parseDate(r[C.DATE_PURCHASED]);
-      const isResign = (r[C.NEW_OR_RESIGN] || '').trim().toLowerCase().includes('resign');
-      return d && d >= lastThursday && d <= thisThursday && !isResign;
+      const d          = parseDate(r[C.DATE_PURCHASED]);
+      const isResign   = (r[C.NEW_OR_RESIGN]  || '').trim().toLowerCase().includes('resign');
+      const isExcluded = (r[C.EXCLUDE_ALERTS] || '').trim().toUpperCase() === 'TRUE';
+      return d && d >= lastThursday && d <= thisThursday && !isResign && !isExcluded;
     });
 
     // Find mismatches
