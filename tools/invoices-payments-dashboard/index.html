@@ -726,7 +726,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     NEW_OR_RESIGN:  18,  // col S
     REFUND:         24,  // col Y
     CASH_COLLECTED: 25,  // col Z
-    EXCLUDE_ALERTS: 26,  // col AA — manual flag: TRUE = skip "Missing Info" alert (e.g. staff/coach set up as client for payroll only)
+    EXCLUDE_ALERTS: 32,  // col AG — manual flag: TRUE = skip "Missing Info" alert (e.g. staff/coach set up as client for payroll only)
   };
 
   // Leads Applied column indices
@@ -857,7 +857,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     try {
       const [clientRows, ppRows, leadsRows, prRows, refundRows] = await Promise.all([
-        fetchRange('Client Mastersheet!A:AA'),
+        fetchRange('Client Mastersheet!A:AG'),
         fetchRange('Payment Plan!A:F'),
         fetchRange('Leads applied!A:P'),
         fetchRange('Payment Records!A:G'),
@@ -1119,7 +1119,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     try {
       const [invoiceBackupRows, clientRows] = await Promise.all([
         fetchRange('Invoices Bakcup!A:Z'),
-        window._clientRowsCache ? Promise.resolve(window._clientRowsCache) : fetchRange('Client Mastersheet!A:AA'),
+        window._clientRowsCache ? Promise.resolve(window._clientRowsCache) : fetchRange('Client Mastersheet!A:AG'),
       ]);
       window._invoiceAuditLoaded = true;
       renderInvoiceAudit(invoiceBackupRows, clientRows);
