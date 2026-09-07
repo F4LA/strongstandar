@@ -744,6 +744,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span id="theme-label">Light</span>
       </button>
       <button class="refresh-btn" onclick="refreshData()">↻ Refresh</button>
+      <button class="refresh-btn" onclick="openCloserSettings()" style="color:var(--text-dim)">⚙ Closers</button>
       <button class="refresh-btn" onclick="resetSetup()" style="color:var(--text-dim)">⚙ Setup</button>
     </div>
   </div>
@@ -896,6 +897,8 @@ let currentMonth     = '';
 let customStart      = null;
 let customEnd        = null;
 let availableClosers = [];
+let allClosersSeen   = []; // unfiltered — every closer name ever seen in the sheet
+let hiddenClosers    = new Set(); // names toggled off in Closer Settings
 let currentCallFilter = 'all'; // filter for Calls This Period
 
 // ── LocalStorage helpers ──
@@ -908,6 +911,7 @@ function saveState() {
     localStorage.setItem('ss_apikey',  API_KEY);
     localStorage.setItem('ss_sheetid', SHEET_ID);
     localStorage.setItem('ss_theme',   document.documentElement.getAttribute('data-theme') || 'dark');
+    localStorage.setItem('ss_hidden_closers', JSON.stringify([...hiddenClosers]));
     if (customStart) localStorage.setItem('ss_cstart', customStart.toISOString());
     if (customEnd)   localStorage.setItem('ss_cend',   customEnd.toISOString());
   } catch(e) {}
@@ -924,6 +928,7 @@ function loadState() {
     const theme   = localStorage.getItem('ss_theme');
     const cstart  = localStorage.getItem('ss_cstart');
     const cend    = localStorage.getItem('ss_cend');
+    const hidden  = localStorage.getItem('ss_hidden_closers');
     if (apikey)  API_KEY  = apikey;
     if (sheetid) SHEET_ID = sheetid;
     if (closer)  currentCloser      = closer;
@@ -932,6 +937,9 @@ function loadState() {
     if (filter)  currentCallFilter  = filter;
     if (cstart)  customStart        = new Date(cstart);
     if (cend)    customEnd          = new Date(cend);
+    if (hidden) {
+      try { hiddenClosers = new Set(JSON.parse(hidden)); } catch(e) { hiddenClosers = new Set(); }
+    }
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme);
       document.getElementById('theme-icon').textContent  = theme === 'light' ? '🌙' : '☀️';
@@ -1036,10 +1044,11 @@ async function loadAllData() {
   raw.ms = msRows.slice(1).filter(r => r && r.length);
   raw.gc = gcRows.slice(1).filter(r => r && r.length);
 
-  // Unique closer names — shows everyone who appears in the sheet, no manual list to maintain
+  // Unique closer names — shows everyone who appears in the sheet, minus anyone hidden in Closer Settings
   const seen = new Set();
   raw.la.forEach(r => { const c = (r[LA.closer] || '').trim(); if (c) seen.add(c); });
-  availableClosers = [...seen].sort();
+  allClosersSeen   = [...seen].sort();
+  availableClosers = allClosersSeen.filter(c => !hiddenClosers.has(c));
 
   document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
@@ -1207,6 +1216,45 @@ function onCloserChange() {
   currentCloser = document.getElementById('closer-select').value;
   buildMonthOptions();
   saveState();
+  renderDashboard();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CLOSER SETTINGS (show/hide who appears in the dropdown)
+// ═══════════════════════════════════════════════════════════════
+function openCloserSettings() {
+  const rows = allClosersSeen.map(name => {
+    const checked = hiddenClosers.has(name) ? '' : 'checked';
+    return `
+      <label style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--border);cursor:pointer">
+        <input type="checkbox" ${checked} onchange="toggleCloserVisibility('${name.replace(/'/g,"\\'")}', this.checked)"
+          style="width:18px;height:18px;accent-color:var(--accent, #6366f1);cursor:pointer" />
+        <span style="font-size:14px">${name}</span>
+      </label>`;
+  }).join('') || '<div style="padding:16px;color:var(--text-dim)">No closers found in the sheet yet.</div>';
+
+  openModal(
+    'Closer Settings',
+    'Show or hide closers from the dropdown above',
+    `<div style="padding:8px 20px">${rows}</div>`
+  );
+}
+
+function toggleCloserVisibility(name, isChecked) {
+  if (isChecked) hiddenClosers.delete(name);
+  else hiddenClosers.add(name);
+
+  availableClosers = allClosersSeen.filter(c => !hiddenClosers.has(c));
+  saveState();
+
+  // Refresh the dropdown; if the currently selected closer got hidden, fall back to the first visible one
+  const sel = document.getElementById('closer-select');
+  sel.innerHTML = availableClosers.map(c => `<option value="${c}">${c}</option>`).join('');
+  if (!availableClosers.includes(currentCloser)) {
+    currentCloser = availableClosers[0] || '';
+  }
+  sel.value = currentCloser;
+  buildMonthOptions();
   renderDashboard();
 }
 
