@@ -1044,10 +1044,11 @@ async function loadAllData() {
   raw.ms = msRows.slice(1).filter(r => r && r.length);
   raw.gc = gcRows.slice(1).filter(r => r && r.length);
 
-  // Unique closer names — shows everyone who appears in the sheet, minus anyone hidden in Closer Settings
+  // Unique closer names — restricted to the current active roster, hardcoded here so it's shared for everyone
   const seen = new Set();
   raw.la.forEach(r => { const c = (r[LA.closer] || '').trim(); if (c) seen.add(c); });
-  allClosersSeen   = [...seen].sort();
+  const VISIBLE_CLOSERS = ['deniz', 'joey', 'bernardo', 'alan'];
+  allClosersSeen   = [...seen].sort().filter(c => VISIBLE_CLOSERS.some(name => c.toLowerCase().includes(name)));
   availableClosers = allClosersSeen.filter(c => !hiddenClosers.has(c));
 
   document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
