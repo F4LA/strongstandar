@@ -1036,11 +1036,10 @@ async function loadAllData() {
   raw.ms = msRows.slice(1).filter(r => r && r.length);
   raw.gc = gcRows.slice(1).filter(r => r && r.length);
 
-  // Unique closer names — filtered to active closers only
+  // Unique closer names — shows everyone who appears in the sheet, no manual list to maintain
   const seen = new Set();
   raw.la.forEach(r => { const c = (r[LA.closer] || '').trim(); if (c) seen.add(c); });
-  const ACTIVE_CLOSERS = ['deniz', 'alan'];
-  availableClosers = [...seen].sort().filter(c => ACTIVE_CLOSERS.some(name => c.toLowerCase().includes(name)));
+  availableClosers = [...seen].sort();
 
   document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
