@@ -8,6 +8,7 @@
   fetch('https://affiliates.strongstandard.com/api/track', {
     method: 'POST',
     credentials: 'include',
+    keepalive: true,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ event: eventType, path: location.pathname }),
   }).catch(function () {});
