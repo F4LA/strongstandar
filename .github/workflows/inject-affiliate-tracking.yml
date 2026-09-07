@@ -1,0 +1,31 @@
+name: Inject Affiliate Tracking
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Inject affiliate tracking script into all HTML files
+        run: |
+          SCRIPT='<script src="/scripts/affiliate-tracking.js"></script>'
+          for file in $(find . -name "*.html"); do
+            if ! grep -q "affiliate-tracking.js" "$file"; then
+              sed -i "s|</head>|$SCRIPT\n</head>|" "$file"
+              echo "Injected affiliate tracking into $file"
+            else
+              echo "Already has affiliate tracking: $file"
+            fi
+          done
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Auto-inject affiliate tracking script"
+          git push
