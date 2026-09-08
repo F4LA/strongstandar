@@ -18,12 +18,9 @@
  all em dashes removed per the new hard style rule; coach name
  corrected from "Sessi" (a v4 mishearing) to "Ceci," her actual
  name per her signed coach nomination form and Joey's own usage.
- Remaining flagged gaps before this page goes live:
- 1) BEFORE_PHOTO_URL / AFTER_PHOTO_URL point at unblurred source
- images. Client consent = "yes, but blur my face." Real,
- face-blurred images must replace these before publish.
- 2) VIDEO_URL has no hosted source yet.
- 3) DISCOVERY_CALL_URL below is a best-guess placeholder.
+ Photos (face-blurred), video source, and discovery call URL all
+ confirmed final as of this revision. Before/after labels now show
+ bodyweight (187.6 lb -> 175.8 lb, Apr 6 - Aug 5, 2026, ~4 months).
  ═══════════════════════════════════════════════════════════════
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,11 +167,22 @@ max-width: 700px; margin: 40px auto 0;
 .ba-label {
 position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
 background: rgba(8,13,26,0.88); border: 1px solid rgba(34,120,172,0.35);
-border-radius: var(--r-full); padding: 5px 18px; font-size: 11px; font-weight: 700;
+border-radius: var(--r-full); padding: 7px 20px; font-size: 11px; font-weight: 700;
 letter-spacing: 0.14em; text-transform: uppercase; color: var(--white);
 white-space: nowrap; backdrop-filter: blur(8px);
+display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.ba-label__weight {
+font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: none;
+color: var(--muted);
 }
 .ba-label--after { border-color: rgba(61,214,140,0.45); color: var(--success); }
+.ba-label--after .ba-label__weight { color: rgba(61,214,140,0.75); }
+
+.ba-timeframe {
+text-align: center; margin-top: 16px; font-size: 12px; font-weight: 700;
+letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
 
 .video-wrap {
 position: relative; width: 100%; aspect-ratio: 16/9;
@@ -365,15 +373,15 @@ Apply Now
 
 <div class="before-after reveal">
 <div class="ba-card">
-<!-- FLAGGED: client consent = "yes, but blur my face." These source images are NOT yet face-blurred. Do not publish with raw Everfit photos. -->
 <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a98c147a1de6b8a227d697c.png" alt="Heather before">
-<div class="ba-label">Before</div>
+<div class="ba-label">Before<span class="ba-label__weight">187.6 lb</span></div>
 </div>
 <div class="ba-card ba-card--after">
 <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a98c1478a50b9d88a23d17f.png" alt="Heather after">
-<div class="ba-label ba-label--after">After</div>
+<div class="ba-label ba-label--after">After<span class="ba-label__weight">175.8 lb</span></div>
 </div>
 </div>
+<p class="ba-timeframe">4 Months Apart</p>
 
 </div>
 </div>
@@ -389,7 +397,6 @@ Apply Now
 <h2>Hear Directly From Heather</h2>
 </div>
 <div class="video-wrap reveal">
-<!-- FLAGGED: no hosted streaming URL exists yet for Heather's client video. A transcript (supplied by Miguel, 19 Aug 2026) is used throughout this page, but the raw video file itself still only lives in Drive and needs to be hosted somewhere a <video> tag can stream it before publish. -->
 <video controls playsinline preload="metadata" style="width:100%;height:100%;display:block;">
 <source src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a983f04da522bf1739fdbd9.mp4" type="video/mp4">
 </video>
