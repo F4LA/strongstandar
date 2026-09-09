@@ -1407,7 +1407,16 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     return `${d.getFullYear()}-${pad(d.getMonth()+1)}-01`;
   }
 
-  async function updateLandingPages(kickoffVal, closingVal) {
+  function addDays(isoDate, days) {
+    // isoDate is 'YYYY-MM-DD' (from a <input type="date">). Returns 'YYYY-MM-DD'.
+    const [y, m, d] = isoDate.split('-').map(Number);
+    const dt = new Date(y, m - 1, d);
+    dt.setDate(dt.getDate() + days);
+    const pad = n => String(n).padStart(2, '0');
+    return `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
+  }
+
+  async function updateLandingPages(kickoffVal, closingVal, day1Val) {
     const results = [];
 
     // ── 1. 21-day-challenge/index.html ──────────────────────
@@ -1465,14 +1474,23 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       results.push({ file: 'Kickoff Registration', status: '❌ ' + e.message });
     }
 
-    // ── 3. scripts/cohort-config.js — spots counter cohort month ─
+    // ── 3. scripts/cohort-config.js — spots counter cohort month + key dates ─
     try {
       const { sha, content } = await githubGetSha('scripts/cohort-config.js');
       const newMonthDate = formatChallengeMonthDate(kickoffVal);
-      const updated = content.replace(
+      const kickoffDateISO = kickoffVal.split('T')[0];
+      const kickoffTimeStr = formatKickoffTime(kickoffVal);
+
+      let updated = content.replace(
         /CHALLENGE_MONTH_DATE:\s*'[^']+'/,
         `CHALLENGE_MONTH_DATE: '${newMonthDate}'`
       );
+      if (day1Val) {
+        updated = updated.replace(/CHALLENGE_START_DATE:\s*'[^']+'/, `CHALLENGE_START_DATE: '${day1Val}'`);
+        updated = updated.replace(/CHALLENGE_END_DATE:\s*'[^']+'/, `CHALLENGE_END_DATE: '${addDays(day1Val, 20)}'`);
+      }
+      updated = updated.replace(/KICKOFF_CALL_DATE:\s*'[^']+'/, `KICKOFF_CALL_DATE: '${kickoffDateISO}'`);
+      updated = updated.replace(/KICKOFF_CALL_TIME:\s*'[^']+'/, `KICKOFF_CALL_TIME: '${kickoffTimeStr}'`);
 
       if (updated === content) {
         results.push({ file: 'Cohort Config (spots counter)', status: 'ℹ️ Ya estaba en ' + newMonthDate });
@@ -1480,7 +1498,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
         await githubUpdateFile(
           'scripts/cohort-config.js',
           updated, sha,
-          `Update cohort month for spots counter to ${newMonthDate}`
+          `Update cohort dates for new cycle (${newMonthDate})`
         );
         results.push({ file: 'Cohort Config (spots counter)', status: `✅ → ${newMonthDate}` });
       }
@@ -1541,6 +1559,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
   async function handleLaunchBtn() {
     const kickoffVal = document.getElementById('kickoff_date').value;
     const closingVal = document.getElementById('closing_date').value;
+    const day1Val = document.getElementById('day1').value;
     const errors = [];
     if (!kickoffVal) errors.push('Kickoff Call date & time');
     if (!closingVal) errors.push('Closing Webinar date & time');
@@ -1587,7 +1606,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     // Step 2: Landing Pages
     const doPages = async () => {
       statusEl.textContent = '🌐 Updating landing pages...';
-      return await updateLandingPages(kickoffVal, closingVal);
+      return await updateLandingPages(kickoffVal, closingVal, day1Val);
     };
 
     // Orchestrate: auth → calendar → pages → show results
