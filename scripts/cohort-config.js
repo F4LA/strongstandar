@@ -22,5 +22,14 @@ window.SS_COHORT = {
 
   // Checkout destinations
   LINK_97: 'https://strongstandard.com/21-day-challenge/checkout-97/',
-  LINK_147: 'https://strongstandard.com/21-day-challenge/checkout-147/'
+  LINK_147: 'https://strongstandard.com/21-day-challenge/checkout-147/',
+
+  // Key dates for this cohort (format 'YYYY-MM-DD'). Used by the affiliate
+  // portal to show start/end/kickoff-call dates — keep these in sync with
+  // the dates written on the challenge page and the kickoff/closing call
+  // registration pages.
+  CHALLENGE_START_DATE: '2026-09-07',
+  CHALLENGE_END_DATE: '2026-09-28',
+  KICKOFF_CALL_DATE: '2026-09-05',
+  KICKOFF_CALL_TIME: '10:00 AM EST'
 };
