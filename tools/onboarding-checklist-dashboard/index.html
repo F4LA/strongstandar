@@ -224,6 +224,10 @@
   .item-name { font-size: 13.5px; color: var(--text); font-weight: 500; }
   .item-name.done { color: var(--text-muted); text-decoration: line-through; text-decoration-color: var(--border-bright); }
   .item-desc { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .sub-items { margin-left: 30px; padding-left: 14px; border-left: 1px solid var(--border); }
+  .sub-items .item-row { padding: 7px 0; }
+  .sub-items .item-name { font-size: 12.5px; color: var(--text-dim); }
+  .sub-items .item-check { width: 15px; height: 15px; }
 
   .loading-note { font-size: 12px; color: var(--text-dim); font-family: var(--font-mono); padding: 20px 0; text-align: center; }
   .empty-note { font-size: 13px; color: var(--text-dim); padding: 20px 0; text-align: center; }
@@ -491,6 +495,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return !!(row && (row.checked === true || row.checked === 'TRUE' || row.checked === 'true'));
   }
 
+  // Returns the subtasks (if any) that belong to a given parent item_id.
+  function getChildren(itemId){
+    return STATE.items.filter(i => i.parent_item_id === itemId);
+  }
+
+  function updateLocalStatus(email, itemId, checked){
+    let row = STATE.status.find(s => s.person_email === email && s.item_id === itemId);
+    if(row){ row.checked = checked; }
+    else { STATE.status.push({ person_email: email, item_id: itemId, checked: checked }); }
+  }
+
   function renderStats(){
     const total = STATE.setters.length;
     let complete = 0;
@@ -534,9 +549,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const totalCount = STATE.items.length;
       const complete = totalCount > 0 && doneCount === totalCount;
       const groupsHtml = categories.map(cat => {
-        const catItems = STATE.items.filter(i => i.category === cat);
+        const catItems = STATE.items.filter(i => i.category === cat && !i.parent_item_id);
         const rows = catItems.map(item => {
           const checked = isChecked(s.personal_email, item.item_id);
+          const children = getChildren(item.item_id);
+          const childRows = children.map(child => {
+            const childChecked = isChecked(s.personal_email, child.item_id);
+            return `
+              <div class="item-row">
+                <input type="checkbox" class="item-check" ${childChecked ? 'checked' : ''}
+                  onchange="onToggle('${escapeAttr(s.personal_email)}','${escapeAttr(child.item_id)}', this.checked, this)">
+                <div class="item-text">
+                  <div class="item-name ${childChecked ? 'done' : ''}">${escapeHtml(child.name)}</div>
+                  ${child.description ? `<div class="item-desc">${linkify(escapeHtml(child.description))}</div>` : ''}
+                </div>
+              </div>`;
+          }).join('');
           return `
             <div class="item-row">
               <input type="checkbox" class="item-check" ${checked ? 'checked' : ''}
@@ -545,7 +573,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="item-name ${checked ? 'done' : ''}">${escapeHtml(item.name)}</div>
                 ${item.description ? `<div class="item-desc">${linkify(escapeHtml(item.description))}</div>` : ''}
               </div>
-            </div>`;
+            </div>${childRows ? `<div class="sub-items">${childRows}</div>` : ''}`;
         }).join('');
         return `<div class="item-group"><div class="item-group-label">${escapeHtml(cat)}</div>${rows}</div>`;
       }).join('');
@@ -607,10 +635,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     checkboxEl.disabled = true;
     showLoading('Saving…');
     try {
-      await callScript('toggleAccess', { person_email: email, item_id: itemId, checked: checked, checked_by: 'dashboard' });
-      let row = STATE.status.find(s => s.person_email === email && s.item_id === itemId);
-      if(row){ row.checked = checked; }
-      else { STATE.status.push({ person_email: email, item_id: itemId, checked: checked }); }
+      const item = STATE.items.find(i => i.item_id === itemId);
+      const children = getChildren(itemId);
+
+      // Checking/unchecking a parent item cascades to all of its subtasks.
+      const idsToUpdate = [itemId, ...children.map(c => c.item_id)];
+
+      // Checking/unchecking a subtask can also cascade UP to the parent:
+      // if this change makes every sibling match the parent's checked state
+      // (e.g. the last channel just got checked), sync the parent too.
+      let parentSync = null;
+      if(item && item.parent_item_id){
+        const siblings = getChildren(item.parent_item_id);
+        const allSiblingsWillMatch = siblings.every(sib =>
+          sib.item_id === itemId ? checked : isChecked(email, sib.item_id) === checked
+        );
+        const parentCurrentlyChecked = isChecked(email, item.parent_item_id);
+        if(allSiblingsWillMatch && parentCurrentlyChecked !== checked){
+          parentSync = item.parent_item_id;
+        }
+      }
+
+      for(const id of idsToUpdate){
+        await callScript('toggleAccess', { person_email: email, item_id: id, checked: checked, checked_by: 'dashboard' });
+        updateLocalStatus(email, id, checked);
+      }
+      if(parentSync){
+        await callScript('toggleAccess', { person_email: email, item_id: parentSync, checked: checked, checked_by: 'dashboard' });
+        updateLocalStatus(email, parentSync, checked);
+      }
+
       renderStats();
       renderSetters();
     } catch(e){
