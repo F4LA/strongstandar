@@ -453,6 +453,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('stat-total-label').textContent = `Active ${label}s`;
     document.getElementById('roster-title').textContent = `${label}s`;
     document.getElementById('add-setter-toggle').textContent = `+ Add ${label}`;
+    document.getElementById('add-setter-submit').textContent = `Add ${label}`;
     document.getElementById('add-setter-form').classList.remove('open');
     document.getElementById('add-item-form').classList.remove('open');
     document.getElementById('new-pct-field').style.display = showsLeadPct() ? '' : 'none';
@@ -733,7 +734,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       errEl.style.display = 'block';
     }
     hideLoading();
-    btn.disabled = false; btn.textContent = 'Add Setter';
+    btn.disabled = false; btn.textContent = `Add ${ROLE_LABELS[CURRENT_ROLE]}`;
   }
 
   async function removeSetter(email, name){
