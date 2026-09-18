@@ -1,7 +1,8 @@
 {
   "_comment": "Map the exact name as it appears in 'Leads applied' column M (Sales call with) to the person's Slack Member ID (starts with U...). Find a Member ID: click their name in Slack -> ... -> Copy member ID. Names are matched case-insensitively, trimmed.",
-  "bernardo": "REPLACE_WITH_BERNARDO_SLACK_MEMBER_ID",
-  "deniz": "REPLACE_WITH_DENIZ_SLACK_MEMBER_ID",
-  "joey": "REPLACE_WITH_JOEY_SLACK_MEMBER_ID",
-  "alan": "REPLACE_WITH_ALAN_SLACK_MEMBER_ID"
+  "bernardo": "U070ZNZQ5FG",
+  "deniz": "U0A2ZPR56DB",
+  "joey": "U071P8EBS9F",
+  "alan": "U0BU45H3MHB",
+  "boaz": "U0C2M4K4H6W"
 }
