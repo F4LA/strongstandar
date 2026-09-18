@@ -43,22 +43,23 @@ function fail(msg) {
 if (!SHEETS_API_KEY) fail('SHEETS_API_KEY env var is missing.');
 if (!SLACK_WEBHOOK_URL) fail('SLACK_WEBHOOK_URL env var is missing.');
 
-// ── Time guard: only actually send at 5pm Eastern (America/New_York) ──
-// The workflow's cron fires twice a day (once for EDT, once for EST) to
-// stay correct across the DST switch. This guard makes sure only the
-// correct firing actually posts to Slack.
-function isFivePmEastern() {
+// ── Time guard: only actually send at 8am or 5pm Eastern (America/New_York) ──
+// The workflow's cron fires 4 times a day (2 slots x EDT/EST) to stay correct
+// across the DST switch. This guard makes sure only the correct firing per
+// slot actually posts to Slack.
+const TARGET_HOURS_ET = [8, 17];
+
+function currentHourEastern() {
   const hourStr = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/New_York',
     hour: 'numeric',
     hour12: false,
   }).format(new Date());
-  const hour = parseInt(hourStr, 10) % 24;
-  return hour === 17;
+  return parseInt(hourStr, 10) % 24;
 }
 
-if (!FORCE_SEND && !isFivePmEastern()) {
-  console.log('Not 5pm Eastern right now — skipping (this is expected for one of the two daily cron firings).');
+if (!FORCE_SEND && !TARGET_HOURS_ET.includes(currentHourEastern())) {
+  console.log('Not 8am/5pm Eastern right now — skipping (this is expected for the other cron firings).');
   process.exit(0);
 }
 

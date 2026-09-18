@@ -2,9 +2,11 @@ name: Stale Confirmed Calls Slack Alert
 
 on:
   schedule:
-    # 5:00 PM America/New_York (Tampa), covering both DST offsets.
-    # The script itself checks the real Eastern time and only sends once —
-    # having both entries just means we don't miss it when the US clocks change.
+    # 8:00 AM and 5:00 PM America/New_York (Tampa), each covering both DST offsets.
+    # The script itself checks the real Eastern time and only sends at 8am/5pm —
+    # having both entries per time just means we don't miss it when the clocks change.
+    - cron: '0 12 * * *' # 8am ET during Eastern Daylight Time (UTC-4)
+    - cron: '0 13 * * *' # 8am ET during Eastern Standard Time (UTC-5)
     - cron: '0 21 * * *' # 5pm ET during Eastern Daylight Time (UTC-4)
     - cron: '0 22 * * *' # 5pm ET during Eastern Standard Time (UTC-5)
   workflow_dispatch:
