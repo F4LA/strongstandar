@@ -1,0 +1,32 @@
+name: Stale Confirmed Calls Slack Alert
+
+on:
+  schedule:
+    # 5:00 PM America/New_York (Tampa), covering both DST offsets.
+    # The script itself checks the real Eastern time and only sends once —
+    # having both entries just means we don't miss it when the US clocks change.
+    - cron: '0 21 * * *' # 5pm ET during Eastern Daylight Time (UTC-4)
+    - cron: '0 22 * * *' # 5pm ET during Eastern Standard Time (UTC-5)
+  workflow_dispatch:
+    inputs:
+      force_send:
+        description: 'Send now regardless of current time (for testing)'
+        type: boolean
+        default: true
+
+jobs:
+  check-and-alert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for stale confirmed calls and alert Slack
+        env:
+          SHEETS_API_KEY: ${{ secrets.SHEETS_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          FORCE_SEND: ${{ github.event.inputs.force_send == 'true' && '1' || '' }}
+        run: node scripts/stale-calls-alert/index.mjs
