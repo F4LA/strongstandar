@@ -224,6 +224,7 @@
   .item-name { font-size: 13.5px; color: var(--text); font-weight: 500; }
   .item-name.done { color: var(--text-muted); text-decoration: line-through; text-decoration-color: var(--border-bright); }
   .item-desc { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .copy-email-btn { flex-shrink: 0; align-self: center; font-size: 11px; padding: 6px 12px; white-space: nowrap; }
   .sub-items { margin-left: 30px; padding-left: 14px; border-left: 1px solid var(--border); }
   .sub-items .item-row { padding: 7px 0; }
   .sub-items .item-name { font-size: 12.5px; color: var(--text-dim); }
@@ -347,6 +348,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="form-field"><label>Business Email <span style="text-transform:none;color:var(--text-dim);">(optional)</span></label><input type="email" id="new-business-email" placeholder="jane@strongstandard.com"></div>
         <div class="form-field"><label>Start Date</label><input type="date" id="new-start-date"></div>
         <div class="form-field" id="new-pct-field"><label>Lead %</label><input type="number" id="new-pct" placeholder="0" min="0" max="100"></div>
+        <div class="form-field" id="new-password-field" style="display:none;"><label>Email Password</label><input type="text" id="new-email-password" placeholder="Temp password"></div>
         <div class="form-error" id="add-setter-error"></div>
         <div class="form-actions">
           <button class="action-btn" onclick="submitAddSetter()" id="add-setter-submit">Add Setter</button>
@@ -425,6 +427,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const EDITING_CARDS = new Set();
 
   function showsLeadPct(){ return CURRENT_ROLE === 'Setters'; }
+  function showsEmailPassword(){ return CURRENT_ROLE === 'Closers'; }
 
   function idSafe(email){ return String(email).replace(/[^a-zA-Z0-9]/g, '_'); }
   function formatDateForInput(val){
@@ -461,6 +464,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('add-setter-form').classList.remove('open');
     document.getElementById('add-item-form').classList.remove('open');
     document.getElementById('new-pct-field').style.display = showsLeadPct() ? '' : 'none';
+    document.getElementById('new-password-field').style.display = showsEmailPassword() ? '' : 'none';
     document.getElementById('stat-pct-card').style.display = showsLeadPct() ? '' : 'none';
     document.getElementById('stats-grid').classList.toggle('two-col', !showsLeadPct());
     EXPANDED_CARDS.clear();
@@ -565,6 +569,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
               </div>`;
           }).join('');
+          const isWelcomeEmailTask = String(item.name || '').trim().toLowerCase() === 'send welcome email';
+          const copyEmailBtnHtml = isWelcomeEmailTask
+            ? `<button class="action-btn ghost copy-email-btn" onclick="event.stopPropagation(); copyWelcomeEmail('${escapeAttr(s.personal_email)}', this)">📋 Copy Email</button>`
+            : '';
           return `
             <div class="item-row">
               <input type="checkbox" class="item-check" ${checked ? 'checked' : ''}
@@ -573,6 +581,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="item-name ${checked ? 'done' : ''}">${escapeHtml(item.name)}</div>
                 ${item.description ? `<div class="item-desc">${linkify(escapeHtml(item.description))}</div>` : ''}
               </div>
+              ${copyEmailBtnHtml}
             </div>${childRows ? `<div class="sub-items">${childRows}</div>` : ''}`;
         }).join('');
         return `<div class="item-group"><div class="item-group-label">${escapeHtml(cat)}</div>${rows}</div>`;
@@ -589,6 +598,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="form-field"><label>Business Email</label><input type="email" id="edit-bemail-${safeId}" value="${escapeAttr(s.business_email || '')}"></div>
           <div class="form-field"><label>Start Date</label><input type="date" id="edit-start-${safeId}" value="${escapeAttr(formatDateForInput(s.start_date))}"></div>
           ${showsLeadPct() ? `<div class="form-field"><label>Lead %</label><input type="number" id="edit-pct-${safeId}" value="${Number(s.lead_percentage) || 0}" min="0" max="100"></div>` : ''}
+          ${showsEmailPassword() ? `<div class="form-field"><label>Email Password</label><input type="text" id="edit-password-${safeId}" value="${escapeAttr(s.email_password || '')}" placeholder="Temp password"></div>` : ''}
           <div class="form-error" id="edit-error-${safeId}"></div>
           <div class="form-actions">
             <button class="action-btn" onclick="saveEdit('${escapeAttr(s.personal_email)}')">Save Changes</button>
@@ -704,6 +714,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const startDate = document.getElementById('edit-start-' + safeId).value;
     const pctEl = document.getElementById('edit-pct-' + safeId);
     const pct = pctEl ? pctEl.value : 0;
+    const passwordEl = document.getElementById('edit-password-' + safeId);
+    const emailPassword = passwordEl ? passwordEl.value : undefined;
     const errEl = document.getElementById('edit-error-' + safeId);
     errEl.style.display = 'none';
 
@@ -721,11 +733,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     showLoading('Saving changes…');
     try {
-      await callScript('updateSetter', {
+      const updatePayload = {
         original_email: originalEmail, personal_email: personalEmail,
         first_name: firstName, last_name: lastName, business_email: businessEmail,
         start_date: startDate, lead_percentage: Number(pct) || 0
-      });
+      };
+      if(emailPassword !== undefined) updatePayload.email_password = emailPassword;
+      await callScript('updateSetter', updatePayload);
       EDITING_CARDS.delete(originalEmail);
       if(personalEmail !== originalEmail){
         EXPANDED_CARDS.delete(originalEmail);
@@ -751,6 +765,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const businessEmail = document.getElementById('new-business-email').value.trim().toLowerCase();
     const startDate = document.getElementById('new-start-date').value;
     const pct = document.getElementById('new-pct').value;
+    const emailPassword = document.getElementById('new-email-password').value;
     const errEl = document.getElementById('add-setter-error');
     errEl.style.display = 'none';
 
@@ -772,7 +787,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       await callScript('addSetter', {
         first_name: firstName, last_name: lastName,
         personal_email: personalEmail, business_email: businessEmail,
-        start_date: startDate, lead_percentage: Number(pct) || 0
+        start_date: startDate, lead_percentage: Number(pct) || 0,
+        email_password: emailPassword
       });
       document.getElementById('new-first-name').value = '';
       document.getElementById('new-last-name').value = '';
@@ -780,6 +796,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       document.getElementById('new-business-email').value = '';
       document.getElementById('new-start-date').value = '';
       document.getElementById('new-pct').value = '';
+      document.getElementById('new-email-password').value = '';
       toggleAddForm();
       await loadAllData(false);
     } catch(e){
@@ -853,6 +870,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       alert('Could not remove that item. Try again in a moment.');
     }
     hideLoading();
+  }
+
+  // Welcome email template for new Closers. {{first_name}}, {{company_email}} and
+  // {{password}} are filled in from that closer's record (business_email / email_password).
+  function buildWelcomeEmail(s){
+    const firstName = s.first_name || '';
+    const companyEmail = s.business_email || '';
+    const password = s.email_password || '';
+    const subject = `Welcome to Strong Standard, ${firstName}!`;
+    const body = [
+      `Hi ${firstName},`,
+      '',
+      "Welcome to the team! My name is Miguel, and I handle the technical side of things here at Strong Standard, things like GoHighLevel, calendars, and the tools you'll be using day to day.",
+      '',
+      "Here's what you need to get started:",
+      '',
+      'Your company account has already been created. You should now have access to:',
+      '',
+      '- Slack, our main communication tool',
+      '- GoHighLevel (GHL), our CRM, this is where we manage all of our leads and sales',
+      '',
+      'Your login details:',
+      '',
+      `Company email: ${companyEmail}`,
+      `Password: ${password}`,
+      '',
+      "If you run into any issues with access, tools, or logins, just reach out to me directly on Slack and I'll get it sorted.",
+      '',
+      'Looking forward to working with you!',
+      '',
+      'Best,',
+      'Miguel',
+      'Strong Standard, Technical Support'
+    ].join('\n');
+    return { subject, body };
+  }
+
+  async function copyWelcomeEmail(email, btnEl){
+    const s = STATE.setters.find(x => x.personal_email === email);
+    if(!s) return;
+    const missing = [];
+    if(!s.first_name) missing.push('first name');
+    if(!s.business_email) missing.push('company email');
+    if(!s.email_password) missing.push('email password');
+    const { subject, body } = buildWelcomeEmail(s);
+    const fullText = `Subject: ${subject}\n\n${body}`;
+    const original = btnEl.textContent;
+    try {
+      await navigator.clipboard.writeText(fullText);
+      btnEl.textContent = missing.length ? `⚠ Copied (missing: ${missing.join(', ')})` : '✓ Copied!';
+    } catch(e){
+      console.error(e);
+      btnEl.textContent = '⚠ Copy failed';
+      alert('Could not copy to clipboard. Copy manually:\n\n' + fullText);
+    }
+    setTimeout(() => { btnEl.textContent = original; }, missing.length ? 3200 : 1600);
   }
 
   function escapeHtml(str){
