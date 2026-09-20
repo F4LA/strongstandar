@@ -12,11 +12,12 @@
 // Optional:
 //   FORCE_SEND=1        - bypass the 5pm-Eastern time guard (used for manual testing)
 
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const LAST_SENT_PATH = join(__dirname, 'last-sent.json');
 
 const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const RANGE = 'Leads applied!A:P';
@@ -43,24 +44,53 @@ function fail(msg) {
 if (!SHEETS_API_KEY) fail('SHEETS_API_KEY env var is missing.');
 if (!SLACK_WEBHOOK_URL) fail('SLACK_WEBHOOK_URL env var is missing.');
 
-// ── Time guard: only actually send at 8am or 5pm Eastern (America/New_York) ──
-// The workflow's cron fires 4 times a day (2 slots x EDT/EST) to stay correct
-// across the DST switch. This guard makes sure only the correct firing per
-// slot actually posts to Slack.
-const TARGET_HOURS_ET = [8, 17];
-
-function currentHourEastern() {
-  const hourStr = new Intl.DateTimeFormat('en-US', {
+// ── Slot + dedupe guard ──
+// GitHub Actions cron is NOT precise — scheduled runs can land 1-5 hours late
+// during busy periods. So instead of requiring an exact hour, we poll every
+// 30 min inside wide morning/evening windows (see the workflow file) and let
+// the script figure out, from the REAL Eastern time it sees when it runs,
+// which slot (if any) this is, then check last-sent.json so we only actually
+// send once per slot per Eastern calendar date, no matter how many times the
+// cron fires inside that window.
+function easternNowParts() {
+  const parts = new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/New_York',
-    hour: 'numeric',
-    hour12: false,
-  }).format(new Date());
-  return parseInt(hourStr, 10) % 24;
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: 'numeric', hour12: false,
+  }).formatToParts(new Date());
+  const map = {};
+  for (const p of parts) map[p.type] = p.value;
+  return { dateStr: `${map.year}-${map.month}-${map.day}`, hour: parseInt(map.hour, 10) % 24 };
 }
 
-if (!FORCE_SEND && !TARGET_HOURS_ET.includes(currentHourEastern())) {
-  console.log('Not 8am/5pm Eastern right now — skipping (this is expected for the other cron firings).');
-  process.exit(0);
+function currentSlot(hour) {
+  if (hour >= 6 && hour <= 12) return 'morning';   // covers 8am ET + generous delay buffer
+  if (hour >= 15 && hour <= 23) return 'evening';  // covers 5pm ET + generous delay buffer
+  return null; // outside both windows (e.g. very early/late night) — nothing to do
+}
+
+function loadLastSent() {
+  if (!existsSync(LAST_SENT_PATH)) return {};
+  try { return JSON.parse(readFileSync(LAST_SENT_PATH, 'utf8')); } catch { return {}; }
+}
+
+function saveLastSent(data) {
+  writeFileSync(LAST_SENT_PATH, JSON.stringify(data, null, 2) + '\n');
+}
+
+const { dateStr: todayStr, hour: hourET } = easternNowParts();
+const slot = currentSlot(hourET);
+const lastSent = loadLastSent();
+
+if (!FORCE_SEND) {
+  if (!slot) {
+    console.log(`Eastern hour is ${hourET}:00 — outside the morning/evening windows. Skipping.`);
+    process.exit(0);
+  }
+  if (lastSent[slot] === todayStr) {
+    console.log(`Already sent the "${slot}" alert today (${todayStr}) — skipping duplicate firing.`);
+    process.exit(0);
+  }
 }
 
 // ── Same parseDate() as the dashboard ──
@@ -174,6 +204,13 @@ async function main() {
 
   await postToSlack(message);
   console.log(`Sent Slack alert for ${stale.length} stale confirmed call(s).`);
+
+  // Mark this slot as sent for today so later firings within the same window
+  // (the cron polls every 30 min) don't send it again.
+  if (slot) {
+    lastSent[slot] = todayStr;
+    saveLastSent(lastSent);
+  }
 }
 
 main().catch(err => {

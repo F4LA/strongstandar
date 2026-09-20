@@ -2,19 +2,25 @@ name: Stale Confirmed Calls Slack Alert
 
 on:
   schedule:
-    # 8:00 AM and 5:00 PM America/New_York (Tampa), each covering both DST offsets.
-    # The script itself checks the real Eastern time and only sends at 8am/5pm —
-    # having both entries per time just means we don't miss it when the clocks change.
-    - cron: '0 12 * * *' # 8am ET during Eastern Daylight Time (UTC-4)
-    - cron: '0 13 * * *' # 8am ET during Eastern Standard Time (UTC-5)
-    - cron: '0 21 * * *' # 5pm ET during Eastern Daylight Time (UTC-4)
-    - cron: '0 22 * * *' # 5pm ET during Eastern Standard Time (UTC-5)
+    # GitHub Actions delays scheduled cron runs, sometimes by several hours during
+    # busy periods, so we can't rely on an exact minute. Instead we poll every 30
+    # minutes inside two generous windows (each wide enough to absorb a multi-hour
+    # delay AND to cover both EDT/EST offsets for 8am/5pm America/New_York), and
+    # the script itself decides — based on the real Eastern time it sees when it
+    # actually runs — whether it's in the morning or evening slot, and whether
+    # that slot has already been sent today (see last-sent.json) to avoid dupes.
+    - cron: '*/30 11-17 * * *' # morning window (covers 8am ET + up to ~5h delay, both DST offsets)
+    - cron: '*/30 20-23 * * *' # evening window (covers 5pm ET + up to ~5h delay, both DST offsets)
+    - cron: '*/30 0-2 * * *'   # evening window continuation past midnight UTC
   workflow_dispatch:
     inputs:
       force_send:
-        description: 'Send now regardless of current time (for testing)'
+        description: 'Send now regardless of current time/dedupe (for testing)'
         type: boolean
         default: true
+
+permissions:
+  contents: write
 
 jobs:
   check-and-alert:
@@ -32,3 +38,15 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           FORCE_SEND: ${{ github.event.inputs.force_send == 'true' && '1' || '' }}
         run: node scripts/stale-calls-alert/index.mjs
+
+      - name: Persist last-sent marker (only if it changed)
+        run: |
+          if ! git diff --quiet -- scripts/stale-calls-alert/last-sent.json; then
+            git config user.email "actions@github.com"
+            git config user.name "Claude"
+            git add scripts/stale-calls-alert/last-sent.json
+            git commit -m "chore: update stale-calls-alert last-sent marker [skip ci]"
+            git push
+          else
+            echo "No change to last-sent.json — nothing to commit."
+          fi
