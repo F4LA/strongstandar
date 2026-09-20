@@ -6,25 +6,23 @@
 // the dashboard and click "Copy Team Message" manually.
 //
 // Env vars required (set as GitHub repo secrets):
-//   SHEETS_API_KEY     - Google Sheets API key (read-only, same one used by the dashboard)
+//   SHEETS_API_KEY      - Google Sheets API key (read-only, same one used by the dashboard)
 //   SLACK_WEBHOOK_URL   - Incoming Webhook URL for the #Sales Updates channel
 //
-// Optional:
-//   FORCE_SEND=1        - bypass the 5pm-Eastern time guard (used for manual testing)
+// No time-of-day check here on purpose — see .github/workflows/stale-calls-alert.yml
+// for why (GitHub Actions cron delay).
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const LAST_SENT_PATH = join(__dirname, 'last-sent.json');
 
 const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const RANGE = 'Leads applied!A:P';
 
 const SHEETS_API_KEY = process.env.SHEETS_API_KEY;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
-const FORCE_SEND = process.env.FORCE_SEND === '1';
 
 // Leads Applied column indices (0-based) — same as the dashboard's `L` object
 const L = {
@@ -44,54 +42,10 @@ function fail(msg) {
 if (!SHEETS_API_KEY) fail('SHEETS_API_KEY env var is missing.');
 if (!SLACK_WEBHOOK_URL) fail('SLACK_WEBHOOK_URL env var is missing.');
 
-// ── Slot + dedupe guard ──
-// GitHub Actions cron is NOT precise — scheduled runs can land 1-5 hours late
-// during busy periods. So instead of requiring an exact hour, we poll every
-// 30 min inside wide morning/evening windows (see the workflow file) and let
-// the script figure out, from the REAL Eastern time it sees when it runs,
-// which slot (if any) this is, then check last-sent.json so we only actually
-// send once per slot per Eastern calendar date, no matter how many times the
-// cron fires inside that window.
-function easternNowParts() {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    year: 'numeric', month: '2-digit', day: '2-digit',
-    hour: 'numeric', hour12: false,
-  }).formatToParts(new Date());
-  const map = {};
-  for (const p of parts) map[p.type] = p.value;
-  return { dateStr: `${map.year}-${map.month}-${map.day}`, hour: parseInt(map.hour, 10) % 24 };
-}
-
-function currentSlot(hour) {
-  if (hour >= 6 && hour <= 12) return 'morning';   // covers 8am ET + generous delay buffer
-  if (hour >= 15 && hour <= 23) return 'evening';  // covers 5pm ET + generous delay buffer
-  return null; // outside both windows (e.g. very early/late night) — nothing to do
-}
-
-function loadLastSent() {
-  if (!existsSync(LAST_SENT_PATH)) return {};
-  try { return JSON.parse(readFileSync(LAST_SENT_PATH, 'utf8')); } catch { return {}; }
-}
-
-function saveLastSent(data) {
-  writeFileSync(LAST_SENT_PATH, JSON.stringify(data, null, 2) + '\n');
-}
-
-const { dateStr: todayStr, hour: hourET } = easternNowParts();
-const slot = currentSlot(hourET);
-const lastSent = loadLastSent();
-
-if (!FORCE_SEND) {
-  if (!slot) {
-    console.log(`Eastern hour is ${hourET}:00 — outside the morning/evening windows. Skipping.`);
-    process.exit(0);
-  }
-  if (lastSent[slot] === todayStr) {
-    console.log(`Already sent the "${slot}" alert today (${todayStr}) — skipping duplicate firing.`);
-    process.exit(0);
-  }
-}
+// No hour-matching rule here on purpose: GitHub Actions cron runs late
+// unpredictably, so the workflow schedules ~1h early (see .yml) and this
+// script just checks for stale calls and sends whenever it's triggered —
+// twice a day, roughly morning and afternoon Eastern time.
 
 // ── Same parseDate() as the dashboard ──
 function parseDate(str) {
@@ -204,13 +158,6 @@ async function main() {
 
   await postToSlack(message);
   console.log(`Sent Slack alert for ${stale.length} stale confirmed call(s).`);
-
-  // Mark this slot as sent for today so later firings within the same window
-  // (the cron polls every 30 min) don't send it again.
-  if (slot) {
-    lastSent[slot] = todayStr;
-    saveLastSent(lastSent);
-  }
 }
 
 main().catch(err => {
