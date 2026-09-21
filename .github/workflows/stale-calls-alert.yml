@@ -18,6 +18,9 @@ on:
     - cron: '0 20 * * *' # ~4pm ET
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   check-and-alert:
     runs-on: ubuntu-latest
@@ -29,7 +32,23 @@ jobs:
           node-version: '20'
 
       - name: Check for stale confirmed calls and alert Slack
+        id: check
         env:
           SHEETS_API_KEY: ${{ secrets.SHEETS_API_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: node scripts/stale-calls-alert/index.mjs
+        continue-on-error: true
+
+      - name: Persist run status (for debugging, no secrets in it)
+        run: |
+          if ! git diff --quiet -- scripts/stale-calls-alert/status.json; then
+            git config user.email "actions@github.com"
+            git config user.name "Claude"
+            git add scripts/stale-calls-alert/status.json
+            git commit -m "chore: update stale-calls-alert status.json [skip ci]"
+            git push
+          fi
+
+      - name: Fail the run if the check step failed
+        if: steps.check.outcome == 'failure'
+        run: exit 1

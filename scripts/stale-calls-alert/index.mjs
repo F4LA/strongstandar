@@ -12,11 +12,23 @@
 // No time-of-day check here on purpose — see .github/workflows/stale-calls-alert.yml
 // for why (GitHub Actions cron delay).
 
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const STATUS_PATH = join(__dirname, 'status.json');
+
+function writeStatus(extra) {
+  try {
+    writeFileSync(STATUS_PATH, JSON.stringify({
+      lastRunAtUTC: new Date().toISOString(),
+      ...extra,
+    }, null, 2) + '\n');
+  } catch (e) {
+    console.warn('Could not write status.json:', e.message);
+  }
+}
 
 const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const RANGE = 'Leads applied!A:P';
@@ -137,6 +149,7 @@ async function main() {
 
   if (stale.length === 0) {
     console.log('No stale confirmed calls today — nothing to send.');
+    writeStatus({ staleCount: 0, sent: false, totalRowsRead: rows.length });
     return;
   }
 
@@ -158,9 +171,11 @@ async function main() {
 
   await postToSlack(message);
   console.log(`Sent Slack alert for ${stale.length} stale confirmed call(s).`);
+  writeStatus({ staleCount: stale.length, sent: true, totalRowsRead: rows.length });
 }
 
 main().catch(err => {
   console.error('Failed:', err);
+  writeStatus({ error: err.message, sent: false });
   process.exit(1);
 });
