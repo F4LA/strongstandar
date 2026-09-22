@@ -12,7 +12,7 @@ window.SS_COHORT = {
 
   // Date literal matching the "Challenge Month" column (AJ) for the CURRENT cohort.
   // Format must stay 'YYYY-MM-01' to match the gviz date type.
-  CHALLENGE_MONTH_DATE: '2026-09-01',
+  CHALLENGE_MONTH_DATE: '2026-10-01',
 
   // Spot counts / pricing tiers
   TOTAL_SPOTS: 60,
@@ -29,7 +29,7 @@ window.SS_COHORT = {
   // the dates written on the challenge page and the kickoff/closing call
   // registration pages.
   CHALLENGE_START_DATE: '2026-09-07',
-  CHALLENGE_END_DATE: '2026-09-28',
-  KICKOFF_CALL_DATE: '2026-09-05',
+  CHALLENGE_END_DATE: '2026-09-27',
+  KICKOFF_CALL_DATE: '2026-10-03',
   KICKOFF_CALL_TIME: '10:00 AM EST'
 };
