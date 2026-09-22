@@ -347,8 +347,8 @@
               <input type="text" id="forum_id" placeholder="e.g. 12345" oninput="saveField('forum_id')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
             </div>
             <div class="cohort-field">
-              <label>Welcome Guide Link</label>
-              <input type="url" id="welcome_guide" placeholder="https://..." oninput="saveField('welcome_guide')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
+              <label>Welcome Guide Link <span style="font-weight:400;color:var(--muted);">(now permanent — see note below)</span></label>
+              <input type="url" id="welcome_guide" value="https://strongstandard.com/21-day-challenge/welcome-guide/" placeholder="https://..." oninput="saveField('welcome_guide')" style="width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;">
             </div>
           </div>
         </div>
@@ -468,7 +468,7 @@
         <div class="section-title">2.1 — <a onclick="event.stopPropagation()" href="https://app.gohighlevel.com/v2/location/cZF68TO3vzxTOnAdACdK/automation/workflow/f935ec88-9712-4c11-88fa-868b677ff8fb" target="_blank" style="color:#38bdf8;font-weight:600;text-decoration:underline;">Pay Challenge Fee ↗</a></div>
         <div class="task" data-task-id="joey-010" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Custom Field — Challenge Month</div></div>
         <div class="task" data-task-id="joey-011" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Set Event Start Date step</div></div>
-        <div class="task" data-task-id="joey-012" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Guide link</div></div>
+        <div class="task" data-task-id="joey-012" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify Welcome Guide link — now a permanent URL, only re-check if it was ever changed</div></div>
       </div>
       <div class="section">
         <div class="section-title">2.2 — <a onclick="event.stopPropagation()" href="https://app.gohighlevel.com/v2/location/cZF68TO3vzxTOnAdACdK/automation/workflow/aec9a931-879c-4c2b-aa5c-993add45d231" target="_blank" style="color:#38bdf8;font-weight:600;text-decoration:underline;">Move Leads Around Pipeline ↗</a></div>
@@ -598,7 +598,7 @@
     <div class="task" data-task-id="joey-045" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Do a test purchase and confirm the full sequence fires correctly</div></div>
     <div class="subtasks">
       <div class="subtask" data-task-id="joey-046" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">TY Page loads and shows correct info</div></div>
-      <div class="subtask" data-task-id="joey-047" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome email arrives with correct dates, links, and Welcome Guide PDF</div></div>
+      <div class="subtask" data-task-id="joey-047" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Welcome email arrives with correct dates, links, and the Welcome Guide link (page auto-updates — no PDF needed)</div></div>
       <div class="subtask" data-task-id="joey-048" onclick="toggleSub(this)"><div class="subtask-dot"><svg width="9" height="7" viewBox="0 0 9 7" fill="none"><polyline points="1 3.5 3 5.5 8 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="subtask-text">Kickoff Call reminder sequence is active</div></div>
     </div>
     <div class="task" data-task-id="joey-049" onclick="toggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Confirm Bernardo's document has all final links and dates updated</div></div>
@@ -657,8 +657,12 @@
           </button>
           <button onclick="handleBDownloadGuideBtn()" id="bGuideBtn" style="display:flex;align-items:center;gap:8px;background:var(--off-white);color:var(--text);border:1.5px solid var(--border);border-radius:9px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span id="bGuideBtnText">Download Welcome Guide</span>
+            <span id="bGuideBtnText">Download Welcome Guide (PDF/offline copy)</span>
           </button>
+          <a href="https://strongstandard.com/21-day-challenge/welcome-guide/" target="_blank" onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:8px;background:#eef7f1;color:#2d6a4f;border:1.5px solid #cfe8da;border-radius:9px;padding:11px 20px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Open Welcome Guide (live link ↗)
+          </a>
           <span id="bAutoStatus" style="font-size:12px;color:var(--muted);"></span>
         </div>
         <div id="bPreviewResult" style="display:none;margin-top:16px;background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:12px;line-height:1.9;font-family:'DM Sans',monospace;white-space:pre-wrap;max-height:480px;overflow-y:auto;"></div>
@@ -679,7 +683,7 @@
       <div class="b-phase-body"><div class="section" style="margin-top:16px">
         <div class="b-task" data-task-id="bernardo-003" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update post dates in Asana for each responsible person</div></div>
         <div class="b-task" data-task-id="bernardo-004" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Schedule Bernardo's posts in Everfit for the full challenge window</div></div>
-        <div class="b-task" data-task-id="bernardo-005" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Update Welcome Guide with new challenge dates (PDF)</div></div>
+        <div class="b-task" data-task-id="bernardo-005" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Verify Welcome Guide page shows the new cohort's dates — it updates itself from cohort-config.js, no PDF to regenerate</div></div>
         <div class="b-task" data-task-id="bernardo-007" onclick="btoggle(this)"><div class="checkbox"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1 4.5 4 7.5 10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="task-text">Voucher Program — post about it in the Everfit community</div></div>
         <details style="margin:2px 0 12px 32px;">
           <summary style="cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);user-select:none;">📋 Show message template</summary>
@@ -1562,6 +1566,8 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       const newMonthDate = formatChallengeMonthDate(kickoffVal);
       const kickoffDateISO = kickoffVal.split('T')[0];
       const kickoffTimeStr = formatKickoffTime(kickoffVal);
+      const closingDateISO = closingVal ? closingVal.split('T')[0] : '';
+      const closingTimeStr = closingVal ? formatKickoffTime(closingVal) : '';
 
       let updated = content.replace(
         /CHALLENGE_MONTH_DATE:\s*'[^']+'/,
@@ -1573,6 +1579,13 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       }
       updated = updated.replace(/KICKOFF_CALL_DATE:\s*'[^']+'/, `KICKOFF_CALL_DATE: '${kickoffDateISO}'`);
       updated = updated.replace(/KICKOFF_CALL_TIME:\s*'[^']+'/, `KICKOFF_CALL_TIME: '${kickoffTimeStr}'`);
+      // Closing Call date/time — used by the live Welcome Guide page
+      // (21-day-challenge/welcome-guide/) so it stays current without
+      // anyone downloading/re-uploading a PDF each cohort.
+      if (closingVal) {
+        updated = updated.replace(/CLOSING_CALL_DATE:\s*'[^']+'/, `CLOSING_CALL_DATE: '${closingDateISO}'`);
+        updated = updated.replace(/CLOSING_CALL_TIME:\s*'[^']+'/, `CLOSING_CALL_TIME: '${closingTimeStr}'`);
+      }
 
       if (updated === content) {
         results.push({ file: 'Cohort Config (spots counter)', status: 'ℹ️ Ya estaba en ' + newMonthDate });
