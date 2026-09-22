@@ -1890,7 +1890,8 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask').forEach(el => {
       el.classList.remove('done');
       const id = el.getAttribute('data-task-id');
-      if (id) taskUpdates.push({ task_id: id, done: false });
+      const type = el.classList.contains('subtask') ? 'subtask' : 'task';
+      if (id) taskUpdates.push({ task_id: id, done: false, ..._taskMeta(el, 'joey', type) });
     });
     const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','gh_token','closing_page_status','forum_id','welcome_guide','affiliates_data'];
     fields.forEach(id => {
@@ -1914,7 +1915,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     document.querySelectorAll('#recurrentesSection .b-task').forEach(el => {
       el.classList.remove('done');
       const id = el.getAttribute('data-task-id');
-      if (id) taskUpdates.push({ task_id: id, done: false });
+      if (id) taskUpdates.push({ task_id: id, done: false, ..._taskMeta(el, 'bernardo', 'task') });
     });
     updateBProgress();
     const ok = await writeTasks(taskUpdates);
