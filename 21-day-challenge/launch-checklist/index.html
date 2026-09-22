@@ -1424,10 +1424,15 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
   }
 
   function formatHomePageDate(dt) {
-    // e.g. "Starts Jul 12, 2026"
-    const d = new Date(dt);
+    // e.g. "Starts Jul 12, 2026". Build the Date from Y/M/D components instead
+    // of `new Date(dateOnlyString)` — a plain 'YYYY-MM-DD' string parses as UTC
+    // midnight in JS, which can shift a day backward once read with local
+    // getters (e.g. Oct 5 UTC becomes Oct 4 evening in US Eastern time).
+    const datePart = dt.split('T')[0];
+    const [y, m, d] = datePart.split('-').map(Number);
+    const dobj = new Date(y, m - 1, d);
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return `Starts ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+    return `Starts ${months[dobj.getMonth()]} ${dobj.getDate()}, ${dobj.getFullYear()}`;
   }
 
   function formatCountdownDeadline(dt) {
@@ -1497,13 +1502,17 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       const { sha, content } = await githubGetSha('21-day-challenge/index.html');
       let updated = content;
 
-      // Update hero start date text e.g. "Starts Jun 6, 2026"
+      // Update hero start date text e.g. "Starts Jun 6, 2026" — this is the
+      // actual challenge start (Day 1), NOT the Kickoff Call date. Day 1 is
+      // 2 days after Kickoff (or the following Monday if Kickoff falls on a
+      // weekend), so it must use day1Val, not kickoffVal.
       updated = updated.replace(
         /(<p class="hero__start-date">)Starts [^<]+(<\/p>)/,
-        `$1${formatHomePageDate(kickoffVal)}$2`
+        `$1${formatHomePageDate(day1Val)}$2`
       );
 
-      // Update countdown deadline
+      // Update countdown deadline — this one DOES stay tied to the Kickoff
+      // Call, since "Registration Closes In" counts down to Kickoff, not Day 1.
       updated = updated.replace(
         /const deadline = new Date\('[^']+'\);/,
         `const deadline = new Date('${formatCountdownDeadline(kickoffVal)}');`
@@ -1512,7 +1521,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       await githubUpdateFile(
         '21-day-challenge/index.html',
         updated, sha,
-        `Update 21DC home page dates for new cohort (${formatHomePageDate(kickoffVal)})`
+        `Update 21DC home page dates for new cohort (${formatHomePageDate(day1Val)})`
       );
       results.push({ file: 'Home Page', status: '✅' });
     } catch(e) {
@@ -1636,6 +1645,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     const errors = [];
     if (!kickoffVal) errors.push('Kickoff Call date & time');
     if (!closingVal) errors.push('Closing Webinar date & time');
+    if (!day1Val) errors.push('Day 1 (should auto-fill from Kickoff — check the field)');
     if (errors.length) { alert('Please fill in:\n• ' + errors.join('\n• ')); return; }
 
     const btn = document.getElementById('launchBtn');
