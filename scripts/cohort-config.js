@@ -28,8 +28,8 @@ window.SS_COHORT = {
   // portal to show start/end/kickoff-call dates — keep these in sync with
   // the dates written on the challenge page and the kickoff/closing call
   // registration pages.
-  CHALLENGE_START_DATE: '2026-09-07',
-  CHALLENGE_END_DATE: '2026-09-27',
+  CHALLENGE_START_DATE: '2026-10-05',
+  CHALLENGE_END_DATE: '2026-10-25',
   KICKOFF_CALL_DATE: '2026-10-03',
   KICKOFF_CALL_TIME: '10:00 AM EST'
 };
