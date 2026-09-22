@@ -57,7 +57,7 @@
   .cohort-panel.collapsed #cohortToggle svg { transform:rotate(-90deg); }
   #cohortToggle svg { transition:transform 0.3s; }
   .cohort-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); align-items:start; }
-  .cohort-card { background:var(--white); padding:20px 24px; }
+  .cohort-card { background:var(--white); padding:20px 24px; min-width:0; }
   .cohort-card--wide { grid-column:1/-1; background:var(--off-white); }
   .cohort-card__label { display:flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
   .cohort-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
@@ -293,7 +293,7 @@
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
             <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
-              <a id="kickoff_zoom_display" onclick="event.stopPropagation()" href="#" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ loading…</a>
+              <a id="kickoff_zoom_display" onclick="event.stopPropagation()" href="#" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ loading…</a>
               <button onclick="copyZoomLink('kickoff_zoom', this)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
           </div>
@@ -304,7 +304,7 @@
           <div class="cohort-field" style="margin-top:8px;">
             <label>Zoom Permalink</label>
             <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
-              <a id="closing_zoom_display" onclick="event.stopPropagation()" href="#" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ loading…</a>
+              <a id="closing_zoom_display" onclick="event.stopPropagation()" href="#" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ loading…</a>
               <button onclick="copyZoomLink('closing_zoom', this)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
           </div>
@@ -318,7 +318,7 @@
           <div style="margin-bottom:12px;">
             <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;letter-spacing:0.5px;">ZOOM LINK</div>
             <div style="display:flex;align-items:center;gap:8px;background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px;">
-              <a id="coaching_zoom_display" onclick="event.stopPropagation()" href="#" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ loading…</a>
+              <a id="coaching_zoom_display" onclick="event.stopPropagation()" href="#" target="_blank" style="color:var(--accent);font-size:12px;font-weight:600;text-decoration:none;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">↗ loading…</a>
               <button onclick="copyZoomLink('coaching_zoom', this)" style="font-size:11px;font-weight:600;color:var(--muted);background:white;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;white-space:nowrap;">Copy</button>
             </div>
           </div>
@@ -1124,7 +1124,11 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     const url = zoomLinks[key] || fallback || '';
     if (url) {
       a.href = url;
-      a.textContent = '↗ ' + url.replace(/^https?:\/\//, '');
+      // Muestra solo host+path, sin el query string (?pwd=...) — igual que
+      // el texto que se mostraba antes cuando el link estaba hardcodeado.
+      // Evita textos larguísimos sin espacios que rompen el grid de 2 columnas.
+      const short = url.replace(/^https?:\/\//, '').split('?')[0];
+      a.textContent = '↗ ' + short;
     } else {
       a.href = '#';
       a.textContent = '⚠️ Not set in Sheet';
