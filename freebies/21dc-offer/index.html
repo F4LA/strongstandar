@@ -568,7 +568,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="price-block__label" id="price-tier-label">Early Bird Price</span>
           <div class="price-block__amount"><span class="currency">$</span><span id="price-amount">97</span></div>
           <div class="price-block__note" id="price-note">Loading availability...</div>
-          <div class="price-block__sub">Starts Aug 3, 2026 · Led by Dr. Joey Munoz, PhD</div>
+          <div class="price-block__sub">Starts <span id="challenge-start-date-1">Aug 3, 2026</span> · Led by Dr. Joey Munoz, PhD</div>
         </div>
         <a href="https://strongstandard.com/21-day-challenge/?utm_source=blueprint" id="checkout-btn" class="btn-challenge" target="_blank" rel="noopener">
           Join the Challenge
@@ -650,7 +650,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
       <div class="guarantee-line" style="margin-top:16px;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        21-day money-back guarantee · Starts Aug 3, 2026 · <span id="final-spots-note">Only a few spots left at $97</span>
+        21-day money-back guarantee · Starts <span id="challenge-start-date-2">Aug 3, 2026</span> · <span id="final-spots-note">Only a few spots left at $97</span>
       </div>
     </div>
   </div>
@@ -674,6 +674,22 @@ const TOTAL_SPOTS = window.SS_COHORT.TOTAL_SPOTS;
 const TIER_1_LIMIT = window.SS_COHORT.TIER_1_LIMIT;
 const LINK_97  = 'https://strongstandard.com/21-day-challenge/?utm_source=blueprint';
 const LINK_147 = 'https://strongstandard.com/21-day-challenge/?utm_source=blueprint';
+
+// ── Challenge start date — pulled from cohort-config.js so this page stays
+// in sync with whatever the Launch Checklist has set, instead of a
+// hardcoded date that goes stale every cohort ──
+(function fillChallengeStartDate() {
+  const startDate = window.SS_COHORT && window.SS_COHORT.CHALLENGE_START_DATE;
+  if (!startDate) return;
+  const [y, m, d] = startDate.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const formatted = `${months[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}`;
+  ['challenge-start-date-1', 'challenge-start-date-2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = formatted;
+  });
+})();
 
 function updateUI(purchaseCount) {
   const currentSpots = Math.max(0, TOTAL_SPOTS - purchaseCount);
