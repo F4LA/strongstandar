@@ -28,6 +28,7 @@ window.SS_COHORT = {
   // portal to show start/end/kickoff-call dates — keep these in sync with
   // the dates written on the challenge page and the kickoff/closing call
   // registration pages.
+  REGISTRATION_CLOSE_DATE: '2026-10-02', // doors close (shown on 21dc-offer)
   CHALLENGE_START_DATE: '2026-10-05',
   CHALLENGE_END_DATE: '2026-10-25',
   KICKOFF_CALL_DATE: '2026-10-03',
