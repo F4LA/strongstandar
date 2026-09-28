@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D1A">
+<title>The Science of Hunger and Satiety Hormones | Strong Standard</title>
+<meta name="description" content="Dr. Joey explains the hormones and mechanisms behind hunger and fullness, and the specific, research-backed nutrition strategies that work with them.">
+<link rel="canonical" href="https://strongstandard.com/blog/the-science-of-hunger-and-satiety-hormones/">
+<meta name="robots" content="index, follow">
+<script src="/scripts/utm-persist.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy:        #080D1A;
+  --steel-mid:   #2278AC;
+  --steel-light: #3899CC;
+  --ice:         #A8CDE0;
+  --page-bg:     #F7F5F0;
+  --surface:     #FFFFFF;
+  --ink:         #1A1A1A;
+  --ink-2:       #3A3A3A;
+  --ink-muted:   #6B6B6B;
+  --rule:        #E4E0D8;
+  --accent:      #2278AC;
+  --accent-soft: #EBF4FB;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-serif:  'DM Serif Display', serif;
+  --font-body:   'DM Sans', sans-serif;
+  --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-full: 9999px;
+  --content-width: 920px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { background: var(--page-bg); color: var(--ink); font-family: var(--font-body); font-size: 18px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: var(--navy); }
+nav.scrolled { border-bottom: 1px solid rgba(34,120,172,0.2); }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: var(--r-full); transition: all 0.2s; border: none; }
+.btn-primary { background: var(--steel-mid); color: #fff; padding: 11px 26px; font-size: 13px; }
+.btn-primary:hover { background: var(--steel-light); }
+
+.post-banner { background: var(--navy); padding: 112px 5% 72px; border-bottom: 3px solid var(--accent); }
+.post-banner__inner { max-width: var(--content-width); margin: 0 auto; }
+.post-banner__back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 36px; transition: color 0.2s; font-family: var(--font-body); }
+.post-banner__back:hover { color: var(--ice); }
+.post-banner__tag { display: inline-block; padding: 4px 12px; border-radius: var(--r-full); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(34,120,172,0.2); color: var(--ice); margin-bottom: 24px; }
+.post-banner h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1; letter-spacing: 0.02em; color: #fff; margin-bottom: 28px; }
+.post-banner h1 em { color: var(--ice); font-style: normal; }
+.post-banner__excerpt { font-size: 20px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 36px; max-width: 680px; font-weight: 300; }
+.post-banner__meta { display: flex; align-items: center; gap: 14px; font-size: 13px; color: rgba(255,255,255,0.4); flex-wrap: wrap; }
+.post-banner__author { display: flex; align-items: center; gap: 10px; }
+.post-banner__avatar { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(56,153,204,0.4); }
+.post-banner__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.post-banner__name { color: rgba(255,255,255,0.8); font-weight: 500; }
+.dot { color: rgba(255,255,255,0.2); }
+
+.post-wrap { max-width: var(--content-width); margin: 0 auto; padding: 64px 5% 100px; }
+.post-body { font-size: 18px; line-height: 1.8; color: var(--ink-2); }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.05; letter-spacing: 0.02em; color: var(--ink); margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid var(--accent); display: block; }
+.post-body h3 { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.15; letter-spacing: 0.02em; color: var(--ink); margin: 32px 0 10px; }
+.post-body ul, .post-body ol { margin: 0 0 24px 0; padding-left: 0; list-style: none; }
+.post-body li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.post-body li:last-child { border-bottom: none; }
+.post-body li::before { content: ''; position: absolute; left: 0; top: 18px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.post-body strong { color: var(--ink); font-weight: 600; }
+.post-body em { color: var(--ink-muted); font-style: italic; }
+.post-body a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(34,120,172,0.3); }
+.post-body a:hover { text-decoration-color: var(--accent); }
+.post-body blockquote { border-left: 4px solid var(--accent); padding: 20px 28px; margin: 40px 0; background: var(--accent-soft); border-radius: 0 var(--r-md) var(--r-md) 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--ink); line-height: 1.6; }
+.post-body hr { border: none; border-top: 1px solid var(--rule); margin: 48px 0; }
+
+.answer-box { background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; margin: 8px 0 36px; }
+.answer-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.answer-box p { margin-bottom: 0; font-size: 16px; color: var(--ink-2); }
+
+.faq-item { margin-bottom: 28px; }
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item h3 { margin: 0 0 8px; }
+.faq-item p { font-size: 16px; color: var(--ink-2); margin-bottom: 0; }
+
+.tdee-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 28px 0 36px; }
+.tdee-item { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); padding: 20px 18px; text-align: center; }
+.tdee-item__value { font-family: var(--font-display); font-size: 1.9rem; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+.tdee-item__label { font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
+@media (max-width: 640px) { .tdee-grid { grid-template-columns: 1fr; } }
+
+.takeaway-box { background: var(--navy); border-radius: var(--r-lg); padding: 32px 36px; margin: 48px 0; }
+.takeaway-box__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ice); margin-bottom: 16px; }
+.takeaway-box ul { margin: 0; padding: 0; list-style: none; }
+.takeaway-box li { padding: 10px 0 10px 24px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.5; }
+.takeaway-box li:last-child { border-bottom: none; }
+.takeaway-box li::before { content: ''; position: absolute; left: 0; top: 19px; width: 6px; height: 6px; border-radius: 50%; background: var(--steel-light); }
+
+.post-cta { background: var(--navy); border-radius: var(--r-lg); padding: 20px 40px 50px; text-align: center; margin: 28px 0 0; }
+.post-cta h3 { font-family: var(--font-display); font-size: 2.4rem; color: #fff; margin-bottom: 12px; letter-spacing: 0.02em; line-height: 1; }
+.post-cta p { color: rgba(255,255,255,0.55); margin-bottom: 20px; font-size: 15px; line-height: 1.6; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+footer { background: var(--navy); border-top: 1px solid rgba(34,120,172,0.12); padding: 40px 5% 32px; }
+.footer__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; }
+.footer-brand__tagline { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: var(--ice); }
+.footer-socials { display: flex; gap: 12px; }
+.social-icon { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(34,120,172,0.25); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.4); transition: all 0.2s; }
+.social-icon:hover { border-color: var(--ice); color: var(--ice); }
+.footer__bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; }
+.footer__copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+@media (max-width: 640px) {
+  .post-banner { padding: 100px 5% 56px; }
+  .post-banner__excerpt { font-size: 17px; }
+  .post-cta { padding: 20px 20px 40px; }
+  .takeaway-box { padding: 24px; }
+}
+
+.related-posts { margin: 56px 0 40px; }
+.related-posts__label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.related-posts__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.related-post-card { display: block; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r-md); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.related-post-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.related-post-card__image { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--navy); }
+.related-post-card__title { padding: 14px 16px; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+@media (max-width: 640px) {
+  .related-posts__grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Science of Hunger and Satiety Hormones",
+  "description": "Dr. Joey explains the hormones and mechanisms behind hunger and fullness, and the specific, research-backed nutrition strategies that work with them.",
+  "url": "https://strongstandard.com/blog/the-science-of-hunger-and-satiety-hormones/",
+  "datePublished": "2026-09-07",
+  "author": {
+    "@type": "Person",
+    "@id": "https://strongstandard.com/#joey-munoz",
+    "name": "Dr. Joey Munoz"
+  },
+  "publisher": {
+    "@id": "https://strongstandard.com/#organization",
+    "@type": "Organization",
+    "name": "Strong Standard Coaching"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://strongstandard.com/blog/the-science-of-hunger-and-satiety-hormones/"
+  },
+  "keywords": "hunger and satiety hormones, how much protein reduces appetite, soluble fiber and satiety, gut microbiome and hunger regulation"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does eating more protein actually reduce hunger?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A 2005 study found that increasing protein intake to 30% of total daily calories led participants to spontaneously reduce their total daily energy intake by approximately 440 calories, without any intentional restriction, simply due to reduced feelings of hunger."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is fiber so effective at reducing hunger?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fiber-rich foods have low caloric density, providing high food volume for relatively few calories, which stretches the stomach and stimulates fullness. Soluble fiber also slows gastric emptying, increasing how long food stays in your digestive tract."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the gut microbiome affect hunger and satiety?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When gut bacteria ferment fiber in the large intestine, they produce short-chain fatty acids like acetate, which have been shown to increase the production of hormones that suppress hunger."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are protein and fiber more satiating than carbs or fat on a per-calorie basis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Data show that protein and fiber are more satiating per calorie than simple carbohydrates or dietary fat, meaning 100 calories of protein or fiber tends to help you feel fuller than 100 calories from those other sources."
+      }
+    }
+  ]
+}
+</script>
+<script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="/">
+    <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="120" height="24" style="height:24px;width:auto;display:block;">
+  </a>
+  <a href="/schedule-call/?utm_source=blog&utm_medium=nav&utm_campaign=blog_post" class="btn btn-primary">
+    Apply Now
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<header class="post-banner">
+  <div class="post-banner__inner">
+    <a href="/blog/" class="post-banner__back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Blog
+    </a>
+    <div><span class="post-banner__tag">Nutrition</span></div>
+    <h1>The Science of Hunger and <em>Satiety</em></h1>
+    <p class="post-banner__excerpt">You know protein and fiber help with hunger, but do you know why? Dr. Joey breaks down the actual hormones and mechanisms at play, and the research behind exactly how much of a difference they make.</p>
+    <div class="post-banner__meta">
+      <div class="post-banner__author">
+        <div class="post-banner__avatar">
+          <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz">
+        </div>
+        <span class="post-banner__name">Dr. Joey Munoz, PhD</span>
+      </div>
+      <span class="dot">·</span>
+      <span>September 7, 2026</span>
+      <span class="dot">·</span>
+      <span>8 min read</span>
+    </div>
+  </div>
+</header>
+
+<main class="post-wrap">
+  <article class="post-body">
+
+    <div id="yt-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin-bottom:40px;cursor:pointer;background:#000;" onclick="loadYT()">
+      <img src="https://i.ytimg.com/vi/oBOLssiqrME/maxresdefault.jpg" alt="Hack your hunger: Science based strategies for sustainable fat loss" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:12px;opacity:0.85;">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;background:rgba(255,0,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      </div>
+    </div>
+    <script>
+    function loadYT() {
+      var d = document.getElementById('yt-embed');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/oBOLssiqrME?autoplay=1';
+      iframe.title = 'Hack your hunger: Science based strategies for sustainable fat loss';
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;';
+      d.innerHTML = '';
+      d.appendChild(iframe);
+    }
+    </script>
+
+    <div class="answer-box">
+      <div class="answer-box__label">Quick Answer</div>
+      <p>Protein and fiber are both more satiating than carbohydrates or fat on a per-calorie basis. Increasing protein to 30% of total calories has been shown to spontaneously reduce daily intake by about 440 calories, while fiber slows digestion, adds food volume, and triggers gut bacteria to produce hunger-suppressing compounds.</p>
+    </div>
+
+    <p>In theory, weight loss is simple: don't eat more calories than you burn. In practice, most people who attempt it fail, and a large part of that comes down to hunger. Understanding the actual hormones and mechanisms behind hunger and fullness makes it possible to work with your biology instead of against it.</p>
+
+    <h2>Why Protein Is So Powerful for Appetite</h2>
+
+    <p>Protein and fiber are the two most satiating nutrients, meaning on a per-calorie basis, they help you feel fuller than the same number of calories from carbohydrates or fat. Research shows a high-protein diet can increase satiety-related hormones like peptide YY (PYY) and GLP-1 more than a high-carb or high-fat meal, even at equal calories.</p>
+
+    <div class="tdee-grid">
+      <div class="tdee-item">
+        <div class="tdee-item__value">30%</div>
+        <div class="tdee-item__label">Protein as a share of total daily calories in the key study</div>
+      </div>
+      <div class="tdee-item">
+        <div class="tdee-item__value">-440 cal</div>
+        <div class="tdee-item__label">Average spontaneous reduction in daily intake, without intentional restriction</div>
+      </div>
+    </div>
+
+    <p>A 2005 study found that participants who raised their protein intake to 30% of total daily calories spontaneously reduced their overall energy intake by roughly 440 calories per day, without any conscious restriction, simply due to feeling less hungry. That's a substantial effect from a single dietary change.</p>
+
+    <h2>How Fiber Reduces Hunger Through Two Different Mechanisms</h2>
+
+    <p>Fiber works through volume and digestion speed. High-fiber foods like vegetables, fruits, and legumes have low caloric density, meaning they provide a lot of food volume for relatively few calories. This stretches the stomach, activating mechanoreceptors that signal fullness to your brain.</p>
+
+    <p>Soluble fiber specifically dissolves in water, forming a gel-like substance in your intestinal tract. This slows gastric emptying, meaning food stays in your digestive system longer, which extends the feeling of fullness over time.</p>
+
+    <h2>The Gut Microbiome Connection</h2>
+
+    <blockquote>When these microbes ferment different fibers, they produce short-chain fatty acids as a byproduct, and one of those short-chain fatty acids is acetate, which has been shown to increase the production of hormones that suppress hunger.</blockquote>
+
+    <p>Fiber isn't digestible by your body directly, it travels to your large intestine, where it's fermented by your gut microbiome. This fermentation produces short-chain fatty acids like acetate, which directly stimulate the release of hunger-suppressing hormones. A study on obese patients following a very low-calorie diet found that adding 30 grams of daily fiber improved satiety outcomes compared to an identical low-calorie diet without added fiber.</p>
+
+    <h2>Putting the Mechanisms Into Practice</h2>
+
+    <p>Given these mechanisms, two clear priorities emerge for anyone trying to manage hunger during a calorie deficit: build meals around adequate protein, and prioritize high-fiber, low-calorie-density foods like vegetables, fruits, and legumes. Both work through distinct biological pathways, hormonal signaling for protein, and volume, digestion speed, and gut bacteria fermentation for fiber, making them complementary rather than redundant strategies.</p>
+
+    <div class="takeaway-box">
+      <div class="takeaway-box__label">Key Takeaways</div>
+      <ul>
+        <li>Protein and fiber are both more satiating per calorie than carbohydrates or fat.</li>
+        <li>Raising protein to 30% of total calories has been shown to spontaneously reduce daily intake by roughly 440 calories.</li>
+        <li>Fiber reduces hunger through low caloric density (more food volume) and slowed gastric emptying from soluble fiber.</li>
+        <li>Gut bacteria fermenting fiber produce short-chain fatty acids like acetate, which directly stimulate hunger-suppressing hormones.</li>
+        <li>Building meals around protein and fiber addresses hunger through multiple distinct biological mechanisms at once.</li>
+      </ul>
+    </div>
+
+    <p>Hunger isn't something to just push through with willpower. Understanding the actual hormones and gut mechanisms behind it gives you specific, research-backed levers to pull, making a calorie deficit feel far more manageable.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>How much does eating more protein actually reduce hunger?</h3>
+      <p>A 2005 study found that increasing protein intake to 30% of total daily calories led participants to spontaneously reduce their total daily energy intake by approximately 440 calories, without any intentional restriction, simply due to reduced feelings of hunger.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why is fiber so effective at reducing hunger?</h3>
+      <p>Fiber-rich foods have low caloric density, providing high food volume for relatively few calories, which stretches the stomach and stimulates fullness. Soluble fiber also slows gastric emptying, increasing how long food stays in your digestive tract.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How does the gut microbiome affect hunger and satiety?</h3>
+      <p>When gut bacteria ferment fiber in the large intestine, they produce short-chain fatty acids like acetate, which have been shown to increase the production of hormones that suppress hunger.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Are protein and fiber more satiating than carbs or fat on a per-calorie basis?</h3>
+      <p>Yes. Data show that protein and fiber are more satiating per calorie than simple carbohydrates or dietary fat, meaning 100 calories of protein or fiber tends to help you feel fuller than 100 calories from those other sources.</p>
+    </div>
+
+    <hr>
+
+    <div class="related-posts">
+      <div class="related-posts__label">You Might Also Like</div>
+      <div class="related-posts__grid">
+        <a href="/blog/how-to-eliminate-hunger-when-dieting/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-eliminate-hunger-when-dieting.png')"></div>
+          <div class="related-post-card__title">How to Eliminate Hunger When Dieting</div>
+        </a>
+        <a href="/blog/not-losing-weight-youre-probably-not-in-a-deficit/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/not-losing-weight-youre-probably-not-in-a-deficit.png')"></div>
+          <div class="related-post-card__title">You're Probably Not in a Deficit</div>
+        </a>
+        <a href="/blog/how-to-lose-weight-without-tracking-calories/" class="related-post-card">
+          <div class="related-post-card__image" style="background-image:url('https://cdn.jsdelivr.net/gh/F4LA/strongstandar@main/blog/_data/thumbnails/how-to-lose-weight-without-tracking-calories.png')"></div>
+          <div class="related-post-card__title">Lose Weight Without Tracking Calories</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="post-cta">
+      <h3>Ready to Build a Body That Lasts?</h3>
+      <p>Science-backed coaching for busy professionals over 40. Apply today for a nutrition plan built around what actually keeps you satisfied.</p>
+      <a href="/schedule-call/?utm_source=blog&utm_medium=cta&utm_content=the-science-of-hunger-and-satiety-hormones" style="display:inline-flex;align-items:center;gap:10px;background:#2278AC;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;padding:16px 40px;border-radius:9999px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3899CC'" onmouseout="this.style.background='#2278AC'">
+        Apply Now &rarr;
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer>
+  <div class="footer__inner">
+    <div class="footer-brand">
+      <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard" width="110" height="22" style="height:22px;width:auto;display:block;margin-bottom:8px;">
+      <p class="footer-brand__tagline">Strength is not the goal. It is the standard.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+      <a href="mailto:drjoey@strongstandard.com">Contact</a>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/dr.joeymunoz/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span class="footer__copy">Copyright 2026 Strong Standard Coaching. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+</script>
+</body>
+</html>
