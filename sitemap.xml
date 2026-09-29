@@ -687,6 +687,21 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://strongstandard.com/blog/dietary-changes-to-extend-longevity/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/meal-prep-without-the-overwhelm/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/why-less-training-volume-might-build-more-muscle/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
