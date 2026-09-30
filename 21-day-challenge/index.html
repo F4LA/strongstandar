@@ -1574,6 +1574,20 @@ h3 {
   opacity: 0.5;
 }
 
+/* Once early bird sells out, only the current price box is shown */
+.offer__tiers--single {
+  grid-template-columns: 1fr;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Hide prices until the live spot count loads, so tier-2 visitors never flash the early bird price */
+html.price-pending .dynamic-price,
+html.price-pending .offer__tiers,
+html.price-pending #offer-price-note { visibility: hidden; }
+
 .offer__tier-label {
   font-size: 11px;
   font-weight: 600;
@@ -3142,6 +3156,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ═══════════════════════════════════════════════
      SCRIPTS
 ═══════════════════════════════════════════════ -->
+<script>document.documentElement.classList.add('price-pending');</script>
 <script src="/scripts/cohort-config.js"></script>
 <script>
 (function () {
@@ -3216,16 +3231,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const tierEarly   = document.getElementById('tier-early');
     const tierRegular = document.getElementById('tier-regular');
     if (tierEarly && tierRegular) {
+      const tiersWrap   = tierEarly.parentElement;
+      const regularLabel = tierRegular.querySelector('.offer__tier-label');
+      if (regularLabel && !regularLabel.dataset.original) regularLabel.dataset.original = regularLabel.textContent;
       if (inTier2) {
-        tierEarly.classList.remove('offer__tier--active');
-        tierEarly.classList.add('offer__tier--sold');
+        // RULE: once early bird spots are gone, hide every trace of the early bird price
+        tierEarly.style.display = 'none';
+        tiersWrap.classList.add('offer__tiers--single');
         tierRegular.classList.remove('offer__tier--next');
         tierRegular.classList.add('offer__tier--active');
+        if (regularLabel) regularLabel.textContent = 'Challenge Price';
       } else {
+        tierEarly.style.display = '';
+        tiersWrap.classList.remove('offer__tiers--single');
         tierEarly.classList.add('offer__tier--active');
         tierEarly.classList.remove('offer__tier--sold');
         tierRegular.classList.add('offer__tier--next');
         tierRegular.classList.remove('offer__tier--active');
+        if (regularLabel) regularLabel.textContent = regularLabel.dataset.original;
       }
     }
 
@@ -3248,13 +3271,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           link.textContent = 'Enrollment Closed';
         });
       } else if (inTier2) {
-        priceNote.textContent = 'Early bird pricing is sold out. Lock in your spot before they\'re gone.';
+        priceNote.textContent = 'One-time payment. Only ' + currentSpots + ' spot' + (currentSpots === 1 ? '' : 's') + ' left. Lock in yours before they\'re gone.';
       } else {
         const earlyLeft = TIER_1_LIMIT - purchaseCount;
         priceNote.textContent = 'Early bird pricing: only ' + earlyLeft + ' spot' + (earlyLeft === 1 ? '' : 's') + ' left at $97. Price goes to $147 after.';
       }
     }
   }
+
+  function revealPrices() { document.documentElement.classList.remove('price-pending'); }
+  setTimeout(revealPrices, 4000); // fallback if the Sheet is slow
 
   function fetchPurchaseCount() {
     const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
@@ -3270,8 +3296,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           window._ss_purchaseCount = purchaseCount;
         }
         updateSpotsUI();
+        revealPrices();
       })
-      .catch(() => { updateSpotsUI(); });
+      .catch(() => { updateSpotsUI(); revealPrices(); });
   }
 
   // Set correct checkout links immediately (default tier), don't wait for Sheet fetch
