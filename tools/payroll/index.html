@@ -417,6 +417,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
+      <!-- Setters Section -->
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-light);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
+          <span>📞</span> Setters — Base Salary
+        </div>
+        <div class="settings-grid" id="setter-salary-grid"></div>
+      </div>
+
       <!-- Coaches Section -->
       <div style="padding:18px 24px">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
@@ -528,7 +536,10 @@ const DASHBOARD_PASSWORD = 'Strong2026';
 const CLOSER_SHEET  = '1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ';
 const COACHES_SHEET = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const COACHES       = ['Brent','Bernardo','Ceci','Miguel','Joey','Jackie'];
-const SETTERS       = ['Emery'];
+const SETTERS       = ['Emery','Keisha','Joyce'];
+// Setters paid per qualified (Show) call on top of their base salary
+const SETTER_PER_SHOW = { Keisha:50, Joyce:50 };
+const PAID_SETTERS    = Object.keys(SETTER_PER_SHOW);
 
 // Column maps
 const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30 };
@@ -542,6 +553,7 @@ let dataLoaded  = { closer:false, coaches:false, setter:false };
 let currentTab  = 'closer';
 let approvedMap = {};
 let salaries    = {};
+let setterSalaries = {};
 let coachSort   = 'name';
 let customItems = {};
 
@@ -749,6 +761,14 @@ function buildSalaryGrid() {
       <input type="text" class="setting-input" id="sal-${c}" placeholder="$0.00"
         value="${salaries[c] ? '$'+salaries[c].toLocaleString('en-US',{minimumFractionDigits:2}) : ''}"/>
     </div>`).join('');
+  // Setters (paid per show)
+  const stGrid = document.getElementById('setter-salary-grid');
+  if (stGrid) stGrid.innerHTML = PAID_SETTERS.map(s=>`
+    <div class="setting-item">
+      <label class="setting-label">${s}</label>
+      <input type="text" class="setting-input" id="stsal-${s}" placeholder="$0.00"
+        value="${setterSalaries[s] ? '$'+setterSalaries[s].toLocaleString('en-US',{minimumFractionDigits:2}) : ''}"/>
+    </div>`).join('');
   // Closer base salary
   const clBase = document.getElementById('set-cl-base');
   const clCurrent = parseAmt(document.getElementById('cl-base-salary')?.value) || 0;
@@ -772,6 +792,13 @@ function saveAllSettings() {
   });
   try { localStorage.setItem('ss_coach_salaries', JSON.stringify(salaries)); } catch(e) {}
 
+  // Save setter base salaries
+  PAID_SETTERS.forEach(s => {
+    const inp = document.getElementById('stsal-'+s);
+    if (inp) { const n = parseAmt(inp.value); setterSalaries[s] = isNaN(n) ? 0 : n; }
+  });
+  try { localStorage.setItem('ss_setter_salaries', JSON.stringify(setterSalaries)); } catch(e) {}
+
   // Save closer base salary
   const clBaseVal = document.getElementById('set-cl-base')?.value;
   if (clBaseVal !== undefined) {
@@ -783,6 +810,7 @@ function saveAllSettings() {
   closeSettings();
   renderCloser();
   renderCoach();
+  renderSetter();
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeSettings(); });
 
@@ -1181,9 +1209,22 @@ function renderSetter() {
     <table class="data-table"><thead><tr><th>Lead</th><th>Sales Person</th><th>Booked Date</th><th>Overdue</th><th>Current Status</th></tr></thead><tbody>${staleRows}</tbody></table>
   </div>`:'';
 
+  // Keisha / Joyce: base salary + $ per Show call
+  const perShow=SETTER_PER_SHOW[setter]||0;
+  const isPaidSetter=perShow>0;
+  const stBase=setterSalaries[setter]||0;
+  const showPay=showLeads.length*perShow;
+  const stTotal=stBase+showPay;
+  const summaryBlock=isPaidSetter?`
+        <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(stBase)}</span></div>
+        <div class="sum-row"><span class="sum-label">Show Calls (${showLeads.length} × ${money(perShow)})</span><span class="sum-val green">${money(showPay)}</span></div>
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(stTotal)}</span></div>`
+    :`
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Calls Booked (Show)</span><span class="sum-val big">${showLeads.length}</span></div>`;
+
   container.innerHTML=`${alertBanner}<div class="slip">
     <div class="slip-header">
-      <div><div class="slip-brand">STRONG STANDARD <span>Setter Call Slip</span></div></div>
+      <div><div class="slip-brand">STRONG STANDARD <span>${isPaidSetter?'Setter Payroll Slip':'Setter Call Slip'}</span></div></div>
       <div style="text-align:right"><div class="slip-name">${setter.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
     </div>
     <div class="slip-dates">
@@ -1193,12 +1234,12 @@ function renderSetter() {
     </div>
     <div class="slip-summary">
       <div class="slip-left">
-        <div class="section-title">Summary</div>
-        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Calls Booked (Show)</span><span class="sum-val big">${showLeads.length}</span></div>
+        <div class="section-title">Summary</div>${summaryBlock}
       </div>
       <div class="slip-right">
         <div class="section-title">Breakdown</div>
         <div class="sum-row"><span class="sum-label">Total Booked</span><span class="sum-val">${setterLeads.length}</span></div>
+        <div class="sum-row"><span class="sum-label">Show</span><span class="sum-val green">${showLeads.length}</span></div>
         ${statusRows}
       </div>
     </div>
@@ -1390,6 +1431,7 @@ function doApprove(key, type) {
 // ── INIT ──────────────────────────────────────────────────────
 async function init() {
   try{ salaries=JSON.parse(localStorage.getItem('ss_coach_salaries')||'{}'); }catch(e){}
+  try{ setterSalaries=JSON.parse(localStorage.getItem('ss_setter_salaries')||'{}'); }catch(e){}
   try{ approvedMap=JSON.parse(localStorage.getItem('ss_payroll_approved')||'{}'); }catch(e){}
   loadCustomItems();
   document.getElementById('app').style.display='block';
