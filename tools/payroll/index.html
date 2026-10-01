@@ -1217,7 +1217,7 @@ function renderSetter() {
   const stTotal=stBase+showPay;
   const summaryBlock=isPaidSetter?`
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(stBase)}</span></div>
-        <div class="sum-row"><span class="sum-label">Show Calls (${showLeads.length} × ${money(perShow)})</span><span class="sum-val green">${money(showPay)}</span></div>
+        <div class="sum-row"><span class="sum-label">Showed Calls (${showLeads.length} × ${money(perShow)})</span><span class="sum-val green">${money(showPay)}</span></div>
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(stTotal)}</span></div>`
     :`
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Calls Booked (Show)</span><span class="sum-val big">${showLeads.length}</span></div>`;
@@ -1239,7 +1239,6 @@ function renderSetter() {
       <div class="slip-right">
         <div class="section-title">Breakdown</div>
         <div class="sum-row"><span class="sum-label">Total Booked</span><span class="sum-val">${setterLeads.length}</span></div>
-        <div class="sum-row"><span class="sum-label">Show</span><span class="sum-val green">${showLeads.length}</span></div>
         ${statusRows}
       </div>
     </div>
