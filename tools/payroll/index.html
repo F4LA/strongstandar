@@ -536,9 +536,9 @@ const DASHBOARD_PASSWORD = 'Strong2026';
 const CLOSER_SHEET  = '1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ';
 const COACHES_SHEET = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const COACHES       = ['Brent','Bernardo','Ceci','Miguel','Joey','Jackie'];
-const SETTERS       = ['Emery','Keisha','Joyce'];
+const SETTERS       = ['Emery','Lakisha','Joyce'];
 // Setters paid per qualified (Show) call on top of their base salary
-const SETTER_PER_SHOW = { Keisha:50, Joyce:50 };
+const SETTER_PER_SHOW = { Lakisha:50, Joyce:50 };
 const PAID_SETTERS    = Object.keys(SETTER_PER_SHOW);
 
 // Column maps
@@ -1209,7 +1209,7 @@ function renderSetter() {
     <table class="data-table"><thead><tr><th>Lead</th><th>Sales Person</th><th>Booked Date</th><th>Overdue</th><th>Current Status</th></tr></thead><tbody>${staleRows}</tbody></table>
   </div>`:'';
 
-  // Keisha / Joyce: base salary + $ per Show call
+  // Lakisha / Joyce: base salary + $ per Show call
   const perShow=SETTER_PER_SHOW[setter]||0;
   const isPaidSetter=perShow>0;
   const stBase=setterSalaries[setter]||0;
