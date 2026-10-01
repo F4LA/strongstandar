@@ -490,6 +490,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <input type="text" class="config-input" id="cl-notes" placeholder="Optional…" style="width:220px" oninput="renderCloser()"/>
         </div>
       </div>
+      <div class="custom-panel" id="cl-custom-panel">
+        <div class="custom-panel-header">
+          <span class="custom-panel-title">➕ Custom Items
+            <span class="custom-panel-sub">Reembolsos, bonos u otros pagos no estándar — se suman al total y salen en el PDF de esta persona para este periodo.</span>
+          </span>
+        </div>
+        <div class="custom-panel-list" id="cl-custom-list"></div>
+        <div class="custom-panel-add">
+          <input type="text" class="config-input" id="cl-custom-concept" placeholder="Concepto (ej. Reembolso por compra)" style="width:300px" onkeydown="if(event.key==='Enter')addCustomItem('cl')"/>
+          <input type="text" class="config-input" id="cl-custom-amount" placeholder="$0.00" style="width:110px" onkeydown="if(event.key==='Enter')addCustomItem('cl')"/>
+          <button class="hbtn" onclick="addCustomItem('cl')">+ Add Item</button>
+        </div>
+      </div>
       <div id="closer-slip"></div>
     </div>
 
@@ -531,6 +544,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <input type="text" class="config-input" id="st-notes" placeholder="Optional…" style="width:260px" oninput="renderSetter()"/>
         </div>
       </div>
+      <div class="custom-panel" id="st-custom-panel">
+        <div class="custom-panel-header">
+          <span class="custom-panel-title">➕ Custom Items
+            <span class="custom-panel-sub">Reembolsos, bonos u otros pagos no estándar — se suman al total y salen en el PDF de este setter para este periodo.</span>
+          </span>
+        </div>
+        <div class="custom-panel-list" id="st-custom-list"></div>
+        <div class="custom-panel-add">
+          <input type="text" class="config-input" id="st-custom-concept" placeholder="Concepto (ej. Reembolso por compra)" style="width:300px" onkeydown="if(event.key==='Enter')addCustomItem('st')"/>
+          <input type="text" class="config-input" id="st-custom-amount" placeholder="$0.00" style="width:110px" onkeydown="if(event.key==='Enter')addCustomItem('st')"/>
+          <button class="hbtn" onclick="addCustomItem('st')">+ Add Item</button>
+        </div>
+      </div>
       <div id="setter-slip"></div>
     </div>
 
@@ -540,6 +566,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="config-field">
           <label>Notes</label>
           <input type="text" class="config-input" id="ad-notes" placeholder="Optional…" style="width:260px" oninput="renderAdmin()"/>
+        </div>
+      </div>
+      <div class="custom-panel" id="ad-custom-panel">
+        <div class="custom-panel-header">
+          <span class="custom-panel-title">➕ Custom Items
+            <span class="custom-panel-sub">Reembolsos, bonos u otros pagos no estándar — se suman al total y salen en el PDF de esta persona para este periodo.</span>
+          </span>
+        </div>
+        <div class="custom-panel-list" id="ad-custom-list"></div>
+        <div class="custom-panel-add">
+          <input type="text" class="config-input" id="ad-custom-concept" placeholder="Concepto (ej. Reembolso por compra)" style="width:300px" onkeydown="if(event.key==='Enter')addCustomItem('ad')"/>
+          <input type="text" class="config-input" id="ad-custom-amount" placeholder="$0.00" style="width:110px" onkeydown="if(event.key==='Enter')addCustomItem('ad')"/>
+          <button class="hbtn" onclick="addCustomItem('ad')">+ Add Item</button>
         </div>
       </div>
       <div id="admin-slip"></div>
@@ -870,6 +909,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeSettings(); })
 
 // ── CLOSER RENDER ─────────────────────────────────────────────
 function renderCloser() {
+  renderCustomPanel('cl');
   const container=document.getElementById('closer-slip');
   const pd=document.getElementById('cl-pay-date')?.value;
   if(!pd||!dataLoaded.closer){container.innerHTML='<div class="empty-state">Select a pay date to generate the payroll slip.</div>';return;}
@@ -902,7 +942,9 @@ function renderCloser() {
   const t1=Math.min(totalCash,T1),t2=totalCash>T1?Math.min(totalCash-T1,T2-T1):0,t3=totalCash>T2?totalCash-T2:0;
   const tierComm=(t1*.10)+(t2*.125)+(t3*.15);
   const baseSalary=parseAmt(document.getElementById('cl-base-salary')?.value)||0;
-  const totalPayment=tierComm+baseSalary+dcSetComm;
+  const clCustom=getCustomItems('Deniz',pd,'cl');
+  const clCustomTotal=clCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
+  const totalPayment=tierComm+baseSalary+dcSetComm+clCustomTotal;
   const notes=document.getElementById('cl-notes')?.value||'';
   const approveKey=`closer|${pd}`;
   const approved=!!approvedMap[approveKey];
@@ -959,6 +1001,7 @@ function renderCloser() {
         <div class="sum-row"><span class="sum-label">Close Commission</span><span class="sum-val gold">${money(tierComm)}</span></div>
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(baseSalary)}</span></div>
         <div class="sum-row"><span class="sum-label">21 DC Set Commission</span><span class="sum-val gold">${money(dcSetComm)}</span></div>
+        ${customRows(clCustom)}
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(totalPayment)}</span></div>
       </div>
       <div class="slip-right">
@@ -1001,54 +1044,63 @@ function renderCloser() {
   </div>`;
 }
 
-// ── CUSTOM ITEMS (coaches) ─────────────────────────────────────
+// ── CUSTOM ITEMS (all tabs) ────────────────────────────────────
+// Coach keys keep the original "Person|payDate" shape so existing saved items
+// still load; other tabs are namespaced ("cl:", "st:", "ad:") to avoid clashes.
 function loadCustomItems(){ try{ customItems=JSON.parse(localStorage.getItem('ss_co_custom_items')||'{}'); }catch(e){ customItems={}; } }
 function saveCustomItems(){ try{ localStorage.setItem('ss_co_custom_items',JSON.stringify(customItems)); }catch(e){} }
-function customKey(coach,pd){ return `${coach}|${pd}`; }
-function getCustomItems(coach,pd){ return (coach&&pd&&customItems[customKey(coach,pd)])||[]; }
+function customKey(person,pd,prefix='co'){ return prefix==='co'?`${person}|${pd}`:`${prefix}:${person}|${pd}`; }
+function getCustomItems(person,pd,prefix='co'){ return (person&&pd&&customItems[customKey(person,pd,prefix)])||[]; }
+function customPerson(prefix){
+  if(prefix==='cl') return 'Deniz';
+  const sel={co:'co-coach-select',st:'st-setter-select',ad:'ad-member-select'}[prefix];
+  return document.getElementById(sel)?.value;
+}
+function customRerender(prefix){ ({cl:renderCloser,co:renderCoach,st:renderSetter,ad:renderAdmin}[prefix]||renderCoach)(); }
+function customRows(items){ return items.map(it=>`<div class="sum-row"><span class="sum-label">${it.concept}</span><span class="sum-val gold">${money(it.amount)}</span></div>`).join(''); }
 
-function renderCustomPanel(){
-  const list=document.getElementById('co-custom-list');
+function renderCustomPanel(prefix='co'){
+  const list=document.getElementById(prefix+'-custom-list');
   if(!list) return;
-  const coach=document.getElementById('co-coach-select')?.value;
-  const pd=document.getElementById('co-pay-date')?.value;
-  if(!coach||!pd){ list.innerHTML='<div class="custom-empty">Select a coach and pay date first.</div>'; return; }
-  const items=getCustomItems(coach,pd);
+  const person=customPerson(prefix);
+  const pd=document.getElementById(prefix+'-pay-date')?.value;
+  if(!person||!pd){ list.innerHTML='<div class="custom-empty">Select a person and pay date first.</div>'; return; }
+  const items=getCustomItems(person,pd,prefix);
   if(!items.length){ list.innerHTML='<div class="custom-empty">No custom items for this period.</div>'; return; }
   list.innerHTML=items.map((it,i)=>`
     <div class="custom-item-row">
       <span class="custom-item-concept">${it.concept}</span>
       <span class="custom-item-amount">${money(it.amount)}</span>
-      <button class="custom-item-remove" onclick="removeCustomItem(${i})" title="Remove">✕</button>
+      <button class="custom-item-remove" onclick="removeCustomItem(${i},'${prefix}')" title="Remove">✕</button>
     </div>`).join('');
 }
 
-function addCustomItem(){
-  const coach=document.getElementById('co-coach-select')?.value;
-  const pd=document.getElementById('co-pay-date')?.value;
-  if(!coach||!pd){ alert('Select a coach and pay date first.'); return; }
-  const conceptInp=document.getElementById('co-custom-concept');
-  const amountInp=document.getElementById('co-custom-amount');
+function addCustomItem(prefix='co'){
+  const person=customPerson(prefix);
+  const pd=document.getElementById(prefix+'-pay-date')?.value;
+  if(!person||!pd){ alert('Select a person and pay date first.'); return; }
+  const conceptInp=document.getElementById(prefix+'-custom-concept');
+  const amountInp=document.getElementById(prefix+'-custom-amount');
   const concept=(conceptInp.value||'').trim();
   const amount=parseAmt(amountInp.value);
   if(!concept){ alert('Enter a concept/description.'); return; }
   if(!amount){ alert('Enter a valid amount.'); return; }
-  const key=customKey(coach,pd);
+  const key=customKey(person,pd,prefix);
   if(!customItems[key]) customItems[key]=[];
   customItems[key].push({concept,amount});
   saveCustomItems();
   conceptInp.value=''; amountInp.value='';
-  renderCoach();
+  customRerender(prefix);
 }
 
-function removeCustomItem(i){
-  const coach=document.getElementById('co-coach-select')?.value;
-  const pd=document.getElementById('co-pay-date')?.value;
-  const key=customKey(coach,pd);
+function removeCustomItem(i,prefix='co'){
+  const person=customPerson(prefix);
+  const pd=document.getElementById(prefix+'-pay-date')?.value;
+  const key=customKey(person,pd,prefix);
   if(!customItems[key]) return;
   customItems[key].splice(i,1);
   saveCustomItems();
-  renderCoach();
+  customRerender(prefix);
 }
 
 // ── COACH RENDER ──────────────────────────────────────────────
@@ -1186,6 +1238,7 @@ function renderCoach() {
 
 // ── SETTER RENDER ───────────────────────────────────────────────
 function renderSetter() {
+  renderCustomPanel('st');
   const container=document.getElementById('setter-slip');
   const pd=document.getElementById('st-pay-date')?.value;
   const setter=document.getElementById('st-setter-select')?.value;
@@ -1268,13 +1321,18 @@ function renderSetter() {
   const isPaidSetter=perShow>0;
   const stBase=setterSalaries[setter]||0;
   const showPay=showLeads.length*perShow;
-  const stTotal=stBase+showPay;
+  const stCustom=getCustomItems(setter,pd,'st');
+  const stCustomTotal=stCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
+  const stTotal=stBase+showPay+stCustomTotal;
   const summaryBlock=isPaidSetter?`
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(stBase)}</span></div>
         <div class="sum-row"><span class="sum-label">Showed Calls (${showLeads.length} × ${money(perShow)})</span><span class="sum-val green">${money(showPay)}</span></div>
+        ${customRows(stCustom)}
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(stTotal)}</span></div>`
     :`
-        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Calls Booked (Show)</span><span class="sum-val big">${showLeads.length}</span></div>`;
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Calls Booked (Show)</span><span class="sum-val big">${showLeads.length}</span></div>
+        ${stCustom.length?`${customRows(stCustom)}
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(stCustomTotal)}</span></div>`:''}`;
 
   container.innerHTML=`${alertBanner}<div class="slip">
     <div class="slip-header">
@@ -1315,6 +1373,7 @@ function renderSetter() {
 function renderAdmin() {
   const container=document.getElementById('admin-slip');
   if(!container) return;
+  renderCustomPanel('ad');
   const pd=document.getElementById('ad-pay-date')?.value;
   const member=document.getElementById('ad-member-select')?.value;
   if(!pd||!member){container.innerHTML='<div class="empty-state">Select a team member and pay date to generate the slip.</div>';return;}
@@ -1322,6 +1381,8 @@ function renderAdmin() {
   const periodLabel=start.toLocaleDateString('en-US',{month:'long',year:'numeric'});
   const notes=document.getElementById('ad-notes')?.value||'';
   const base=adminSalaries[member]||0;
+  const adCustom=getCustomItems(member,pd,'ad');
+  const adTotal=base+adCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
   const approveKey=`admin|${member}|${pd}`;
   const approved=!!approvedMap[approveKey];
 
@@ -1339,7 +1400,8 @@ function renderAdmin() {
       <div class="slip-left">
         <div class="section-title">Summary</div>
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(base)}</span></div>
-        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(base)}</span></div>
+        ${customRows(adCustom)}
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(adTotal)}</span></div>
       </div>
       <div class="slip-right">
         <div class="section-title">Details</div>
