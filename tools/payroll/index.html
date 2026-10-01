@@ -425,6 +425,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="settings-grid" id="setter-salary-grid"></div>
       </div>
 
+      <!-- Admin Team Section -->
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-light);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
+          <span>🗂</span> Admin Team — Base Salary
+        </div>
+        <div class="settings-grid" id="admin-salary-grid"></div>
+      </div>
+
       <!-- Coaches Section -->
       <div style="padding:18px 24px">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
@@ -460,6 +468,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="tab-btn active" onclick="switchTab('closer',this)"><span class="tab-icon">🎯</span> Closer</button>
     <button class="tab-btn"        onclick="switchTab('coaches',this)"><span class="tab-icon">🎓</span> Coaches</button>
     <button class="tab-btn"        onclick="switchTab('setter',this)"><span class="tab-icon">📞</span> Setter</button>
+    <button class="tab-btn"        onclick="switchTab('admin',this)"><span class="tab-icon">🗂</span> Admin Team</button>
   </div>
 
   <!-- CONTROLS (shared) -->
@@ -525,6 +534,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div id="setter-slip"></div>
     </div>
 
+    <!-- ── ADMIN TEAM TAB ── -->
+    <div class="tab-pane" id="pane-admin">
+      <div class="config-row">
+        <div class="config-field">
+          <label>Notes</label>
+          <input type="text" class="config-input" id="ad-notes" placeholder="Optional…" style="width:260px" oninput="renderAdmin()"/>
+        </div>
+      </div>
+      <div id="admin-slip"></div>
+    </div>
+
   </div>
 </div>
 
@@ -540,6 +560,7 @@ const SETTERS       = ['Emery','Lakisha','Joyce'];
 // Setters paid per qualified (Show) call on top of their base salary
 const SETTER_PER_SHOW = { Lakisha:50, Joyce:50 };
 const PAID_SETTERS    = Object.keys(SETTER_PER_SHOW);
+const ADMIN_TEAM      = ['Miguel Salas','Gaby Pachón'];
 
 // Column maps
 const MS = { firstName:0,lastName:1,dealValue:4,saleDate:5,startDate:6,closer:12,refundFlag:24,cashCollected:25,payoutDate:26,refundDate:30 };
@@ -554,6 +575,7 @@ let currentTab  = 'closer';
 let approvedMap = {};
 let salaries    = {};
 let setterSalaries = {};
+let adminSalaries  = {};
 let coachSort   = 'name';
 let customItems = {};
 
@@ -664,6 +686,7 @@ async function switchTab(tab, btn) {
     if(tab==='closer')  { await loadCloserData(); await loadSetterDataSafe(); renderCloser(); }
     if(tab==='coaches') { await loadCoachData();   buildSalaryGrid(); renderCoach(); }
     if(tab==='setter')  { await loadSetterData();  renderSetter(); }
+    if(tab==='admin')   { renderAdmin(); }
   } catch(e) { alert('Error loading data: '+e.message); }
   showLoading(false);
 }
@@ -689,6 +712,7 @@ async function refreshData() {
     if(currentTab==='closer')  { await loadCloserData(); await loadSetterDataSafe(); renderCloser(); }
     if(currentTab==='coaches') { await loadCoachData();   buildSalaryGrid(); renderCoach(); }
     if(currentTab==='setter')  { await loadSetterData();  renderSetter(); }
+    if(currentTab==='admin')   { renderAdmin(); }
     markUpdated();
   } catch(e) { alert('Error refreshing data: '+e.message); }
   showLoading(false);
@@ -723,6 +747,19 @@ function buildControls(tab) {
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="co-period-display">—</span></div>`;
     updatePeriodDisplay('co');
+  } else if(tab==='admin') {
+    const savedPD = localStorage.getItem('ss_ad_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+    bar.innerHTML=`
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="control-label">Team Member</span>
+        <div class="select-wrapper"><select id="ad-member-select" onchange="renderAdmin()">${ADMIN_TEAM.map(a=>`<option value="${a}">${a}</option>`).join('')}</select></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="control-label">Pay Date</span>
+        <input type="date" class="date-input" id="ad-pay-date" value="${savedPD}" oninput="onADPayDate()"/>
+      </div>
+      <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="ad-period-display">—</span></div>`;
+    updatePeriodDisplay('ad');
   } else {
     const savedPD = localStorage.getItem('ss_st_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
     bar.innerHTML=`
@@ -741,6 +778,7 @@ function buildControls(tab) {
 
 function onCLPayDate(){ localStorage.setItem('ss_cl_paydate',document.getElementById('cl-pay-date').value); updatePeriodDisplay('cl'); renderCloser(); }
 function onCOPayDate(){ localStorage.setItem('ss_co_paydate',document.getElementById('co-pay-date').value); updatePeriodDisplay('co'); renderCoach(); }
+function onADPayDate(){ localStorage.setItem('ss_ad_paydate',document.getElementById('ad-pay-date').value); updatePeriodDisplay('ad'); renderAdmin(); }
 function onSTPayDate(){ localStorage.setItem('ss_st_paydate',document.getElementById('st-pay-date').value); updatePeriodDisplay('st'); renderSetter(); }
 
 function updatePeriodDisplay(prefix) {
@@ -768,6 +806,14 @@ function buildSalaryGrid() {
       <label class="setting-label">${s}</label>
       <input type="text" class="setting-input" id="stsal-${s}" placeholder="$0.00"
         value="${setterSalaries[s] ? '$'+setterSalaries[s].toLocaleString('en-US',{minimumFractionDigits:2}) : ''}"/>
+    </div>`).join('');
+  // Admin team
+  const adGrid = document.getElementById('admin-salary-grid');
+  if (adGrid) adGrid.innerHTML = ADMIN_TEAM.map((a,i)=>`
+    <div class="setting-item">
+      <label class="setting-label">${a}</label>
+      <input type="text" class="setting-input" id="adsal-${i}" placeholder="$0.00"
+        value="${adminSalaries[a] ? '$'+adminSalaries[a].toLocaleString('en-US',{minimumFractionDigits:2}) : ''}"/>
     </div>`).join('');
   // Closer base salary
   const clBase = document.getElementById('set-cl-base');
@@ -799,6 +845,13 @@ function saveAllSettings() {
   });
   try { localStorage.setItem('ss_setter_salaries', JSON.stringify(setterSalaries)); } catch(e) {}
 
+  // Save admin team salaries
+  ADMIN_TEAM.forEach((a,i) => {
+    const inp = document.getElementById('adsal-'+i);
+    if (inp) { const n = parseAmt(inp.value); adminSalaries[a] = isNaN(n) ? 0 : n; }
+  });
+  try { localStorage.setItem('ss_admin_salaries', JSON.stringify(adminSalaries)); } catch(e) {}
+
   // Save closer base salary
   const clBaseVal = document.getElementById('set-cl-base')?.value;
   if (clBaseVal !== undefined) {
@@ -811,6 +864,7 @@ function saveAllSettings() {
   renderCloser();
   renderCoach();
   renderSetter();
+  renderAdmin();
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeSettings(); });
 
@@ -1257,6 +1311,54 @@ function renderSetter() {
   </div>`;
 }
 
+// ── ADMIN TEAM RENDER ───────────────────────────────────────────
+function renderAdmin() {
+  const container=document.getElementById('admin-slip');
+  if(!container) return;
+  const pd=document.getElementById('ad-pay-date')?.value;
+  const member=document.getElementById('ad-member-select')?.value;
+  if(!pd||!member){container.innerHTML='<div class="empty-state">Select a team member and pay date to generate the slip.</div>';return;}
+  const {start,end}=getPeriod(pd);
+  const periodLabel=start.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  const notes=document.getElementById('ad-notes')?.value||'';
+  const base=adminSalaries[member]||0;
+  const approveKey=`admin|${member}|${pd}`;
+  const approved=!!approvedMap[approveKey];
+
+  container.innerHTML=`<div class="slip">
+    <div class="slip-header">
+      <div><div class="slip-brand">STRONG STANDARD <span>Admin Team Payroll Slip</span></div></div>
+      <div style="text-align:right"><div class="slip-name">${member.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
+    </div>
+    <div class="slip-dates">
+      <div class="slip-date-cell"><div class="slip-date-label">Pay Date</div><div class="slip-date-val">${fmtDate(parseDate(pd+'T12:00:00'))}</div></div>
+      <div class="slip-date-cell"><div class="slip-date-label">Period Start</div><div class="slip-date-val">${fmtDate(start)}</div></div>
+      <div class="slip-date-cell"><div class="slip-date-label">Period End</div><div class="slip-date-val">${fmtDate(end)}</div></div>
+    </div>
+    <div class="slip-summary">
+      <div class="slip-left">
+        <div class="section-title">Summary</div>
+        <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(base)}</span></div>
+        <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(base)}</span></div>
+      </div>
+      <div class="slip-right">
+        <div class="section-title">Details</div>
+        <div class="sum-row"><span class="sum-label">Team</span><span class="sum-val">Admin</span></div>
+        <div class="sum-row"><span class="sum-label">Period</span><span class="sum-val">${periodLabel}</span></div>
+      </div>
+    </div>
+    ${base?'':`<div style="padding:14px 28px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">⚙ No base salary set for ${member}. Add it in Salary Settings.</div>`}
+    ${notes?`<div style="padding:14px 28px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)">📝 ${notes}</div>`:''}
+    <div class="slip-footer">
+      <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
+      <div class="footer-btns">
+        <button class="btn-pdf" onclick="generatePDF(this)">🖨 Generate PDF</button>
+        <button class="btn-approve ${approved?'approved':''}" onclick="doApprove('${approveKey}','admin')" id="ad-approve-btn">${approved?'✓ Approved':'✓ Approve & Send'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
 // ── GENERATE PDF ─────────────────────────────────────────────
 async function generatePDF(btn) {
   const slip = document.querySelector('.tab-pane.active .slip');
@@ -1334,7 +1436,7 @@ async function generatePDF(btn) {
     const personName = (nameEl?.textContent || '').trim();
     const periodEl  = slip.querySelector('.slip-period');
     const period    = (periodEl?.textContent || '').trim();
-    const typeMap   = { coaches:'Coach Payroll', setter:'Setter Payroll' };
+    const typeMap   = { coaches:'Coach Payroll', setter:'Setter Payroll', admin:'Admin Payroll' };
     const type      = typeMap[currentTab] || 'Closer Payroll';
     pdf.save(`${type} ${personName} - ${period}.pdf`);
 
@@ -1358,7 +1460,7 @@ async function generatePDF(btn) {
   const personName = (nameEl?.textContent || '').trim();
   const periodEl = slip.querySelector('.slip-period');
   const period   = (periodEl?.textContent || '').trim();
-  const typeMap  = { coaches:'Coach Payroll', setter:'Setter Payroll' };
+  const typeMap  = { coaches:'Coach Payroll', setter:'Setter Payroll', admin:'Admin Payroll' };
   const type     = typeMap[currentTab] || 'Closer Payroll';
   const filename = `${type} ${personName} - ${period}`;
 
@@ -1415,8 +1517,8 @@ function doApprove(key, type) {
   if(approvedMap[key]) return;
   approvedMap[key]=true;
   try{ localStorage.setItem('ss_payroll_approved',JSON.stringify(approvedMap)); }catch(e){}
-  const prefixMap = { closer:'cl', coach:'co', setter:'st' };
-  const paneMap   = { closer:'closer', coach:'coaches', setter:'setter' };
+  const prefixMap = { closer:'cl', coach:'co', setter:'st', admin:'ad' };
+  const paneMap   = { closer:'closer', coach:'coaches', setter:'setter', admin:'admin' };
   const prefix=prefixMap[type]||'co';
   const paneId=paneMap[type]||'coaches';
   const btn=document.getElementById(prefix+'-approve-btn');
@@ -1431,6 +1533,7 @@ function doApprove(key, type) {
 async function init() {
   try{ salaries=JSON.parse(localStorage.getItem('ss_coach_salaries')||'{}'); }catch(e){}
   try{ setterSalaries=JSON.parse(localStorage.getItem('ss_setter_salaries')||'{}'); }catch(e){}
+  try{ adminSalaries=JSON.parse(localStorage.getItem('ss_admin_salaries')||'{}'); }catch(e){}
   try{ approvedMap=JSON.parse(localStorage.getItem('ss_payroll_approved')||'{}'); }catch(e){}
   loadCustomItems();
   document.getElementById('app').style.display='block';
