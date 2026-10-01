@@ -409,12 +409,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--steel-light);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
           <span>🎯</span> Closer
         </div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
-          <div class="setting-item">
-            <label class="setting-label">Deniz — Base Salary</label>
-            <input type="text" class="setting-input" id="set-cl-base" placeholder="$0.00"/>
-          </div>
-        </div>
+        <div class="settings-grid" id="closer-salary-grid"></div>
       </div>
 
       <!-- Setters Section -->
@@ -483,7 +478,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="config-row">
         <div class="config-field">
           <label>Base Salary</label>
-          <input type="text" class="config-input" id="cl-base-salary" placeholder="$0.00" oninput="renderCloser()"/>
+          <input type="text" class="config-input" id="cl-base-salary" placeholder="$0.00" oninput="onCloserBaseInput()"/>
         </div>
         <div class="config-field">
           <label>Notes</label>
@@ -595,6 +590,7 @@ const DASHBOARD_PASSWORD = 'Strong2026';
 const CLOSER_SHEET  = '1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ';
 const COACHES_SHEET = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const COACHES       = ['Brent','Bernardo','Ceci','Miguel','Joey','Jackie'];
+const CLOSERS       = ['Deniz','Alan','Boaz'];
 const SETTERS       = ['Emery','Lakisha','Joyce'];
 // Setters paid per qualified (Show) call on top of their base salary
 const SETTER_PER_SHOW = { Lakisha:50, Joyce:50 };
@@ -615,6 +611,7 @@ let approvedMap = {};
 let salaries    = {};
 let setterSalaries = {};
 let adminSalaries  = {};
+let closerSalaries = {};
 let coachSort   = 'name';
 let customItems = {};
 
@@ -765,7 +762,7 @@ function buildControls(tab) {
     bar.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px">
         <span class="control-label">Closer</span>
-        <span style="font-family:var(--font-display);font-size:18px;letter-spacing:2px;color:var(--steel-light)">DENIZ</span>
+        <div class="select-wrapper"><select id="cl-closer-select" onchange="onCloserChange()">${CLOSERS.map(n=>`<option value="${n}"${n===(localStorage.getItem('ss_cl_closer')||CLOSERS[0])?' selected':''}>${n}</option>`).join('')}</select></div>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
         <span class="control-label">Pay Date</span>
@@ -773,6 +770,7 @@ function buildControls(tab) {
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="cl-period-display">—</span></div>`;
     updatePeriodDisplay('cl');
+    syncCloserBaseInput();
   } else if(tab==='coaches') {
     const savedPD = localStorage.getItem('ss_co_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
     bar.innerHTML=`
@@ -829,6 +827,18 @@ function updatePeriodDisplay(prefix) {
   disp.textContent=`${fmtDate(start)} – ${fmtDate(end)}`;
 }
 
+// ── CLOSER SELECTION / BASE SALARY ─────────────────────────────
+function currentCloser(){ return document.getElementById('cl-closer-select')?.value || CLOSERS[0]; }
+function fmtSal(v){ return v ? '$'+v.toLocaleString('en-US',{minimumFractionDigits:2}) : ''; }
+function syncCloserBaseInput(){ const inp=document.getElementById('cl-base-salary'); if(inp) inp.value=fmtSal(closerSalaries[currentCloser()]||0); }
+function onCloserChange(){ localStorage.setItem('ss_cl_closer',currentCloser()); syncCloserBaseInput(); renderCloser(); }
+function onCloserBaseInput(){
+  const n=parseAmt(document.getElementById('cl-base-salary')?.value);
+  closerSalaries[currentCloser()]=isNaN(n)?0:n;
+  try{ localStorage.setItem('ss_closer_salaries',JSON.stringify(closerSalaries)); }catch(e){}
+  renderCloser();
+}
+
 // ── SALARY SETTINGS ───────────────────────────────────────────
 function buildSalaryGrid() {
   // Coaches
@@ -854,10 +864,13 @@ function buildSalaryGrid() {
       <input type="text" class="setting-input" id="adsal-${i}" placeholder="$0.00"
         value="${adminSalaries[a] ? '$'+adminSalaries[a].toLocaleString('en-US',{minimumFractionDigits:2}) : ''}"/>
     </div>`).join('');
-  // Closer base salary
-  const clBase = document.getElementById('set-cl-base');
-  const clCurrent = parseAmt(document.getElementById('cl-base-salary')?.value) || 0;
-  if (clBase) clBase.value = clCurrent ? '$'+clCurrent.toLocaleString('en-US',{minimumFractionDigits:2}) : '';
+  // Closers
+  const clGrid = document.getElementById('closer-salary-grid');
+  if (clGrid) clGrid.innerHTML = CLOSERS.map(n=>`
+    <div class="setting-item">
+      <label class="setting-label">${n}</label>
+      <input type="text" class="setting-input" id="clsal-${n}" placeholder="$0.00" value="${fmtSal(closerSalaries[n]||0)}"/>
+    </div>`).join('');
 }
 
 function openSettings() {
@@ -891,13 +904,13 @@ function saveAllSettings() {
   });
   try { localStorage.setItem('ss_admin_salaries', JSON.stringify(adminSalaries)); } catch(e) {}
 
-  // Save closer base salary
-  const clBaseVal = document.getElementById('set-cl-base')?.value;
-  if (clBaseVal !== undefined) {
-    const n = parseAmt(clBaseVal);
-    const clInp = document.getElementById('cl-base-salary');
-    if (clInp) { clInp.value = clBaseVal; localStorage.setItem('ss_cl_base_salary', clBaseVal); }
-  }
+  // Save closer base salaries
+  CLOSERS.forEach(n => {
+    const inp = document.getElementById('clsal-'+n);
+    if (inp) { const v = parseAmt(inp.value); closerSalaries[n] = isNaN(v) ? 0 : v; }
+  });
+  try { localStorage.setItem('ss_closer_salaries', JSON.stringify(closerSalaries)); } catch(e) {}
+  syncCloserBaseInput();
 
   closeSettings();
   renderCloser();
@@ -914,7 +927,8 @@ function renderCloser() {
   const pd=document.getElementById('cl-pay-date')?.value;
   if(!pd||!dataLoaded.closer){container.innerHTML='<div class="empty-state">Select a pay date to generate the payroll slip.</div>';return;}
   const {start,end}=getPeriod(pd);
-  const cLow='deniz';
+  const closer=currentCloser();
+  const cLow=closer.toLowerCase();
   const inR=(d)=>d&&d>=start&&d<=end;
 
   const msComm=raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase().includes(cLow)&&!isTRUE(r[MS.refundFlag])&&inR(parseDate(r[MS.payoutDate])));
@@ -941,12 +955,12 @@ function renderCloser() {
   const T1=12500,T2=25000;
   const t1=Math.min(totalCash,T1),t2=totalCash>T1?Math.min(totalCash-T1,T2-T1):0,t3=totalCash>T2?totalCash-T2:0;
   const tierComm=(t1*.10)+(t2*.125)+(t3*.15);
-  const baseSalary=parseAmt(document.getElementById('cl-base-salary')?.value)||0;
-  const clCustom=getCustomItems('Deniz',pd,'cl');
+  const baseSalary=closerSalaries[closer]||0;
+  const clCustom=getCustomItems(closer,pd,'cl');
   const clCustomTotal=clCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
   const totalPayment=tierComm+baseSalary+dcSetComm+clCustomTotal;
   const notes=document.getElementById('cl-notes')?.value||'';
-  const approveKey=`closer|${pd}`;
+  const approveKey=closer==='Deniz'?`closer|${pd}`:`closer|${closer}|${pd}`;
   const approved=!!approvedMap[approveKey];
   const periodLabel=start.toLocaleDateString('en-US',{month:'long',year:'numeric'});
 
@@ -988,7 +1002,7 @@ function renderCloser() {
   container.innerHTML=`<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Closer Commission Slip</span></div></div>
-      <div style="text-align:right"><div class="slip-name">DENIZ</div><div class="slip-period">${periodLabel}</div></div>
+      <div style="text-align:right"><div class="slip-name">${closer.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
     </div>
     <div class="slip-dates">
       <div class="slip-date-cell"><div class="slip-date-label">Pay Date</div><div class="slip-date-val">${fmtDate(parseDate(pd+'T12:00:00'))}</div></div>
@@ -1052,7 +1066,7 @@ function saveCustomItems(){ try{ localStorage.setItem('ss_co_custom_items',JSON.
 function customKey(person,pd,prefix='co'){ return prefix==='co'?`${person}|${pd}`:`${prefix}:${person}|${pd}`; }
 function getCustomItems(person,pd,prefix='co'){ return (person&&pd&&customItems[customKey(person,pd,prefix)])||[]; }
 function customPerson(prefix){
-  if(prefix==='cl') return 'Deniz';
+  if(prefix==='cl') return currentCloser();
   const sel={co:'co-coach-select',st:'st-setter-select',ad:'ad-member-select'}[prefix];
   return document.getElementById(sel)?.value;
 }
@@ -1603,8 +1617,10 @@ async function init() {
   buildControls('closer');
   // Restore base salary BEFORE rendering, so the first paint (and any PDF generated
   // without touching the page first) already reflects the saved value.
+  try{ closerSalaries=JSON.parse(localStorage.getItem('ss_closer_salaries')||'{}'); }catch(e){}
   const savedSal=localStorage.getItem('ss_cl_base_salary');
-  if(savedSal){ const inp=document.getElementById('cl-base-salary'); if(inp)inp.value=savedSal; }
+  if(savedSal && closerSalaries.Deniz===undefined){ const n=parseAmt(savedSal); if(!isNaN(n)) closerSalaries.Deniz=n; try{ localStorage.setItem('ss_closer_salaries',JSON.stringify(closerSalaries)); }catch(e){} }
+  syncCloserBaseInput();
   showLoading(true);
   try{ await loadCloserData(); await loadSetterDataSafe(); renderCloser(); markUpdated(); }catch(e){ alert('Error: '+e.message); }
   showLoading(false);
