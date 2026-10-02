@@ -11,6 +11,7 @@
 - `schedule/` — Schedule call page (VSL + calendar)
 - `confirmation/` — Call confirmation page
 - `21-day-challenge/` — 21DC funnel pages
+- `careers/` - Hiring funnels (`closer-application/`, `setter-application/`)
 - `group-coaching/` — Group coaching checkout pages
 - `legal/` — Terms, Privacy Policy
 - `assets/` — Shared CSS, JS, images
