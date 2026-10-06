@@ -717,6 +717,21 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://strongstandard.com/blog/breaking-strength-plateaus-with-training-frequency/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/can-you-lose-fat-and-gain-muscle-at-the-same-time/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://strongstandard.com/blog/10-lifting-rules-for-beginners-to-build-muscle/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Legal -->
   <url>
     <loc>https://strongstandard.com/privacy-policy/</loc>
