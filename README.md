@@ -15,6 +15,7 @@
 - `group-coaching/` — Group coaching checkout pages
 - `legal/` — Terms, Privacy Policy
 - `assets/` — Shared CSS, JS, images
+- `docs/` - Ops documentation for internal tools and automations (start at `docs/README.md`)
 
 ## Adding a page
 
