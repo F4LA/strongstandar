@@ -380,10 +380,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="consent-row">
-          <input type="checkbox" id="consent" name="consent" required>
-          <label for="consent">
-            By providing my email, I agree to receive occasional
-            marketing messages from Strong Standard which I can opt out of at any time.
+          <input type="checkbox" id="consent_non_marketing" name="consent_non_marketing">
+          <label for="consent_non_marketing">
+            I agree to receive non-marketing text messages from Dr. Joseph Munoz Services
+            regarding appointments, scheduling, service updates, and responses to my inquiries.
+            Message frequency varies. Message and data rates may apply. Reply STOP to opt out
+            and HELP for help.
+          </label>
+        </div>
+
+        <div class="consent-row">
+          <input type="checkbox" id="consent_marketing" name="consent_marketing">
+          <label for="consent_marketing">
+            I agree to receive recurring marketing and promotional text messages from
+            Dr. Joseph Munoz Services, including coaching program announcements, challenge
+            enrollment opportunities, promotions, and special offers. Message frequency varies.
+            Message and data rates may apply. Reply STOP to opt out and HELP for help.
+            Consent is not a condition of purchase.
           </label>
         </div>
 
@@ -470,17 +483,13 @@ form.addEventListener('submit', async (e) => {
   const firstName = document.getElementById('first_name').value.trim();
   const lastName  = document.getElementById('last_name').value.trim();
   const email     = document.getElementById('email').value.trim();
-  const consent   = document.getElementById('consent').checked;
+  const consentNonMarketing = document.getElementById('consent_non_marketing').checked;
+  const consentMarketing    = document.getElementById('consent_marketing').checked;
 
   let valid = true;
   if (!firstName) { document.getElementById('first_name').classList.add('error'); valid = false; }
   if (!lastName)  { document.getElementById('last_name').classList.add('error'); valid = false; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('email').classList.add('error'); valid = false; }
-  if (!consent) {
-    errorDiv.querySelector('.form-state__body').textContent = 'Please accept the consent checkbox to continue.';
-    errorDiv.style.display = 'block';
-    return;
-  }
   if (!valid) return;
 
   submitBtn.disabled = true;
@@ -495,6 +504,8 @@ form.addEventListener('submit', async (e) => {
         lastName:  lastName,
         email:     email,
         source:    '21DC November Waitlist',
+        sms_non_marketing_consent: consentNonMarketing,
+        sms_marketing_consent:     consentMarketing,
       }),
     });
 
