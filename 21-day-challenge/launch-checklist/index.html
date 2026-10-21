@@ -748,7 +748,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
 
   </div>
 
-  <button class="reset-btn" onclick="confirmReset()" style="margin-top:16px;">
+  <button class="reset-btn" id="resetBtn" onclick="confirmReset()" style="margin-top:16px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
     Reset checklist for new challenge
   </button>
@@ -1075,7 +1075,7 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
   // Applies done/not-done from the sheet onto elements matched by data-task-id, for a given group.
   function applyTaskStates(tasks, group, selector) {
     const map = {};
-    tasks.forEach(t => { if (t.group === group) map[t.task_id] = t.done; });
+    tasks.forEach(t => { if (t.group === group) map[t.task_id] = (t.done === true || String(t.done).toLowerCase() === 'true'); });
     document.querySelectorAll(selector).forEach(el => {
       const id = el.getAttribute('data-task-id');
       if (id && map[id]) el.classList.add('done');
@@ -2016,16 +2016,39 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     updateVoucherDeadline();
     try { updateLiveCallPreview(); } catch(e) {}
     try { updateWeek2Preview(); } catch(e) {}
+    const btn = document.getElementById('resetBtn');
+    const btnHTML = btn ? btn.innerHTML : '';
+    const setBtn = t => { if (btn) btn.textContent = t; };
+    if (btn) btn.disabled = true;
+    window.onbeforeunload = () => 'Reset in progress';
     const failed = [];
+    // Tasks FIRST: this is the most important write and the one that was getting
+    // lost when the page was refreshed before the slow field writes finished.
+    setBtn('⏳ Resetting tasks... no cierres ni refresques');
+    if (!(await writeTasks(taskUpdates))) failed.push('tasks');
+    let i = 0;
     for (const key of fields) {
+      i++;
+      setBtn(`⏳ Resetting fields ${i}/${fields.length}... no cierres ni refresques`);
       if (!(await writeField(key, ''))) failed.push(key);
     }
-    const ok = await writeTasks(taskUpdates);
-    if (!ok) failed.push('tasks');
+    // Verify against a fresh read of the Sheet
+    setBtn('⏳ Verificando...');
+    let stillDone = [];
+    try {
+      const fresh = await fetch(`${APPS_SCRIPT_URL}?token=${encodeURIComponent(GS_TOKEN)}&_=${Date.now()}`).then(r => r.json());
+      stillDone = (fresh.tasks || []).filter(t => t.done === true || String(t.done).toLowerCase() === 'true');
+      if (stillDone.length) console.warn('Tasks still done after reset:', stillDone);
+    } catch(e) { console.warn('Verify read failed:', e); }
+    _sheetDataPromise = null;
+    window.onbeforeunload = null;
+    if (btn) { btn.disabled = false; btn.innerHTML = btnHTML; }
     if (failed.length) {
-      alert('⚠️ Reset incompleto. No se pudo guardar en Google Sheets: ' + failed.join(', ') + '. Revisa la consola (F12) y vuelve a darle Reset.');
+      alert('⚠️ Reset incompleto. No se pudo guardar en Google Sheets: ' + failed.join(', ') + '. Vuelve a darle Reset.');
+    } else if (stillDone.length) {
+      alert('⚠️ El Sheet todavía tiene ' + stillDone.length + ' tareas marcadas: ' + stillDone.map(t => t.task_id).join(', '));
     } else {
-      alert('✅ Checklist reseteado completo.');
+      alert('✅ Checklist reseteado completo. Ya puedes refrescar.');
     }
   }
 
