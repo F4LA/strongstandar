@@ -746,15 +746,11 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
       </div></div>
     </div>
 
-    <button class="reset-btn" style="border-color:#d0e8d8;color:#2d6a4f;" onclick="confirmBReset()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
-      Reset checklist
-    </button>
   </div>
 
   <button class="reset-btn" onclick="confirmReset()" style="margin-top:16px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
-    Reset Miguel checklist for new challenge
+    Reset checklist for new challenge
   </button>
 
 </div><!-- end recurrentesSection -->
@@ -1986,43 +1982,51 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
 
   // ── RESET ─────────────────────────────────────────────────
   async function confirmReset() {
-    if (!confirm('Reset Miguel checklist for a new challenge?')) return;
+    if (!confirm('Reset the ENTIRE checklist for a new challenge?\n\nThis clears Miguel, Bernardo and Específicos tasks plus all cohort fields. Tokens and Asana emails are kept.')) return;
     const taskUpdates = [];
-    document.querySelectorAll('#recurrentesSection .task, #recurrentesSection .subtask').forEach(el => {
-      el.classList.remove('done');
-      const id = el.getAttribute('data-task-id');
-      const type = el.classList.contains('subtask') ? 'subtask' : 'task';
-      if (id) taskUpdates.push({ task_id: id, done: false, ..._taskMeta(el, 'joey', type) });
+    const groups = [
+      { sel: '#recurrentesSection .task, #recurrentesSection .subtask', group: 'joey' },
+      { sel: '#recurrentesSection .b-task', group: 'bernardo' },
+      { sel: '#especificosSection .e-task', group: 'especificos' }
+    ];
+    groups.forEach(g => {
+      document.querySelectorAll(g.sel).forEach(el => {
+        el.classList.remove('done');
+        const id = el.getAttribute('data-task-id');
+        const type = el.classList.contains('subtask') ? 'subtask' : 'task';
+        if (id) taskUpdates.push({ task_id: id, done: false, ..._taskMeta(el, g.group, type) });
+      });
     });
-    // NOTE: 'gh_token' is intentionally excluded — it's a standing credential for
-    // pushing to GitHub, not per-cohort data, and must survive a checklist reset.
-    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','closing_page_status','forum_id','welcome_guide','affiliates_data'];
+    // NOTE: gh_token, asana_token and asana_email_* are intentionally excluded.
+    // They are standing credentials/settings, not per-cohort data.
+    const fields = ['kickoff_date','closing_date','live_wed_time','live_sat_time','closing_page_status','forum_id','welcome_guide','affiliates_data','day1','enrollment_open','enrollment_close'];
     fields.forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.value = id === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
+      if (el) el.value = '';
     });
+    // Clear UI-only state that is not a plain input
+    affiliates = [];
+    renderAffiliates();
+    const cps = document.getElementById('closingPageStatus');
+    if (cps) { cps.textContent = 'Not updated yet'; cps.style.color = 'var(--muted)'; }
     document.getElementById('cohortPanel').classList.remove('collapsed');
     updateProgress();
+    updateBProgress();
+    updateEProgress();
     updateVoucherDeadline();
+    try { updateLiveCallPreview(); } catch(e) {}
+    try { updateWeek2Preview(); } catch(e) {}
+    const failed = [];
     for (const key of fields) {
-      const val = key === 'clarity_zoom' ? 'https://api.leadconnectorhq.com/widget/bookings/clarity-call-21dc' : '';
-      await writeField(key, val);
+      if (!(await writeField(key, ''))) failed.push(key);
     }
     const ok = await writeTasks(taskUpdates);
-    if (!ok) alert('⚠️ Hubo un error guardando el reset en Google Sheets. Revisa la consola (F12) y vuelve a intentar — las tareas podrían seguir marcadas al refrescar.');
-  }
-
-  async function confirmBReset() {
-    if (!confirm('Reset Bernardo checklist for a new challenge?')) return;
-    const taskUpdates = [];
-    document.querySelectorAll('#recurrentesSection .b-task').forEach(el => {
-      el.classList.remove('done');
-      const id = el.getAttribute('data-task-id');
-      if (id) taskUpdates.push({ task_id: id, done: false, ..._taskMeta(el, 'bernardo', 'task') });
-    });
-    updateBProgress();
-    const ok = await writeTasks(taskUpdates);
-    if (!ok) alert('⚠️ Hubo un error guardando el reset en Google Sheets. Revisa la consola (F12) y vuelve a intentar.');
+    if (!ok) failed.push('tasks');
+    if (failed.length) {
+      alert('⚠️ Reset incompleto. No se pudo guardar en Google Sheets: ' + failed.join(', ') + '. Revisa la consola (F12) y vuelve a darle Reset.');
+    } else {
+      alert('✅ Checklist reseteado completo.');
+    }
   }
 
 // ─── BERNARDO AUTOMATION ENGINE ──────────────────────────────────────────────
