@@ -10,8 +10,15 @@ window.SS_COHORT = {
   SHEET_ID: '1QWWYn5_SgwCOPaFtq_7CV-WsVnrtmwjUoXPFm7gVM7A',
   SHEET_GID: '0',
 
+  // PUBLIC counter sheet used by the live spots counter on the challenge pages.
+  // It only mirrors the "Challenge Month" column (via IMPORTRANGE) as text
+  // 'YYYY-MM-DD', so no participant names/emails are exposed. Must be shared
+  // "Anyone with the link: Viewer". The private tracking sheet above is NOT public.
+  COUNTER_SHEET_ID: '1XfLwkr61RVc5SssHdLf-aRJJ30-_bRtKLqALNLb25IQ',
+  COUNTER_SHEET_GID: '0',
+
   // Date literal matching the "Challenge Month" column (AJ) for the CURRENT cohort.
-  // Format must stay 'YYYY-MM-01' to match the gviz date type.
+  // Format must stay 'YYYY-MM-01' (matched as text against the public counter sheet).
   CHALLENGE_MONTH_DATE: '2026-11-01',
 
   // Spot counts / pricing tiers
