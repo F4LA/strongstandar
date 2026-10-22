@@ -1446,10 +1446,11 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
   }
 
   function formatChallengeMonthDate(dt) {
-    // e.g. "2026-09-01" — matches the Client Mastersheet "Challenge Month" (col AJ) literal format
-    const d = new Date(dt);
-    const pad = n => String(n).padStart(2,'0');
-    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-01`;
+    // e.g. "2026-09-01" — matches the Client Mastersheet "Challenge Month" (col AJ) literal format.
+    // Read year/month straight from the 'YYYY-MM-DD...' string so timezone parsing
+    // can never shift the date into the previous month.
+    const [y, m] = String(dt).split('T')[0].split('-');
+    return `${y}-${m}-01`;
   }
 
   function addDays(isoDate, days) {
@@ -1559,7 +1560,9 @@ Don't wait too long, these spots fill up fast. Let me know if you have any quest
     // ── 3. scripts/cohort-config.js — spots counter cohort month + key dates ─
     try {
       const { sha, content } = await githubGetSha('scripts/cohort-config.js');
-      const newMonthDate = formatChallengeMonthDate(kickoffVal);
+      // Cohort is labeled by the month Day 1 starts in (e.g. kickoff Oct 31, Day 1 Nov 2 = November cohort),
+      // NOT the kickoff month. Fall back to kickoff only if Day 1 is missing.
+      const newMonthDate = formatChallengeMonthDate(day1Val || kickoffVal);
       const kickoffDateISO = kickoffVal.split('T')[0];
       const kickoffTimeStr = formatKickoffTime(kickoffVal);
       const closingDateISO = closingVal ? closingVal.split('T')[0] : '';
