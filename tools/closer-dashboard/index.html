@@ -898,7 +898,47 @@ let customStart      = null;
 let customEnd        = null;
 let availableClosers = [];
 let allClosersSeen   = []; // unfiltered — every closer name ever seen in the sheet
-let hiddenClosers    = new Set(); // names toggled off in Closer Settings
+let activeClosers    = null;      // shared roster (Supabase); null = not loaded / not set yet
+
+// ── Shared closer roster (Supabase key/value, same table as invoices dashboard) ──
+const ROSTER_SUPABASE_URL = 'https://akrxgohrlpiprqwnhkzc.supabase.co';
+const ROSTER_SUPABASE_KEY = 'sb_publishable_k5qrLybTNeW3F8N3u9uTpg_ZXymerMh';
+const ROSTER_API = `${ROSTER_SUPABASE_URL}/rest/v1/checklist`;
+const ROSTER_KEY = 'closer_dashboard__active_closers';
+const ROSTER_HEADERS = {
+  'apikey': ROSTER_SUPABASE_KEY,
+  'Authorization': `Bearer ${ROSTER_SUPABASE_KEY}`,
+  'Content-Type': 'application/json',
+  'Prefer': 'resolution=merge-duplicates'
+};
+// Fallback used only until the roster is saved from the portal for the first time
+const DEFAULT_ROSTER_MATCH = ['joey', 'bernardo', 'alan', 'boaz', 'boas'];
+
+async function fetchRoster() {
+  try {
+    const res  = await fetch(`${ROSTER_API}?key=eq.${encodeURIComponent(ROSTER_KEY)}&select=value`, { headers: ROSTER_HEADERS });
+    const rows = await res.json();
+    if (Array.isArray(rows) && rows[0] && rows[0].value) {
+      const arr = JSON.parse(rows[0].value);
+      if (Array.isArray(arr)) return arr;
+    }
+  } catch (e) { console.warn('Roster: failed to load', e); }
+  return null;
+}
+
+async function saveRoster() {
+  const res = await fetch(ROSTER_API, {
+    method: 'POST',
+    headers: ROSTER_HEADERS,
+    body: JSON.stringify({ key: ROSTER_KEY, value: JSON.stringify(activeClosers || []) }),
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+}
+
+function isActiveCloser(name) {
+  if (activeClosers) return activeClosers.some(a => a.toLowerCase() === name.toLowerCase());
+  return DEFAULT_ROSTER_MATCH.some(m => name.toLowerCase().includes(m));
+}
 let currentCallFilter = 'all'; // filter for Calls This Period
 
 // ── LocalStorage helpers ──
@@ -911,7 +951,6 @@ function saveState() {
     localStorage.setItem('ss_apikey',  API_KEY);
     localStorage.setItem('ss_sheetid', SHEET_ID);
     localStorage.setItem('ss_theme',   document.documentElement.getAttribute('data-theme') || 'dark');
-    localStorage.setItem('ss_hidden_closers', JSON.stringify([...hiddenClosers]));
     if (customStart) localStorage.setItem('ss_cstart', customStart.toISOString());
     if (customEnd)   localStorage.setItem('ss_cend',   customEnd.toISOString());
   } catch(e) {}
@@ -928,7 +967,6 @@ function loadState() {
     const theme   = localStorage.getItem('ss_theme');
     const cstart  = localStorage.getItem('ss_cstart');
     const cend    = localStorage.getItem('ss_cend');
-    const hidden  = localStorage.getItem('ss_hidden_closers');
     if (apikey)  API_KEY  = apikey;
     if (sheetid) SHEET_ID = sheetid;
     if (closer)  currentCloser      = closer;
@@ -937,9 +975,6 @@ function loadState() {
     if (filter)  currentCallFilter  = filter;
     if (cstart)  customStart        = new Date(cstart);
     if (cend)    customEnd          = new Date(cend);
-    if (hidden) {
-      try { hiddenClosers = new Set(JSON.parse(hidden)); } catch(e) { hiddenClosers = new Set(); }
-    }
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme);
       document.getElementById('theme-icon').textContent  = theme === 'light' ? '🌙' : '☀️';
@@ -1034,22 +1069,23 @@ async function loadAllData() {
   if (!laTab) throw new Error(`Tab "IMPORT - LEADS APPLIED" not found.\nAvailable: ${tabs.join(', ')}`);
   if (!msTab) throw new Error(`Tab "IMPORT - MASTERSHEET" not found.\nAvailable: ${tabs.join(', ')}`);
 
-  const [laRows, msRows, gcRows] = await Promise.all([
+  const [laRows, msRows, gcRows, roster] = await Promise.all([
     apiFetch(`'${laTab}'!A1:Q3000`),
     apiFetch(`'${msTab}'!A1:AE3000`),
     gcTab ? apiFetch(`'${gcTab}'!A1:S3000`) : Promise.resolve([]),
+    fetchRoster(),
   ]);
+  activeClosers = roster;
 
   raw.la = laRows.slice(1).filter(r => r && r.length);
   raw.ms = msRows.slice(1).filter(r => r && r.length);
   raw.gc = gcRows.slice(1).filter(r => r && r.length);
 
-  // Unique closer names — restricted to the current active roster, hardcoded here so it's shared for everyone
+  // Unique closer names from the sheet; the dropdown shows only the shared active roster
   const seen = new Set();
   raw.la.forEach(r => { const c = (r[LA.closer] || '').trim(); if (c) seen.add(c); });
-  const VISIBLE_CLOSERS = ['deniz', 'joey', 'bernardo', 'alan', 'boaz', 'boas'];
-  allClosersSeen   = [...seen].sort().filter(c => VISIBLE_CLOSERS.some(name => c.toLowerCase().includes(name)));
-  availableClosers = allClosersSeen.filter(c => !hiddenClosers.has(c));
+  allClosersSeen   = [...seen].sort((a, b) => a.localeCompare(b));
+  availableClosers = allClosersSeen.filter(isActiveCloser);
 
   document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
 }
@@ -1224,37 +1260,54 @@ function onCloserChange() {
 // CLOSER SETTINGS (show/hide who appears in the dropdown)
 // ═══════════════════════════════════════════════════════════════
 function openCloserSettings() {
-  const rows = allClosersSeen.map(name => {
-    const checked = hiddenClosers.has(name) ? '' : 'checked';
+  const sorted = [...allClosersSeen].sort((a, b) =>
+    (isActiveCloser(b) - isActiveCloser(a)) || a.localeCompare(b));
+  const rows = sorted.map((name, i) => {
+    const checked = isActiveCloser(name) ? 'checked' : '';
     return `
       <label style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--border);cursor:pointer">
-        <input type="checkbox" ${checked} onchange="toggleCloserVisibility('${name.replace(/'/g,"\\'")}', this.checked)"
+        <input type="checkbox" ${checked} data-idx="${i}" onchange="toggleCloserVisibility(this)"
           style="width:18px;height:18px;accent-color:var(--accent, #6366f1);cursor:pointer" />
         <span style="font-size:14px">${name}</span>
       </label>`;
   }).join('') || '<div style="padding:16px;color:var(--text-dim)">No closers found in the sheet yet.</div>';
+  window._rosterOrder = sorted;
 
   openModal(
     'Closer Settings',
-    'Show or hide closers from the dropdown above',
-    `<div style="padding:8px 20px">${rows}</div>`
+    'Checked = shows in the Closer dropdown. Saved for the whole team.',
+    `<div id="roster-status" style="padding:10px 20px 0;font-size:12px;font-family:var(--font-mono);color:var(--text-dim)">
+       New closers appear here once they have at least one call in the sheet.
+     </div>
+     <div style="padding:8px 20px">${rows}</div>`
   );
 }
 
-function toggleCloserVisibility(name, isChecked) {
-  if (isChecked) hiddenClosers.delete(name);
-  else hiddenClosers.add(name);
+async function toggleCloserVisibility(el) {
+  const name   = window._rosterOrder[Number(el.dataset.idx)];
+  const status = document.getElementById('roster-status');
+  if (!activeClosers) activeClosers = allClosersSeen.filter(isActiveCloser); // first save: seed from defaults
+  const prev = [...activeClosers];
+  activeClosers = activeClosers.filter(a => a.toLowerCase() !== name.toLowerCase());
+  if (el.checked) activeClosers.push(name);
 
-  availableClosers = allClosersSeen.filter(c => !hiddenClosers.has(c));
-  saveState();
+  if (status) { status.style.color = 'var(--text-dim)'; status.textContent = 'Saving…'; }
+  try {
+    await saveRoster();
+    if (status) { status.style.color = 'var(--green, #2ecc71)'; status.textContent = `Saved: ${name} ${el.checked ? 'added to' : 'removed from'} the dropdown for everyone.`; }
+  } catch (e) {
+    activeClosers = prev;
+    el.checked = !el.checked;
+    if (status) { status.style.color = 'var(--red)'; status.textContent = 'Could not save. Check your connection and try again.'; }
+    return;
+  }
 
-  // Refresh the dropdown; if the currently selected closer got hidden, fall back to the first visible one
+  availableClosers = allClosersSeen.filter(isActiveCloser);
   const sel = document.getElementById('closer-select');
   sel.innerHTML = availableClosers.map(c => `<option value="${c}">${c}</option>`).join('');
-  if (!availableClosers.includes(currentCloser)) {
-    currentCloser = availableClosers[0] || '';
-  }
+  if (!availableClosers.includes(currentCloser)) currentCloser = availableClosers[0] || '';
   sel.value = currentCloser;
+  saveState();
   buildMonthOptions();
   renderDashboard();
 }
@@ -1971,6 +2024,39 @@ function renderBottomRow(stats) {
   return wrap;
 }
 
+// Find the payout date for a closed call by matching the client name in MASTERSHEET / GC MASTERSHEET
+function normName(f, l) { return `${f||''} ${l||''}`.toLowerCase().replace(/\s+/g, ' ').trim(); }
+function findPayoutForCall(r) {
+  const key = normName(r[LA.firstName], r[LA.lastName]);
+  if (!key) return null;
+  const cd = parseDate(r[LA.callDate]);
+  const cands = [];
+  raw.ms.forEach(m => {
+    if (normName(m[MS.firstName], m[MS.lastName]) !== key) return;
+    cands.push({ payout: parseDate(m[MS.payoutDate]), sale: parseDate(m[MS.saleDate]), refunded: isTRUE(m[MS.refundFlag]) });
+  });
+  raw.gc.forEach(g => {
+    if (normName(g[GC.firstName], g[GC.lastName]) !== key) return;
+    cands.push({ payout: parseDate(g[GC.payoutDate]), sale: parseDate(g[GC.saleDate]), refunded: isTRUE(g[GC.excludeFlag]) });
+  });
+  if (!cands.length) return null;
+  // Prefer the sale closest to the call date
+  const t = cd ? cd.getTime() : 0;
+  cands.sort((a, b) => Math.abs((a.sale?.getTime() ?? t) - t) - Math.abs((b.sale?.getTime() ?? t) - t));
+  return cands[0];
+}
+
+function payoutTag(r) {
+  const p = findPayoutForCall(r);
+  const base = 'display:block;font-size:10px;font-family:var(--font-mono);margin-top:4px';
+  if (!p) return `<span style="${base};color:var(--text-dim)">Payout: not in mastersheet yet</span>`;
+  if (p.refunded) return `<span style="${base};color:var(--red)">Refunded / excluded</span>`;
+  if (!p.payout) return `<span style="${base};color:var(--text-dim)">Payout: date pending</span>`;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = p.payout > today;
+  return `<span style="${base};color:${upcoming ? 'var(--gold, #c9a84c)' : 'var(--green, #2ecc71)'}">Payout ${upcoming ? '' : '(paid) '}${fmtDate(p.payout)}</span>`;
+}
+
 function buildCallRow(r) {
   const name    = `${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim() || '—';
   const cd      = parseDate(r[LA.callDate]);
@@ -1988,7 +2074,7 @@ function buildCallRow(r) {
   return `<tr style="${rowBg}">
     <td style="font-weight:500">${name}</td>
     <td style="color:var(--text-dim);font-family:var(--font-mono)">${cd ? fmtDate(cd) : '—'}</td>
-    <td>${badge(outcome, closed)}${isStale ? ' <span style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-left:4px">· update needed</span>' : ''}</td>
+    <td>${badge(outcome, closed)}${isStale ? ' <span style="font-size:10px;color:var(--red);font-family:var(--font-mono);margin-left:4px">· update needed</span>' : ''}${closed ? payoutTag(r) : ''}</td>
   </tr>`;
 }
 
