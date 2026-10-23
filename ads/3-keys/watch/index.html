@@ -1023,7 +1023,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="video-cta-arrow reveal" id="unlock-notice" style="transition-delay:0.2s">
         <div class="video-cta-arrow__peek">
           <span class="video-cta-arrow__label">🔒 Your Application</span>
-          <div class="video-cta-arrow__heading">Application opens up in: <span class="unlock-countdown">15:00</span></div>
+          <div class="video-cta-arrow__heading">Application opens up in: <span class="unlock-countdown">3:00</span></div>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
       </div>
@@ -1059,7 +1059,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══════════════════════════════════════
      BOOKING SECTION — the "application".
-     Unlocks once 15 min of ACTUAL playback
+     Unlocks once 3 min of ACTUAL playback
      (player.secondsWatched) have been watched,
      via Wistia's Player API.
 ═══════════════════════════════════════ -->
@@ -1071,7 +1071,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="booking__header">
         <span class="label">Next Step</span>
         <h2>Application Opens<br>Up In:</h2>
-        <div class="lock-countdown"><span class="unlock-countdown">15:00</span></div>
+        <div class="lock-countdown"><span class="unlock-countdown">3:00</span></div>
         <p>Keep the workshop playing above — your application unlocks automatically as you watch.</p>
       </div>
     </div>
@@ -1370,7 +1370,7 @@ function playVideo(wrapper) {
   video.play();
 }
 
-// Gate the application (booking widget) behind 15 min of ACTUAL watch time.
+// Gate the application (booking widget) behind 3 min of ACTUAL watch time.
 // Case studies / testimonials stay visible the whole time.
 // player.secondsWatched only counts unique seconds actually played,
 // so skipping ahead with the scrubber doesn't unlock it early — via Wistia's Player API.
@@ -1381,11 +1381,11 @@ function playVideo(wrapper) {
   const countdownEls = document.querySelectorAll('.unlock-countdown');
   if (!player || !lockedEl || !unlockedEl) return;
 
-  const THRESHOLD_SECONDS = 900; // 15 minutes
+  const THRESHOLD_SECONDS = 180; // 3 minutes (ads funnel)
   let threshold = THRESHOLD_SECONDS;
   let unlocked = false;
 
-  // QA bypass: add ?unlock=now to the URL to skip the 15-min wait while testing.
+  // QA bypass: add ?unlock=now to the URL to skip the 3-min wait while testing.
   // Does not affect real visitors — the gate stays on by default.
   const testBypass = new URLSearchParams(window.location.search).get('unlock') === 'now';
 
@@ -1424,7 +1424,7 @@ function playVideo(wrapper) {
 
   if (testBypass) unlockApplication();
 
-  // If the recording is shorter than 15 min, require a full watch instead
+  // If the recording is shorter than 3 min, require a full watch instead
   player.addEventListener('loaded-metadata', () => {
     if (player.duration && player.duration < THRESHOLD_SECONDS) {
       threshold = Math.floor(player.duration);
