@@ -2188,6 +2188,15 @@ footer {
   }
 }
 
+
+/* Perf: infinite animations only run while on screen (class toggled by JS) */
+.btn-checkout-pulse:not(.anim-on),
+.hero-glow:not(.anim-on),
+.spots-dot:not(.anim-on) { animation-play-state: paused; }
+.hero-glow { will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  .btn-checkout-pulse, .hero-glow, .spots-dot { animation: none !important; }
+}
 </style>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script src="https://link.msgsndr.com/js/external-tracking.js" data-tracking-id="tk_64a7d969aad242139fef91e0e9c35c84" defer></script>
@@ -2718,8 +2727,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="vt-track" id="vtTrack">
         <div class="vt-card" style="width:min(340px,100%);flex-shrink:0;">
           <div class="video-testimonial-player video-testimonial-player--vertical">
-            <video preload="metadata" playsinline controlsList="nodownload" data-src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a623dc7fb06386ede71e023.mp4#t=0.1">
-              <source src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a623dc7fb06386ede71e023.mp4#t=0.1" type="video/mp4">
+            <video preload="none" playsinline controlsList="nodownload" data-src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a623dc7fb06386ede71e023.mp4#t=0.1">
             </video>
             <button class="vid-test-play" aria-label="Play testimonial">
               <div class="vid-test-play__circle">
@@ -2730,8 +2738,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="vt-card" style="width:min(340px,100%);flex-shrink:0;">
           <div class="video-testimonial-player video-testimonial-player--vertical">
-            <video preload="metadata" playsinline controlsList="nodownload" data-src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a623dc7b86ae42034ca5d0d.mp4#t=0.1">
-              <source src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a623dc7b86ae42034ca5d0d.mp4#t=0.1" type="video/mp4">
+            <video preload="none" playsinline controlsList="nodownload" data-src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a623dc7b86ae42034ca5d0d.mp4#t=0.1">
             </video>
             <button class="vid-test-play" aria-label="Play testimonial">
               <div class="vid-test-play__circle">
@@ -2742,8 +2749,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="vt-card" style="width:min(340px,100%);flex-shrink:0;">
           <div class="video-testimonial-player video-testimonial-player--vertical">
-            <video preload="metadata" playsinline controlsList="nodownload" data-src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a6266d72e0540011f4535da.mp4#t=0.1">
-              <source src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a6266d72e0540011f4535da.mp4#t=0.1" type="video/mp4">
+            <video preload="none" playsinline controlsList="nodownload" data-src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a6266d72e0540011f4535da.mp4#t=0.1">
             </video>
             <button class="vid-test-play" aria-label="Play testimonial">
               <div class="vid-test-play__circle">
@@ -3394,7 +3400,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       });
       // Lazy-load src on first play
-      if (video.dataset.src && !video.src) {
+      if (video.dataset.src && !video.getAttribute('src')) {
         video.src = video.dataset.src;
         video.load();
       }
@@ -3404,6 +3410,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     video.addEventListener('play',   () => { playBtn.style.display = 'none'; });
     video.addEventListener('ended',  () => { playBtn.style.display = 'flex'; video.removeAttribute('controls'); });
   });
+
+  // ── LAZY-LOAD TESTIMONIAL VIDEO THUMBNAILS ─────────
+  // Videos only start downloading when the section is near the screen
+  (function() {
+    const vids = document.querySelectorAll('.video-testimonial-player video[data-src]');
+    if (!vids.length) return;
+    const attach = v => { if (!v.getAttribute('src')) { v.preload = 'metadata'; v.src = v.dataset.src; } };
+    if (!('IntersectionObserver' in window)) { vids.forEach(attach); return; }
+    const vObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { attach(e.target); vObs.unobserve(e.target); } });
+    }, { rootMargin: '600px 0px' });
+    vids.forEach(v => vObs.observe(v));
+  })();
 
   // ── VIDEO TESTIMONIAL CAROUSEL ─────────────────────
   (function() {
@@ -3536,6 +3555,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
     }, { passive: true });
   }
+
+  // ── RUN INFINITE ANIMATIONS ONLY WHILE VISIBLE ──────
+  (function() {
+    const els = document.querySelectorAll('.btn-checkout-pulse, .hero-glow, .spots-dot');
+    if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('anim-on')); return; }
+    const aObs = new IntersectionObserver(entries => {
+      entries.forEach(e => e.target.classList.toggle('anim-on', e.isIntersecting));
+    });
+    els.forEach(el => aObs.observe(el));
+  })();
 
   // ── SCROLL REVEAL (.reveal elements) ─────────────────
   const reveals = document.querySelectorAll('.reveal');
