@@ -1,6 +1,5 @@
 {
-  "lastRunAtUTC": "2026-10-23T22:50:59.788Z",
-  "staleCount": 5,
-  "sent": true,
-  "totalRowsRead": 2288
+  "lastRunAtUTC": "2026-10-24T14:21:55.643Z",
+  "error": "The caller does not have permission",
+  "sent": false
 }
