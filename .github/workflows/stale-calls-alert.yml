@@ -34,7 +34,7 @@ jobs:
       - name: Check for stale confirmed calls and alert Slack
         id: check
         env:
-          SHEETS_API_KEY: ${{ secrets.SHEETS_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: node scripts/stale-calls-alert/index.mjs
         continue-on-error: true

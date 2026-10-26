@@ -6,13 +6,15 @@
 // the dashboard and click "Copy Team Message" manually.
 //
 // Env vars required (set as GitHub repo secrets):
-//   SHEETS_API_KEY      - Google Sheets API key (read-only, same one used by the dashboard)
+//   GOOGLE_SERVICE_ACCOUNT_JSON - full JSON key of the ss-tools-sheets service account
+//                                 (the sheet is private and shared with it as Viewer)
 //   SLACK_WEBHOOK_URL   - Incoming Webhook URL for the #Sales Updates channel
 //
 // No time-of-day check here on purpose — see .github/workflows/stale-calls-alert.yml
 // for why (GitHub Actions cron delay).
 
 import { readFileSync, writeFileSync } from 'fs';
+import { createSign } from 'crypto';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -33,7 +35,7 @@ function writeStatus(extra) {
 const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const RANGE = 'Leads applied!A:P';
 
-const SHEETS_API_KEY = process.env.SHEETS_API_KEY;
+const GOOGLE_SERVICE_ACCOUNT_JSON = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 
 // Leads Applied column indices (0-based) — same as the dashboard's `L` object
@@ -51,7 +53,7 @@ function fail(msg) {
   process.exit(1);
 }
 
-if (!SHEETS_API_KEY) fail('SHEETS_API_KEY env var is missing.');
+if (!GOOGLE_SERVICE_ACCOUNT_JSON) fail('GOOGLE_SERVICE_ACCOUNT_JSON env var is missing.');
 if (!SLACK_WEBHOOK_URL) fail('SLACK_WEBHOOK_URL env var is missing.');
 
 // No hour-matching rule here on purpose: GitHub Actions cron runs late
@@ -112,11 +114,44 @@ function slackMention(name) {
 }
 
 // ── Fetch "Leads applied" from the same Sheet the dashboard reads ──
+// The sheet is private: sign a JWT with the service account and swap it for
+// a short-lived read-only access token.
+const b64url = input =>
+  Buffer.from(input).toString('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+
+async function googleAccessToken() {
+  const sa = JSON.parse(GOOGLE_SERVICE_ACCOUNT_JSON);
+  const now = Math.floor(Date.now() / 1000);
+  const header = b64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const claims = b64url(JSON.stringify({
+    iss: sa.client_email,
+    scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+    aud: 'https://oauth2.googleapis.com/token',
+    iat: now,
+    exp: now + 3600,
+  }));
+  const signer = createSign('RSA-SHA256');
+  signer.update(`${header}.${claims}`);
+  const signature = b64url(signer.sign(String(sa.private_key).replace(/\\n/g, '\n')));
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: `${header}.${claims}.${signature}`,
+    }),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`Google auth failed: ${body.error_description || body.error || res.status}`);
+  return body.access_token;
+}
+
 async function fetchLeadsRows() {
+  const token = await googleAccessToken();
   const url =
     `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/` +
-    `${encodeURIComponent(RANGE)}?key=${SHEETS_API_KEY}&_=${Date.now()}`;
-  const res = await fetch(url, { cache: 'no-store' });
+    `${encodeURIComponent(RANGE)}?_=${Date.now()}`;
+  const res = await fetch(url, { cache: 'no-store', headers: { Authorization: `Bearer ${token}` } });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body?.error?.message || `HTTP ${res.status}`);
