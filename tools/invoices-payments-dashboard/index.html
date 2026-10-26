@@ -625,7 +625,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="display:flex;gap:10px;align-items:center;">
     <button class="btn btn-ghost" onclick="openSettings()" title="Slack settings">⚙️ Slack IDs</button>
     <button class="btn btn-ghost" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
-    <button class="btn btn-primary" id="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    <button class="btn btn-primary" id="refresh-btn" onclick="refreshAll()">↻ Refresh</button>
   </div>
 </header>
 
@@ -864,6 +864,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       renderAttribution(clientRows, leadsRows);
       renderStaleCalls(leadsRows);
       renderFinancials(clientRows, prRows, ppRows, refundRows);
+      // Load Invoice Audit and Alerts right away (not only when their tab is
+      // clicked) so their badges show pending issues, and so Refresh updates them too.
+      loadInvoiceAudit();
+      loadAlerts();
       document.getElementById('last-updated').textContent =
         'Last updated: ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } catch (err) {
@@ -1478,6 +1482,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // Auto-load on open
   loadData();
+
+  // ── Refresh button ────────────────────────────────────
+  // GitHub Pages lets the browser cache this page for ~10 min, so after a code
+  // update the old version kept running until a hard refresh (Ctrl+Shift+R).
+  // Refresh now asks the server for the latest page (bypassing the cache); if
+  // the code changed it reloads the page, otherwise it just reloads the data.
+  // Compare only this tool's own code (main script + main stylesheet), so
+  // scripts injected at runtime (e.g. Google Tag Manager) don't count as changes.
+  function codeSignature(doc) {
+    const main  = Array.from(doc.querySelectorAll('script:not([src])'))
+      .find(el => el.textContent.includes("const SHEET_ID"));
+    const style = doc.head && doc.head.querySelector('style');
+    return (main ? main.textContent : '') + '\n' + (style ? style.textContent : '');
+  }
+  async function refreshAll() {
+    try {
+      const res = await fetch(location.pathname, { cache: 'reload' });
+      if (res.ok) {
+        const fresh = new DOMParser().parseFromString(await res.text(), 'text/html');
+        if (codeSignature(fresh) !== codeSignature(document)) {
+          location.reload();
+          return;
+        }
+      }
+    } catch (e) { /* offline or blocked: fall back to reloading data only */ }
+    loadData();
+  }
 
   // ── Message modal ─────────────────────────────────────
   function buildMessage(clientName, amount, date, coachName) {
