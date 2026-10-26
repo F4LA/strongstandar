@@ -695,6 +695,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </main>
 
+<!-- Company Google login + private sheet access (see /scripts/ss-auth.js) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.js"></script>
+<script src="/scripts/ss-auth.js"></script>
 <script>
   const SHEET_ID = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 
@@ -712,7 +715,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function emailBtn(email) {
     return email ? `<button class="copy-btn" onclick="copyEmail('${email}', this)">📋 Copy Email</button>` : '';
   }
-  const API_KEY  = 'AIzaSyC7WtRVmLS2mo53i_Cge8NAlJ5tB2kaHjE';
 
   // Client Mastersheet column indices (0-based, columns A–Z)
   const C = {
@@ -835,17 +837,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
 
+  // Sheets are private: read through the signed-in bridge (always fresh data).
   async function fetchRange(range) {
-    const bust = Date.now(); // cache buster — forces fresh data every call
-    const url =
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/` +
-      `${encodeURIComponent(range)}?key=${API_KEY}&_=${bust}`;
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      throw new Error(body?.error?.message || `HTTP ${res.status}`);
-    }
-    return (await res.json()).values || [];
+    return ssAuth.sheet(SHEET_ID, range);
   }
 
   // ── Main load ─────────────────────────────────────────
