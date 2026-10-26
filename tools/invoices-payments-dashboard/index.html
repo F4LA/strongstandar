@@ -904,10 +904,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       ppRows.map(r => (r[P.EMAIL] || '').trim().toLowerCase())
     );
 
-    // ── 1. Overdue payments (date <= today, status ≠ paid) ──
+    // Refunded clients (Client Mastersheet col Y = TRUE): their pending installments
+    // are void, so they must not show as Overdue. Matched by email, with name fallback.
+    const refundedEmails = new Set();
+    const refundedNames  = new Set();
+    clientRows.slice(1).forEach(r => {
+      if ((r[C.REFUND] || '').trim().toUpperCase() !== 'TRUE') return;
+      const email = (r[C.EMAIL] || '').trim().toLowerCase();
+      const name  = `${norm(r[C.FIRST_NAME])} ${norm(r[C.LAST_NAME])}`.trim().toLowerCase();
+      if (email) refundedEmails.add(email);
+      if (name)  refundedNames.add(name);
+    });
+
+    // ── 1. Overdue payments (date <= today, status ≠ paid, not refunded) ──
     const overdue = ppRows.filter(r => {
       const d      = parseDate(r[P.DATE]);
       const status = (r[P.STATUS] || '').trim().toLowerCase();
+      const email  = (r[P.EMAIL] || '').trim().toLowerCase();
+      const name   = norm(r[P.FULL_NAME]).toLowerCase();
+      if (refundedEmails.has(email) || refundedNames.has(name)) return false;
       return d && d <= now && status !== 'paid';
     });
 
