@@ -1350,12 +1350,14 @@ nav.scrolled {
   font-weight: 300;
 }
 
-/* Staff grid — 5 coaches */
+/* Staff grid — rows of 3, last row centered */
 .staff-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
 }
+.staff-grid > .coach-card { flex: 0 0 calc((100% - 40px) / 3); }
 
 /* Bernardo: highlighted first card */
 .coach-card--featured {
@@ -1885,7 +1887,7 @@ h1, h2 { text-wrap: balance; }
   .pillars__grid { display: none; }
   .pillar-accordion { display: block; }
   .founders-grid { grid-template-columns: 1fr; }
-  .staff-grid { grid-template-columns: repeat(2, 1fr); }
+  .staff-grid > .coach-card { flex-basis: calc((100% - 20px) / 2); }
   .founder-featured { flex-direction: column; align-items: center; text-align: center; padding: 32px 24px; }
   .founder-featured__avatar { width: 140px; height: 140px; }
   .founder-featured__bio { text-align: center; }
@@ -3056,7 +3058,7 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
 
     </div>
 
-    <!-- 5 coaches grid (desktop) -->
+    <!-- coaches grid (desktop): rows of 3 -->
     <p class="coaches-sublabel reveal" id="desktopStaffLabel" style="margin-top:48px;">The Coaching Staff</p>
     <div class="staff-grid reveal">
 
