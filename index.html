@@ -1350,10 +1350,10 @@ nav.scrolled {
   font-weight: 300;
 }
 
-/* Staff grid — 4 coaches */
+/* Staff grid — 5 coaches */
 .staff-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
@@ -3056,7 +3056,7 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
 
     </div>
 
-    <!-- 4 coaches grid (desktop) -->
+    <!-- 5 coaches grid (desktop) -->
     <p class="coaches-sublabel reveal" id="desktopStaffLabel" style="margin-top:48px;">The Coaching Staff</p>
     <div class="staff-grid reveal">
 
@@ -3090,6 +3090,14 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
         <h4>Jacqueline Llovet</h4>
         <div class="coach-card__role">Coach</div>
         <p>A Registered Nurse specializing in Women's Health since 1997, Jackie became a coach after her own transformation in her late 40s. She is especially passionate about helping busy parents and midlife women build strength and confidence at any age.</p>
+      </div>
+
+      <div class="coach-card">
+        <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="/assets/coaches/mikari.png" alt="Mikari" style="object-position:50% 15%;"></div>
+        <div class="coach-card__degree">Registered Dietitian</div>
+        <h4>Mikari</h4>
+        <div class="coach-card__role">Coach</div>
+        <p>Mikari is a Registered Dietitian from London, England, working in Bariatric Surgery, and holds a Master's in Sport and Exercise Nutrition. She focuses on behavior change and mindset to help you build lasting habits, get stronger, and feel more confident without restricting the foods you love.</p>
       </div>
 
     </div>
@@ -3148,6 +3156,13 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
             <div class="coach-card__role">Coach</div>
             <p>A Registered Nurse specializing in Women's Health since 1997, Jackie became a coach after her own transformation in her late 40s. Especially passionate about helping busy parents and midlife women.</p>
           </div>
+          <div class="coach-card">
+            <div class="coach-card__avatar"><img width="120" height="120" loading="lazy" src="/assets/coaches/mikari.png" alt="Mikari" style="object-position:50% 15%;"></div>
+            <div class="coach-card__degree">Registered Dietitian</div>
+            <h4>Mikari</h4>
+            <div class="coach-card__role">Coach</div>
+            <p>Mikari is a Registered Dietitian from London, England, working in Bariatric Surgery, and holds a Master's in Sport and Exercise Nutrition. She focuses on behavior change and mindset to help you build lasting habits, get stronger, and feel more confident without restricting the foods you love.</p>
+          </div>
         </div>
       </div>
       <div class="coach-carousel__nav">
@@ -3160,6 +3175,7 @@ Outside of coaching, Bernardo is a husband and father of two. He is the person w
           <span role="button" tabindex="0" class="coach-carousel__dot" data-c="2" aria-label="Go to coach 3"></span>
           <span role="button" tabindex="0" class="coach-carousel__dot" data-c="3" aria-label="Go to coach 4"></span>
           <span role="button" tabindex="0" class="coach-carousel__dot" data-c="4" aria-label="Go to coach 5"></span>
+          <span role="button" tabindex="0" class="coach-carousel__dot" data-c="5" aria-label="Go to coach 6"></span>
         </div>
         <button class="coach-carousel__btn" id="coachNext" aria-label="Next coach">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
@@ -3611,7 +3627,7 @@ document.querySelectorAll('.pillar-accordion-trigger').forEach(trigger => {
 const coachTrack = document.getElementById('coachTrack');
 const coachDots = document.querySelectorAll('.coach-carousel__dot');
 let coachActive = 0;
-const coachTotal = 5; // Bernardo + Brent + Ceci + Miguel + Jackie
+const coachTotal = 6; // Bernardo + Brent + Ceci + Miguel + Jackie + Mikari
 
 function goToCoach(n) {
   coachActive = (n + coachTotal) % coachTotal;
