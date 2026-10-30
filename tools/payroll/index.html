@@ -758,54 +758,54 @@ async function refreshData() {
 function buildControls(tab) {
   const bar=document.getElementById('controls-bar');
   if(tab==='closer') {
-    const savedPD = localStorage.getItem('ss_cl_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+    const savedPD = getSharedPayDate();
     bar.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px">
         <span class="control-label">Closer</span>
         <div class="select-wrapper"><select id="cl-closer-select" onchange="onCloserChange()">${CLOSERS.map(n=>`<option value="${n}"${n===(localStorage.getItem('ss_cl_closer')||CLOSERS[0])?' selected':''}>${n}</option>`).join('')}</select></div>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="control-label">Pay Date</span>
+        <span class="control-label">Pay Date (all tabs)</span>
         <input type="date" class="date-input" id="cl-pay-date" value="${savedPD}" oninput="onCLPayDate()"/>
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="cl-period-display">—</span></div>`;
     updatePeriodDisplay('cl');
     syncCloserBaseInput();
   } else if(tab==='coaches') {
-    const savedPD = localStorage.getItem('ss_co_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+    const savedPD = getSharedPayDate();
     bar.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px">
         <span class="control-label">Coach</span>
         <div class="select-wrapper"><select id="co-coach-select" onchange="renderCoach()">${COACHES.map(c=>`<option value="${c}">${c}</option>`).join('')}</select></div>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="control-label">Pay Date</span>
+        <span class="control-label">Pay Date (all tabs)</span>
         <input type="date" class="date-input" id="co-pay-date" value="${savedPD}" oninput="onCOPayDate()"/>
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="co-period-display">—</span></div>`;
     updatePeriodDisplay('co');
   } else if(tab==='admin') {
-    const savedPD = localStorage.getItem('ss_ad_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+    const savedPD = getSharedPayDate();
     bar.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px">
         <span class="control-label">Team Member</span>
         <div class="select-wrapper"><select id="ad-member-select" onchange="renderAdmin()">${ADMIN_TEAM.map(a=>`<option value="${a}">${a}</option>`).join('')}</select></div>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="control-label">Pay Date</span>
+        <span class="control-label">Pay Date (all tabs)</span>
         <input type="date" class="date-input" id="ad-pay-date" value="${savedPD}" oninput="onADPayDate()"/>
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="ad-period-display">—</span></div>`;
     updatePeriodDisplay('ad');
   } else {
-    const savedPD = localStorage.getItem('ss_st_paydate') || fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+    const savedPD = getSharedPayDate();
     bar.innerHTML=`
       <div style="display:flex;align-items:center;gap:10px">
         <span class="control-label">Setter</span>
         <div class="select-wrapper"><select id="st-setter-select" onchange="renderSetter()">${SETTERS.map(s=>`<option value="${s}">${s}</option>`).join('')}</select></div>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="control-label">Pay Date</span>
+        <span class="control-label">Pay Date (all tabs)</span>
         <input type="date" class="date-input" id="st-pay-date" value="${savedPD}" oninput="onSTPayDate()"/>
       </div>
       <div class="period-badge"><span class="pb-label">Period:</span><span class="pb-val" id="st-period-display">—</span></div>`;
@@ -813,10 +813,20 @@ function buildControls(tab) {
   }
 }
 
-function onCLPayDate(){ localStorage.setItem('ss_cl_paydate',document.getElementById('cl-pay-date').value); updatePeriodDisplay('cl'); renderCloser(); }
-function onCOPayDate(){ localStorage.setItem('ss_co_paydate',document.getElementById('co-pay-date').value); updatePeriodDisplay('co'); renderCoach(); }
-function onADPayDate(){ localStorage.setItem('ss_ad_paydate',document.getElementById('ad-pay-date').value); updatePeriodDisplay('ad'); renderAdmin(); }
-function onSTPayDate(){ localStorage.setItem('ss_st_paydate',document.getElementById('st-pay-date').value); updatePeriodDisplay('st'); renderSetter(); }
+// One pay date shared by every tab (Closer, Coaches, Setter, Admin).
+// Falls back to the old per-tab keys so the last date used is not lost.
+function getSharedPayDate(){
+  try{
+    const v=localStorage.getItem('ss_paydate')||localStorage.getItem('ss_cl_paydate')||localStorage.getItem('ss_co_paydate')||localStorage.getItem('ss_st_paydate')||localStorage.getItem('ss_ad_paydate');
+    if(v) return v;
+  }catch(e){}
+  return fmtDI(new Date(new Date().getFullYear(),new Date().getMonth(),1));
+}
+function setSharedPayDate(v){ try{ localStorage.setItem('ss_paydate',v); }catch(e){} }
+function onCLPayDate(){ setSharedPayDate(document.getElementById('cl-pay-date').value); updatePeriodDisplay('cl'); renderCloser(); }
+function onCOPayDate(){ setSharedPayDate(document.getElementById('co-pay-date').value); updatePeriodDisplay('co'); renderCoach(); }
+function onADPayDate(){ setSharedPayDate(document.getElementById('ad-pay-date').value); updatePeriodDisplay('ad'); renderAdmin(); }
+function onSTPayDate(){ setSharedPayDate(document.getElementById('st-pay-date').value); updatePeriodDisplay('st'); renderSetter(); }
 
 function updatePeriodDisplay(prefix) {
   const inp=document.getElementById(prefix+'-pay-date');
