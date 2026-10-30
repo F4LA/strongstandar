@@ -245,13 +245,20 @@ select:focus{border-color:var(--steel-mid);}
 .empty-state{padding:60px;text-align:center;color:var(--text-dim);font-size:13px;}
 
 /* ── PRINT ──────────────────────────────────────────────────── */
+/* Review alerts (screen only, never in PDF) */
+.review-alerts{margin:0 0 16px;border:1px solid rgba(230,160,0,.55);background:rgba(255,200,0,.10);border-radius:12px;padding:14px 18px;}
+.review-alerts-title{font-weight:600;font-size:13px;color:#b07800;margin-bottom:8px;letter-spacing:.3px;}
+.review-alerts ul{margin:0;padding-left:18px;}
+.review-alerts li{font-size:12.5px;color:var(--text);margin:4px 0;line-height:1.45;}
+.review-alerts.ok{border-color:rgba(46,204,113,.45);background:rgba(46,204,113,.08);}
+.review-alerts.ok .review-alerts-title{color:#1a9e55;margin:0;}
 @media print {
   @page { margin:15mm 18mm; size:A4; }
 
   /* ── Hide UI chrome ── */
   #pw-screen, .loading-overlay, .settings-overlay,
   .header, .tabs-bar, .controls-bar, .config-row, .custom-panel, .alert-banner,
-  .slip-footer, .sort-bar { display:none !important; }
+  .slip-footer, .sort-bar, .review-alerts { display:none !important; }
 
   /* ── Base ── */
   * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
@@ -1029,7 +1036,29 @@ function renderCloser() {
     <td style="font-family:var(--font-display);font-weight:500;${c.isRefund?'color:var(--red)':'color:var(--gold)'}">${c.isRefund?'Not paid (refund)':money(100)}</td>
   </tr>`).join('');
 
-  container.innerHTML=`<div class="slip">
+  // ---- Review alerts ----
+  const clAlerts=[];
+  const nm=(f,l)=>`${f||''} ${l||''}`.trim()||'(no name)';
+  const myMS=raw.ms.filter(r=>(r[MS.closer]||'').toLowerCase().includes(cLow));
+  const myGC=raw.gc.filter(r=>(r[GC.closer]||'').toLowerCase().includes(cLow));
+  const checkRows=[
+    ...myMS.filter(r=>!isTRUE(r[MS.refundFlag])).map(r=>({name:nm(r[MS.firstName],r[MS.lastName]),sale:parseDate(r[MS.saleDate]),pay:parseDate(r[MS.payoutDate]),cc:parseAmt(r[MS.cashCollected]),deal:parseAmt(r[MS.dealValue])})),
+    ...myGC.filter(r=>!isTRUE(r[GC.excludeFlag])).map(r=>({name:nm(r[GC.firstName],r[GC.lastName]),sale:parseDate(r[GC.saleDate]),pay:parseDate(r[GC.payoutDate]),cc:parseAmt(r[GC.cashCollected]),deal:parseAmt(r[GC.dealValue])})),
+  ].filter(c=>inR(c.sale)||inR(c.pay)); // deals closed or paid out in this period
+  checkRows.forEach(c=>{
+    if(c.sale&&!c.pay) clAlerts.push(`<b>${c.name}</b> (closed ${fmtDate(c.sale)}) has no Payout Date, so it won't be paid until one is added.`);
+    if(c.sale&&c.pay){ const d=daysBetween(c.sale,c.pay); if(d!==14) clAlerts.push(`<b>${c.name}</b>: Payout Date ${fmtDate(c.pay)} is ${d} days after Close Date ${fmtDate(c.sale)} (expected 14).`); }
+    if(c.pay&&inR(c.pay)&&!(c.cc>0)) clAlerts.push(`<b>${c.name}</b> is paid out this period but has no Cash Collected.`);
+    if(c.deal>0&&c.cc>c.deal) clAlerts.push(`<b>${c.name}</b>: Cash Collected ${money(c.cc)} is higher than Deal Value ${money(c.deal)}.`);
+  });
+  const dupC={}; clients.forEach(c=>{const k=c.name.toLowerCase(); dupC[k]=(dupC[k]||0)+1;});
+  Object.entries(dupC).filter(([,n])=>n>1).forEach(([k,n])=>clAlerts.push(`<b>${clients.find(c=>c.name.toLowerCase()===k).name}</b> appears ${n} times in this period's commission.`));
+  msRef.forEach(r=>{ const pay=parseDate(r[MS.payoutDate]); if(pay&&pay<start) clAlerts.push(`<b>${nm(r[MS.firstName],r[MS.lastName])}</b> was refunded on ${fmtDate(parseDate(r[MS.refundDate]))}, but its commission was already paid (payout ${fmtDate(pay)}). Consider a deduction in Custom Items.`); });
+  if(!(baseSalary>0)) clAlerts.push(`Base Salary for ${closer} is $0. Set it in the Base Salary field if that's not right.`);
+  if(!(tierComm>0)) clAlerts.push(`${closer} has $0 Close Commission this period (no deals with a payout date in ${periodLabel}).`);
+  const clAlertsHTML=reviewAlertsHTML('closer',clAlerts);
+
+  container.innerHTML=`${clAlertsHTML}<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Closer Commission Slip</span></div></div>
       <div style="text-align:right"><div class="slip-name">${closer.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
@@ -1156,13 +1185,8 @@ function removeCustomItem(i,prefix='co'){
 // ── COACH RENDER ──────────────────────────────────────────────
 function setCoachSort(s){ coachSort=s; renderCoach(); }
 
-function renderCoach() {
-  renderCustomPanel();
-  const container=document.getElementById('coach-slip');
-  const pd=document.getElementById('co-pay-date')?.value;
-  const coach=document.getElementById('co-coach-select')?.value;
-  if(!pd||!coach||!dataLoaded.coaches){container.innerHTML='<div class="empty-state">Select a coach and pay date to generate the payroll slip.</div>';return;}
-  const {start,end}=getPeriod(pd);
+// Coach client sets for a period (shared by the slip and the month-over-month alert)
+function coachSets(coach,start,end){
   const july2025=new Date(2025,6,1);
   const inR=(d)=>d&&d>=start&&d<=end;
 
@@ -1184,6 +1208,22 @@ function renderCoach() {
     return (r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&sl&&sl>=start&&sl<=end&&isTRUE(r[CM.nonQFlag])&&tv>0;
   });
 
+  return {activeClients,retClients,nonQClients,isMonthlyProduct};
+}
+function coachCommissionTotal(coach,pd){
+  const {start,end}=getPeriod(pd);
+  const {activeClients,retClients}=coachSets(coach,start,end);
+  return activeClients.reduce((s,r)=>s+parseAmt(r[CM.coachPay]),0)+retClients.reduce((s,r)=>s+parseAmt(r[CM.retComm]),0);
+}
+function renderCoach() {
+  renderCustomPanel();
+  const container=document.getElementById('coach-slip');
+  const pd=document.getElementById('co-pay-date')?.value;
+  const coach=document.getElementById('co-coach-select')?.value;
+  if(!pd||!coach||!dataLoaded.coaches){container.innerHTML='<div class="empty-state">Select a coach and pay date to generate the payroll slip.</div>';return;}
+  const {start,end}=getPeriod(pd);
+  const {activeClients,retClients,nonQClients}=coachSets(coach,start,end);
+  const inR=(d)=>d&&d>=start&&d<=end;
   const sortFn=coachSort==='enddate'
     ?(a,b)=>(parseDate(a[CM.endDate])?.getTime()||0)-(parseDate(b[CM.endDate])?.getTime()||0)
     :(a,b)=>(`${a[CM.firstName]} ${a[CM.lastName]}`).localeCompare(`${b[CM.firstName]} ${b[CM.lastName]}`);
@@ -1232,7 +1272,24 @@ function renderCoach() {
     <td><span class="tag tag-nonq">Non-Qualifier</span></td>
   </tr>`).join('');
 
-  container.innerHTML=`<div class="slip">
+  // ---- Review alerts ----
+  const coAlerts=[];
+  const coName=r=>`${r[CM.firstName]||''} ${r[CM.lastName]||''}`.trim()||'(no name)';
+  [[activeClients,activeCounts,'Active Clients'],[retClients,retCounts,'Retention'],[nonQClients,nonQCounts,'Non-Qualifiers']].forEach(([arr,counts,label])=>{
+    const seen=new Set();
+    arr.forEach(r=>{ const k=coName(r).toLowerCase(); if(counts[k]>1&&!seen.has(k)){ seen.add(k); coAlerts.push(`<b>${coName(r)}</b> appears ${counts[k]} times in ${label}.`); } });
+  });
+  const recentFrom=new Date(start.getFullYear(),start.getMonth()-2,1);
+  raw.cm.filter(r=>(r[CM.coach]||'').trim().toLowerCase()===coach.toLowerCase()&&!isTRUE(r[CM.excludeFlag])&&parseAmt(r[CM.tier])>0)
+    .filter(r=>{ const sl=parseDate(r[CM.saleDate]); return sl&&sl>=recentFrom&&sl<=end&&(!parseDate(r[CM.startDate])||!parseDate(r[CM.endDate])); })
+    .forEach(r=>coAlerts.push(`<b>${coName(r)}</b> (sold ${fmtDate(parseDate(r[CM.saleDate]))}) is missing a ${!parseDate(r[CM.startDate])?'Start Date':'End Date'}, so it may be left out of pay.`));
+  const coPrev=coachCommissionTotal(coach,prevPayDate(pd));
+  const coChange=pctChangeAlert('Client pay + retention',activeClientPay+retCommPay,coPrev);
+  if(coChange) coAlerts.push(coChange);
+  if(!(totalPayment>0)) coAlerts.push(`Total Payment for ${coach} is $0.`);
+  const coAlertsHTML=reviewAlertsHTML('coach',coAlerts);
+
+  container.innerHTML=`${coAlertsHTML}<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Coach Commission Slip</span></div></div>
       <div style="text-align:right"><div class="slip-name">${coach.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
@@ -1384,7 +1441,22 @@ function renderSetter() {
         ${stCustom.length?`${customRows(stCustom)}
         <div class="sum-row total"><span class="sum-label" style="font-weight:600;color:var(--text)">Total Payment</span><span class="sum-val big">${money(stCustomTotal)}</span></div>`:''}`;
 
-  container.innerHTML=`${alertBanner}<div class="slip">
+  // ---- Review alerts ----
+  const stAlerts=[];
+  if(staleCalls.length) stAlerts.push(`${staleCalls.length} call${staleCalls.length>1?'s':''} still ${staleCalls.length>1?'have':'has'} a pre-call status (see the list below). Update the sheet before approving.`);
+  const dupS={}; setterLeads.forEach(r=>{ const k=((r[LA.email]||'').trim().toLowerCase())||`${r[LA.firstName]||''} ${r[LA.lastName]||''}`.trim().toLowerCase(); if(k) dupS[k]=(dupS[k]||[]).concat([r]); });
+  Object.values(dupS).filter(a=>a.length>1).forEach(a=>stAlerts.push(`<b>${`${a[0][LA.firstName]||''} ${a[0][LA.lastName]||''}`.trim()||a[0][LA.email]}</b> appears ${a.length} times this period (booked ${a.map(r=>fmtDate(parseDate(r[LA.bookedDate]))).join(', ')}).`));
+  if(isPaidSetter){
+    const {start:ps,end:pe}=getPeriod(prevPayDate(pd));
+    const prevShows=raw.la.filter(r=>(r[LA.source]||'').toLowerCase().includes(sLow)&&(d=>d&&d>=ps&&d<=pe)(parseDate(r[LA.bookedDate]))&&isShowStatus(r[LA.showStatus])).length;
+    const stChange=pctChangeAlert('Showed calls pay',showPay,prevShows*perShow);
+    if(stChange) stAlerts.push(stChange);
+    if(!(stTotal>0)) stAlerts.push(`Total Payment for ${setter} is $0.`);
+    if(!(stBase>0)) stAlerts.push(`Base Salary for ${setter} is $0.`);
+  }
+  const stAlertsHTML=reviewAlertsHTML('setter',stAlerts);
+
+  container.innerHTML=`${stAlertsHTML}${alertBanner}<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>${isPaidSetter?'Setter Payroll Slip':'Setter Call Slip'}</span></div></div>
       <div style="text-align:right"><div class="slip-name">${setter.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
@@ -1436,7 +1508,11 @@ function renderAdmin() {
   const approveKey=`admin|${member}|${pd}`;
   const approved=!!approvedMap[approveKey];
 
-  container.innerHTML=`<div class="slip">
+  const adAlerts=[];
+  if(!(base>0)) adAlerts.push(`Base Salary for ${member} is $0. Set it in Settings if that's not right.`);
+  const adAlertsHTML=reviewAlertsHTML('admin',adAlerts);
+
+  container.innerHTML=`${adAlertsHTML}<div class="slip">
     <div class="slip-header">
       <div><div class="slip-brand">STRONG STANDARD <span>Admin Team Payroll Slip</span></div></div>
       <div style="text-align:right"><div class="slip-name">${member.toUpperCase()}</div><div class="slip-period">${periodLabel}</div></div>
@@ -1625,8 +1701,25 @@ async function generateAllPDFs() {
 }
 
 // ── APPROVE ───────────────────────────────────────────────────
+// ---- Review alerts: things to check before approving. Shown on screen only (hidden in PDF). ----
+let pendingAlerts={closer:0,coach:0,setter:0,admin:0};
+function reviewAlertsHTML(type,list){
+  pendingAlerts[type]=list.length;
+  if(!list.length) return `<div class="review-alerts ok"><div class="review-alerts-title">✓ No issues found. Ready to review and approve.</div></div>`;
+  return `<div class="review-alerts"><div class="review-alerts-title">⚠ ${list.length} thing${list.length>1?'s':''} to review before approving</div><ul>${list.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
+}
+function daysBetween(a,b){ const u=d=>Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()); return Math.round((u(b)-u(a))/86400000); }
+function prevPayDate(pd){ const d=new Date(pd+'T12:00:00'); return fmtDI(new Date(d.getFullYear(),d.getMonth()-1,d.getDate())); }
+function pctChangeAlert(label,cur,prev){
+  if(!(prev>0)) return null;
+  const ch=(cur-prev)/prev;
+  if(Math.abs(ch)<=0.30) return null;
+  return `${label} is ${money(cur)}, ${Math.round(Math.abs(ch)*100)}% ${ch>0?'higher':'lower'} than last period (${money(prev)}). Double check it's expected.`;
+}
+
 function doApprove(key, type) {
   if(approvedMap[key]) return;
+  if(pendingAlerts[type]>0 && !confirm(`There ${pendingAlerts[type]>1?'are':'is'} ${pendingAlerts[type]} item${pendingAlerts[type]>1?'s':''} flagged for review on this slip.\n\nDid you already review ${pendingAlerts[type]>1?'them':'it'} and want to approve anyway?`)) return;
   approvedMap[key]=true;
   try{ localStorage.setItem('ss_payroll_approved',JSON.stringify(approvedMap)); }catch(e){}
   const prefixMap = { closer:'cl', coach:'co', setter:'st', admin:'ad' };
