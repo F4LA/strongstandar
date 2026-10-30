@@ -166,7 +166,23 @@
     return body.values || [];
   }
 
-  window.ssAuth = { ready: ready, sheet: sheet, signOut: signOut };
+  // Authorized call to any Coach Portal API route (e.g. '/api/payroll-slack').
+  async function api(path, options) {
+    await ready;
+    var token = await currentToken();
+    var opts = options || {};
+    var headers = Object.assign({}, opts.headers || {}, { Authorization: 'Bearer ' + token });
+    var res = await fetch(BRIDGE + path, Object.assign({}, opts, { headers: headers, cache: 'no-store' }));
+    var body = await res.json().catch(function () { return {}; });
+    if (res.status === 401) {
+      showLogin('Your session expired. Please sign in again.');
+      throw new Error(body.error || 'Not signed in');
+    }
+    if (!res.ok) throw new Error(body.error || ('HTTP ' + res.status));
+    return body;
+  }
+
+  window.ssAuth = { ready: ready, sheet: sheet, api: api, signOut: signOut };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

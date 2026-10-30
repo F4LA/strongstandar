@@ -377,6 +377,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-WHG7DNVZ');</script>
 <!-- End Google Tag Manager -->
 <script src="/scripts/affiliate-tracking.js"></script>
+<!-- Google login (company accounts) + PDF libs for "Send via Slack" -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.js"></script>
+<script src="/scripts/ss-auth.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+.slack-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:20px;}
+.slack-modal{width:100%;max-width:520px;background:var(--navy-mid,#1a1d27);border:1px solid var(--border);border-radius:14px;padding:22px 24px;color:var(--text);font-family:var(--font-body);}
+.slack-modal h3{margin:0 0 4px;font-family:var(--font-display);letter-spacing:.5px;}
+.slack-modal .sub{font-size:12px;color:var(--text-muted);margin-bottom:14px;}
+.slack-modal label{display:block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);margin:12px 0 6px;}
+.slack-modal select,.slack-modal textarea{width:100%;box-sizing:border-box;background:var(--navy-light);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:9px 10px;font-family:var(--font-body);font-size:13px;}
+.slack-modal textarea{min-height:150px;resize:vertical;line-height:1.45;}
+.slack-modal .warn{margin-top:12px;font-size:12px;color:#b07800;background:rgba(255,200,0,.10);border:1px solid rgba(230,160,0,.45);border-radius:8px;padding:8px 10px;}
+.slack-modal .status{margin-top:10px;font-size:12px;min-height:16px;}
+.slack-modal .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;}
+@media print{.slack-overlay{display:none !important;}}
+</style>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -1119,7 +1137,8 @@ function renderCloser() {
     <div class="slip-footer">
       <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
       <div class="footer-btns">
-        <button class="btn-pdf" onclick="generatePDF(this)">🖨 Generate PDF</button>
+        <button class="btn-pdf" onclick="generatePDF(this)" >🖨 Generate PDF</button>
+        <button class="btn-pdf" id="slack-btn-closer" onclick="openSlackSend('closer')">💬 Send via Slack</button>
         <button class="btn-approve ${approved?'approved':''}" onclick="doApprove('${approveKey}','closer')" id="cl-approve-btn">${approved?'✓ Approved':'✓ Approve & Send'}</button>
       </div>
     </div>
@@ -1339,7 +1358,8 @@ function renderCoach() {
     <div class="slip-footer">
       <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
       <div class="footer-btns">
-        <button class="btn-pdf" onclick="generatePDF(this)">🖨 Generate PDF</button>
+        <button class="btn-pdf" onclick="generatePDF(this)" >🖨 Generate PDF</button>
+        <button class="btn-pdf" id="slack-btn-coach" onclick="openSlackSend('coach')">💬 Send via Slack</button>
         <button class="btn-approve ${approved?'approved':''}" onclick="doApprove('${approveKey}','coach')" id="co-approve-btn">${approved?'✓ Approved':'✓ Approve & Send'}</button>
       </div>
     </div>
@@ -1487,7 +1507,8 @@ function renderSetter() {
     <div class="slip-footer">
       <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
       <div class="footer-btns">
-        <button class="btn-pdf" onclick="generatePDF(this)">🖨 Generate PDF</button>
+        <button class="btn-pdf" onclick="generatePDF(this)" >🖨 Generate PDF</button>
+        <button class="btn-pdf" id="slack-btn-setter" onclick="openSlackSend('setter')">💬 Send via Slack</button>
         <button class="btn-approve ${approved?'approved':''}" onclick="doApprove('${approveKey}','setter')" id="st-approve-btn">${approved?'✓ Approved':'✓ Approve & Send'}</button>
       </div>
     </div>
@@ -1543,7 +1564,8 @@ function renderAdmin() {
     <div class="slip-footer">
       <div class="status-wrap"><div class="status-dot ${approved?'approved':''}"></div><span class="status-text">${approved?'✓ Approved — Ready to send payment':'Pending approval'}</span></div>
       <div class="footer-btns">
-        <button class="btn-pdf" onclick="generatePDF(this)">🖨 Generate PDF</button>
+        <button class="btn-pdf" onclick="generatePDF(this)" >🖨 Generate PDF</button>
+        <button class="btn-pdf" id="slack-btn-admin" onclick="openSlackSend('admin')">💬 Send via Slack</button>
         <button class="btn-approve ${approved?'approved':''}" onclick="doApprove('${approveKey}','admin')" id="ad-approve-btn">${approved?'✓ Approved':'✓ Approve & Send'}</button>
       </div>
     </div>
@@ -1704,6 +1726,126 @@ async function generateAllPDFs() {
 }
 
 // ── APPROVE ───────────────────────────────────────────────────
+// ---- Send via Slack: builds the slip PDF and DMs it through the Coach Portal (/api/payroll-slack) ----
+const SLACK_DEFAULT_TEMPLATES={
+  closer:"Hey {first}! Here's your Closer Commission Slip for {period}. Before I send the payment, could you please double check it and let me know if everything looks right or if any deal is missing? Thanks!",
+  coach:"Hey {first}! Here's your Coach Commission Slip for {period}. Please take a look and let me know if everything looks right or if any client is missing before I send the payment. Thanks!",
+  setter:"Hey {first}! Here's your Setter Payroll Slip for {period}. Please take a look and let me know if everything looks right before I send the payment. Thanks!",
+  admin:"Hey {first}! Here's your Payroll Slip for {period}. Let me know if you have any questions. Thanks!",
+};
+let slackMembers=null;
+function slackStore(k,def){ try{ return JSON.parse(localStorage.getItem(k)||'null')||def; }catch(e){ return def; } }
+function slackSave(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function slackPerson(type){
+  return type==='closer'?currentCloser()
+    :type==='coach'?document.getElementById('co-coach-select')?.value
+    :type==='setter'?document.getElementById('st-setter-select')?.value
+    :document.getElementById('ad-member-select')?.value;
+}
+function slackNorm(v){ return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+function slackGuess(person){
+  const p=slackNorm(person), first=p.split(/\s+/)[0];
+  const alias={boaz:['boaz','boas']}[first]||[first];
+  return slackMembers.find(m=>slackNorm(m.realName)===p||slackNorm(m.displayName)===p)
+      || slackMembers.find(m=>alias.some(a=>slackNorm(m.realName).split(/\s+/)[0]===a||slackNorm(m.displayName).split(/\s+/)[0]===a));
+}
+function slackSentKey(type,person){ return `${type}|${person}|${getSharedPayDate()}`; }
+function slackEsc(v){ return String(v||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function closeSlackSend(){ document.getElementById('slack-overlay')?.remove(); }
+
+async function openSlackSend(type){
+  const person=slackPerson(type);
+  const slip=document.querySelector('.tab-pane.active .slip');
+  if(!person||!slip){ alert('Generate the slip first.'); return; }
+  if(!window.ssAuth){ alert('Login is not loaded. Reload the page and try again.'); return; }
+  const period=(slip.querySelector('.slip-period')?.textContent||'').trim();
+  const templates=slackStore('ss_slack_templates',{});
+  const msg=(templates[type]||SLACK_DEFAULT_TEMPLATES[type]).replace(/\{first\}/g,person.split(/\s+/)[0]).replace(/\{name\}/g,person).replace(/\{period\}/g,period);
+  const sent=slackStore('ss_slack_sent',{})[slackSentKey(type,person)];
+  const ov=document.createElement('div'); ov.className='slack-overlay'; ov.id='slack-overlay';
+  ov.onclick=e=>{ if(e.target===ov) closeSlackSend(); };
+  ov.innerHTML=`<div class="slack-modal">
+    <h3>Send ${slackEsc(person)}'s slip via Slack</h3>
+    <div class="sub">${slackEsc(period)} · The PDF is attached to a DM from the Payroll bot.</div>
+    ${pendingAlerts[type]>0?`<div class="warn">⚠ This slip has ${pendingAlerts[type]} item${pendingAlerts[type]>1?'s':''} flagged for review.</div>`:''}
+    ${sent?`<div class="warn" style="color:var(--green);background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.4)">Already sent on ${new Date(sent).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}. Sending again will send a new message.</div>`:''}
+    <label>To (Slack member)</label>
+    <select id="slack-to"><option value="">Loading Slack members…</option></select>
+    <label>Message <span style="text-transform:none;letter-spacing:0">({first} and {period} are filled in automatically)</span></label>
+    <textarea id="slack-msg">${slackEsc(msg)}</textarea>
+    <div style="margin-top:8px;font-size:12px;color:var(--text-muted)"><label style="display:inline;text-transform:none;letter-spacing:0;margin:0;cursor:pointer"><input type="checkbox" id="slack-save-tpl"> Save this message as the default for every ${type} slip</label></div>
+    <div class="status" id="slack-status"></div>
+    <div class="actions"><button class="btn-pdf" onclick="closeSlackSend()">Cancel</button><button class="btn-approve" id="slack-send-btn" onclick="doSlackSend('${type}')" disabled>💬 Send</button></div>
+  </div>`;
+  document.body.appendChild(ov);
+  const sel=document.getElementById('slack-to'), status=document.getElementById('slack-status');
+  try{
+    if(!slackMembers) slackMembers=(await ssAuth.api('/api/payroll-slack')).members||[];
+    const saved=slackStore('ss_slack_map',{})[person];
+    const guess=saved?slackMembers.find(m=>m.id===saved):slackGuess(person);
+    sel.innerHTML='<option value="">Choose a member…</option>'+slackMembers.map(m=>`<option value="${m.id}" ${guess&&guess.id===m.id?'selected':''}>${slackEsc(m.realName)}${m.displayName&&m.displayName!==m.realName?' ('+slackEsc(m.displayName)+')':''}${m.email?' · '+slackEsc(m.email):''}</option>`).join('');
+    if(!guess) status.innerHTML='<span style="color:#b07800">Couldn\'t match this person automatically. Pick them from the list (it will be remembered).</span>';
+    document.getElementById('slack-send-btn').disabled=false;
+  }catch(e){ sel.innerHTML='<option value="">Couldn\'t load members</option>'; status.innerHTML=`<span style="color:var(--red)">${slackEsc(e.message)}</span>`; }
+}
+
+async function buildSlipPdfBase64(slip){
+  if(!window.html2canvas||!window.jspdf) throw new Error('PDF library failed to load. Reload the page.');
+  const html=document.documentElement, prevTheme=html.getAttribute('data-theme');
+  const footer=slip.querySelector('.slip-footer'), prevFooter=footer?.style.display, prevOverflow=slip.style.overflow;
+  html.setAttribute('data-theme','light'); if(footer) footer.style.display='none'; slip.style.overflow='visible';
+  try{
+    await document.fonts.ready;
+    const canvas=await html2canvas(slip,{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false,scrollX:0,scrollY:-window.scrollY,width:slip.scrollWidth,height:slip.scrollHeight});
+    const { jsPDF }=window.jspdf;
+    const pdf=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+    const margin=12,pageW=210,pageH=297,usableW=pageW-margin*2,usableH=pageH-margin*2;
+    const pxPerPage=Math.floor(canvas.width*(usableH/usableW));
+    for(let y=0,page=0;y<canvas.height;y+=pxPerPage,page++){
+      const h=Math.min(pxPerPage,canvas.height-y);
+      const c=document.createElement('canvas'); c.width=canvas.width; c.height=h;
+      const ctx=c.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,h); ctx.drawImage(canvas,0,y,canvas.width,h,0,0,canvas.width,h);
+      if(page>0) pdf.addPage();
+      pdf.addImage(c.toDataURL('image/jpeg',0.85),'JPEG',margin,margin,usableW,usableW*(h/canvas.width));
+    }
+    return pdf.output('datauristring').split(',')[1];
+  } finally {
+    if(prevTheme===null) html.removeAttribute('data-theme'); else html.setAttribute('data-theme',prevTheme);
+    if(footer) footer.style.display=prevFooter||''; slip.style.overflow=prevOverflow;
+  }
+}
+
+async function doSlackSend(type){
+  const person=slackPerson(type), userId=document.getElementById('slack-to').value;
+  const message=document.getElementById('slack-msg').value.trim();
+  const status=document.getElementById('slack-status'), btn=document.getElementById('slack-send-btn');
+  if(!userId){ status.innerHTML='<span style="color:var(--red)">Pick who should receive it.</span>'; return; }
+  const member=slackMembers.find(m=>m.id===userId);
+  if(!confirm(`Send ${person}'s slip to ${member?member.realName:'this member'} on Slack?`)) return;
+  btn.disabled=true; btn.textContent='⏳ Sending…'; status.textContent='Building the PDF…';
+  try{
+    const slip=document.querySelector('.tab-pane.active .slip');
+    const period=(slip.querySelector('.slip-period')?.textContent||'').trim();
+    const typeName={closer:'Closer Payroll',coach:'Coach Payroll',setter:'Setter Payroll',admin:'Admin Payroll'}[type];
+    const pdfBase64=await buildSlipPdfBase64(slip);
+    status.textContent='Sending to Slack…';
+    await ssAuth.api('/api/payroll-slack',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId,message,filename:`${typeName} ${person} - ${period}.pdf`,pdfBase64})});
+    const map=slackStore('ss_slack_map',{}); map[person]=userId; slackSave('ss_slack_map',map);
+    if(document.getElementById('slack-save-tpl')?.checked){
+      const first=person.split(/\s+/)[0];
+      const tpl=message.split(first).join('{first}').split(period).join('{period}');
+      const t=slackStore('ss_slack_templates',{}); t[type]=tpl; slackSave('ss_slack_templates',t);
+    }
+    const sent=slackStore('ss_slack_sent',{}); sent[slackSentKey(type,person)]=Date.now(); slackSave('ss_slack_sent',sent);
+    status.innerHTML='<span style="color:var(--green)">✓ Sent!</span>';
+    const b=document.getElementById('slack-btn-'+type); if(b) b.textContent='✓ Sent via Slack';
+    setTimeout(closeSlackSend,1200);
+  }catch(e){
+    status.innerHTML=`<span style="color:var(--red)">${slackEsc(e.message)}</span>`;
+    btn.disabled=false; btn.textContent='💬 Send';
+  }
+}
+
 // ---- Review alerts: things to check before approving. Shown on screen only (hidden in PDF). ----
 let pendingAlerts={closer:0,coach:0,setter:0,admin:0};
 function reviewAlertsHTML(type,list){
