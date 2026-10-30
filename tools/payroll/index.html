@@ -1766,7 +1766,7 @@ async function openSlackSend(type){
   ov.onclick=e=>{ if(e.target===ov) closeSlackSend(); };
   ov.innerHTML=`<div class="slack-modal">
     <h3>Send ${slackEsc(person)}'s slip via Slack</h3>
-    <div class="sub">${slackEsc(period)} · The PDF is attached to a DM from the Payroll bot.</div>
+    <div class="sub">${slackEsc(period)} · The PDF is sent as a Slack DM with this message.</div>
     ${pendingAlerts[type]>0?`<div class="warn">⚠ This slip has ${pendingAlerts[type]} item${pendingAlerts[type]>1?'s':''} flagged for review.</div>`:''}
     ${sent?`<div class="warn" style="color:var(--green);background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.4)">Already sent on ${new Date(sent).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}. Sending again will send a new message.</div>`:''}
     <label>To (Slack member)</label>

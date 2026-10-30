@@ -9,8 +9,9 @@
 - It calls the Coach Portal route `/api/payroll-slack` (repo F4LA/coach-portal):
   - `GET` lists Slack members to pick the recipient.
   - `POST` uploads the PDF and sends the DM.
-- The Slack bot token lives only in Vercel (coach-portal project) as `SLACK_BOT_TOKEN`.
-- Bot scopes needed: `chat:write`, `files:write`, `im:write`, `users:read`, `users:read.email`.
+- Tokens live only in Vercel (coach-portal project):
+  - `SLACK_USER_TOKEN` (xoxp-): slips are sent as that person (Miguel), so replies arrive in his own DMs. Only the Slack user who owns this token (matched by email to the Google login) can send. User scopes: `chat:write`, `files:write`, `im:write`.
+  - `SLACK_BOT_TOKEN` (xoxb-): lists Slack members; sends as the bot only if there's no user token. Bot scopes: `chat:write`, `files:write`, `im:write`, `users:read`, `users:read.email`.
 
 **Remembered in the browser (localStorage):** which Slack member each person maps to, custom default messages per slip type, and when each slip was sent.
 
