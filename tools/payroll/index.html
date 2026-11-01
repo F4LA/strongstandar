@@ -965,6 +965,8 @@ function renderCloser() {
   const clCustom=getCustomItems(closer,pd,'cl');
   const clCustomTotal=clCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
   const totalPayment=tierComm+baseSalary+dcSetComm+clCustomTotal;
+  lastSlip.closer={period:ledgerPeriodOf(start),payDate:pd,person:closer,role:'Closer',base:baseSalary,commission:tierComm,retention:0,
+    extras:dcSetComm+clCustomTotal,extrasDetail:[...(dcSetComm?[`21 DC Set Commission (${dcCalls.length} x $100): ${money(dcSetComm)}`]:[]),...ledgerItems(clCustom)].join('; '),total:totalPayment};
   const notes=document.getElementById('cl-notes')?.value||'';
   const approveKey=closer==='Deniz'?`closer|${pd}`:`closer|${closer}|${pd}`;
   const approved=!!approvedMap[approveKey];
@@ -1228,6 +1230,8 @@ function renderCoach() {
   const customItemsArr   = getCustomItems(coach,pd);
   const customTotal      = customItemsArr.reduce((s,it)=>s+parseAmt(it.amount),0);
   const totalPayment     = activeClientPay+retCommPay+baseSalary+customTotal;
+  lastSlip.coach={period:ledgerPeriodOf(start),payDate:pd,person:coach,role:'Coach',base:baseSalary,commission:activeClientPay,retention:retCommPay,
+    extras:customTotal,extrasDetail:ledgerItems(customItemsArr).join('; '),total:totalPayment};
   const notes=document.getElementById('co-notes')?.value||'';
   const approveKey=`coach|${coach}|${pd}`;
   const approved=!!approvedMap[approveKey];
@@ -1425,6 +1429,8 @@ function renderSetter() {
   const stCustom=getCustomItems(setter,pd,'st');
   const stCustomTotal=stCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
   const stTotal=stBase+showPay+stCustomTotal;
+  lastSlip.setter={period:ledgerPeriodOf(start),payDate:pd,person:setter,role:'Setter',base:isPaidSetter?stBase:0,commission:isPaidSetter?showPay:0,retention:0,
+    extras:stCustomTotal,extrasDetail:ledgerItems(stCustom).join('; '),total:isPaidSetter?stTotal:stCustomTotal};
   const summaryBlock=isPaidSetter?`
         <div class="sum-row"><span class="sum-label">Base Salary</span><span class="sum-val">${money(stBase)}</span></div>
         <div class="sum-row"><span class="sum-label">Showed Calls (${showLeads.length} × ${money(perShow)})</span><span class="sum-val green">${money(showPay)}</span></div>
@@ -1500,6 +1506,8 @@ function renderAdmin() {
   const base=adminSalaries[member]||0;
   const adCustom=getCustomItems(member,pd,'ad');
   const adTotal=base+adCustom.reduce((s,it)=>s+parseAmt(it.amount),0);
+  lastSlip.admin={period:ledgerPeriodOf(start),payDate:pd,person:member,role:'Admin',base,commission:0,retention:0,
+    extras:adTotal-base,extrasDetail:ledgerItems(adCustom).join('; '),total:adTotal};
   const approveKey=`admin|${member}|${pd}`;
   const approved=!!approvedMap[approveKey];
 
@@ -1833,8 +1841,26 @@ function pctChangeAlert(label,cur,prev){
   return `${label} is ${money(cur)}, ${Math.round(Math.abs(ch)*100)}% ${ch>0?'higher':'lower'} than last period (${money(prev)}). Double check it's expected.`;
 }
 
-function doApprove(key, type) {
-  if(approvedMap[key]) return;
+// ── LEDGER (Strong Standard Payroll sheet) ───────────────────
+// On Approve, the slip's numbers are saved as one row in the "Ledger" tab via the Coach Portal.
+let lastSlip={};
+function ledgerPeriodOf(start){ return `${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,'0')}`; }
+function ledgerItems(items){ return (items||[]).map(it=>`${it.concept}: ${money(parseAmt(it.amount))}`); }
+async function saveToLedger(type){
+  const slip=lastSlip[type];
+  if(!slip) throw new Error('Slip data not ready. Regenerate the slip and try again.');
+  if(!window.ssAuth) throw new Error('Login is not loaded. Reload the page and try again.');
+  await ssAuth.api('/api/payroll-ledger',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(slip)});
+}
+
+async function doApprove(key, type) {
+  if(approvedMap[key]){
+    // Already approved (e.g. before the ledger existed, or numbers changed): offer to (re)save the row.
+    if(!confirm('This slip is already approved.\n\nSave it again to the Payroll Ledger? (updates its row with the current numbers)')) return;
+    try{ await saveToLedger(type); alert('Saved to the Payroll Ledger.'); }
+    catch(e){ alert('Could not save to the Payroll Ledger.\n\n'+e.message); }
+    return;
+  }
   if(pendingAlerts[type]>0 && !confirm(`There ${pendingAlerts[type]>1?'are':'is'} ${pendingAlerts[type]} item${pendingAlerts[type]>1?'s':''} flagged for review on this slip.\n\nDid you already review ${pendingAlerts[type]>1?'them':'it'} and want to approve anyway?`)) return;
   approvedMap[key]=true;
   try{ localStorage.setItem('ss_payroll_approved',JSON.stringify(approvedMap)); }catch(e){}
@@ -1845,9 +1871,19 @@ function doApprove(key, type) {
   const btn=document.getElementById(prefix+'-approve-btn');
   const dot=document.querySelector(`#pane-${paneId} .status-dot`);
   const txt=document.querySelector(`#pane-${paneId} .status-text`);
-  if(btn){btn.textContent='✓ Approved';btn.classList.add('approved');}
+  if(btn){btn.textContent='Saving…';btn.disabled=true;}
+  try{
+    await saveToLedger(type);
+  }catch(e){
+    delete approvedMap[key];
+    try{ localStorage.setItem('ss_payroll_approved',JSON.stringify(approvedMap)); }catch(_){}
+    if(btn){btn.textContent='✓ Approve & Send';btn.disabled=false;}
+    alert('Could not save this slip to the Payroll Ledger, so it was not approved.\n\n'+e.message);
+    return;
+  }
+  if(btn){btn.textContent='✓ Approved';btn.classList.add('approved');btn.disabled=false;}
   if(dot) dot.classList.add('approved');
-  if(txt) txt.textContent='✓ Approved — Ready to send payment';
+  if(txt) txt.textContent='✓ Approved · Saved to Payroll Ledger';
 }
 
 // ── INIT ──────────────────────────────────────────────────────
