@@ -402,18 +402,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<!-- PASSWORD -->
-<div id="pw-screen">
-  <div class="pw-card" id="pw-card">
-    <div class="pw-lock">🔒</div>
-    <div class="pw-logo">STRONG STANDARD</div>
-    <div class="pw-sub">Payroll Portal</div>
-    <input type="password" class="pw-input" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPW()"/>
-    <button class="pw-btn" onclick="checkPW()">Access Payroll</button>
-    <div class="pw-error" id="pw-error">Incorrect password. Try again.</div>
-  </div>
-</div>
-
 <!-- LOADING -->
 <div class="loading-overlay" id="loading" style="display:none">
   <div class="loading-text">LOADING DATA</div>
@@ -611,7 +599,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 // ═══════════════════════════════════════════════════════════════
 // CONSTANTS
 // ═══════════════════════════════════════════════════════════════
-const DASHBOARD_PASSWORD = 'Strong2026';
 const CLOSER_SHEET  = '1t19JjlIjliu1I5AEuxmDDM9EZQnKmkSFmZuk04c2foQ';
 const COACHES_SHEET = '1ctM6K8hQfh73bi7f-MtXkqW3BaPxU73NZf8xPJQUEOc';
 const COACHES       = ['Brent','Bernardo','Ceci','Miguel','Joey','Jackie'];
@@ -639,22 +626,6 @@ let adminSalaries  = {};
 let closerSalaries = {};
 let coachSort   = 'name';
 let customItems = {};
-
-// ── PASSWORD ─────────────────────────────────────────────────
-function checkPW() {
-  const val = document.getElementById('pw-input').value;
-  if (val === DASHBOARD_PASSWORD) {
-    localStorage.setItem('ss_auth', btoa(DASHBOARD_PASSWORD));
-    document.getElementById('pw-screen').style.display = 'none';
-    init();
-  } else {
-    const card = document.getElementById('pw-card');
-    document.getElementById('pw-error').style.display = 'block';
-    card.classList.remove('pw-shake'); void card.offsetWidth; card.classList.add('pw-shake');
-    document.getElementById('pw-input').value = ''; document.getElementById('pw-input').focus();
-  }
-}
-function isAuth() { try{ return localStorage.getItem('ss_auth')===btoa(DASHBOARD_PASSWORD); }catch(e){return false;} }
 
 // ── THEME ─────────────────────────────────────────────────────
 function toggleTheme() {
@@ -1902,8 +1873,8 @@ async function init() {
 
 document.addEventListener('DOMContentLoaded',()=>{
   loadTheme();
-  if(isAuth()){ document.getElementById('pw-screen').style.display='none'; init(); }
-  else document.getElementById('pw-input').focus();
+  // Acceso solo con Google (@strongstandard.com) via ss-auth.js; carga datos despues del login
+  if(window.ssAuth) ssAuth.ready.then(()=>init()); else init();
 });
 </script>
 </body>
