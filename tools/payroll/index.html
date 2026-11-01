@@ -1212,8 +1212,8 @@ function coachSets(coach,start,end){
   const july2025=new Date(2025,6,1);
   const inR=(d)=>d&&d>=start&&d<=end;
 
-  const MONTHLY_PRODUCTS=['accountability track','strategy track']; // servicios mes-a-mes, sin adelanto de pago
-  const isMonthlyProduct=(r)=>MONTHLY_PRODUCTS.includes((r[CM.product]||'').trim().toLowerCase());
+  // servicios mes-a-mes (Accountability Track/Tracking, Strategy Track): sin adelanto, se paga cada mes incluido el ultimo
+  const isMonthlyProduct=(r)=>{ const p=(r[CM.product]||'').trim().toLowerCase().replace(/\s+/g,' '); return p.includes('accountability')||p.includes('strategy track'); };
   const activeClients=raw.cm.filter(r=>{
     const sd=parseDate(r[CM.startDate]),ed=parseDate(r[CM.endDate]),tv=parseAmt(r[CM.tier]);
     const edEOD=ed?new Date(ed.getFullYear(),ed.getMonth(),ed.getDate(),23,59,59):null; // fin de dia, para que "31-jul" del cliente empate con el "31-jul 23:59:59" del periodo
