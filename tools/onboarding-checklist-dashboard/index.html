@@ -348,7 +348,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="form-field"><label>Business Email <span style="text-transform:none;color:var(--text-dim);">(optional)</span></label><input type="email" id="new-business-email" placeholder="jane@strongstandard.com"></div>
         <div class="form-field"><label>Start Date</label><input type="date" id="new-start-date"></div>
         <div class="form-field" id="new-pct-field"><label>Lead %</label><input type="number" id="new-pct" placeholder="0" min="0" max="100"></div>
-        <div class="form-field" id="new-password-field" style="display:none;"><label>Email Password</label><input type="text" id="new-email-password" placeholder="Temp password"></div>
+        <div class="form-field" id="new-password-field"><label>Email Password</label><input type="text" id="new-email-password" placeholder="Temp password"></div>
         <div class="form-error" id="add-setter-error"></div>
         <div class="form-actions">
           <button class="action-btn" onclick="submitAddSetter()" id="add-setter-submit">Add Setter</button>
@@ -427,7 +427,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const EDITING_CARDS = new Set();
 
   function showsLeadPct(){ return CURRENT_ROLE === 'Setters'; }
-  function showsEmailPassword(){ return CURRENT_ROLE === 'Closers'; }
+  function showsEmailPassword(){ return CURRENT_ROLE === 'Closers' || CURRENT_ROLE === 'Setters'; }
 
   function idSafe(email){ return String(email).replace(/[^a-zA-Z0-9]/g, '_'); }
   function formatDateForInput(val){
@@ -872,12 +872,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     hideLoading();
   }
 
-  // Welcome email template for new Closers. {{first_name}}, {{company_email}} and
-  // {{password}} are filled in from that closer's record (business_email / email_password).
+  // Welcome email templates (Setters and Closers). First name, company email and
+  // password are filled in from the person's record (business_email / email_password).
   function buildWelcomeEmail(s){
     const firstName = s.first_name || '';
     const companyEmail = s.business_email || '';
     const password = s.email_password || '';
+    if(CURRENT_ROLE === 'Setters'){
+      const subject = `Welcome to the team, ${firstName}!`;
+      const body = [
+        `Hey ${firstName},`,
+        '',
+        "It's Miguel from Strong Standard. Hope you're doing well and having a great day!",
+        '',
+        "First off, welcome to the team. We're really excited to have you with us.",
+        '',
+        "I take care of the admin, tech, and marketing side of things, so if anything technical comes up, I'm your guy.",
+        '',
+        "Here's your info to log into your Google email:",
+        '',
+        `Email: ${companyEmail}`,
+        `Password: ${password}`,
+        '',
+        "With this email you'll be able to access the three tools we work with:",
+        '- GHL, our CRM',
+        '- Slack, our team communication channel',
+        "- ManyChat, where you'll be receiving and working your leads",
+        '',
+        "If you have any questions or run into any trouble logging in, just send me a message and I'll help you out.",
+        '',
+        'Talk soon,',
+        'Miguel'
+      ].join('\n');
+      return { subject, body };
+    }
     const subject = `Welcome to Strong Standard, ${firstName}!`;
     const body = [
       `Hi ${firstName},`,
