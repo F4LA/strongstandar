@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// BTC: after Wed, Nov 25, 2026 11:59 PM ET show the "offer ended" screen. Preview with ?btc_preview=expired
+(function() {
+  var end = new Date('2026-11-25T23:59:59-05:00').getTime();
+  var forced = /[?&]btc_preview=expired\b/.test(location.search);
+  if (forced || Date.now() > end) document.documentElement.classList.add('btc-is-expired');
+})();
+</script>
 <script src="/scripts/utm-persist.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -853,6 +861,44 @@ footer {
 /* ══ BTC (Beat the Clock / Start STRONG 2027) ══ */
 :root { --btc: #FFC72C; }
 
+/* BTC expired screen */
+#btc-expired { display: none; }
+html.btc-is-expired body > *:not(#btc-expired):not(script):not(noscript):not(style) { display: none !important; }
+html.btc-is-expired #btc-expired { display: flex; }
+#btc-expired {
+  min-height: 100vh; min-height: 100dvh; align-items: center; justify-content: center;
+  padding: 40px 20px; position: relative; overflow: hidden; background: var(--navy);
+}
+#btc-expired::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(34,120,172,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(34,120,172,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.btc-exp__card {
+  position: relative; z-index: 1; max-width: 620px; width: 100%; text-align: center;
+  background: var(--navy-2); border: 1px solid rgba(255,199,44,0.2); border-top: 3px solid var(--btc);
+  border-radius: var(--r-lg); padding: 40px 36px; box-shadow: var(--shadow-md);
+}
+.btc-exp__logo { height: 24px; width: auto; margin: 0 auto 28px; }
+.btc-exp__tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--btc); margin-bottom: 10px; }
+.btc-exp__title { font-family: var(--font-display); font-size: clamp(2.4rem, 7vw, 3.4rem); line-height: 1; color: var(--white); margin-bottom: 18px; }
+.btc-exp__title span { color: var(--btc); white-space: nowrap; }
+.btc-exp__text { font-size: 16px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+.btc-exp__text strong { color: var(--off-white); font-weight: 600; }
+.btc-exp__divider { height: 1px; background: rgba(255,255,255,0.08); margin: 26px 0; }
+.btc-exp__cta-lead { font-size: 17px; color: var(--off-white); font-weight: 500; margin-bottom: 18px; }
+.btc-exp__btn {
+  display: inline-flex; align-items: center; gap: 10px; background: var(--btc); color: var(--navy);
+  font-weight: 700; font-size: 15px; letter-spacing: 0.04em; padding: 16px 34px; border-radius: var(--r-full);
+  box-shadow: 0 0 30px rgba(255,199,44,0.25); transition: all .22s ease;
+}
+.btc-exp__btn:hover { background: #FFD65C; transform: translateY(-2px); }
+@media (max-width: 480px) {
+  .btc-exp__card { padding: 32px 22px; }
+  .btc-exp__text { font-size: 15px; }
+  .btc-exp__btn { width: 100%; justify-content: center; }
+}
+
 /* BTC sticky compact bar (slides in once the full banner scrolls away) */
 .topbar { position: relative !important; }
 .btc-sticky {
@@ -989,6 +1035,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHG7DNVZ"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+<!-- ═══════════════════════════════════════
+     BTC EXPIRED SCREEN (shown after Nov 25, 11:59 PM ET)
+═══════════════════════════════════════ -->
+<section id="btc-expired">
+  <div class="btc-exp__card">
+    <img class="btc-exp__logo" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard Coaching">
+    <span class="btc-exp__tag">Start STRONG 2027</span>
+    <h1 class="btc-exp__title">Beat the Clock <span>has ended</span></h1>
+    <p class="btc-exp__text">Thank you for your interest in our Start STRONG 2027 campaign. The last day to apply and book your call for this offer was <strong>Wednesday, Nov 25 at 11:59 PM ET</strong>.</p>
+    <p class="btc-exp__text">This offer is now closed, and we only run it once a year, around this time.</p>
+    <div class="btc-exp__divider"></div>
+    <p class="btc-exp__cta-lead">Still interested in working with us? You can apply for our coaching program and book your call below.</p>
+    <a class="btc-exp__btn" id="btc-exp-btn" href="/schedule-call/?utm_source=btc-page&utm_medium=redirect&utm_campaign=btc-expired&utm_content=btc-application">Apply for coaching
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+<script>
+(function() {
+  if (!document.documentElement.classList.contains('btc-is-expired')) return;
+  // Stop the BTC form/calendar and video from loading at all once expired
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('iframe[src*="leadconnectorhq.com"], wistia-player').forEach(function(el) { el.remove(); });
+  });
+  // Keep the original ad source/medium if the visitor came from an ad; campaign/content mark the post-offer path
+  try {
+    var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+    var here = new URLSearchParams(location.search), saved = {};
+    try { saved = JSON.parse(sessionStorage.getItem('ss_utms') || '{}'); } catch (e) {}
+    var btn = document.getElementById('btc-exp-btn');
+    var u = new URL(btn.getAttribute('href'), location.origin);
+    ['utm_source','utm_medium','utm_term'].forEach(function(k) { var v = here.get(k) || saved[k]; if (v) u.searchParams.set(k, v); });
+    btn.setAttribute('href', u.pathname + u.search);
+  } catch (e) {}
+})();
+</script>
 
 <div class="btc-sticky" id="btc-sticky" aria-hidden="true">
   <div class="btc-sticky__inner">
