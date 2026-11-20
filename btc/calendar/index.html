@@ -4,9 +4,10 @@
 <script>
 // BTC: after Wed, Nov 25, 2026 11:59 PM ET show the "offer ended" screen. Preview with ?btc_preview=expired
 (function() {
-  var end = new Date('2026-11-25T23:59:59-05:00').getTime();
+  // Cutoff is a fixed instant: Thu, Nov 26, 2026 12:00 AM America/New_York (EST, UTC-5). Same moment for every visitor, whatever their local time zone.
+  var end = new Date('2026-11-26T00:00:00-05:00').getTime();
   var forced = /[?&]btc_preview=expired\b/.test(location.search);
-  if (forced || Date.now() > end) document.documentElement.classList.add('btc-is-expired');
+  if (forced || Date.now() >= end) document.documentElement.classList.add('btc-is-expired');
 })();
 </script>
 <script src="/scripts/utm-persist.js" defer></script>
