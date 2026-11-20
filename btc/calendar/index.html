@@ -557,54 +557,61 @@ footer {
   .hero h1 { font-size: clamp(1.8rem, 7vw, 2.6rem); }
 }
 
-/* ══ BTC (Beat the Clock / Start STRONG 2027) overrides ══ */
-:root { --btc: #FFC72C; --btc-dark: #E0A800; }
+/* ══ BTC (Beat the Clock / Start STRONG 2027) ══ */
+:root { --btc: #FFC72C; }
 .topbar { position: sticky; }
-.btc-banner {
-  background: var(--btc);
-  color: var(--navy);
-  text-align: center;
-  padding: 18px 20px 20px;
-  position: relative;
-  z-index: 101;
+.btc-bar {
+  position: relative; z-index: 101;
+  background: linear-gradient(180deg, var(--navy-3) 0%, var(--navy-2) 100%);
+  border-top: 3px solid var(--btc);
+  border-bottom: 1px solid rgba(255,199,44,0.18);
 }
-.btc-banner__inner { max-width: 880px; margin: 0 auto; }
-.btc-banner__tag {
-  display: inline-block;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-  background: var(--navy); color: var(--btc);
-  padding: 4px 12px; border-radius: 9999px; margin-bottom: 10px;
+.btc-bar__inner {
+  max-width: 1160px; margin: 0 auto; padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
 }
-.btc-banner__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
-  line-height: 1.05; letter-spacing: 0.01em; margin-bottom: 8px;
+.btc-bar__eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--btc); margin-bottom: 4px;
 }
-.btc-banner__text { font-size: 15px; font-weight: 500; line-height: 1.45; margin-bottom: 12px; }
-.btc-banner__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px; }
-.btc-timer { display: flex; gap: 6px; }
-.btc-timer__unit {
-  background: var(--navy); color: var(--btc);
-  border-radius: 8px; min-width: 54px; padding: 6px 6px 4px; text-align: center;
+.btc-bar__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--btc); box-shadow: 0 0 0 0 rgba(255,199,44,.6); animation: btcPulse 1.8s infinite; }
+@keyframes btcPulse { 0% { box-shadow: 0 0 0 0 rgba(255,199,44,.55); } 70% { box-shadow: 0 0 0 8px rgba(255,199,44,0); } 100% { box-shadow: 0 0 0 0 rgba(255,199,44,0); } }
+.btc-bar__title {
+  font-family: var(--font-display); font-size: 28px; line-height: 1.05;
+  color: var(--white); letter-spacing: 0.02em;
 }
-.btc-timer__num { font-family: var(--font-display); font-size: 24px; line-height: 1; display: block; }
-.btc-timer__lbl { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #FFE7A3; }
-.btc-banner__btn {
+.btc-bar__title span { color: var(--btc); }
+.btc-bar__text { font-size: 14px; color: var(--muted); line-height: 1.5; margin-top: 4px; max-width: 640px; }
+.btc-bar__text strong { color: var(--off-white); font-weight: 600; }
+.btc-bar__side { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+.btc-timer { display: flex; align-items: flex-start; gap: 4px; }
+.btc-timer__unit { text-align: center; min-width: 38px; }
+.btc-timer__num { font-family: var(--font-display); font-size: 32px; line-height: 1; color: var(--white); display: block; }
+.btc-timer__lbl { font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); }
+.btc-timer__sep { font-family: var(--font-display); font-size: 28px; line-height: 1.1; color: var(--btc); opacity: .7; }
+.btc-bar__btn {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--navy); color: var(--btc);
-  font-weight: 700; font-size: 15px;
-  padding: 13px 26px; border-radius: 9999px;
-  transition: transform .2s, box-shadow .2s;
+  background: var(--btc); color: var(--navy);
+  font-weight: 700; font-size: 14px; letter-spacing: 0.04em;
+  padding: 13px 24px; border-radius: var(--r-full); white-space: nowrap;
+  box-shadow: 0 0 24px rgba(255,199,44,0.25); transition: all .22s ease;
 }
-.btc-banner__btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(8,13,26,.35); }
+.btc-bar__btn:hover { background: #FFD65C; transform: translateY(-2px); box-shadow: 0 0 36px rgba(255,199,44,0.4); }
 .accent, .hero-video__header h1 .accent, .hero h1 .accent { color: var(--btc) !important; }
-.btn-primary { background: var(--btc); color: var(--navy); box-shadow: 0 0 30px rgba(255,199,44,0.3); }
-.btn-primary:hover { background: #FFD65C; box-shadow: 0 0 50px rgba(255,199,44,0.45); }
-@media (max-width: 600px) {
-  .btc-banner { padding: 14px 14px 16px; }
-  .btc-banner__text { font-size: 13.5px; }
-  .btc-timer__unit { min-width: 48px; }
-  .btc-timer__num { font-size: 21px; }
+.btn-primary { background: var(--btc); color: var(--navy); box-shadow: 0 0 30px rgba(255,199,44,0.25); }
+.btn-primary:hover { background: #FFD65C; box-shadow: 0 0 50px rgba(255,199,44,0.4); }
+@media (max-width: 900px) {
+  .btc-bar__inner { flex-direction: column; text-align: center; gap: 14px; padding: 14px 20px 16px; }
+  .btc-bar__eyebrow { justify-content: center; }
+  .btc-bar__text { margin-left: auto; margin-right: auto; }
+  .btc-bar__side { flex-direction: column; gap: 12px; }
+}
+@media (max-width: 480px) {
+  .btc-bar__title { font-size: 23px; }
+  .btc-bar__text { font-size: 13px; }
+  .btc-timer__num { font-size: 28px; }
+  .btc-bar__btn { width: 100%; justify-content: center; }
 }
 .hero { padding-top: 48px; }
 </style>
@@ -625,18 +632,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <!-- ═══════════════════════════════════════
-     BTC BANNER (Start STRONG 2027)
+     BTC BAR (Start STRONG 2027)
 ═══════════════════════════════════════ -->
-<div class="btc-banner" id="btc-banner">
-  <div class="btc-banner__inner">
-    <span class="btc-banner__tag">Beat the Clock</span>
-    <div class="btc-banner__title">Start STRONG 2027: Get coached through the holidays for free</div>
-    <p class="btc-banner__text">Join before Wed, Nov 25 at 11:59 PM ET. Your 6 months start Jan 1. Only 12 spots.</p>
-    <div class="btc-banner__row">
+<div class="btc-bar" id="btc-banner">
+  <div class="btc-bar__inner">
+    <div class="btc-bar__copy">
+      <div class="btc-bar__eyebrow"><span class="btc-bar__dot"></span>Beat the Clock</div>
+      <div class="btc-bar__title"><span>Start STRONG 2027:</span> Get coached through the holidays for free</div>
+      <p class="btc-bar__text">Join before <strong>Wed, Nov 25 at 11:59 PM ET</strong>. Your 6 months start Jan 1. <strong>Only 12 spots.</strong></p>
+    </div>
+    <div class="btc-bar__side">
       <div class="btc-timer" id="btc-timer" aria-label="Time left to join">
           <div class="btc-timer__unit"><span class="btc-timer__num" data-u="d">00</span><span class="btc-timer__lbl">Days</span></div>
+          <span class="btc-timer__sep">:</span>
           <div class="btc-timer__unit"><span class="btc-timer__num" data-u="h">00</span><span class="btc-timer__lbl">Hrs</span></div>
+          <span class="btc-timer__sep">:</span>
           <div class="btc-timer__unit"><span class="btc-timer__num" data-u="m">00</span><span class="btc-timer__lbl">Min</span></div>
+          <span class="btc-timer__sep">:</span>
           <div class="btc-timer__unit"><span class="btc-timer__num" data-u="s">00</span><span class="btc-timer__lbl">Sec</span></div>
         </div>
     </div>
