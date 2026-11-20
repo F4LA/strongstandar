@@ -559,7 +559,51 @@ footer {
 
 /* ══ BTC (Beat the Clock / Start STRONG 2027) ══ */
 :root { --btc: #FFC72C; }
-.topbar { position: sticky; }
+
+/* BTC sticky compact bar (slides in once the full banner scrolls away) */
+.topbar { position: relative !important; }
+.btc-sticky {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(13,21,38,0.97);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-top: 3px solid var(--btc);
+  border-bottom: 1px solid rgba(255,199,44,0.2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  transform: translateY(-110%); transition: transform .28s ease;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.btc-sticky.is-on { transform: translateY(0); }
+.btc-sticky__inner { max-width: 1160px; margin: 0 auto; padding: 8px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.btc-sticky__title { font-family: var(--font-display); font-size: 22px; line-height: 1.05; color: var(--white); letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btc-sticky__title span { color: var(--btc); }
+.btc-sticky__title b, .btc-sticky__title i { font-weight: inherit; font-style: normal; }
+.btc-sticky__side { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.btc-sticky .btc-timer__unit { min-width: 28px; }
+.btc-sticky .btc-timer__num { font-size: 22px; }
+.btc-sticky .btc-timer__sep { font-size: 20px; }
+.btc-sticky .btc-timer__lbl { font-size: 8px; letter-spacing: 0.12em; }
+.btc-sticky .btc-bar__btn { padding: 9px 18px; font-size: 13px; box-shadow: none; }
+@media (max-width: 700px) {
+  .btc-sticky__inner { padding: 7px 14px; gap: 10px; }
+  .btc-sticky__title { display: none; }
+  .btc-sticky__side { width: 100%; justify-content: space-between; gap: 10px; }
+  .btc-sticky .btc-timer__unit { min-width: 24px; }
+  .btc-sticky .btc-timer__num { font-size: 20px; }
+  .btc-sticky .btc-bar__btn { padding: 9px 14px; }
+  .btc-sticky--nobtn .btc-sticky__title { display: block; font-size: 17px; flex: 1; min-width: 0; }
+  .btc-sticky--nobtn .btc-sticky__side { width: auto; }
+  .btc-sticky__rest { display: none; }
+}
+@media (max-width: 360px) {
+  .btc-sticky .btc-timer__lbl { display: none; }
+}
+/* mobile-friendly tweaks */
+@media (max-width: 480px) {
+  .btc-bar__inner { padding: 14px 16px 16px; }
+  .btc-bar__side { width: 100%; }
+  .btc-bar__btn { align-self: stretch; justify-content: center; padding: 14px 20px; font-size: 15px; }
+  .btc-timer__unit { min-width: 34px; }
+}
 .btc-bar {
   position: relative; z-index: 101;
   background: linear-gradient(180deg, var(--navy-3) 0%, var(--navy-2) 100%);
@@ -631,6 +675,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+<div class="btc-sticky btc-sticky--nobtn" id="btc-sticky" aria-hidden="true">
+  <div class="btc-sticky__inner">
+    <div class="btc-sticky__title"><span>Start STRONG 2027<b class="btc-sticky__rest">:</b></span><i class="btc-sticky__rest"> Enroll by Nov 25</i></div>
+    <div class="btc-sticky__side">
+      <div class="btc-timer"><div class="btc-timer__unit"><span class="btc-timer__num" data-u="d">00</span><span class="btc-timer__lbl">Days</span></div><span class="btc-timer__sep">:</span><div class="btc-timer__unit"><span class="btc-timer__num" data-u="h">00</span><span class="btc-timer__lbl">Hrs</span></div><span class="btc-timer__sep">:</span><div class="btc-timer__unit"><span class="btc-timer__num" data-u="m">00</span><span class="btc-timer__lbl">Min</span></div><span class="btc-timer__sep">:</span><div class="btc-timer__unit"><span class="btc-timer__num" data-u="s">00</span><span class="btc-timer__lbl">Sec</span></div></div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════
      BTC BAR (Start STRONG 2027)
 ═══════════════════════════════════════ -->
@@ -642,7 +695,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="btc-bar__text">Enroll and pay for our 6-month coaching before <strong>Wed, Nov 25 at 11:59 PM ET</strong>. Your 6-month program officially starts <strong>Jan 1</strong>, and we coach you from now until then as a free bonus. <strong style="white-space:nowrap">Only 12 spots.</strong></p>
     </div>
     <div class="btc-bar__side">
-      <div class="btc-timer" id="btc-timer" aria-label="Time left to join">
+      <div class="btc-timer" aria-label="Time left to join">
           <div class="btc-timer__unit"><span class="btc-timer__num" data-u="d">00</span><span class="btc-timer__lbl">Days</span></div>
           <span class="btc-timer__sep">:</span>
           <div class="btc-timer__unit"><span class="btc-timer__num" data-u="h">00</span><span class="btc-timer__lbl">Hrs</span></div>
@@ -1000,19 +1053,29 @@ function playVtVideo(el) {
 // BTC countdown to Wed, Nov 25, 2026 11:59 PM ET (America/New_York, EST = UTC-5)
 (function() {
   const end = new Date('2026-11-25T23:59:59-05:00').getTime();
-  const box = document.getElementById('btc-timer');
-  if (!box) return;
+  const boxes = document.querySelectorAll('.btc-timer');
+  if (!boxes.length) return;
   const pad = n => String(n).padStart(2, '0');
   function tick() {
     const left = end - Date.now();
-    if (left <= 0) { box.style.display = 'none'; clearInterval(t); return; }
+    if (left <= 0) { boxes.forEach(b => b.style.display = 'none'); clearInterval(t); return; }
     const s = Math.floor(left / 1000);
-    box.querySelector('[data-u="d"]').textContent = pad(Math.floor(s / 86400));
-    box.querySelector('[data-u="h"]').textContent = pad(Math.floor(s % 86400 / 3600));
-    box.querySelector('[data-u="m"]').textContent = pad(Math.floor(s % 3600 / 60));
-    box.querySelector('[data-u="s"]').textContent = pad(s % 60);
+    const v = { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 };
+    boxes.forEach(b => Object.keys(v).forEach(k => { const el = b.querySelector('[data-u="' + k + '"]'); if (el) el.textContent = pad(v[k]); }));
   }
   const t = setInterval(tick, 1000); tick();
+})();
+
+// Show the compact sticky bar once the full BTC banner is out of view
+(function() {
+  const banner = document.getElementById('btc-banner');
+  const bar = document.getElementById('btc-sticky');
+  if (!banner || !bar || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(([e]) => {
+    const on = !e.isIntersecting;
+    bar.classList.toggle('is-on', on);
+    bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+  }, { threshold: 0 }).observe(banner);
 })();
 </script>
 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
