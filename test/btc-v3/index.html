@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Start STRONG 2027 | 1:1 Coaching | Strong Standard (test v3)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#080D1A;--navy-2:#0D1526;--navy-3:#132039;
+  --ink:#101828;--ink-2:#475467;--ink-3:#667085;
+  --paper:#FFFFFF;--paper-2:#F4F6FA;--paper-3:#E9EDF4;
+  --btc:#FFC72C;--btc-hover:#FFD65C;--btc-ink:#9A6B00;
+  --line-d:rgba(255,255,255,.1);--line-l:#E3E8EF;
+  --display:'Bebas Neue',Impact,'Arial Narrow',sans-serif;
+  --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);font-size:16px;line-height:1.6;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.h2{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,4.4vw,3.3rem);line-height:1;letter-spacing:.01em;text-wrap:balance}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--btc-ink);margin-bottom:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;font-size:17px;color:var(--navy);background:var(--btc);border-radius:999px;padding:17px 34px;box-shadow:0 10px 30px rgba(0,0,0,.18);transition:background .2s,transform .2s}
+.btn:hover{background:var(--btc-hover);transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+.sec{padding:84px 0}
+.sec--l2{background:var(--paper-2)}
+.sec--d{background:radial-gradient(90% 70% at 50% 0%,var(--navy-3) 0%,var(--navy-2) 55%,var(--navy) 100%);color:#E8EDF5}
+.sec--d .h2{color:#fff}
+
+/* 1. Announcement bar */
+.bar{background:var(--navy);color:#E8EDF5;font-size:14px;padding:10px 16px;text-align:center;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+.bar__line{display:inline-block;width:28px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--btc),#E0A800);vertical-align:middle;margin-right:10px}
+.bar b{font-weight:700;color:#fff}
+.bar__hot{color:var(--btc);font-weight:700}
+.bar__m{display:none}
+
+/* 2. Hero */
+.hero{padding:56px 0 64px;text-align:center}
+.hero__logo{height:24px;width:auto;margin:0 auto 26px}
+.hero__qual{font-family:var(--display);font-size:clamp(1.4rem,2.6vw,1.9rem);letter-spacing:.02em;line-height:1.1;background:linear-gradient(90deg,#FFE08A,var(--btc) 55%,#E0A800);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(3rem,6.6vw,5.4rem);line-height:.95;color:#fff;max-width:980px;margin:0 auto;text-wrap:balance}
+.hero__video{max-width:860px;margin:32px auto 0;border-radius:16px;overflow:hidden;background:var(--navy-3);box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.hero__cta{margin-top:30px}
+.hero__proof{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:14px}
+.hero__stars{color:var(--btc);letter-spacing:2px}
+.hero__stars span{color:#fff;font-weight:600;letter-spacing:0;margin-left:6px}
+.hero__proof small{color:rgba(255,255,255,.6);font-size:13.5px}
+.hero__p{max-width:720px;margin:28px auto 0;font-size:17px;color:rgba(255,255,255,.8)}
+.hero__p b{color:var(--btc)}
+
+/* 3. Problem */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:start}
+.photo{border-radius:16px;overflow:hidden;background:var(--paper-3)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo--pair{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.photo--pair img{aspect-ratio:4/5}
+.prob .h2{margin-top:26px}
+.prob__lead{font-weight:700;margin-bottom:14px}
+.sym{display:flex;flex-direction:column;gap:12px;list-style:none}
+.sym li{background:var(--paper);border:1px solid var(--line-l);border-left:3px solid var(--btc);border-radius:10px;padding:13px 16px;font-size:16px}
+.prob__close{margin-top:20px;color:var(--ink-2)}
+
+/* 4. Four areas */
+.areas__head{max-width:640px}
+.areas__head p{color:var(--ink-2);margin-top:14px;font-size:17px}
+.areas__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:36px}
+.area{background:var(--paper);border:1px solid var(--line-l);border-radius:16px;padding:24px}
+.area__n{font-family:var(--display);font-size:34px;line-height:1;color:var(--btc-ink)}
+.area h3{font-size:18px;margin:10px 0 8px;line-height:1.3}
+.area p{font-size:15px;color:var(--ink-2)}
+
+/* 5. Includes */
+.checks{display:flex;flex-direction:column;gap:14px;margin-top:24px;list-style:none}
+.checks li{display:flex;gap:12px;font-size:16.5px}
+.checks li::before{content:"✓";flex:0 0 26px;height:26px;border-radius:50%;background:var(--btc);color:var(--navy);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.checks li.bonus{background:#FFF7DD;border-radius:10px;padding:10px 12px;margin-left:-12px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid4 .photo{aspect-ratio:1/1}
+
+/* 6. Stat */
+.stat{text-align:center}
+.stat .h2{max-width:860px;margin:0 auto}
+.stat p{max-width:680px;margin:18px auto 0;color:var(--ink-2);font-size:17px}
+
+/* 7. Objection */
+.away{background:var(--paper-3)}
+.away .two{align-items:center}
+.away p{margin-top:16px;color:var(--ink-2);font-size:17px}
+.away .photo{aspect-ratio:4/3}
+
+/* 8. Strip */
+.strip{background:var(--navy);color:#fff;text-align:center;padding:18px 16px;font-family:var(--display);font-size:clamp(1.2rem,2.4vw,1.6rem);letter-spacing:.04em}
+.strip span{color:var(--btc);margin:0 10px}
+
+/* 9. Founder */
+.founder{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:center}
+.founder__img{border-radius:18px;overflow:hidden;aspect-ratio:4/5;background:var(--navy-3);position:relative}
+.founder__img img{width:100%;height:100%;object-fit:cover;object-position:50% 15%}
+.founder p{margin-top:16px;color:rgba(255,255,255,.8);font-size:16.5px}
+.creds{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.creds span{font-size:13.5px;font-weight:600;border:1px solid rgba(255,199,44,.35);color:#FFE08A;border-radius:999px;padding:6px 12px}
+
+/* 10. How it works (date cards) */
+.how{text-align:center}
+.how p.sub{color:var(--ink-2);max-width:640px;margin:14px auto 0;font-size:17px}
+.dates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:34px;text-align:left}
+.date{border:1px solid var(--line-l);border-radius:14px;padding:20px;background:var(--paper)}
+.date__k{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-3)}
+.date__d{font-family:var(--display);font-size:28px;line-height:1.05;margin:6px 0}
+.date__s{font-size:14.5px;color:var(--ink-2)}
+.date--on{border:2px solid var(--btc);background:#FFFBEA;text-decoration:none;display:block}
+.date--on .date__s{color:var(--btc-ink);font-weight:700}
+.date--off{opacity:.55}
+
+/* 12. Book */
+.book{background:var(--paper-2)}
+.book .two{gap:48px}
+.book p{color:var(--ink-2);margin-top:14px;font-size:16.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chips span{background:var(--paper);border:1px solid var(--line-l);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:500}
+.card{background:var(--paper);border-radius:16px;box-shadow:0 10px 40px rgba(16,24,40,.12);padding:26px;border-top:4px solid var(--btc)}
+.card__h{font-family:var(--display);font-size:30px;line-height:1}
+.card__p{font-size:15px;color:var(--ink-2);margin:8px 0 18px}
+.steps{display:flex;gap:6px;margin-bottom:16px}
+.steps span{flex:1;height:4px;border-radius:4px;background:var(--paper-3)}
+.steps span.on{background:var(--btc)}
+.step{display:none}.step.is-active{display:block}
+.step__t{font-size:14px;color:var(--ink-3);margin-bottom:12px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.field input,.field select{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1px solid #CBD2DC;border-radius:10px;padding:13px 14px;appearance:none;-webkit-appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23667085' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+.field input:focus,.field select:focus{outline:2px solid var(--btc);outline-offset:1px;border-color:transparent}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice label{display:flex;align-items:center;justify-content:center;font-weight:500;padding:12px;border:1px solid #CBD2DC;border-radius:10px;cursor:pointer;margin:0}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label:has(input:checked){background:var(--btc);border-color:var(--btc);font-weight:700}
+.choice label:has(input:focus-visible){outline:2px solid var(--navy);outline-offset:2px}
+.cta{width:100%;font:inherit;font-size:17px;font-weight:700;color:var(--navy);background:var(--btc);border:0;border-radius:999px;padding:16px 20px;cursor:pointer;margin-top:4px}
+.cta:hover{background:var(--btc-hover)}
+.cta small{display:block;font-size:13px;font-weight:500;opacity:.8}
+.back{display:block;margin:10px auto 0;background:none;border:0;font:inherit;font-size:14px;color:var(--ink-3);text-decoration:underline;cursor:pointer}
+.err{display:none;font-size:13px;color:#C0362C;margin:-4px 0 10px}
+.fine{font-size:12.5px;color:var(--ink-3);text-align:center;margin-top:12px}
+.done{text-align:center;padding:24px 0}
+.done h3{font-family:var(--display);font-weight:400;font-size:30px}
+.done p{color:var(--ink-2);margin-top:6px}
+
+/* 13. Reviews */
+.rev__head{text-align:center;max-width:640px;margin:0 auto}
+.rev__head p{color:rgba(255,255,255,.7);margin-top:12px}
+.vids{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
+.vid{background:var(--navy);border:1px solid var(--line-d);border-radius:12px;overflow:hidden}
+.vid p{font-size:13.5px;color:#E8EDF5;padding:10px 12px 12px;line-height:1.4}
+.revs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+.rv{background:var(--paper);color:var(--ink);border-radius:14px;padding:22px}
+.rv__s{color:#E0A800;letter-spacing:2px;font-size:15px}
+.rv__q{font-size:15.5px;margin:10px 0 14px}
+.rv__w{display:flex;align-items:center;gap:10px}
+.rv__w img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--paper-3)}
+.rv__n{font-weight:700;font-size:14.5px}
+.rv__r{font-size:13px;color:var(--ink-3)}
+.hide{display:none!important}
+.more{display:block;margin:26px auto 0;background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;font:inherit;font-weight:700;font-size:15px;border-radius:999px;padding:13px 24px;cursor:pointer}
+.disc{font-size:12.5px;color:rgba(255,255,255,.5);text-align:center;max-width:760px;margin:24px auto 0}
+
+/* 14. FAQ */
+.faq{max-width:780px;margin:0 auto}
+.faq .h2{text-align:center;margin-bottom:30px}
+.faq details{border-bottom:1px solid var(--line-l)}
+.faq summary{list-style:none;cursor:pointer;font-weight:700;font-size:17.5px;padding:20px 40px 20px 0;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:6px;top:50%;width:10px;height:10px;border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+.faq details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+.faq summary:focus-visible{outline:2px solid var(--btc);outline-offset:2px}
+.faq details p{padding:0 0 20px;color:var(--ink-2)}
+
+/* 15. Final */
+.final{text-align:center;padding:80px 0}
+.final p{font-size:18px;color:rgba(255,255,255,.75);margin:14px 0 28px}
+
+footer{background:var(--navy);color:rgba(255,255,255,.5);font-size:12.5px;text-align:center;padding:26px 20px calc(26px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line-d)}
+footer p{max-width:760px;margin:0 auto 8px}
+footer nav{display:flex;gap:18px;justify-content:center}
+.note{position:fixed;right:12px;bottom:12px;z-index:50;font-size:12px;background:#2a1f00;color:var(--btc);border:1px solid rgba(255,199,44,.4);padding:6px 10px;border-radius:8px}
+
+@media (max-width:900px){
+  .sec{padding:60px 0}
+  .two,.founder{grid-template-columns:minmax(0,1fr);gap:30px}
+  .areas__grid,.dates,.vids{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .revs{grid-template-columns:minmax(0,1fr)}
+  .founder__img{max-width:360px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 18px}
+  .bar__d{display:none}.bar__m{display:inline}
+  .hero{padding:40px 0 48px}
+  .areas__grid,.dates{grid-template-columns:minmax(0,1fr)}
+  .vids{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .btn{width:100%}
+  .strip span{display:block;height:0;overflow:hidden;margin:0}
+  .card{padding:20px 16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- 1. Announcement bar -->
+<div class="bar">
+  <span class="bar__d"><span class="bar__line"></span><b>Start STRONG 2027</b> &nbsp;·&nbsp; 1:1 coaching &nbsp;·&nbsp; <span class="bar__hot">Book by Wed, Nov 25: <span class="js-clock">5d 00h 00m</span> left</span></span>
+  <span class="bar__m"><span class="bar__line"></span><b>Start STRONG 2027</b> · <span class="bar__hot">12 spots · <span class="js-clock">5d 00h</span></span></span>
+</div>
+
+<main>
+<!-- 2. Hero -->
+<section class="sec--d hero">
+  <div class="wrap">
+    <img class="hero__logo" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard">
+    <div class="hero__qual">Doing all the right things and the scale won't move?</div>
+    <h1>Find out exactly what to change, and walk into 2027 leaner.</h1>
+    <div class="hero__video">
+      <script src="https://fast.wistia.com/player.js" async></script>
+      <script src="https://fast.wistia.com/embed/4nvtea50gu.js" async type="module"></script>
+      <style>wistia-player[media-id='4nvtea50gu']:not(:defined){background:center / contain no-repeat url('https://fast.wistia.com/embed/medias/4nvtea50gu/swatch');display:block;filter:blur(5px);padding-top:56.25%}</style>
+      <wistia-player media-id="4nvtea50gu" aspect="1.7777777777777777"></wistia-player>
+    </div>
+    <div class="hero__cta"><a class="btn" href="#apply">Apply for 1:1 coaching</a></div>
+    <div class="hero__proof">
+      <div class="hero__stars">★★★★★<span>4.8 on Apple Podcasts</span></div>
+      <small>500+ transformations · Led by a PhD in Nutritional Sciences</small>
+    </div>
+    <p class="hero__p">You train, you track, and nothing moves. On your call, a coach looks at how you eat, train and recover, and tells you what to change. <b>Book by Wed, Nov 25 at 11:59 PM ET:</b> your 1:1 program officially starts Jan 1, and we coach you from the day you enroll until then as a free bonus.</p>
+  </div>
+</section>
+
+<!-- 3. Problem -->
+<section class="sec prob">
+  <div class="wrap two">
+    <div>
+      <div class="photo photo--pair">
+        <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6da11eeea68d3c617.png" alt="Client before coaching">
+        <img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6229beab4e36ee9dd.png" alt="Same client after: down 56 lbs at 62">
+      </div>
+      <h2 class="h2">You're not lazy. You're following a plan that was never built for your body.</h2>
+    </div>
+    <div>
+      <p class="prob__lead">Sound familiar?</p>
+      <ul class="sym">
+        <li>You train on a schedule, and the scale hasn't moved in months.</li>
+        <li>You measure every bite, and you're hungrier than ever.</li>
+        <li>What used to work stopped working after menopause, surgery, or a medication.</li>
+        <li>Every expert online says something different, and none of it is made for you.</li>
+        <li>You paid a trainer or a program, and ended up right where you started.</li>
+        <li>One slip turns into "well, today's done," and the week goes with it.</li>
+      </ul>
+      <p class="prob__close">These aren't six separate problems. They're what happens when nobody looks at your actual body and tells you what to change. That's what 1:1 coaching is for.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Four areas -->
+<section class="sec sec--l2">
+  <div class="wrap">
+    <div class="areas__head">
+      <div class="eyebrow">What we look at</div>
+      <h2 class="h2">Your results come down to four things.</h2>
+      <p>We look at all four with you, then tell you which one to change first.</p>
+    </div>
+    <div class="areas__grid">
+      <div class="area"><div class="area__n">01</div><h3>How you eat</h3><p>Enough protein, the right amount of food, and a way of eating you can keep without measuring every bite forever.</p></div>
+      <div class="area"><div class="area__n">02</div><h3>How you train</h3><p>Training built around your goals, your history, and any pain or injury, so you build muscle instead of just burning calories.</p></div>
+      <div class="area"><div class="area__n">03</div><h3>How you recover</h3><p>Sleep, stress, and energy. When these are off, the scale stalls no matter how hard you work.</p></div>
+      <div class="area"><div class="area__n">04</div><h3>How you stay consistent</h3><p>A coach who checks in and notices when life gets busy, so one bad week doesn't turn into starting over.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Includes -->
+<section class="sec">
+  <div class="wrap two">
+    <div>
+      <h2 class="h2">What 1:1 coaching actually includes</h2>
+      <ul class="checks">
+        <li>A nutrition plan built for your body, your schedule, and the foods you enjoy.</li>
+        <li>Training designed around your goals, your history, and any pain or injuries.</li>
+        <li>Your own coach, who checks in and adjusts your plan as you progress.</li>
+        <li>The science behind every change, so you understand it well enough to run it yourself.</li>
+        <li>Support through the hard weeks: travel, holidays, family, and work.</li>
+        <li class="bonus"><span><b>Start STRONG 2027 bonus:</b> coaching from the day you enroll, free until your program officially starts on Jan 1.</span></li>
+      </ul>
+    </div>
+    <div class="grid4">
+      <div class="photo"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6da11eeea68d3c619.png" alt="Client before"></div>
+      <div class="photo"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6b0e5e2bb7f7be9c4.png" alt="Client after: down 10 lbs and 2 inches in 3 months"></div>
+      <div class="photo"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6a691ce6ea08bc810.png" alt="Client before"></div>
+      <div class="photo"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6c56ad27908774d19.png" alt="Client after: down 14 lbs to her lowest weight in 18 years"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Stat -->
+<section class="sec sec--l2 stat">
+  <div class="wrap">
+    <h2 class="h2">You already know you need help. The question is who to trust.</h2>
+    <p>Most people who come to us have already paid a trainer, a dietitian, or a program that handed them generic advice. Strong Standard is science-backed, led by a PhD in Nutritional Sciences, and built around one coach who knows your body.</p>
+  </div>
+</section>
+
+<!-- 7. Objection -->
+<section class="sec away">
+  <div class="wrap two">
+    <div>
+      <div class="eyebrow">"I'll start after the holidays"</div>
+      <h2 class="h2">That's how December turns into another restart.</h2>
+      <p>Parties, travel, family dinners. It's the hardest month to stay on track, and the one most people write off. With Start STRONG 2027 your coach starts with you right away, so you finish the year ahead and your program officially begins Jan 1.</p>
+    </div>
+    <div class="photo"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c66fc69286f3967e3c.png" alt="Strong Standard client after coaching" style="object-position:50% 20%"></div>
+  </div>
+</section>
+
+<!-- 8. Strip -->
+<div class="strip">Book by Wed, Nov 25<span>·</span>Coaching starts the day you enroll<span>·</span>Program starts Jan 1</div>
+
+<!-- 9. Founder -->
+<section class="sec sec--d">
+  <div class="wrap founder">
+    <div class="founder__img"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e11b0150b9a3263a54cd77.png" alt="Dr. Joey Munoz"></div>
+    <div>
+      <h2 class="h2">Meet Dr. Joey Munoz</h2>
+      <p>Dr. Joey holds a PhD in Nutritional Sciences from Florida State University and has spent his career translating complex nutrition and exercise science into practical systems that work for real people in real life.</p>
+      <p>He built Strong Standard because he grew up in the same struggle his clients face, and he knew the missing piece was never motivation. It was the right system, the right education, and the right support. He is the coach he wished he had.</p>
+      <div class="creds">
+        <span>PhD, Nutritional Sciences, FSU</span>
+        <span>385K+ Instagram followers</span>
+        <span>The Dr. Joey Munoz Show, 4.8★</span>
+        <span>Jordan Syatt Podcast</span>
+        <span>Lift Free and Diet Hard</span>
+        <span>HALO Talks</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. How it works (date cards) -->
+<section class="sec how">
+  <div class="wrap">
+    <h2 class="h2">How Start STRONG 2027 works</h2>
+    <p class="sub">12 spots for 1:1 coaching. Once they're gone, or the deadline passes, the offer closes until next year.</p>
+    <div class="dates">
+      <a class="date date--on" href="#apply"><div class="date__k">STEP 1</div><div class="date__d">Book by Nov 25</div><div class="date__s">Open · 12 spots</div></a>
+      <div class="date"><div class="date__k">STEP 2</div><div class="date__d">Your call</div><div class="date__s">Can be after Nov 25, as long as you booked by the deadline.</div></div>
+      <div class="date"><div class="date__k">STEP 3</div><div class="date__d">You enroll</div><div class="date__s">Coaching starts right away, free until Jan 1.</div></div>
+      <div class="date"><div class="date__k">STEP 4</div><div class="date__d">Jan 1, 2027</div><div class="date__s">Your 1:1 program officially starts.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Book -->
+<section class="sec book" id="apply">
+  <div class="wrap two">
+    <div>
+      <div class="eyebrow">1:1 COACHING</div>
+      <h2 class="h2">For people who are already trying</h2>
+      <p>This is for you if you're putting in the work and not getting the result, or if you keep starting strong and falling off when life gets busy.</p>
+      <p>Start STRONG 2027 applies to 1:1 coaching only, not group coaching.</p>
+      <div class="chips">
+        <span>Stuck on a plateau</span><span>Menopause</span><span>After cancer or surgery</span><span>A GLP-1 that stalled</span><span>Pre-diabetes or high blood pressure</span><span>Training around pain</span><span>Busy parent or caregiver</span><span>Retired or retiring</span><span>Tired of starting over</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__h">Apply in 2 steps</div>
+      <p class="card__p">On your call we look at what you're doing now and tell you what to change, whether you join or not.</p>
+      <div class="steps" aria-hidden="true"><span class="on"></span><span></span></div>
+      <form id="f" novalidate>
+        <div class="step is-active" data-step="1">
+          <p class="step__t">Step 1 of 2: Where should we send your call details?</p>
+          <div class="field"><label for="fn">First name</label><input id="fn" autocomplete="given-name"></div>
+          <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
+          <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel"></div>
+          <p class="err" id="e1">Fill in all three fields to continue.</p>
+          <button type="button" class="cta" id="next">Continue to step 2</button>
+        </div>
+        <div class="step" data-step="2">
+          <p class="step__t">Step 2 of 2: Two quick questions so we can prepare your call.</p>
+          <div class="field"><label for="goal">Your main goal</label>
+            <select id="goal"><option value="">Choose one</option><option>Lose body fat</option><option>Build muscle and strength</option><option>Both: change my body composition</option><option>Improve my health numbers and energy</option></select>
+          </div>
+          <div class="field"><label>Are you ready to invest in 1:1 coaching if it's the right fit?</label>
+            <div class="choice"><label><input type="radio" name="inv" value="yes">Yes</label><label><input type="radio" name="inv" value="no">Not right now</label></div>
+          </div>
+          <p class="err" id="e2">Answer both questions to continue.</p>
+          <button type="submit" class="cta">Book my call and lock in free holiday coaching<small>Pick a time on the next screen</small></button>
+          <button type="button" class="back" id="back">Back</button>
+        </div>
+      </form>
+      <p class="fine">Book by Wed, Nov 25 at 11:59 PM ET. Only 12 spots.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13. Reviews -->
+<section class="sec sec--d">
+  <div class="wrap">
+    <div class="rev__head">
+      <div class="eyebrow" style="color:var(--btc)">DON'T TAKE OUR WORD FOR IT</div>
+      <h2 class="h2">Hear it from our clients</h2>
+      <p>Real clients, real schedules, real results.</p>
+    </div>
+    <div class="vids">
+      <div class="vid"><script src="https://fast.wistia.com/embed/1crvdcmj5m.js" async type="module"></script><wistia-player media-id="1crvdcmj5m" aspect="1.6"></wistia-player><p>Gained 20 pounds of muscle and finally built a body he's proud of</p></div>
+      <div class="vid"><script src="https://fast.wistia.com/embed/8gg94oddp5.js" async type="module"></script><wistia-player media-id="8gg94oddp5" aspect="1.7777777777777777"></wistia-player><p>Lost 10 kg of fat, rebuilt his strength, and took control of his health</p></div>
+      <div class="vid"><script src="https://fast.wistia.com/embed/b8gglcfx42.js" async type="module"></script><wistia-player media-id="b8gglcfx42" aspect="1.7777777777777777"></wistia-player><p>Balanced a busy career, family, and fitness to reach his dream physique</p></div>
+      <div class="vid"><script src="https://fast.wistia.com/embed/cxmhlgh4bn.js" async type="module"></script><wistia-player media-id="cxmhlgh4bn" aspect="1.7777777777777777"></wistia-player><p>Broke free from 15 years of yo-yo dieting and reclaimed her health</p></div>
+    </div>
+    <div class="revs" id="revs">
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I was working out consistently, meal prepping every week, getting seven hours of sleep, and still wasn't seeing results. I was stuck in the all-or-nothing mindset trap."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10fe20b562c72811d250c.png" alt=""><div><div class="rv__n">Kristin Kilburg</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I had tried everything and felt there was just no way to lose that weight. I thought it was just a consequence of menopause I was going to have to learn to live with."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a3972679aae5140d0ac3b94.png" alt=""><div><div class="rv__n">Penny English</div><div class="rv__r">Lost 10 lbs and 2 inches in 3 months</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I feel great in my body now. I feel comfortable with how I look and how I feel. My pre-diabetic levels were completely dropped and back to normal."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1089a036302171d7e6ced.png" alt=""><div><div class="rv__n">Linda Abaray</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I feel stronger than I have in a very long time. My coach helped me redesign my training to fit not just my goals, but my life at 62. It is all about mindset."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/6a3971c17b00529580a0bdc5.jpeg" alt=""><div><div class="rv__n">Randy Splinter</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I was in a constant state of information overload. I would constantly switch things up without having the consistency of a long-term plan. What I needed was someone to help me build that plan and actually stick to it."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e10730a2661c2e8f91a922.jpeg" alt="" style="object-position:65% 5%"><div><div class="rv__n">Steve Saldivar</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I used to think there was nothing I could do to change my habits. I thought I was just too busy. What has been eye opening is learning how to incorporate daily habits in a way that fits within the busy lifestyle."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e106972c135a8c8390b0e7.jpeg" alt=""><div><div class="rv__n">Andrea Shannon</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"It was losing weight without losing body fat. This is about changing your whole body composition. My coach is not just your guide. They are your cheerleader, your inspiration, the person who shoves you out of your comfort zone."</p><div class="rv__w"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e1075b12a3b92a680d385f.jpg" alt=""><div><div class="rv__n">Rob Johnson</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"I had lost a significant amount of weight before, but I didn't really have a means to make it last. I slowly put the weight back on over a decade. This time I needed help building something that would actually stick."</p><div class="rv__w"><div><div class="rv__n">Jonathan Siesholtz</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+      <div class="rv"><div class="rv__s">★★★★★</div><p class="rv__q">"My coach was there every step along the way during the frustrated times. She helped me see that a difficult moment was not going to stop me from seeing results. Having that constant feedback changed everything."</p><div class="rv__w"><div><div class="rv__n">Shannon Slack</div><div class="rv__r">1:1 coaching client</div></div></div></div>
+    </div>
+    <p class="disc">Individual results vary and depend on effort, adherence, and starting point. Testimonials are from real clients and are not a guarantee of a specific result.</p>
+  </div>
+</section>
+
+<!-- 14. FAQ -->
+<section class="sec">
+  <div class="wrap faq">
+    <h2 class="h2">Questions people ask before they book</h2>
+    <details><summary>Who is this for?</summary><p>People who want 1:1 coaching: you're putting in the work and not seeing the result, or you keep starting strong and falling off when life gets busy. Start STRONG 2027 applies to 1:1 coaching only, not group coaching.</p></details>
+    <details><summary>How much does it cost?</summary><p>Your coach walks you through the price and the payment options on your call, before you decide anything. With this offer, every week of coaching between the day you enroll and Jan 1 is free on top of your program.</p></details>
+    <details><summary>Is the holiday coaching really free?</summary><p>Yes. You pay for your 1:1 coaching program, which officially starts Jan 1. The coaching you get from the day you enroll until then costs you nothing extra.</p></details>
+    <details><summary>What if I can't take my call until after Nov 25?</summary><p>That's fine. Book your call by Wed, Nov 25 at 11:59 PM ET and the offer is yours, even if the call itself is later.</p></details>
+    <details><summary>I've paid coaches before and nothing changed. Why is this different?</summary><p>You get one coach who looks at your body, your history, and your week, and tells you what to change and why. The approach is science-backed, with no quick fixes, and your coach checks in when life gets busy.</p></details>
+    <details><summary>I want to talk it over with my partner first.</summary><p>Good. Book your call by the deadline to lock in the offer, and bring them to the call so they hear the plan and the price with you.</p></details>
+    <details><summary>What happens on the call?</summary><p>You'll talk through your goals, what you're doing now, and what's getting in the way. We build a preliminary plan together and tell you what to change first, whether you join or not.</p></details>
+  </div>
+</section>
+
+<!-- 15. Final CTA -->
+<section class="sec--d final">
+  <div class="wrap">
+    <h2 class="h2">Ready to stop guessing and start 2027 ahead?</h2>
+    <p>Book by Wed, Nov 25.<br>Coaching starts the day you enroll.</p>
+    <a class="btn" href="#apply">Apply for 1:1 coaching</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Results vary and depend on individual effort, adherence, and starting point. This program is not medical advice. Consult your physician before starting any nutrition or exercise program.</p>
+  <p>&copy; 2026 Strong Standard Coaching. All rights reserved.</p>
+  <nav><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-service/">Terms of Service</a></nav>
+</footer>
+
+<div class="note">Test v3: form not connected</div>
+
+<script>
+(function(){
+  var end=new Date('2026-11-26T00:00:00-05:00').getTime(),els=document.querySelectorAll('.js-clock');
+  function p(n){return String(n).padStart(2,'0')}
+  function t(){var s=Math.max(0,Math.floor((end-Date.now())/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);
+    els.forEach(function(e,i){e.textContent=e.closest('.bar__m')?d+'d '+p(h)+'h':d+'d '+p(h)+'h '+p(m)+'m'})}
+  t();setInterval(t,30000);
+})();
+(function(){
+  var f=document.getElementById('f'),steps=f.querySelectorAll('.step'),bars=document.querySelectorAll('.steps span');
+  function go(n){steps.forEach(function(s){s.classList.toggle('is-active',s.dataset.step==n)});bars.forEach(function(b,i){b.classList.toggle('on',i<n)});var x=f.querySelector('.step.is-active input,.step.is-active select');if(x)x.focus()}
+  document.getElementById('next').addEventListener('click',function(){var ok=['fn','em','ph'].every(function(id){return document.getElementById(id).value.trim()});document.getElementById('e1').style.display=ok?'none':'block';if(ok)go(2)});
+  document.getElementById('back').addEventListener('click',function(){go(1)});
+  f.addEventListener('submit',function(e){e.preventDefault();var ok=document.getElementById('goal').value&&f.querySelector('input[name="inv"]:checked');document.getElementById('e2').style.display=ok?'none':'block';if(!ok)return;
+    f.innerHTML='<div class="done"><h3>Next: pick your call time</h3><p>On the live page this step opens the BTC calendar.</p></div>';document.querySelector('.steps').style.display='none'});
+})();
+(function(){
+  var w=document.getElementById('revs'),c=w.children,L=window.innerWidth<768?3:6,i;if(c.length<=L)return;
+  for(i=L;i<c.length;i++)c[i].classList.add('hide');
+  var b=document.createElement('button');b.type='button';b.className='more';b.textContent='Show all '+c.length+' reviews';
+  b.onclick=function(){for(var j=0;j<c.length;j++)c[j].classList.remove('hide');b.remove()};w.parentNode.insertBefore(b,w.nextSibling);
+})();
+</script>
+</body>
+</html>
