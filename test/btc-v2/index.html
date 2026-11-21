@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Start STRONG 2027 | Strong Standard (mockup v2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #080D1A; --navy-2: #0D1526; --navy-3: #111C30;
+  --white: #FFFFFF; --off: #E8EDF5; --muted: #A3B0C2; --faint: #66748A;
+  --btc: #FFC72C; --btc-hover: #FFD65C;
+  --line: rgba(255,255,255,0.08);
+  --display: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+  --body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--navy); color: var(--off); font-family: var(--body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* Top strip: logo + deadline, nothing clickable */
+.strip { position: sticky; top: 0; z-index: 10; background: rgba(8,13,26,0.94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+.strip__in { max-width: 1120px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.strip__logo { height: 20px; width: auto; }
+.strip__clock { display: flex; align-items: baseline; gap: 10px; font-size: 13px; color: var(--muted); }
+.strip__time { font-family: var(--display); font-size: 22px; letter-spacing: 0.04em; color: var(--btc); font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { max-width: 1120px; margin: 0 auto; padding: 48px 24px 56px; display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr); gap: 56px; align-items: start; }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.9rem, 5.6vw, 4.6rem); line-height: 0.95; letter-spacing: 0.01em; color: var(--white); text-wrap: balance; }
+.hero__sub { margin-top: 18px; font-size: 18px; color: var(--off); max-width: 34em; }
+.hero__sub b { color: var(--btc); font-weight: 700; }
+
+.hero__offer { margin-top: 14px; font-size: 16px; color: var(--muted); max-width: 36em; }
+.hero__offer b { color: var(--btc); font-weight: 700; }
+.video { margin-top: 24px; border-radius: 14px; overflow: hidden; background: var(--navy-3); box-shadow: 0 20px 50px rgba(0,0,0,0.45); }
+.video__hint { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.hero h1 { font-size: clamp(2.5rem, 4.6vw, 3.9rem); }
+/* Proof image */
+.proof { margin-top: 28px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 6px; border-radius: 14px; overflow: hidden; position: relative; background: var(--navy-3); }
+.proof img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--navy-3); }
+.proof__tag { position: absolute; top: 10px; font-size: 12px; font-weight: 600; background: rgba(8,13,26,0.8); color: var(--off); padding: 3px 10px; border-radius: 999px; }
+.proof__tag--b { left: 10px; } .proof__tag--a { left: calc(50% + 13px); }
+.proof__cap { grid-column: 1 / -1; padding: 12px 16px 14px; font-size: 15px; color: var(--off); }
+.proof__cap strong { color: var(--white); }
+
+/* Form card */
+.card { background: var(--navy-2); border: 1px solid var(--line); border-top: 3px solid var(--btc); border-radius: 16px; padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.45); position: sticky; top: 76px; }
+.card__why { font-size: 15px; color: var(--muted); margin-bottom: 20px; }
+.card__why strong { color: var(--white); }
+.steps { display: flex; gap: 6px; margin-bottom: 18px; }
+.steps span { flex: 1; height: 4px; border-radius: 4px; background: var(--line); }
+.steps span.on { background: var(--btc); }
+.step { display: none; }
+.step.is-active { display: block; }
+.step__title { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 14px; font-weight: 600; color: var(--off); margin-bottom: 6px; }
+.field input, .field select { width: 100%; font: inherit; font-size: 16px; color: var(--white); background: var(--navy); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 13px 14px; appearance: none; -webkit-appearance: none; }
+.field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23A3B0C2' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+.field input:focus, .field select:focus { outline: 2px solid var(--btc); outline-offset: 1px; border-color: transparent; }
+.choice { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.choice label { display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 500; font-size: 15px; padding: 12px; border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; cursor: pointer; margin: 0; }
+.choice input { position: absolute; opacity: 0; pointer-events: none; }
+.choice input:checked + span { color: var(--navy); }
+.choice label:has(input:checked) { background: var(--btc); border-color: var(--btc); color: var(--navy); font-weight: 700; }
+.choice label:has(input:focus-visible) { outline: 2px solid var(--btc); outline-offset: 2px; }
+.cta { width: 100%; margin-top: 6px; font: inherit; font-size: 17px; font-weight: 700; color: var(--navy); background: var(--btc); border: 0; border-radius: 999px; padding: 17px 20px; cursor: pointer; transition: background .2s, transform .2s; }
+.cta:hover { background: var(--btc-hover); transform: translateY(-1px); }
+.cta:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+.cta small { display: block; font-size: 13px; font-weight: 500; opacity: 0.8; margin-top: 2px; }
+.back { display: block; margin: 12px auto 0; background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; text-decoration: underline; }
+.fine { font-size: 12.5px; color: var(--faint); text-align: center; margin-top: 12px; }
+.err { font-size: 13px; color: #FF8A80; margin-top: -6px; margin-bottom: 10px; display: none; }
+.done { text-align: center; padding: 20px 0; }
+.done h3 { font-family: var(--display); font-weight: 400; font-size: 32px; color: var(--white); }
+.done p { color: var(--muted); margin-top: 8px; }
+
+/* Objections */
+.obj { border-top: 1px solid var(--line); }
+.obj__in { max-width: 1120px; margin: 0 auto; padding: 56px 24px; }
+.obj h2, .proofs h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1; color: var(--white); margin-bottom: 28px; }
+.obj__list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; list-style: none; }
+.obj__list h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; line-height: 1.3; }
+.obj__list p { color: var(--muted); font-size: 15.5px; }
+
+/* Social proof */
+.proofs { background: var(--navy-2); border-top: 1px solid var(--line); }
+.proofs__in { max-width: 1120px; margin: 0 auto; padding: 56px 24px; }
+.proofs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.p { background: var(--navy); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.p__img { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 3px; }
+.p__img img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; background: var(--navy-3); }
+.p__txt { padding: 14px 16px 16px; }
+.p__num { font-family: var(--display); font-size: 26px; color: var(--btc); line-height: 1; }
+.p__txt p { font-size: 14.5px; color: var(--off); margin-top: 6px; }
+.again { text-align: center; margin-top: 36px; }
+.again a { display: inline-block; text-decoration: none; font-weight: 700; color: var(--navy); background: var(--btc); border-radius: 999px; padding: 15px 30px; }
+
+/* Legal */
+footer { border-top: 1px solid var(--line); padding: 28px 24px calc(28px + env(safe-area-inset-bottom, 0px)); text-align: center; font-size: 12.5px; color: var(--faint); }
+footer p { max-width: 720px; margin: 0 auto 10px; }
+footer nav { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+
+/* Mockup note */
+.note { position: fixed; right: 12px; bottom: 12px; z-index: 20; font-size: 12px; background: #2a1f00; color: var(--btc); border: 1px solid rgba(255,199,44,0.4); padding: 6px 10px; border-radius: 8px; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: minmax(0,1fr); gap: 28px; padding: 28px 20px 40px; }
+  .card { position: static; padding: 22px 18px; }
+  .obj__list, .proofs__grid { grid-template-columns: 1fr; gap: 22px; }
+  .obj__in, .proofs__in { padding: 44px 20px; }
+}
+@media (max-width: 480px) {
+  .strip__in { padding: 10px 16px; }
+  .strip__clock span:first-child { display: none; }
+  .hero__sub { font-size: 16.5px; }
+  .proof__cap { font-size: 14px; }
+  .proof img { aspect-ratio: 1 / 1; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="strip">
+  <div class="strip__in">
+    <img class="strip__logo" src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69de737801e07d5dde37fcc4.png" alt="Strong Standard">
+    <div class="strip__clock"><span>Offer closes in</span><span class="strip__time" id="clock">5d 00h 00m</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <h1>Doing all the right things and the scale won't move? Get a plan built for your body.</h1>
+      <p class="hero__sub">A 1:1 coach looks at how you eat, train and recover, and tells you exactly what to change. Science-backed, no quick fixes.</p>
+      <p class="hero__offer"><b>Book your call by Wed, Nov 25 at 11:59 PM ET.</b> Your 1:1 coaching program officially starts Jan 1, and we coach you from the day you enroll, so the holidays are a free bonus on top of your program, not another restart.</p>
+
+      <div class="video">
+        <script src="https://fast.wistia.com/player.js" async></script>
+        <script src="https://fast.wistia.com/embed/4nvtea50gu.js" async type="module"></script>
+        <style>wistia-player[media-id='4nvtea50gu']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/4nvtea50gu/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }</style>
+        <wistia-player media-id="4nvtea50gu" aspect="1.7777777777777777"></wistia-player>
+      </div>
+      <p class="video__hint">Watch this first: it explains how the application and your call work.</p>
+    </div>
+
+    <div class="card" id="apply">
+      <p class="card__why"><strong>Why apply?</strong> On your call we look at what you are doing now and tell you what to change, whether you join or not.</p>
+      <div class="steps" aria-hidden="true"><span class="on"></span><span></span></div>
+
+      <form id="f" novalidate>
+        <div class="step is-active" data-step="1">
+          <p class="step__title">Step 1 of 2: Where should we send your call details?</p>
+          <div class="field"><label for="fn">First name</label><input id="fn" autocomplete="given-name" required></div>
+          <div class="field"><label for="em">Email</label><input id="em" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel" required></div>
+          <p class="err" id="e1">Fill in all three fields to continue.</p>
+          <button type="button" class="cta" id="next">Continue to step 2</button>
+        </div>
+
+        <div class="step" data-step="2">
+          <p class="step__title">Step 2 of 2: Two quick questions so we prepare your call.</p>
+          <div class="field">
+            <label for="goal">Your main goal</label>
+            <select id="goal" required>
+              <option value="">Choose one</option>
+              <option>Lose body fat</option>
+              <option>Build muscle and strength</option>
+              <option>Both: recomposition</option>
+              <option>Improve health markers and energy</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Are you ready to invest in 1:1 coaching if it's the right fit?</label>
+            <div class="choice">
+              <label><input type="radio" name="inv" value="yes"><span>Yes</span></label>
+              <label><input type="radio" name="inv" value="no"><span>Not right now</span></label>
+            </div>
+          </div>
+          <p class="err" id="e2">Answer both questions to book your call.</p>
+          <button type="submit" class="cta">Book my call and lock in free holiday coaching<small>Pick a time on the next screen</small></button>
+          <button type="button" class="back" id="back">Back</button>
+        </div>
+      </form>
+      <p class="fine">Only 12 spots. Your call can be after Nov 25 as long as you book by the deadline.</p>
+    </div>
+  </section>
+
+  <section class="obj">
+    <div class="obj__in">
+      <h2>Before you book</h2>
+      <ul class="obj__list">
+        <li>
+          <h3>What does it cost?</h3>
+          <p>Your coach walks you through the price and payment options on the call, before you decide anything. With this offer, every week of coaching until Jan 1 is free on top of your program.</p>
+        </li>
+        <li>
+          <h3>I've paid coaches before and nothing changed. Why is this different?</h3>
+          <p>You get one coach who looks at your body, your history and your week, and tells you what to change and why. And when life gets busy, your coach notices and keeps you going.</p>
+        </li>
+        <li>
+          <h3>I want to talk it over with my partner first.</h3>
+          <p>Good. Book your call by the deadline to lock in the offer, and bring them to the call so they hear the plan and the price with you.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="proofs">
+    <div class="proofs__in">
+      <h2>Real clients, real results</h2>
+      <div class="proofs__grid">
+        <article class="p">
+          <div class="p__img"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6da11eeea68d3c617.png" alt="Client before" loading="lazy"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6229beab4e36ee9dd.png" alt="Client after" loading="lazy"></div>
+          <div class="p__txt"><div class="p__num">-56 lbs</div><p>Down 56 lbs in under 12 months and stronger than ever at 62.</p></div>
+        </article>
+        <article class="p">
+          <div class="p__img"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6da11eeea68d3c619.png" alt="Client before" loading="lazy"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6b0e5e2bb7f7be9c4.png" alt="Client after" loading="lazy"></div>
+          <div class="p__txt"><div class="p__num">-10 lbs &middot; -2 in</div><p>Down 10 lbs and 2 inches off her waist in just 3 months.</p></div>
+        </article>
+        <article class="p">
+          <div class="p__img"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6a691ce6ea08bc810.png" alt="Client before" loading="lazy"><img src="https://assets.cdn.filesafe.space/cZF68TO3vzxTOnAdACdK/media/69e780c6c56ad27908774d19.png" alt="Client after" loading="lazy"></div>
+          <div class="p__txt"><div class="p__num">-14 lbs</div><p>Down 14 lbs to her lowest weight in 18 years.</p></div>
+        </article>
+      </div>
+      <div class="again"><a href="#apply">Book my call</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Results vary and depend on individual effort, adherence, and starting point. Testimonials are from real clients and are not a guarantee of results. This program is not medical advice; consult your physician before starting any nutrition or exercise program.</p>
+  <p>&copy; 2026 Strong Standard. All rights reserved.</p>
+  <nav><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></nav>
+</footer>
+
+<div class="note">Mockup v2: form not connected</div>
+
+<script>
+// Countdown to Nov 26, 2026 12:00 AM ET
+(function () {
+  var end = new Date('2026-11-26T00:00:00-05:00').getTime(), el = document.getElementById('clock');
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function tick() {
+    var s = Math.max(0, Math.floor((end - Date.now()) / 1000));
+    el.textContent = Math.floor(s / 86400) + 'd ' + pad(Math.floor(s % 86400 / 3600)) + 'h ' + pad(Math.floor(s % 3600 / 60)) + 'm ' + pad(s % 60) + 's';
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+// Two-step form (mockup only)
+(function () {
+  var f = document.getElementById('f'), steps = f.querySelectorAll('.step'), bars = document.querySelectorAll('.steps span');
+  function go(n) {
+    steps.forEach(function (s) { s.classList.toggle('is-active', s.dataset.step == n); });
+    bars.forEach(function (b, i) { b.classList.toggle('on', i < n); });
+    var first = f.querySelector('.step.is-active input, .step.is-active select'); if (first) first.focus();
+  }
+  document.getElementById('next').addEventListener('click', function () {
+    var ok = ['fn', 'em', 'ph'].every(function (id) { return document.getElementById(id).value.trim(); });
+    document.getElementById('e1').style.display = ok ? 'none' : 'block';
+    if (ok) go(2);
+  });
+  document.getElementById('back').addEventListener('click', function () { go(1); });
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = document.getElementById('goal').value && f.querySelector('input[name="inv"]:checked');
+    document.getElementById('e2').style.display = ok ? 'none' : 'block';
+    if (!ok) return;
+    f.innerHTML = '<div class="done"><h3>Next: pick your call time</h3><p>In the live page this step opens the BTC calendar.</p></div>';
+    document.querySelector('.steps').style.display = 'none';
+  });
+})();
+</script>
+</body>
+</html>
