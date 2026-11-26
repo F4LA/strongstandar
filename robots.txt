@@ -4,6 +4,7 @@ Allow: /
 # Disallow internal tools
 Disallow: /tools/
 Disallow: /payments/
+Disallow: /backups/
 
 # Disallow funnel/transactional pages
 Disallow: /21-day-challenge/checkout-97/
