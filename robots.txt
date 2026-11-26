@@ -9,6 +9,8 @@ Disallow: /backups/
 # Disallow funnel/transactional pages
 Disallow: /21-day-challenge/checkout-97/
 Disallow: /21-day-challenge/checkout-147/
+Disallow: /21-day-challenge/checkout-97-b/
+Disallow: /21-day-challenge/checkout-147-b/
 Disallow: /21-day-challenge/thank-you/
 Disallow: /21-day-challenge/launch-checklist/
 Disallow: /freebies/21dc-offer/
